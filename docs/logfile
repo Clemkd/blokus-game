@@ -1,0 +1,23 @@
+Journal de bord :
+
+1er jour : 11 mai 2016
+Après avoir fini le pré-projet, nous avons choisi le jeu pour notre projet qui est : le Blokus.
+
+2ème jour : 12 mai 2016
+Nous avons commencé à réfléchir sur l'IHM du Blokus avec l'élaboration d'une maquette via PhotoShop. 
+De plus, nous avons réfléchi sur la structure de l'application et nous avons élaboré un diagramme de classes afin de bien séparer les classes lors du développement de l'application.
+Prise de contact avec notre tuteur, le RDV est planifié pour mardi 17 mai à 14h.
+
+3ème jour : 13 mai 2016 
+Il y a eu cours, on a rien fait, allé gg wp.
+
+4ème jour : 17 mai 2016
+Audit IHM (maquette) : Lors de l’audit, nous avons discuté à propos de l’IHM. Il y a eu plusieurs remarques : 
+- Design sobre et couleurs approprié
+- Problème sur la sélection des « joueurs » avec le grisage des type de joueurs
+- Meilleur affichage des « aides » avec des bulles
+- Affichage des règles du jeu pour la première partie
+- Révision des mécanique de jeu (drag & drop / clic & drop + rotation / symétrie)
+Il faut maintenant définir un « sondage » afin de faire tester la maquette sur des joueurs de type lambda ou des joueurs de Blokus aguerri.
+Le groupe est maintenant divisé par tâche, Lucas sur le design de l’interface, Loïc, Clément et Valentin sur l’architecture et l’IA, et Thai Binh sur le moteur de l’interface.
+L’UML est fini à ce jour. 
