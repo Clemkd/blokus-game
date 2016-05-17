@@ -10,20 +10,19 @@ Audit 17 Mai :
 - Quand c'est le tour d'un utilisateur :
   > Griser le conteneur + pieces du joueur adverse
   > Griser les pieces du joueur dont la couleur n'est pas jouable
-  > La couleur du header du conteneur = couleur a jouer
 - Tant qu'un angle du plateau ne contient pas de piece, mettre l'angle de la couleur attendu
 - Integrer un systeme de score qui incremente en fonction des pieces deposes 
-- Changer "Humain" par synonyme
+- Changer "Humain" par synonyme ✔
 - Finir design interface aide
 
 Reunion Tuteur 17 Mai :
 - Apparence :
-  > Modifier police du texte car illisible 
+  > Modifier police du texte car illisible ✔
   > Rendre les panneaux de fond opaques avec color/texture
 - Sur le menu principal :
-  > Mise en place d'un menu principal (nouvelles partie, tutoriel, quitter)
-  > Pour une nouvelle partie, apres selection du type de joueur, faire un hover sur les boutons non selectionnes pour changement de type
-  > Remplacer aide par options/preferences
+  > Mise en place d'un menu principal (nouvelles partie, tutoriel, quitter) ✔
+  > Apres selection du type de joueur, faire un hover sur les boutons non selectionnes pour changement de type
+  > Remplacer aide par options/preferences ✔
 - Enlever le texte informatif sur l'interface de jeu et mettre a la place :
   > Un panneau interdit en cas d'action impossible
   > Options surbrillance/non surbrillance au depot de piece
@@ -33,3 +32,4 @@ Reunion Tuteur 17 Mai :
   > Retirer les lignes vides
 - Approfondissement :
   > Creer propre explorateur de sauvegarde/chargement
+- Reduction header conteneur et verifier si toutes les pieces rentrent
