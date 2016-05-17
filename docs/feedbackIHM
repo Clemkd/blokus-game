@@ -1,7 +1,7 @@
 Audit 17 Mai :
 - Choisir une des deux methodes de jeu suivantes pour les controles de pieces :
   > Methode Bimanuel : Drag and drop (clic gauche dragged) et utilisation molette, clic droit et clavier pour symetrie et rotation
-  > Methode Monomanuel : Selection de pieces (clic gauche pressed), utilisation molette, clic droit et clavier pour symetrie et rotation puis depot de pieces (clic gauche pressed)
+  > Methode Monomanuel : Selection de pieces (clic gauche pressed), utilisation molette et clic droit pour symetrie et rotation puis depot de pieces (clic gauche pressed)
 - Aider l'utilisateur pour savoir les commandes a utiliser pour jouer :
   > Au commencement d'une premiere partie
   > Au moment d'un deplacement (autour du curseur ou a la place du texte informatif)
