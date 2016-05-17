@@ -14,14 +14,18 @@ public class TilePanel implements DrawableInterface{
 	private boolean state;
 	private Color tileColor;
 	
+	/**
+	 * Constructeur
+	 * @param color la couleur des pi√®ces dans le panel
+	 */
 	public TilePanel(Color color) {
 		this.state = false;
 		this.tileColor = color;
 	}
 
 	/**
-	 * Fonction qui ajout une piËce dans le panel
-	 * @param t la piËce concernÈe
+	 * Fonction qui ajoute une pi√®ce dans le panel
+	 * @param t la pi√®ce concern√©e
 	 */
 	public void addTile(Tile t)
 	{
@@ -29,8 +33,8 @@ public class TilePanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui retire une piËce du panel
-	 * @param t la piËce concernÈe
+	 * Fonction qui retire une pi√®ce du panel
+	 * @param t la pi√®ce concern√©e
 	 */
 	public void removeTile(Tile t)
 	{
@@ -38,9 +42,9 @@ public class TilePanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui renvoie la piËce sÈlectionnÈe lors du clic gr‚ce ‡ la position v
+	 * Fonction qui renvoie la pi√®ce s√©lectionn√©e lors du clic gr√¢ce √† la position v
 	 * @param v la position du clic
-	 * @return la piËce cliquÈe
+	 * @return la pi√®ce cliqu√©e
 	 */
 	public Tile getTile(Vector2<Integer> v)
 	{
@@ -57,20 +61,15 @@ public class TilePanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui dÈsactive le panel joueur
+	 * Fonction qui d√©sactive le panel joueur
 	 */
 	public void disable()
 	{
 		this.state = false;
 	}
-	
-	public boolean getState()
-	{
-		return this.state;
-	}
 
 	@Override
-	public void update(float elaspedTime) {
+	public void update(float elapsedTime) {
 		afaire;
 	}
 

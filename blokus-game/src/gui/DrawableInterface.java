@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 
 public interface DrawableInterface {
 	/**
-	 * Fonction qui met à jour toute l'interface selon un taux value
-	 * @param value taux de rafraichissement
+	 * Fonction qui met Ã  jour toute l'interface selon un taux value
+	 * @param elapsedTime
 	 */
-	public void update(float elaspedTime);
+	public void update(float elapsedTime);
 	
 	/**
 	 * Fonction qui dessine 

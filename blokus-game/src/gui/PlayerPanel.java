@@ -14,6 +14,11 @@ public class PlayerPanel implements DrawableInterface{
 	private TilePanel tp1;
 	private TilePanel tp2;
 	
+	/**
+	 * Constructeur de PlayerPanel
+	 * @param t1 le premier panel du joueur
+	 * @param t2 le deuxi√®me panel du joueur
+	 */
 	public PlayerPanel(TilePanel t1, TilePanel t2) {
 		this.state = false;
 		this.tp1 = t1;
@@ -29,7 +34,7 @@ public class PlayerPanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui dÈsactive le panel joueur
+	 * Fonction qui d√©sactive le panel joueur
 	 */
 	public void disable()
 	{
@@ -46,9 +51,9 @@ public class PlayerPanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui renvoie la piËce sÈlectionnÈe lors du clic gr‚ce ‡ la position v
+	 * Fonction qui renvoie la pi√®ce s√©lectionn√©e lors du clic gr√¢ce √† la position v
 	 * @param v la position du clic
-	 * @return la piËce cliquÈe
+	 * @return la pi√®ce cliqu√©e
 	 */
 	public Tile getTile(Vector2<Integer> v)
 	{
@@ -57,7 +62,7 @@ public class PlayerPanel implements DrawableInterface{
 	}
 
 	@Override
-	public void update(float elaspedTime) {
+	public void update(float elapsedTime) {
 		afaire;
 	}
 
