@@ -20,4 +20,8 @@ Audit IHM (maquette) : Lors de l’audit, nous avons discuté à propos de l’I
 - Révision des mécanique de jeu (drag & drop / clic & drop + rotation / symétrie)
 Il faut maintenant définir un « sondage » afin de faire tester la maquette sur des joueurs de type lambda ou des joueurs de Blokus aguerri.
 Le groupe est maintenant divisé par tâche, Lucas sur le design de l’interface, Loïc, Clément et Valentin sur l’architecture et l’IA, et Thai Binh sur le moteur de l’interface.
-L’UML est fini à ce jour. 
+L’UML est fini à ce jour.
+
+Suite au RDV avec notre tuteur, nous avons changé notre architecture afin de la rendre plus "facile" sans essayer d'optimiser le code en sachant que nous n'avons pas encore commencé a codé.
+
+L'implémentation du code débute donc à ce jour.
