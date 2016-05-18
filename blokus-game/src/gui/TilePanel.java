@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import entities.Tile;
 import utilities.Vector2;
@@ -25,7 +27,7 @@ public class TilePanel implements DrawableInterface{
 	/**
 	 * La liste des pièces
 	 */
-	private ArrayList<Tile> tiles;
+	private HashMap<Tile, Vector2<Integer>> tiles;
 	
 	/**
 	 * La longueur du panel
@@ -58,9 +60,9 @@ public class TilePanel implements DrawableInterface{
 	 * Fonction qui ajoute une pièce dans le panel
 	 * @param t la pièce concernée
 	 */
-	public void addTile(Tile t)
+	public void addTile(Tile t, Vector2<Integer> v)
 	{
-		this.tiles.add(t);
+		this.tiles.put(t, v);
 	}
 	
 	/**
@@ -69,15 +71,7 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public void removeTile(Tile t)
 	{
-		int i = 0;
-		while (i<this.tiles.size() && this.tiles.get(i) != t )
-		{
-			i++;
-		}	
-		if(i != this.tiles.size())
-		{
-			this.tiles.remove(i);
-		}
+		this.tiles.remove(t);
 	}
 	
 	/**
@@ -89,8 +83,14 @@ public class TilePanel implements DrawableInterface{
 	{
 		Tile res = null;
 		
-		
-		
+		for(Entry<Tile, Vector2<Integer>> entry : this.tiles.entrySet())
+		{
+			if(entry.getKey().isInBounds(v, entry.getValue()))
+			{
+				res = entry.getKey();
+				break;
+			}
+		}
 		return res;
 	}
 	

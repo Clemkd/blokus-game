@@ -26,6 +26,11 @@ public class PlayerPanel implements DrawableInterface{
 	private TilePanel tilePanel2;
 	
 	/**
+	 * Determine si il y a eu un clic
+	 */
+	private boolean isClicked;
+	
+	/**
 	 * Constructeur de PlayerPanel
 	 * @param t1 le premier panel du joueur
 	 * @param t2 le deuxième panel du joueur
@@ -34,6 +39,7 @@ public class PlayerPanel implements DrawableInterface{
 		this.state = false;
 		this.tilePanel1 = t1;
 		this.tilePanel2 = t2;
+		this.isClicked = false;
 	}
 
 	/**
@@ -90,7 +96,19 @@ public class PlayerPanel implements DrawableInterface{
 
 	@Override
 	public void update(float elapsedTime) {
-		
+		if(Mouse.getState() == Mouse.LEFT && !Mouse.isReleased() && !this.isClicked)
+		{
+			Vector2<Integer> v = Mouse.getPosition();
+			Tile tileSelected = this.getTile(v);
+			
+			//TODO: debug
+			System.out.println(tileSelected);
+			this.isClicked = true;
+		}
+		else if (Mouse.isReleased())
+		{
+			this.isClicked = false;
+		}
 	}
 
 	@Override

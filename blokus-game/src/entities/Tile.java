@@ -97,7 +97,7 @@ public class Tile {
 
 
 	/**
-	 * Méthode permettant d'effecture une symétrie de la Tile
+	 * Méthode permettant d'effectuer une symétrie de la Tile
 	 */
 	public void flip(){
 		CellType[][] temp = new CellType[WIDTH][HEIGHT];
@@ -115,8 +115,8 @@ public class Tile {
 	 */
 	public Vector2<Integer> getFirstCase(){
 		if(this.firstCase == null){
-			for(int i=0; i<this.WIDTH; i++){
-				for(int j=0; j<this.HEIGHT; j++){
+			for(int i=0; i<WIDTH; i++){
+				for(int j=0; j<HEIGHT; j++){
 					if(this.matrix[i][j] == CellType.PIECE){
 						return new Vector2<Integer>(i, j);
 					}
@@ -126,7 +126,6 @@ public class Tile {
 		return firstCase;
 	}
 	
-	
 	/** 
 	 * Méthode permettant d'accéder au type de cellule dans une matrice
 	 * @param x la ligne dans la matrice
@@ -135,5 +134,31 @@ public class Tile {
 	 */
 	public CellType getCellType(int x, int y){
 		return this.matrix[x][y];
+	}
+	
+	/**
+	 * Méthode qui dit si le clic est sur la pièce
+	 * @param v la position du clic
+	 * @param positionTile 
+	 * @return vrai si la position est dans la pièce, faux sinon
+	 */
+	public boolean isInBounds(Vector2<Integer> v, Vector2<Integer> positionTile)
+	{
+		for(int i=0; i<WIDTH; i++){
+			for(int j=0; j<HEIGHT; j++){
+				if(this.getCellType(i, j) == CellType.PIECE)
+				{
+					if(positionTile.getX()+i*CellColor.CELL_WIDTH< v.getX() 
+							&& positionTile.getX()+(i+1)*CellColor.CELL_WIDTH< v.getX() 
+							&& positionTile.getY()+i*CellColor.CELL_HEIGHT< v.getY() 
+							&& positionTile.getY()+(i+1)*CellColor.CELL_HEIGHT< v.getY())
+					{
+						return true;
+					}
+				}
+			}
+			
+		}
+		return false;
 	}
 }

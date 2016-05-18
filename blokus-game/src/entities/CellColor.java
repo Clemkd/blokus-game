@@ -30,6 +30,15 @@ public enum CellColor {
 	private String path;
 	
 	/**
+	 * constante qui défini la largeur en pixel d'une cellulle d'une pièce
+	 */
+	public static final int CELL_WIDTH = 16;
+	
+	/**
+	 * constante qui défini la hauteur en pixel d'une cellulle d'une pièce
+	 */
+	public static final int CELL_HEIGHT = 16;
+	/**
 	 * Constructeur de CellColor
 	 * @param path le chemin d'accès vers une image
 	 */
