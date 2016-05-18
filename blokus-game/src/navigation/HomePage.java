@@ -15,14 +15,44 @@ import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener{
 	
+	/**
+	 * Bouton représentant le choix de 1 joueur
+	 */
 	private BlokusButton buttonOnePLayer;
+	
+	/**
+	 * Bouton représentant le choix de 2 joueurs
+	 */
 	private BlokusButton buttonTwoPlayer;
+	
+	/**
+	 * Bouton représentant le choix de charger une partie
+	 */
 	private BlokusButton buttonLoad;
+	
+	/**
+	 * Bouton représentant le choix du tutoriel
+	 */
 	private BlokusButton buttonTutorial;
+	
+	/**
+	 * Bouton représentant le choix des options du jeu
+	 */
 	private BlokusButton buttonOption;
+	
+	/**
+	 * Bouton représentant le choix de quitter le jeu
+	 */
 	private BlokusButton buttonExit;
+	
+	/**
+	 * Image représentant le logo du jeu
+	 */
 	private BufferedImage titre;
 	
+	/**
+	 * Constructeur
+	 */
 	public HomePage() {
 		super();
 		
