@@ -12,6 +12,8 @@ public class Navigation {
 	 */
 	public static Page homePage = new HomePage();
 	
+	public static Page iaPage = new IASelectionPage();
+	
 	/**
 	 * Change l'état de jeu et navigue vers cet état
 	 * @param p Le nouvel état de jeu

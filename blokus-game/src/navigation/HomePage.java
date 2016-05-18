@@ -88,7 +88,7 @@ public class HomePage extends Page implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof BlokusButton){
 			if(e.getSource().equals(this.buttonOnePLayer)){
-				//TODO navigation choix IA
+				Navigation.NavigateTo(Navigation.iaPage);
 			}else if(e.getSource().equals(this.buttonTwoPlayer)){
 				//TODO navigation plateau 2 joueurs
 			}else if(e.getSource().equals(this.buttonLoad)){
