@@ -7,48 +7,46 @@ public class Tile {
 	 * Constante pour la hauteur de la matrice d'une Tile
 	 */
 	public static final int HEIGHT = 7;
-	
+
 	/**
 	 * Constante pour la matrice de la matrice d'une Tile
 	 */
 	public static final int WIDTH = 7;
-	
+
 	/**
 	 * Matrice d'entier permettant de représenter la forme d'une tuile et les possibilités d'adjacence
 	 */
-	private int[][] matrix = new int[HEIGHT][WIDTH] ;
-	
+	private CellType[][] matrix = new CellType[HEIGHT][WIDTH] ;
+
 	/**
 	 * Couleur de la Tile
 	 */
 	CellColor couleur;
 	
 	/**
+	 * Emplacement dans la matrice de la premiere case de la piece
+	 */
+	private Vector2<Integer> firstCase;
+
+	/**
 	 * 
 	 * @param matrix la matrice représentant la forme de la Tile à instancier
 	 * @param couleur le type de cellule de la Tile (couleur de la cellule)
 	 */
-	public Tile(int[][] matrix, CellColor couleur) {
+	public Tile(CellType[][] matrix, CellColor couleur) {
 		this.matrix = matrix;
 		this.couleur = couleur;
 	}
-	
+
 	/**
 	 * Accesseur de matrix
 	 * @return la matrice de représentation de la Tile
 	 */
-	public int[][] getMatrix() {
+	public CellType[][] getMatrix() {
 		return matrix;
 	}
-	
-	/**
-	 * Mutateur de matrix
-	 * @param matrix nouvelle matrice pour la Tile
-	 */
-	public void setMatrix(int[][] matrix) {
-		this.matrix = matrix;
-	}
-	
+
+
 	/**
 	 * Accessseur de couleur
 	 * @return le type de cellule
@@ -56,7 +54,7 @@ public class Tile {
 	public CellColor getCouleur() {
 		return couleur;
 	}
-	
+
 	/**
 	 * mutateur de couleur
 	 * @param couleur la nouvelle type de cellule de la Tile
@@ -64,12 +62,12 @@ public class Tile {
 	public void setCouleur(CellColor couleur) {
 		this.couleur = couleur;
 	}
-	
+
 	/**
 	 * Méthode permettant la rotation dans un sens horaire de la matrice de la Tile
 	 */
 	public void rotateClockwise() {
-		int[][] temp = new int[WIDTH][HEIGHT];
+		CellType[][] temp = new CellType[WIDTH][HEIGHT];
 
 		for (int x = 0; x < WIDTH; x++){
 			for (int y = 0; y < HEIGHT; y++){
@@ -79,36 +77,63 @@ public class Tile {
 
 		matrix = temp;
 	}
-	
+
 	/**
 	 * Méthode permettant la rotation dans un sens anti-horaire de la matrice de la Tile
 	 */
 	public void rotateCounterClockwise()
 	{
-		int[][] temp = new int[WIDTH][HEIGHT];
-	
+		CellType[][] temp = new CellType[WIDTH][HEIGHT];
+
 		for (int x = 0; x < WIDTH; x++){
 			for (int y = 0; y < HEIGHT; y++){
 				temp[y][WIDTH - x - 1] = matrix[x][y];
 			}
 		}
-	
-	
-		this.setMatrix(temp);
+
+
+		this.matrix = temp;
 	}
-	
-	
+
+
 	/**
 	 * Méthode permettant d'effecture une symétrie de la Tile
 	 */
-	public void flip()
-	   {
-	      int[][] temp = new int[WIDTH][HEIGHT];
-	      
-	      for (int x = 0; x < WIDTH; x++)
-	         for (int y = 0; y < HEIGHT; y++)
-	            temp[WIDTH - x - 1][y] = matrix[x][y];
-	            
-	      this.setMatrix(temp);
-	   }
+	public void flip(){
+		CellType[][] temp = new CellType[WIDTH][HEIGHT];
+
+		for (int x = 0; x < WIDTH; x++)
+			for (int y = 0; y < HEIGHT; y++)
+				temp[WIDTH - x - 1][y] = matrix[x][y];
+
+		this.matrix = temp;
+	}
+	
+	/**
+	 * Méthode indiquant la position de la première cellule de type piece dans la matrice
+	 * @return un Vector2<Integer> 
+	 */
+	public Vector2<Integer> getFirstCase(){
+		if(this.firstCase == null){
+			for(int i=0; i<this.WIDTH; i++){
+				for(int j=0; j<this.HEIGHT; j++){
+					if(this.matrix[i][j] == CellType.PIECE){
+						return new Vector2<Integer>(i, j);
+					}
+				}
+			}
+		}
+		return firstCase;
+	}
+	
+	
+	/** 
+	 * Méthode permettant d'accéder au type de cellule dans une matrice
+	 * @param x la ligne dans la matrice
+	 * @param y la colonne dans la matrice
+	 * @return un CellType
+	 */
+	public CellType getCellType(int x, int y){
+		return this.matrix[x][y];
+	}
 }
