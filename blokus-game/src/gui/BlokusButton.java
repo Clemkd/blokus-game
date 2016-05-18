@@ -88,6 +88,19 @@ public class BlokusButton implements DrawableInterface
 	}
 	
 	/**
+	 * Determine si la position est située sur le bouton
+	 * @param position La position à tester
+	 * @return Vrai si la position donnée est disposée sur le bouton, Faux dans le cas contraire
+	 */
+	public boolean isInBounds(Vector2<Integer> position)
+	{
+		return position.getX() >= this.getPosition().getX() &&
+				position.getX() < this.getSize().getWidth() &&
+				position.getY() >= this.getPosition().getY() &&
+				position.getY() < this.getSize().getHeight();
+	}
+	
+	/**
 	 * Ajoute un listener pour l'évènement de clique sur le bouton
 	 * @param listener Le listener d'évènement
 	 */
@@ -111,7 +124,7 @@ public class BlokusButton implements DrawableInterface
 	@Override
 	public void update(float elapsedTime) 
 	{
-		if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased() && !this.wasClicked)
+		if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased() && !this.wasClicked && this.isInBounds(Mouse.getPosition()))
 		{
 			this.raiseClickEvent(new ActionEvent(this, 0, null));
 			this.wasClicked = true;
