@@ -95,9 +95,9 @@ public class BlokusButton implements DrawableInterface
 	public boolean isInBounds(Vector2<Integer> position)
 	{
 		return position.getX() >= this.getPosition().getX() &&
-				position.getX() < this.getSize().getWidth() &&
+				position.getX() < this.getSize().getWidth() + this.position.getX() &&
 				position.getY() >= this.getPosition().getY() &&
-				position.getY() < this.getSize().getHeight();
+				position.getY() < this.getSize().getHeight() + this.position.getY();
 	}
 	
 	/**
