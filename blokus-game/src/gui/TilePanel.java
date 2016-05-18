@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import entities.Tile;
 import utilities.Vector2;
@@ -11,16 +12,46 @@ import utilities.Vector2;
  *
  */
 public class TilePanel implements DrawableInterface{
+	/**
+	 * Etat du panel des pièce
+	 */
 	private boolean state;
+	
+	/**
+	 * La couleur des pièces
+	 */
 	private Color tileColor;
 	
 	/**
-	 * Constructeur
+	 * La liste des pièces
+	 */
+	private ArrayList<Tile> tiles;
+	
+	/**
+	 * La longueur du panel
+	 */
+	private int width;
+
+	/**
+	 * La largeur du panel
+	 */
+	private int height;
+	
+	/**
+	 * Position du panel dans le panel joueur (PlayerPanel)
+	 */
+	private Vector2<Integer> pos;
+	
+	/**
+	 * Constructeur de TilePanel
 	 * @param color la couleur des pièces dans le panel
 	 */
-	public TilePanel(Color color) {
+	public TilePanel(Color color, int width, int height, Vector2<Integer> pos) {
 		this.state = false;
 		this.tileColor = color;
+		this.width = width;
+		this.height = height;
+		this.pos = pos;
 	}
 
 	/**
@@ -29,7 +60,7 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public void addTile(Tile t)
 	{
-		afaire;
+		this.tiles.add(t);
 	}
 	
 	/**
@@ -38,7 +69,15 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public void removeTile(Tile t)
 	{
-		afaire;
+		int i = 0;
+		while (i<this.tiles.size() && this.tiles.get(i) != t )
+		{
+			i++;
+		}	
+		if(i != this.tiles.size())
+		{
+			this.tiles.remove(i);
+		}
 	}
 	
 	/**
@@ -48,8 +87,11 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public Tile getTile(Vector2<Integer> v)
 	{
-		afaire;
-		return null;
+		Tile res = null;
+		
+		
+		
+		return res;
 	}
 	
 	/**
@@ -67,14 +109,62 @@ public class TilePanel implements DrawableInterface{
 	{
 		this.state = false;
 	}
+	
+	/**
+	 * Getter de la longueur
+	 * @return la longueur
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Settter de la longueur
+	 * @param width la longueur
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	/**
+	 * Getter de la largeur
+	 * @return la largeur
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * Setter de la largeur
+	 * @param height la largeur
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
+	 * Getter de la position du panel
+	 * @return la position du panel
+	 */
+	public Vector2<Integer> getPos() {
+		return pos;
+	}
+
+	/**
+	 * Setter de la position du panel
+	 * @param pos la position du panel
+	 */
+	public void setPos(Vector2<Integer> pos) {
+		this.pos = pos;
+	}
 
 	@Override
 	public void update(float elapsedTime) {
-		afaire;
+		
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		afaire;
+		
 	}
 }

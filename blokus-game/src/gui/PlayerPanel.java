@@ -10,9 +10,20 @@ import utilities.Vector2;
  *
  */
 public class PlayerPanel implements DrawableInterface{
+	/**
+	 * Etat du panel joueur
+	 */
 	private boolean state;
-	private TilePanel tp1;
-	private TilePanel tp2;
+	
+	/**
+	 * Premier panel fils contenant les pieces du joueur
+	 */
+	private TilePanel tilePanel1;
+	
+	/**
+	 * Deuxième panel fils contenant les pièces du joueur
+	 */
+	private TilePanel tilePanel2;
 	
 	/**
 	 * Constructeur de PlayerPanel
@@ -21,8 +32,8 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	public PlayerPanel(TilePanel t1, TilePanel t2) {
 		this.state = false;
-		this.tp1 = t1;
-		this.tp2 = t2;
+		this.tilePanel1 = t1;
+		this.tilePanel2 = t2;
 	}
 
 	/**
@@ -51,23 +62,39 @@ public class PlayerPanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui renvoie la pièce sélectionnée lors du clic grâce à la position v
-	 * @param v la position du clic
+	 * Fonction qui renvoie la pièce sélectionnée lors du clic grâce à la position relative v
+	 * @param v la position relative du clic dans le panel
 	 * @return la pièce cliquée
 	 */
 	public Tile getTile(Vector2<Integer> v)
 	{
-		return null;
-		afaire;
+		int x = v.getX();
+		int y = v.getY();
+		Tile res = null;
+		if(x> this.tilePanel1.getPos().getX() && x < this.tilePanel1.getPos().getX() + this.tilePanel1.getWidth() && y> this.tilePanel1.getPos().getY() && y<this.tilePanel1.getPos().getY()+this.tilePanel1.getHeight())
+		{
+			// Je donne la position relative au TilePanel pour essayer de récuperer la pièce
+			v.setX(x-this.tilePanel1.getPos().getX());
+			v.setY(y-this.tilePanel1.getPos().getY());
+			res = this.tilePanel1.getTile(v);
+		}
+		else if(x> this.tilePanel2.getPos().getX() && x < this.tilePanel2.getPos().getX() + this.tilePanel2.getWidth() && y> this.tilePanel2.getPos().getY() && y<this.tilePanel2.getPos().getY()+this.tilePanel2.getHeight())
+		{
+			// Je donne la position relative au TilePanel pour essayer de récuperer la pièce
+			v.setX(x-this.tilePanel2.getPos().getX());
+			v.setY(y-this.tilePanel2.getPos().getY());
+			res = this.tilePanel2.getTile(v);
+		}
+		return res;
 	}
 
 	@Override
 	public void update(float elapsedTime) {
-		afaire;
+		
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		afaire;
+		
 	}
 }
