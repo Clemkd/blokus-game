@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -15,7 +17,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener {
+import utilities.Vector2;
+
+public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener, DrawableInterface {
 	private static final long	serialVersionUID	= 1L;
 	private Image background;
 	private BlokusButton buttonOnePLayer;
@@ -39,7 +43,16 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
 		
 		this.buttonOnePLayer = new BlokusButton("./resources/boutons/btnUnJoueur.png");
-		
+		this.buttonOnePLayer.setPosition(new Vector2<Integer>(488, 239));
+		this.buttonOnePLayer.draw(batch);
+		this.buttonOnePLayer.addListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("wesh gros!");
+				
+			}
+		});
 		
 		
 	}
@@ -95,6 +108,17 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(float elapsedTime) {
+		this.buttonOnePLayer.update(elapsedTime);
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		this.repaint();
 		
 	}
 
