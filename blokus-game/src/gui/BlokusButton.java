@@ -67,7 +67,7 @@ public class BlokusButton implements DrawableInterface
 		this.listeners = new ArrayList<ActionListener>();
 		try {
 			this.backgroundImage = ImageIO.read(new File(file));
-			this.backgroundImageHover = BufferedImageHelper.generateMask(this.backgroundImage, Color.cyan, 0.5f);
+			this.backgroundImageHover = BufferedImageHelper.generateMask(this.backgroundImage, Color.BLACK, 0.3f);
 			this.size = new Dimension(this.backgroundImage.getWidth(), this.backgroundImage.getHeight());
 		} catch (IOException e) {
 			System.err.println("Impossible de charger l'image " + file + " pour le bouton\nMessage : " + e.getMessage());
