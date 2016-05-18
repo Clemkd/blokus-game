@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,7 @@ public class Window implements Runnable , ActionListener
 		this.frame.setSize(width, height);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.gameGraphics = new GraphicsPanel();
-		this.frame.add(gameGraphics);
+		this.frame.getContentPane().add(this.gameGraphics, BorderLayout.CENTER);
 		
 	}
 

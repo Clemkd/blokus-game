@@ -18,7 +18,8 @@ import javax.swing.JComponent;
 public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener {
 	private static final long	serialVersionUID	= 1L;
 	private Image background;
-
+	private BlokusButton buttonOnePLayer;
+	
 	public GraphicsPanel() {
 		super();
 	}
@@ -35,7 +36,11 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 			System.out.println("erreur chargement fond");
 			e.printStackTrace();
 		}
-		g.drawImage(background, 0, 0, null);
+		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
+		
+		this.buttonOnePLayer = new BlokusButton("./resources/boutons/btnUnJoueur.png");
+		
+		
 		
 	}
 
