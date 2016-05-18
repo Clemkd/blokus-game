@@ -37,11 +37,13 @@ public abstract class BoardManager {
 	 */
 	public static void initialize()
 	{
+		// Positions adjacentes relatives
 		adjacentPositions[0] = new Vector2<Integer>(1, 0);
 		adjacentPositions[1] = new Vector2<Integer>(0, 1);
 		adjacentPositions[2] = new Vector2<Integer>(2, 1);
 		adjacentPositions[3] = new Vector2<Integer>(1, 2);
 		
+		// Positions coins relatives
 		cornerPositions[0] = new Vector2<Integer>(0, 0);
 		cornerPositions[1] = new Vector2<Integer>(2, 0);
 		cornerPositions[2] = new Vector2<Integer>(0, 2);
@@ -56,7 +58,26 @@ public abstract class BoardManager {
 	 */
 	public boolean isValidMove(Tile tile, Vector2<Integer> position)
 	{
-		
+		Vector2<Integer> fc = tile.getFirstCase();
+
+		for(int offsetX = fc.getX(); offsetX < Tile.WIDTH; offsetX++)
+		{
+			for(int offsetY = fc.getY(); offsetY < Tile.HEIGHT; offsetY++)
+			{	
+				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
+				{
+					Vector2<Integer> v = new Vector2<Integer>(
+							position.getX() + (fc.getX() - offsetX),
+							position.getY() + (fc.getY() - offsetY));
+					
+					if(!this.isInBounds(v) || this.cells[v.getX()][v.getY()] != null)
+					{
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -66,7 +87,23 @@ public abstract class BoardManager {
 	 */
 	public ArrayList<Vector2<Integer>> getValidMoves(CellColor color)
 	{
+		ArrayList<Vector2<Integer>> validMoves = new ArrayList<Vector2<Integer>>();
 		
+		for(int x = 0; x < BoardManager.WIDTH; x++)
+		{
+			for(int y = 0; y < BoardManager.HEIGHT; y++)
+			{
+				Vector2<Integer> currentPosition = new Vector2<Integer>(x, y);
+				if(this.cells[x][y] == null &&
+						this.hasSameColorWithACornerCell(color, currentPosition) &&
+						!this.hasSameColorWithAnAdjacentCell(color, currentPosition))
+				{
+					validMoves.add(currentPosition);
+				}
+			}
+		}
+		
+		return validMoves;
 	}
 	
 	/**
