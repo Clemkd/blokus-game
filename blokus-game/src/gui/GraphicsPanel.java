@@ -23,6 +23,9 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 
 	public GraphicsPanel() {
 		super();
+		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
+		this.addMouseWheelListener(this);
 	}
 
 	@Override
