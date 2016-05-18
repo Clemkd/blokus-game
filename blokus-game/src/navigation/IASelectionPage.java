@@ -17,6 +17,7 @@ public class IASelectionPage extends Page implements ActionListener{
 	private BlokusButton buttonIAEasy;
 	private BlokusButton buttonIAMedium;
 	private BlokusButton buttonIAHard;
+	private BlokusButton buttonReturn;
 	private BufferedImage titre;
 	private BufferedImage background;
 	
@@ -48,6 +49,10 @@ public class IASelectionPage extends Page implements ActionListener{
 		this.buttonIAHard = new BlokusButton("./resources/boutons/iahard.png");
 		this.buttonIAHard.setPosition(new Vector2<Integer>(395, 576));
 		this.buttonIAHard.addListener(this);
+		
+		this.buttonReturn = new BlokusButton("./resources/boutons/back.png");
+		this.buttonReturn.setPosition(new Vector2<Integer>(22,22));
+		this.buttonReturn.addListener(this);
 	}
 	
 	@Override
@@ -55,6 +60,7 @@ public class IASelectionPage extends Page implements ActionListener{
 		this.buttonIAEasy.update(elapsedTime);
 		this.buttonIAMedium.update(elapsedTime);
 		this.buttonIAHard.update(elapsedTime);
+		this.buttonReturn.update(elapsedTime);
 		
 	}
 
@@ -65,6 +71,7 @@ public class IASelectionPage extends Page implements ActionListener{
 		this.buttonIAEasy.draw(g);
 		this.buttonIAMedium.draw(g);
 		this.buttonIAHard.draw(g);
+		this.buttonReturn.draw(g);
 		
 	}
 
@@ -77,6 +84,8 @@ public class IASelectionPage extends Page implements ActionListener{
 				//TODO lancer une nouvelle partie avec une ia moyenne
 			}else if(e.getSource().equals(this.buttonIAHard)){
 				//TODO lancer une nouvelle partie avec une ia difficile
+			}else if(e.getSource().equals(this.buttonReturn)){
+				Navigation.NavigateTo(Navigation.homePage);
 			}
 		}
 		
