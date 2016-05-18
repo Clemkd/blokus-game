@@ -96,7 +96,7 @@ public class PlayerPanel implements DrawableInterface{
 
 	@Override
 	public void update(float elapsedTime) {
-		if(Mouse.getState() == Mouse.LEFT && !Mouse.isReleased() && !this.isClicked)
+		if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased() && !this.isClicked)
 		{
 			Vector2<Integer> v = Mouse.getPosition();
 			Tile tileSelected = this.getTile(v);
