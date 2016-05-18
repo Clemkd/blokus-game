@@ -7,8 +7,8 @@ import utilities.Vector2;
 public class Mouse 
 {
 	public static final int NONE = -1;
-	public static final int RIGHT = 1;
-	public static final int LEFT = 3;
+	public static final int RIGHT = 3;
+	public static final int LEFT = 1;
 	public static final int WHEEL_SCROLL = 2;
 	
 	public static final boolean MOUSE_PRESSED = false;
