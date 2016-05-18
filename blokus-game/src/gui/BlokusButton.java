@@ -1,7 +1,12 @@
 package gui;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Transparency;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -12,6 +17,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
+import utilities.BufferedImageHelper;
 import utilities.Vector2;
 
 public class BlokusButton implements DrawableInterface
@@ -22,6 +28,11 @@ public class BlokusButton implements DrawableInterface
 	 * Determine si le bouton a été cliqué
 	 */
 	private boolean wasClicked;
+	
+	/**
+	 * Determine si le curseur est disposé sur le bouton
+	 */
+	private boolean mouseHover;
 	/**
 	 * Les listeners du bouton
 	 */
@@ -31,6 +42,11 @@ public class BlokusButton implements DrawableInterface
 	 * L'image de fond du bouton
 	 */
 	private BufferedImage backgroundImage;
+	
+	/**
+	 * Le mask du fond du bouton lorsque le curseur est dispositionné dessus
+	 */
+	private BufferedImage backgroundImageHover;
 	
 	/**
 	 * La position absolue du bouton dans son conteneur
@@ -44,12 +60,14 @@ public class BlokusButton implements DrawableInterface
 	
 	public BlokusButton(String file)
 	{
+		this.mouseHover = false;
 		this.wasClicked = false;
 		this.position = new Vector2<Integer>(0, 0);
 		this.size = new Dimension();
 		this.listeners = new ArrayList<ActionListener>();
 		try {
 			this.backgroundImage = ImageIO.read(new File(file));
+			this.backgroundImageHover = BufferedImageHelper.generateMask(this.backgroundImage, Color.cyan, 0.5f);
 			this.size = new Dimension(this.backgroundImage.getWidth(), this.backgroundImage.getHeight());
 		} catch (IOException e) {
 			System.err.println("Impossible de charger l'image " + file + " pour le bouton\nMessage : " + e.getMessage());
@@ -124,12 +142,21 @@ public class BlokusButton implements DrawableInterface
 	@Override
 	public void update(float elapsedTime) 
 	{
-		if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased() && !this.wasClicked && this.isInBounds(Mouse.getPosition()))
+		if(Mouse.getLastMouseButton() == Mouse.LEFT && this.isInBounds(Mouse.getPosition()))
 		{
-			this.raiseClickEvent(new ActionEvent(this, 0, null));
-			this.wasClicked = true;
+			this.mouseHover = true;
+			if(!this.wasClicked && !Mouse.isReleased())
+			{
+				this.raiseClickEvent(new ActionEvent(this, 0, null));
+				this.wasClicked = true;
+			}
 		}
-		else if(Mouse.isReleased())
+		else
+		{
+			this.mouseHover = false;
+		}
+		
+		if(this.wasClicked && Mouse.isReleased())
 		{
 			this.wasClicked = false;
 		}
@@ -147,6 +174,20 @@ public class BlokusButton implements DrawableInterface
 					(int)this.size.getWidth(),
 					(int)this.size.getHeight(),
 					null);
+			
+			if(this.mouseHover)
+			{
+				g2d.drawImage(this.backgroundImageHover,
+						this.position.getX(),
+						this.position.getY(), 
+						(int)this.size.getWidth(),
+						(int)this.size.getHeight(),
+						null);
+			}
+			
+			g2d.dispose();
+			
+			
 		}
 	}
 }
