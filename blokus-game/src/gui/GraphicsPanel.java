@@ -19,20 +19,18 @@ import utilities.Vector2;
 
 public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener {
 	private static final long	serialVersionUID	= 1L;
+	private static final boolean DEBUG = true;
+	
 	private Image				background;
+	private long				framesRendered;
+	private double				timeElapsed;
+	private int					approxFPS;
 
 	public GraphicsPanel() {
 		super();
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addMouseWheelListener(this);
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D batch = (Graphics2D) g;
-		this.clear(batch);
 		try {
 			this.background = ImageIO.read(new File("./resources/images/background.png"));
 		}
@@ -40,9 +38,30 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 			System.out.println("erreur chargement fond");
 			e.printStackTrace();
 		}
+		this.framesRendered = 0;
+		this.timeElapsed = 0.0;
+		this.approxFPS = 0;
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D batch = (Graphics2D) g;
+		this.clear(batch);
 
 		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
 		Navigation.getPage().draw(batch);
+		
+		this.framesRendered++;
+		if(DEBUG) {
+			batch.setColor(new Color(240,240,240,190));
+			batch.fillRect(0, 0, 140, 65);
+			batch.setColor(Color.BLACK);
+			batch.drawString(String.valueOf(this.framesRendered), 5, 15);
+			batch.drawString(String.valueOf(this.timeElapsed), 5, 30);
+			batch.drawString(String.valueOf(this.framesRendered / this.timeElapsed), 5, 45);
+			batch.drawString(String.valueOf(this.approxFPS), 5, 60);
+		}
 	}
 
 	@Override
@@ -94,6 +113,8 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 	}
 
 	public void update(float elapsedTime) {
+		this.timeElapsed += elapsedTime / 1000f;
+		this.approxFPS = Math.round(1000/elapsedTime);
 		Navigation.getPage().update(elapsedTime);
 		this.repaint();
 	}

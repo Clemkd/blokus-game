@@ -33,7 +33,7 @@ public class Window implements Runnable , ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==this.timer) {
-			float elapsedTime = (System.nanoTime() - this.startTime)/100000f;
+			float elapsedTime = (System.nanoTime() - this.startTime)/1000000f;
 			this.startTime = System.nanoTime();
 			
 			this.gameGraphics.update(elapsedTime);
