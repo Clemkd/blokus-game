@@ -1,4 +1,7 @@
+import java.util.List;
+
 import entities.CellColor;
+import entities.Tile;
 import utilities.Vector2;
 
 public abstract class Player {
@@ -15,4 +18,6 @@ public abstract class Player {
 	public abstract Vector2<Integer> play();
 	
 	public abstract boolean updateBoard();
+	
+	public abstract List<Tile> getTileInventory();
 }
