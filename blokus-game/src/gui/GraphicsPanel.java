@@ -22,7 +22,8 @@ import utilities.Vector2;
 public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener, DrawableInterface {
 	private static final long	serialVersionUID	= 1L;
 	private Image background;
-	private BlokusButton buttonOnePLayer;
+
+
 	
 	public GraphicsPanel() {
 		super();
@@ -40,21 +41,9 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 			System.out.println("erreur chargement fond");
 			e.printStackTrace();
 		}
+		
 		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
-		
-		this.buttonOnePLayer = new BlokusButton("./resources/boutons/btnUnJoueur.png");
-		this.buttonOnePLayer.setPosition(new Vector2<Integer>(488, 239));
-		this.buttonOnePLayer.draw(batch);
-		this.buttonOnePLayer.addListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("wesh gros!");
-				
-			}
-		});
-		
-		
+		Navigation.getPage().draw(batch);
 	}
 
 	@Override
@@ -113,7 +102,8 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 
 	@Override
 	public void update(float elapsedTime) {
-		this.buttonOnePLayer.update(elapsedTime);
+		Navigation.getPage().update(elapsedTime);
+		this.repaint();
 	}
 
 	@Override

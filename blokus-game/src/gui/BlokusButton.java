@@ -111,7 +111,7 @@ public class BlokusButton implements DrawableInterface
 	@Override
 	public void update(float elapsedTime) 
 	{
-		if(Mouse.getState() == Mouse.LEFT && !Mouse.isReleased() && !this.wasClicked)
+		if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased() && !this.wasClicked)
 		{
 			this.raiseClickEvent(new ActionEvent(this, 0, null));
 			this.wasClicked = true;

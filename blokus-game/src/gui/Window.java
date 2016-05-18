@@ -24,7 +24,10 @@ public class Window implements Runnable , ActionListener
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.gameGraphics = new GraphicsPanel();
 		this.frame.getContentPane().add(this.gameGraphics, BorderLayout.CENTER);
+		
+		Navigation.NavigateTo(Navigation.homePage);
 		this.timer = new Timer(UPDATE_DELAY, this);
+		
 	}
 
 	@Override
