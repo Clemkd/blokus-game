@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import navigation.Navigation;
+
 public class Window implements Runnable , ActionListener 
 {
 	private static final int UPDATE_DELAY = 15;

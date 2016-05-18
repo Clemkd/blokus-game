@@ -15,6 +15,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
+import navigation.Navigation;
 import utilities.Vector2;
 
 public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener {

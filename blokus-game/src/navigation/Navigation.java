@@ -1,4 +1,4 @@
-package gui;
+package navigation;
 
 public class Navigation {
 	

@@ -1,4 +1,4 @@
-package gui;
+package navigation;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.text.html.HTMLDocument.HTMLReader.BlockAction;
 
+import gui.BlokusButton;
 import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener{
@@ -24,7 +25,6 @@ public class HomePage extends Page implements ActionListener{
 	
 	public HomePage() {
 		super();
-		//y = 51 et x = 500
 		
 		try {
 			this.titre = ImageIO.read(new File("./resources/images/logo.png"));
@@ -86,8 +86,20 @@ public class HomePage extends Page implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().getClass().isInstance(BlokusButton.class)){
-			
+		if(e.getSource() instanceof BlokusButton){
+			if(e.getSource().equals(this.buttonOnePLayer)){
+				//TODO navigation choix IA
+			}else if(e.getSource().equals(this.buttonTwoPlayer)){
+				//TODO navigation plateau 2 joueurs
+			}else if(e.getSource().equals(this.buttonLoad)){
+				//TODO navigation option
+			}else if(e.getSource().equals(this.buttonTutorial)){
+				//TODO navigation Tutorial
+			}else if(e.getSource().equals(this.buttonOption)){
+				//TODO navigation exit
+			}else if(e.getSource().equals(this.buttonExit)){
+				System.exit(0);
+			}
 		}
 	}
 
