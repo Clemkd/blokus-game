@@ -1,7 +1,13 @@
-Boutons :
+Boutons Accueil:
 - exit.png : 488,622
 - load.png : 488, 406
 - oneplayer.png : 488, 
 - options.png : 488, 577
 - tutorial.png : 488, 492
 - twoplayers.png : 488, 318
+
+Boutons Un joueur:
+- backgroundsolo : 371, 267
+- iaeasy : 395, 345
+- iamedium : 395, 461
+- iahard : 395, 576
