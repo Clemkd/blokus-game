@@ -7,22 +7,22 @@ public enum CellColor {
 	/**
 	 * Cellule de couleur bleu avec le chemin d'accès vers l'image correspondante
 	 */
-	BLUE(""),
+	BLUE("./resources/cells/bluecell.png"),
 	
 	/**
 	 * Cellule de couleur rouge avec le chemin d'accès vers l'image correspondante
 	 */
-	RED(""),
+	RED("./resources/cells/redcell.png"),
 	
 	/**
 	 * Cellule de couleur verte avec le chemin d'accès vers l'image correspondante
 	 */
-	GREEN(""),
+	GREEN("./resources/cells/greencell.png"),
 	
 	/**
 	 * Cellule de couleur jaune avec le chemin d'accès vers l'image correspondante
 	 */
-	YELLOW("");
+	YELLOW("./resources/cells/yellowcell.png");
 	
 	/**
 	 * attribut représentant le chemin d'accès vers l'image correspondate au type de celulle

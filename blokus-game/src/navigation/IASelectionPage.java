@@ -70,7 +70,15 @@ public class IASelectionPage extends Page implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getSource() instanceof BlokusButton){
+			if(e.getSource().equals(this.buttonIAEasy)){
+				//TODO lancer une nouvelle partie avec une ia facile
+			}else if(e.getSource().equals(this.buttonIAMedium)){
+				//TODO lancer une nouvelle partie avec une ia moyenne
+			}else if(e.getSource().equals(this.buttonIAHard)){
+				//TODO lancer une nouvelle partie avec une ia difficile
+			}
+		}
 		
 	}
 
