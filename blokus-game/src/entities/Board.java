@@ -156,29 +156,31 @@ public class Board {
 					}
 				}
 			}
+			
+			Vector2 v;
 			switch(color) {
 				case BLUE:
-					Vector2 v = new Vector2(0,0);
+					v = new Vector2(0,0);
 					if(this.getCell(v)==null)
 						validMoves.add(v);
 					break;
 				case YELLOW:
-					Vector2 v = new Vector2(this.WIDTH-1,0);
+					v = new Vector2(WIDTH-1,0);
 					if(this.getCell(v)==null)
 						validMoves.add(v);
 					break;
 				case RED:
-					Vector2 v = new Vector2(this.WIDTH-1,this.HEIGHT-1);
+					v = new Vector2(WIDTH-1,HEIGHT-1);
 					if(this.getCell(v)==null)
 						validMoves.add(v);
 					break;
 				case GREEN:
-					Vector2 v = new Vector2(0,this.HEIGHT-1);
+					v = new Vector2(0,HEIGHT-1);
 					if(this.getCell(v)==null)
 						validMoves.add(v);
 					break;
 				default:
-					Vector2 v = new Vector2(0,0);
+					v = new Vector2(0,0);
 					if(this.getCell(v)==null)
 						validMoves.add(v);
 					break;
