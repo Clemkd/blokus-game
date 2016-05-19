@@ -148,10 +148,10 @@ public class Tile {
 			for(int j=0; j<HEIGHT; j++){
 				if(this.getCellType(i, j) == CellType.PIECE)
 				{
-					if(positionTile.getX()+i*CellColor.CELL_WIDTH< v.getX() 
-							&& positionTile.getX()+(i+1)*CellColor.CELL_WIDTH< v.getX() 
-							&& positionTile.getY()+i*CellColor.CELL_HEIGHT< v.getY() 
-							&& positionTile.getY()+(i+1)*CellColor.CELL_HEIGHT< v.getY())
+					if(positionTile.getX()+i*CellColor.BLUE.getImage().getWidth() < v.getX() 
+							&& positionTile.getX()+(i+1)*CellColor.BLUE.getImage().getWidth() < v.getX() 
+							&& positionTile.getY()+i*CellColor.BLUE.getImage().getHeight() < v.getY() 
+							&& positionTile.getY()+(i+1)*CellColor.BLUE.getImage().getHeight() < v.getY())
 					{
 						return true;
 					}

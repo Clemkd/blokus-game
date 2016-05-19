@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import entities.CellColor;
+import entities.CellType;
 import entities.Tile;
 import utilities.Vector2;
 
@@ -165,6 +167,53 @@ public class TilePanel implements DrawableInterface{
 
 	@Override
 	public void draw(Graphics2D g) {
+		Graphics2D g2d = (Graphics2D) g.create();
+		CellType[][] matrix;
+		Tile t;
+		Vector2<Integer> pos1stCell;
+		int x = 48;
+		int y = 91;
+		Vector2<Integer> posCell = new Vector2<Integer>(x, y);
+		int width;
+		int height;
+		int nbTilesLine = 1;
 		
+		for(Entry<Tile, Vector2<Integer>> entry : this.tiles.entrySet())
+		{
+			t = entry.getKey();
+			matrix = t.getMatrix();
+			pos1stCell = t.getFirstCase();
+			width = t.getCouleur().getImage().getWidth();
+			height = t.getCouleur().getImage().getHeight();
+			for(int i=pos1stCell.getX(); i<Tile.WIDTH; i++)
+			{
+				for(int j=0; j<Tile.HEIGHT; i++)
+				{
+					if(matrix[i][j] == CellType.PIECE)
+					{
+						g.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), width, height, null);
+					}
+					posCell.setY(posCell.getY()+height);
+				}
+				posCell.setX(posCell.getX()+width);
+			}
+			nbTilesLine++;
+			
+			if(nbTilesLine<=4)
+			{
+				posCell.setX((x*nbTilesLine)+(width*4));
+				posCell.setY(y);
+			}
+			else
+			{
+				posCell.setX(x);
+				y = y + (height*4);
+				posCell.setY(y);
+				nbTilesLine = 1;
+			}			
+		}
+		
+		g2d.dispose();
 	}
+		
 }
