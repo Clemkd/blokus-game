@@ -1,18 +1,18 @@
 package utilities;
 
-public class Vector2<T> {
+public class Vector2 {
 
 	/**
 	 * Premier élément du couple
 	 */
-	private T x;
+	private int x;
 	
 	/**
 	 * Second élément du couple
 	 */
-	private T y;
+	private int y;
 
-	public Vector2(T x, T y) {
+	public Vector2(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -21,21 +21,20 @@ public class Vector2<T> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + this.x.hashCode();
-		result = prime * result + this.y.hashCode();
+		result = prime * result + this.x;
+		result = prime * result + this.y;
 		return result;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Vector2<?>))
+		if (!(obj instanceof Vector2))
 			return false;
-		Vector2<T> other = (Vector2<T>) obj;
+		Vector2 other = (Vector2) obj;
 		if (x != other.x)
 			return false;
 		if (y != other.y)
@@ -52,7 +51,7 @@ public class Vector2<T> {
 	 * Obtient le premier élément du couple
 	 * @return L'élément
 	 */
-	public T getX() {
+	public int getX() {
 		return x;
 	}
 
@@ -60,7 +59,7 @@ public class Vector2<T> {
 	 * Définit le premier élément du couple
 	 * @param x Le nouvel élément
 	 */
-	public void setX(T x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
@@ -68,7 +67,7 @@ public class Vector2<T> {
 	 * Obtient le second élément du couple
 	 * @return L'élément
 	 */
-	public T getY() {
+	public int getY() {
 		return y;
 	}
 
@@ -76,7 +75,7 @@ public class Vector2<T> {
 	 * Définit le second élément du couple
 	 * @param y Le nouvel élément
 	 */
-	public void setY(T y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 }
