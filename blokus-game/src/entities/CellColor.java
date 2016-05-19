@@ -76,5 +76,8 @@ public enum CellColor {
 		return this.image;
 	}
 
-	
+	public boolean equals(CellColor c)
+	{
+		return this.getPath() == c.getPath();
+	}
 }

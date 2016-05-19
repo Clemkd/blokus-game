@@ -22,26 +22,6 @@ public class Board {
 	protected final static int HEIGHT = 20;
 	
 	/**
-	 * Couleur de départ pour l'angle haut gauche
-	 */
-	public final static CellColor UP_LEFT_COLOR = CellColor.RED;
-	
-	/**
-	 * Couleur de départ pour l'angle haut droit
-	 */
-	public final static CellColor UP_RIGHT_COLOR = CellColor.GREEN;
-	
-	/**
-	 * Couleur de départ pour l'angle bas gauche
-	 */
-	public final static CellColor DOWN_LEFT_COLOR = CellColor.BLUE;
-	
-	/**
-	 * Couleur de départ pour l'angle bas droit
-	 */
-	public final static CellColor DOWN_RIGHT_COLOR = CellColor.YELLOW;
-	
-	/**
 	 * Le tableau de cellules du plateau de jeu
 	 */
 	protected CellColor[][] cells;
@@ -81,22 +61,22 @@ public class Board {
 	 */
 	public void addTile(Tile tile, Vector2 position) throws InvalidMoveException
 	{
-		if(!isValidMove(tile, position))
+		if(!this.getValidMoves(tile.getCouleur()).contains(position) || !isValidMove(tile, position))
 		{
 			throw new InvalidMoveException("Tentative d'ajout d'une tuile sur une zone interdite");
 		}
 		
 		Vector2 fc = tile.getFirstCase();
 
-		for(int offsetX = fc.getX(); offsetX < Tile.WIDTH; offsetX++)
+		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
 		{
-			for(int offsetY = fc.getY(); offsetY < Tile.HEIGHT; offsetY++)
+			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
 			{	
 				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
 				{
 					Vector2 currentGridPosition = new Vector2(
-							position.getX() + (fc.getX() - offsetX),
-							position.getY() + (fc.getY() - offsetY));
+							position.getX() - fc.getX() + offsetX,
+							position.getY() - fc.getY() + offsetY);
 					
 					this.setCell(currentGridPosition, tile.getCouleur());
 				}
@@ -114,15 +94,15 @@ public class Board {
 	{
 		Vector2 fc = tile.getFirstCase();
 
-		for(int offsetX = fc.getX(); offsetX < Tile.WIDTH; offsetX++)
+		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
 		{
-			for(int offsetY = fc.getY(); offsetY < Tile.HEIGHT; offsetY++)
+			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
 			{	
 				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
 				{
 					Vector2 v = new Vector2(
-							position.getX() + (fc.getX() - offsetX),
-							position.getY() + (fc.getY() - offsetY));
+							position.getX() - fc.getX() + offsetX,
+							position.getY() - fc.getY() + offsetY);
 					
 					if(!this.isInBounds(v) || this.cells[v.getX()][v.getY()] != null || this.hasSameColorWithAnAdjacentCell(tile.getCouleur(), v))
 					{
@@ -230,7 +210,7 @@ public class Board {
 	 * @param position La position de la cellule à tester
 	 * @return Vrai s'il existe une case en coin de même couleur, Faux dans le cas contraire
 	 */
-	protected boolean hasSameColorWithACornerCell(CellColor color, Vector2 position)
+	public boolean hasSameColorWithACornerCell(CellColor color, Vector2 position)
 	{
 		for(int i = 0; i < RELATIVES_POSITION_COUNT; i++)
 		{
@@ -241,7 +221,9 @@ public class Board {
 			
 			if(this.isInBounds(currentPosition))
 			{
+				
 				CellColor currentCell = this.cells[currentPosition.getX()][currentPosition.getY()];
+				
 				if(currentCell == color)
 				{
 					return true;
@@ -284,5 +266,37 @@ public class Board {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		for(int y = 0; y < Board.HEIGHT; y++)
+		{
+			builder.append("\n");
+			for(int x = 0; x < Board.WIDTH; x++)
+			{
+				if(this.cells[x][y] == CellColor.BLUE)
+				{
+					builder.append("B ");
+				}
+				else if(this.cells[x][y] == CellColor.RED)
+				{
+					builder.append("R ");
+				}
+				else if(this.cells[x][y] == CellColor.GREEN)
+				{
+					builder.append("G ");
+				}
+				else if(this.cells[x][y] == CellColor.YELLOW)
+				{
+					builder.append("Y ");
+				}
+				else if(this.cells[x][y] == null)
+					builder.append("X ");
+			}
+		}
+		
+		return builder.toString();
 	}
 }
