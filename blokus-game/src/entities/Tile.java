@@ -511,32 +511,6 @@ public class Tile {
 
 		listTile.add(new Tile(matrix6, cellColor));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		return listTile;
 	}
 
