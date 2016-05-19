@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import utilities.CellPositions;
 import utilities.InvalidMoveException;
+import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
 public class Board {
@@ -44,8 +45,10 @@ public class Board {
 	 * @param position La position de la cellule à obtenir
 	 * @return La cellule
 	 */
-	private CellColor getCell(Vector2<Integer> position)
+	public CellColor getCell(Vector2<Integer> position) throws OutOfBoundsException
 	{
+		if(!this.isInBounds(position))
+			throw new OutOfBoundsException("Tentative d'accès à une cellule en dehors du plateau");
 		return this.cells[position.getX()][position.getY()];
 	}
 	
@@ -210,6 +213,7 @@ public class Board {
 	public Board copy()
 	{
 		Board result = new Board();
+		try {
 		for(int x = 0; x < Board.WIDTH; x++)
 		{
 			for(int y = 0; y < Board.HEIGHT; y++)
@@ -218,7 +222,10 @@ public class Board {
 				result.setCell(pos, this.getCell(pos));
 			}
 		}
-		
+		} catch (OutOfBoundsException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 		return result;
 		
 	}
