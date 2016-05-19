@@ -81,7 +81,7 @@ public class GamePage extends Page implements ActionListener{
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.board, 450, 200, null);
+		g.drawImage(this.board, 400, 200, this.board.getWidth(), this.board.getHeight(), null, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
