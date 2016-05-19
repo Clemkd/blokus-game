@@ -40,7 +40,7 @@ public class TilePanel implements DrawableInterface{
 	/**
 	 * La liste des pièces
 	 */
-	private HashMap<Tile, Vector2<Integer>> tiles;
+	private HashMap<Tile, Vector2> tiles;
 	
 	/**
 	 * La longueur du panel
@@ -55,7 +55,7 @@ public class TilePanel implements DrawableInterface{
 	/**
 	 * Position du panel dans le panel joueur (PlayerPanel)
 	 */
-	private Vector2<Integer> pos;
+	private Vector2 pos;
 	
 	private BufferedImage cellMaskImage;
 	
@@ -65,19 +65,19 @@ public class TilePanel implements DrawableInterface{
 	 * Constructeur de TilePanel
 	 * @param color la couleur des pièces dans le panel
 	 */
-	public TilePanel(CellColor color, int width, int height, Vector2<Integer> pos, Player p) {
+	public TilePanel(CellColor color, int width, int height, Vector2 pos, Player p) {
 		this.state = false;
 		//this.tileColor = color;
 		this.width = width;
 		this.height = height;
 		this.pos = pos;
 		this.player = p;
-		this.tiles = new HashMap<Tile, Vector2<Integer>>();
+		this.tiles = new HashMap<Tile, Vector2>();
 		
 		ArrayList<Tile> listOfTiles = Tile.getListOfNeutralTile(color);
 		for(int i=0; i<listOfTiles.size();i++)
 		{
-			this.tiles.put(listOfTiles.get(i), new Vector2<Integer>(0,0));
+			this.tiles.put(listOfTiles.get(i), new Vector2(0,0));
 		}
 		
 		this.cellMaskImage = BufferedImageHelper.generateMask(color.getImage(), Color.BLACK, 0.5f);
@@ -87,7 +87,7 @@ public class TilePanel implements DrawableInterface{
 	 * Fonction qui ajoute une pièce dans le panel
 	 * @param t la pièce concernée
 	 */
-	public void addTile(Tile t, Vector2<Integer> v)
+	public void addTile(Tile t, Vector2 v)
 	{
 		this.tiles.put(t, v);
 	}
@@ -106,11 +106,11 @@ public class TilePanel implements DrawableInterface{
 	 * @param v la position du clic
 	 * @return la pièce cliquée
 	 */
-	public Tile getTile(Vector2<Integer> v)
+	public Tile getTile(Vector2 v)
 	{
 		Tile res = null;
 		
-		for(Entry<Tile, Vector2<Integer>> entry : this.tiles.entrySet())
+		for(Entry<Tile, Vector2> entry : this.tiles.entrySet())
 		{
 			if(entry.getKey().isInBounds(v, entry.getValue()))
 			{
@@ -173,7 +173,7 @@ public class TilePanel implements DrawableInterface{
 	 * Getter de la position du panel
 	 * @return la position du panel
 	 */
-	public Vector2<Integer> getPos() {
+	public Vector2 getPos() {
 		return pos;
 	}
 
@@ -181,7 +181,7 @@ public class TilePanel implements DrawableInterface{
 	 * Setter de la position du panel
 	 * @param pos la position du panel
 	 */
-	public void setPos(Vector2<Integer> pos) {
+	public void setPos(Vector2 pos) {
 		this.pos = pos;
 	}
 
@@ -190,58 +190,75 @@ public class TilePanel implements DrawableInterface{
 		
 	}
 
-
+	private boolean aze = true;
 	
 	@Override
 	public void draw(Graphics2D g) {
+		if(aze)
+		{
+			aze = false;
 		Graphics2D g2d = (Graphics2D) g.create();
 		
 		Tile t;
-		Vector2<Integer> posCell = new Vector2<Integer>(OFFSET_X, OFFSET_Y);
+		Vector2 posCell = new Vector2(OFFSET_X, OFFSET_Y);
 		int nbTilesLine = 1;
 		ArrayList<Tile> ap = (ArrayList<Tile>) this.player.getTileInventory();
-
+		boolean firstMeet = false;
 		
-		for(Entry<Tile, Vector2<Integer>> entry : this.tiles.entrySet())
+		for(Entry<Tile, Vector2> entry : this.tiles.entrySet())
 		{
 			t = entry.getKey();
 			
-			if(ap.contains(entry.getKey()))
-			{
-				for(int i=t.getFirstCase().getX(); i<Tile.WIDTH; i++)
+			//if(ap.contains(entry.getKey()))
+			//{
+				for(int i=0; i<Tile.WIDTH; i++)
 				{
 					for(int j=0; j< Tile.HEIGHT; j++)
 					{
+						System.out.println(t.getMatrix());
 						if(t.getMatrix()[i][j] == CellType.PIECE)
 						{
-							g.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+							firstMeet = true;
+							System.out.println("Y = "+posCell.getY()+" X = "+posCell.getX());
+							g2d.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
 	
 							if(!this.state)
 							{
-								g.drawImage(this.cellMaskImage, posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+								g2d.drawImage(this.cellMaskImage, posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
 							}
 						}
-						posCell.setY(posCell.getY()+CellColor.CELL_HEIGHT);
+						if(firstMeet)
+						{
+							
+							posCell.setY(posCell.getY()+CellColor.CELL_HEIGHT);
+							
+						}
 					}
-					posCell.setX(posCell.getX()+CellColor.CELL_WIDTH);
+					if(firstMeet)
+					{	
+
+						posCell.setX(posCell.getX()+CellColor.CELL_WIDTH);
+					}
+					
 				}
-			}
+				firstMeet = false;
+			//}
 			nbTilesLine++;
 			
 			if(nbTilesLine<=4)
 			{
-				posCell.setX((OFFSET_X*nbTilesLine)+(CellColor.CELL_WIDTH*4));
+				posCell.setX((OFFSET_X*nbTilesLine)+(CellColor.CELL_WIDTH*3));
 				posCell.setY(OFFSET_Y);
 			}
 			else
 			{
 				posCell.setX(OFFSET_X);
-				posCell.setY(OFFSET_Y + (CellColor.CELL_HEIGHT*5));
+				posCell.setY(OFFSET_Y + (CellColor.CELL_HEIGHT*4));
 				nbTilesLine = 1;
 			}			
 		}
-		
 		g2d.dispose();
+		}
 	}
 		
 }
