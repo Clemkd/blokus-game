@@ -72,6 +72,7 @@ public class TilePanel implements DrawableInterface{
 		this.height = height;
 		this.pos = pos;
 		this.player = p;
+		this.tiles = new HashMap<Tile, Vector2<Integer>>();
 		
 		ArrayList<Tile> listOfTiles = Tile.getListOfNeutralTile(color);
 		for(int i=0; i<listOfTiles.size();i++)
@@ -209,7 +210,7 @@ public class TilePanel implements DrawableInterface{
 			{
 				for(int i=t.getFirstCase().getX(); i<Tile.WIDTH; i++)
 				{
-					for(int j=0; j< Tile.HEIGHT; i++)
+					for(int j=0; j< Tile.HEIGHT; j++)
 					{
 						if(t.getMatrix()[i][j] == CellType.PIECE)
 						{

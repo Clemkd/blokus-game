@@ -481,4 +481,9 @@ public class Tile {
 		
 		return listTile;
 	}
+
+	@Override
+	public String toString() {
+		return "Tile [couleur=" + couleur + "]";
+	}
 }

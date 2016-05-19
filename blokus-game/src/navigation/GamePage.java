@@ -7,10 +7,15 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import entities.CellColor;
+import entities.Player;
+import entities.PlayerHuman;
 import gui.BlokusButton;
+import gui.PlayerPanel;
 import utilities.Vector2;
 
 public class GamePage extends Page implements ActionListener{
@@ -62,6 +67,7 @@ public class GamePage extends Page implements ActionListener{
 	
 	private BufferedImage board;
 
+	private PlayerPanel panelJoueur1;
 	
 	public GamePage() {
 		super();
@@ -74,6 +80,7 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonRedo.update(elapsedTime);
 		this.buttonSave.update(elapsedTime);
 		this.buttonExit.update(elapsedTime);
+		this.panelJoueur1.update(elapsedTime);
 		
 	}
 
@@ -86,6 +93,8 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonRedo.draw(g);
 		this.buttonSave.draw(g);
 		this.buttonExit.draw(g);
+		this.panelJoueur1.draw(g);
+		
 		
 	}
 
@@ -137,6 +146,12 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"exitig.png");
 		this.buttonExit.setPosition(new Vector2<Integer>(1120, POS_Y));
 		this.buttonExit.addListener(this);
+		ArrayList<CellColor> listColors = new ArrayList<>();
+		listColors.add(CellColor.BLUE);
+		listColors.add(CellColor.GREEN);
+		
+		this.panelJoueur1 = new PlayerPanel(new PlayerHuman("Moi", listColors));
+		
 		
 	}
 
