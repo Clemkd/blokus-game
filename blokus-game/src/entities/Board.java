@@ -20,6 +20,27 @@ public class Board {
 	 * La hauteur du plateau de jeu en nombre de cellules
 	 */
 	protected final static int HEIGHT = 20;
+	
+	/**
+	 * Couleur de départ pour l'angle haut gauche
+	 */
+	public final static CellColor UP_LEFT_BEGIN_COLOR = CellColor.RED;
+	
+	/**
+	 * Couleur de départ pour l'angle haut droit
+	 */
+	public final static CellColor UP_RIGHT_BEGIN_COLOR = CellColor.GREEN;
+	
+	/**
+	 * Couleur de départ pour l'angle bas gauche
+	 */
+	public final static CellColor DOWN_LEFT_BEGIN_COLOR = CellColor.BLUE;
+	
+	/**
+	 * Couleur de départ pour l'angle bas droit
+	 */
+	public final static CellColor DOWN_RIGHT_BEGIN_COLOR = CellColor.YELLOW;
+	
 	/**
 	 * Le tableau de cellules du plateau de jeu
 	 */
@@ -122,21 +143,55 @@ public class Board {
 	{
 		ArrayList<Vector2<Integer>> validMoves = new ArrayList<Vector2<Integer>>();
 		
-		for(int x = 0; x < Board.WIDTH; x++)
+		try
 		{
-			for(int y = 0; y < Board.HEIGHT; y++)
+			for(int x = 0; x < Board.WIDTH; x++)
 			{
-				Vector2<Integer> currentPosition = new Vector2<Integer>(x, y);
-				if(this.cells[x][y] == null &&
-						this.hasSameColorWithACornerCell(color, currentPosition) &&
-						!this.hasSameColorWithAnAdjacentCell(color, currentPosition))
+				for(int y = 0; y < Board.HEIGHT; y++)
 				{
-					validMoves.add(currentPosition);
+					Vector2<Integer> currentPosition = new Vector2<Integer>(x, y);
+					if(this.getCell(currentPosition) == null && (this.isBeginCellForColor(currentPosition, color) ||
+							(this.hasSameColorWithACornerCell(color, currentPosition) && !this.hasSameColorWithAnAdjacentCell(color, currentPosition))))
+					{
+						validMoves.add(currentPosition);
+					}
 				}
 			}
 		}
+		catch(OutOfBoundsException e)
+		{
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 		
 		return validMoves;
+	}
+	
+	/**
+	 * Determine si la cellule cible est une cellule de départ et si elle correspond à la couleur donnée
+	 * @param p La position de la cellule à tester
+	 * @param c La couleur à tester
+	 * @return Vrai s'il s'agit d'une cellule de départ et si elle correspond à la couleur donnée, Faux dans le cas contraire
+	 */
+	protected boolean isBeginCellForColor(Vector2<Integer> p, CellColor c)
+	{
+		if(p.getX() == 0 && p.getY() == 0)
+		{
+			return c == UP_LEFT_BEGIN_COLOR;
+		}
+		else if(p.getX() == (WIDTH - 1) && p.getY() == 0)
+		{
+			return c == UP_RIGHT_BEGIN_COLOR;
+		}
+		else if(p.getX() == 0 && p.getY() == (HEIGHT - 1))
+		{
+			return c == DOWN_LEFT_BEGIN_COLOR;
+		}
+		else if(p.getX() == (WIDTH - 1) && p.getY() == (HEIGHT - 1))
+		{
+			return c == DOWN_RIGHT_BEGIN_COLOR;
+		}
+		return false;
 	}
 	
 	/**
