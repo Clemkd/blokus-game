@@ -2,6 +2,8 @@ package entities;
 
 import java.util.ArrayList;
 
+import utilities.CellPositions;
+import utilities.InvalidMoveException;
 import utilities.Vector2;
 
 public abstract class BoardManager {
@@ -23,29 +25,34 @@ public abstract class BoardManager {
 	protected CellColor[][] cells;
 	
 	/**
-	 * La liste des positions relatives adjacentes
+	 * Ajoute la tuile à la grille du tableau de jeu
+	 * @param tile La tuile à ajouter
+	 * @param position La position sur la grille
+	 * @throws InvalidMoveException Exception levée si l'ajout n'est pas possible
 	 */
-	protected static Vector2<Integer>[] adjacentPositions;
-	
-	/**
-	 * La liste des positions relatives des coins
-	 */
-	protected static Vector2<Integer>[] cornerPositions;
-	
-	
-	public BoardManager()
+	public void addTile(Tile tile, Vector2<Integer> position) throws InvalidMoveException
 	{
-		// Positions adjacentes relatives
-		adjacentPositions[0] = new Vector2<Integer>(1, 0);
-		adjacentPositions[1] = new Vector2<Integer>(0, 1);
-		adjacentPositions[2] = new Vector2<Integer>(2, 1);
-		adjacentPositions[3] = new Vector2<Integer>(1, 2);
+		if(!isValidMove(tile, position))
+		{
+			throw new InvalidMoveException("Tentative d'ajout d'une tuile sur une zone interdite");
+		}
 		
-		// Positions coins relatives
-		cornerPositions[0] = new Vector2<Integer>(0, 0);
-		cornerPositions[1] = new Vector2<Integer>(2, 0);
-		cornerPositions[2] = new Vector2<Integer>(0, 2);
-		cornerPositions[3] = new Vector2<Integer>(2, 2);
+		Vector2<Integer> fc = tile.getFirstCase();
+
+		for(int offsetX = fc.getX(); offsetX < Tile.WIDTH; offsetX++)
+		{
+			for(int offsetY = fc.getY(); offsetY < Tile.HEIGHT; offsetY++)
+			{	
+				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
+				{
+					Vector2<Integer> currentGridPosition = new Vector2<Integer>(
+							position.getX() + (fc.getX() - offsetX),
+							position.getY() + (fc.getY() - offsetY));
+					
+					this.cells[currentGridPosition.getX()][currentGridPosition.getY()] = tile.getCouleur();
+				}
+			}
+		}
 	}
 	
 	/**
@@ -114,7 +121,7 @@ public abstract class BoardManager {
 	{
 		for(int i = 0; i < RELATIVES_POSITION_COUNT; i++)
 		{
-			Vector2<Integer> currentAdjacentPosition = adjacentPositions[i];
+			Vector2<Integer> currentAdjacentPosition = CellPositions.values()[i].getPosition();
 			Vector2<Integer> currentPosition = new Vector2<Integer>(
 					position.getX() + currentAdjacentPosition.getX(),
 					position.getY() + currentAdjacentPosition.getY());
@@ -142,7 +149,7 @@ public abstract class BoardManager {
 	{
 		for(int i = 0; i < RELATIVES_POSITION_COUNT; i++)
 		{
-			Vector2<Integer> currentCornerPosition = cornerPositions[i];
+			Vector2<Integer> currentCornerPosition = CellPositions.values()[i + 4].getPosition();
 			Vector2<Integer> currentPosition = new Vector2<Integer>(
 					position.getX() + currentCornerPosition.getX(),
 					position.getY() + currentCornerPosition.getY());

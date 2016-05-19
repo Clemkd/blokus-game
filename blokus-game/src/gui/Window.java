@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import entities.Board;
 import navigation.Navigation;
 
 public class Window implements Runnable , ActionListener 
@@ -29,7 +30,6 @@ public class Window implements Runnable , ActionListener
 		
 		Navigation.NavigateTo(Navigation.homePage);
 		this.timer = new Timer(UPDATE_DELAY, this);
-		
 	}
 
 	@Override
