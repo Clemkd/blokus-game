@@ -1,7 +1,10 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
+import entities.CellColor;
+import entities.Player;
 import entities.Tile;
 import utilities.Vector2;
 
@@ -30,15 +33,25 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	private boolean isClicked;
 	
+	private static final int TILE_PANEL_WIDTH = 200;
+	
+	private static final int TILE_PANEL_HEIGHT = 400;
+	
+	private static final int POS_X = 0;
+	
+	private static final int POS_Y = 0;
+	
+	private Player player;
 	/**
 	 * Constructeur de PlayerPanel
 	 * @param t1 le premier panel du joueur
 	 * @param t2 le deuxième panel du joueur
 	 */
-	public PlayerPanel(TilePanel t1, TilePanel t2) {
+	public PlayerPanel(Player p) {
+		this.player = p;
 		this.state = false;
-		this.tilePanel1 = t1;
-		this.tilePanel2 = t2;
+		this.tilePanel1 = new TilePanel(CellColor.BLUE, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2<Integer>(POS_X, POS_Y), p );
+		this.tilePanel2 = new TilePanel(CellColor.RED, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2<Integer>(POS_X, POS_Y+TILE_PANEL_HEIGHT), p );;
 		this.isClicked = false;
 	}
 

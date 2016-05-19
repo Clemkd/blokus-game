@@ -170,7 +170,7 @@ public class Tile {
 	 * @param cellColor
 	 * @return une liste de toute les Tile possible
 	 */
-	public ArrayList<Tile> getListOfNeutralTile(CellColor cellColor){
+	public static ArrayList<Tile> getListOfNeutralTile(CellColor cellColor){
 		ArrayList<Tile> listTile = new ArrayList<Tile>();
 		Tile tile;
 		

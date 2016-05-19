@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import entities.CellColor;
 import entities.CellType;
+import entities.Player;
 import entities.Tile;
 import utilities.BufferedImageHelper;
 import utilities.Vector2;
@@ -53,17 +54,25 @@ public class TilePanel implements DrawableInterface{
 	
 	private BufferedImage cellMaskImage;
 	
+	private Player player;
+	
 	/**
 	 * Constructeur de TilePanel
 	 * @param color la couleur des pièces dans le panel
 	 */
-	public TilePanel(CellColor color, int width, int height, Vector2<Integer> pos) {
+	public TilePanel(CellColor color, int width, int height, Vector2<Integer> pos, Player p) {
 		this.state = false;
 		//this.tileColor = color;
 		this.width = width;
 		this.height = height;
 		this.pos = pos;
+		this.player = p;
 		
+		ArrayList<Tile> listOfTiles = Tile.getListOfNeutralTile(color);
+		for(int i=0; i<listOfTiles.size();i++)
+		{
+			this.tiles.put(listOfTiles.get(i), new Vector2<Integer>(0,0));
+		}
 		
 		this.cellMaskImage = BufferedImageHelper.generateMask(color.getImage(), Color.BLACK, 0.5f);
 	}
@@ -79,14 +88,6 @@ public class TilePanel implements DrawableInterface{
 	
 	/**
 	 * Fonction qui retire une pièce du panelbTilesLine<=4)
-			{
-				posCell.setX((x*nbTilesLine)+(width*4));
-				posCell.setY(y);
-			}
-			else
-			{
-				posCell.setX(x);
-				y = y + (he
 	 * @param t la pièce concernée
 	 */
 	public void removeTile(Tile t)
@@ -191,27 +192,32 @@ public class TilePanel implements DrawableInterface{
 		Tile t;
 		Vector2<Integer> posCell = new Vector2<Integer>(OFFSET_X, OFFSET_Y);
 		int nbTilesLine = 1;
+		ArrayList<Tile> ap = (ArrayList<Tile>) this.player.getTileInventory();
+
 		
 		for(Entry<Tile, Vector2<Integer>> entry : this.tiles.entrySet())
 		{
 			t = entry.getKey();
-
-			for(int i=t.getFirstCase().getX(); i<Tile.WIDTH; i++)
+			
+			if(ap.contains(entry.getKey()))
 			{
-				for(int j=0; j< Tile.HEIGHT; i++)
+				for(int i=t.getFirstCase().getX(); i<Tile.WIDTH; i++)
 				{
-					if(t.getMatrix()[i][j] == CellType.PIECE)
+					for(int j=0; j< Tile.HEIGHT; i++)
 					{
-						g.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
-
-						if(!this.state)
+						if(t.getMatrix()[i][j] == CellType.PIECE)
 						{
-							g.drawImage(this.cellMaskImage, posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+							g.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+	
+							if(!this.state)
+							{
+								g.drawImage(this.cellMaskImage, posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+							}
 						}
+						posCell.setY(posCell.getY()+CellColor.CELL_HEIGHT);
 					}
-					posCell.setY(posCell.getY()+CellColor.CELL_HEIGHT);
+					posCell.setX(posCell.getX()+CellColor.CELL_WIDTH);
 				}
-				posCell.setX(posCell.getX()+CellColor.CELL_WIDTH);
 			}
 			nbTilesLine++;
 			
@@ -223,7 +229,7 @@ public class TilePanel implements DrawableInterface{
 			else
 			{
 				posCell.setX(OFFSET_X);
-				posCell.setY(OFFSET_Y + (CellColor.CELL_HEIGHT*4));
+				posCell.setY(OFFSET_Y + (CellColor.CELL_HEIGHT*5));
 				nbTilesLine = 1;
 			}			
 		}
