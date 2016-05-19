@@ -56,8 +56,8 @@ public class PlayerPanel implements DrawableInterface{
 	public PlayerPanel(Player p) {
 		this.player = p;
 		this.state = false;
-		this.tilePanel1 = new TilePanel(CellColor.BLUE, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2<Integer>(POS_X, POS_Y), p );
-		this.tilePanel2 = new TilePanel(CellColor.RED, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2<Integer>(POS_X, POS_Y+TILE_PANEL_HEIGHT), p );;
+		this.tilePanel1 = new TilePanel(CellColor.BLUE, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2(POS_X, POS_Y), p );
+		this.tilePanel2 = new TilePanel(CellColor.RED, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2(POS_X, POS_Y+TILE_PANEL_HEIGHT), p );;
 		this.isClicked = false;
 	}
 
@@ -91,7 +91,7 @@ public class PlayerPanel implements DrawableInterface{
 	 * @param v la position relative du clic dans le panel
 	 * @return la pièce cliquée
 	 */
-	public Tile getTile(Vector2<Integer> v)
+	public Tile getTile(Vector2 v)
 	{
 		int x = v.getX();
 		int y = v.getY();
@@ -117,7 +117,7 @@ public class PlayerPanel implements DrawableInterface{
 	public void update(float elapsedTime) {
 		if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased() && !this.isClicked)
 		{
-			Vector2<Integer> v = Mouse.getPosition();
+			Vector2 v = Mouse.getPosition();
 			Tile tileSelected = this.getTile(v);
 			
 			//TODO: debug

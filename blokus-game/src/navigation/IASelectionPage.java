@@ -110,19 +110,19 @@ public class IASelectionPage extends Page implements ActionListener{
 		}
 		
 		this.buttonIAEasy = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iaeasy.png");
-		this.buttonIAEasy.setPosition(new Vector2<Integer>(POS_X, 275));
+		this.buttonIAEasy.setPosition(new Vector2(POS_X, 275));
 		this.buttonIAEasy.addListener(this);
 		
 		this.buttonIAMedium = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iamedium.png");
-		this.buttonIAMedium.setPosition(new Vector2<Integer>(POS_X, 391));
+		this.buttonIAMedium.setPosition(new Vector2(POS_X, 391));
 		this.buttonIAMedium.addListener(this);
 		
 		this.buttonIAHard = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iahard.png");
-		this.buttonIAHard.setPosition(new Vector2<Integer>(POS_X, 506));
+		this.buttonIAHard.setPosition(new Vector2(POS_X, 506));
 		this.buttonIAHard.addListener(this);
 		
 		this.buttonReturn = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"back.png");
-		this.buttonReturn.setPosition(new Vector2<Integer>(22,22));
+		this.buttonReturn.setPosition(new Vector2(22,22));
 		this.buttonReturn.addListener(this);
 		
 	}

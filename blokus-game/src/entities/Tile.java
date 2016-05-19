@@ -29,7 +29,7 @@ public class Tile {
 	/**
 	 * Emplacement dans la matrice de la premiere case de la piece
 	 */
-	private Vector2<Integer> firstCase;
+	private Vector2 firstCase;
 
 	/**
 	 * 
@@ -114,14 +114,14 @@ public class Tile {
 	
 	/**
 	 * Méthode indiquant la position de la première cellule de type piece dans la matrice
-	 * @return un Vector2<Integer> 
+	 * @return un Vector2 
 	 */
-	public Vector2<Integer> getFirstCase(){
+	public Vector2 getFirstCase(){
 		if(this.firstCase == null){
 			for(int i=0; i<WIDTH; i++){
 				for(int j=0; j<HEIGHT; j++){
 					if(this.matrix[i][j] == CellType.PIECE){
-						return new Vector2<Integer>(i, j);
+						return new Vector2(i, j);
 					}
 				}
 			}
@@ -145,7 +145,7 @@ public class Tile {
 	 * @param positionTile 
 	 * @return vrai si la position est dans la pièce, faux sinon
 	 */
-	public boolean isInBounds(Vector2<Integer> v, Vector2<Integer> positionTile)
+	public boolean isInBounds(Vector2 v, Vector2 positionTile)
 	{
 		for(int i=0; i<WIDTH; i++){
 			for(int j=0; j<HEIGHT; j++){
