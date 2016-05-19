@@ -12,3 +12,10 @@ Boutons Un joueur:
 - iamedium : 395, 461
 - iahard : 395, 576
 - back : 22, 22
+
+Boutons InGame :
+- annulerig :  505, 750
+- exitig : 1120, 750
+- optionsig : 32, 750
+- refaireig : 650, 750
+- sauvegarderig : 940, 750
