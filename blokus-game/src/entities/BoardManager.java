@@ -24,6 +24,11 @@ public abstract class BoardManager {
 	 */
 	protected CellColor[][] cells;
 	
+	public BoardManager()
+	{
+		this.cells = new CellColor[WIDTH][HEIGHT];
+	}
+	
 	/**
 	 * Ajoute la tuile à la grille du tableau de jeu
 	 * @param tile La tuile à ajouter
@@ -75,7 +80,7 @@ public abstract class BoardManager {
 							position.getX() + (fc.getX() - offsetX),
 							position.getY() + (fc.getY() - offsetY));
 					
-					if(!this.isInBounds(v) || this.cells[v.getX()][v.getY()] != null)
+					if(!this.isInBounds(v) || this.cells[v.getX()][v.getY()] != null || this.hasSameColorWithAnAdjacentCell(tile.getCouleur(), v))
 					{
 						return false;
 					}

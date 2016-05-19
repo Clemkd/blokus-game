@@ -24,7 +24,7 @@ public class Tile {
 	/**
 	 * Couleur de la Tile
 	 */
-	CellColor couleur;
+	private CellColor couleur;
 	
 	/**
 	 * Emplacement dans la matrice de la premiere case de la piece
