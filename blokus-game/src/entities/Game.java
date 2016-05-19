@@ -11,7 +11,7 @@ public abstract class Game {
 	/**
 	 * Plateau de jeu courant
 	 */
-	protected BoardManager board;
+	protected Board board;
 	/**
 	 * Liste des joueurs de la partie
 	 */
@@ -23,7 +23,7 @@ public abstract class Game {
 	/**
 	 * Prise en charge de la sauvegarde de l'état de la partie pour les annulations et répétitions de coups
 	 */
-	protected UndoRedoManager<BoardManager> undoRedoManager;
+	protected UndoRedoManager<Board> undoRedoManager;
 	/**
 	 * Liste des ActionListeners de cette partie
 	 */
@@ -39,7 +39,7 @@ public abstract class Game {
 	 * Transmet une copie du plateau courant
 	 * @return Copie du plateau courant
 	 */
-	public BoardManager getBoard() {
+	public Board getBoard() {
 		return this.board.copy();
 	}
 	

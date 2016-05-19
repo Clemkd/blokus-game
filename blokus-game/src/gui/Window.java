@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import entities.Board;
 import navigation.Navigation;
 
 public class Window implements Runnable , ActionListener 
