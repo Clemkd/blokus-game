@@ -10,10 +10,10 @@ public abstract class Page implements DrawableInterface{
 	/**
 	 * Méthode de chargement du contenu de l'état de jeu
 	 */
-	public abstract void LoadContents();
+	public abstract void loadContents();
 	
 	/**
 	 * Méthode de déchargement du contenu de l'état de jeu
 	 */
-	public abstract void UnloadContents();
+	public abstract void unloadContents();
 }

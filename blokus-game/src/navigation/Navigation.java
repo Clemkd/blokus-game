@@ -24,11 +24,11 @@ public class Navigation {
 	{
 		if(page != null && p != page)
 		{
-			page.UnloadContents();
+			page.unloadContents();
 		}
 		page = p;
 		
-		page.LoadContents();
+		page.loadContents();
 	}
 	
 	/**
