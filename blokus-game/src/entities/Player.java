@@ -10,6 +10,7 @@ public abstract class Player {
 	 * Les couleurs du joueur
 	 */
 	protected List<CellColor>	colors;
+	protected String name;
 
 	/**
 	 * Les tuiles du joueur
@@ -18,10 +19,11 @@ public abstract class Player {
 	protected boolean			playing;
 	protected Move				chosenMove;
 
-	public Player(List<CellColor> colors) {
+	public Player(String name, List<CellColor> colors) {
 		this.playing = false;
 		this.chosenMove = null;
 		this.colors = colors;
+		this.name = name;
 		this.tiles = new ArrayList<Tile>();
 		for (CellColor c : colors)
 			this.tiles.addAll(Tile.getListOfNeutralTile(c));
@@ -72,5 +74,13 @@ public abstract class Player {
 		this.chosenMove = null;
 
 		return m;
+	}
+	
+	/**
+	 * Transmet le nom du joueur
+	 * @return
+	 */
+	public String getName() {
+		return this.name;
 	}
 }
