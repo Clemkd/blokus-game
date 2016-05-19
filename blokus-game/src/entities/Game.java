@@ -1,8 +1,8 @@
+package entities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import entities.BoardManager;
 import utilities.UndoRedoManager;
 
 public abstract class Game {
@@ -91,14 +91,26 @@ public abstract class Game {
 	 */
 	public abstract void clickEvent(int x, int y);
 	
+	/**
+	 * Ajoute un listener à la classe de jeu
+	 * @param al Le listener à ajouter
+	 */
 	public void addListener(ActionListener al) {
 		this.listeners.add(al);
 	}
 	
+	/**
+	 * Supprime un listener de la classe de jeu
+	 * @param al Le listener à supprimer
+	 */
 	public void removeListener(ActionListener al) {
 		this.listeners.remove(al);
 	}
 	
+	/**
+	 * Lance l'évènement sur tous les listeners de la classe
+	 * @param e Les informtations de l'évènement lancé
+	 */
 	public void notifyListeners(ActionEvent e) {
 		for(ActionListener al : this.listeners) {
 			al.actionPerformed(e);
