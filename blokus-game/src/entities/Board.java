@@ -30,6 +30,26 @@ public class Board {
 	}
 	
 	/**
+	 * Modifie la cellule de la grille du plateau à la position spécifiée
+	 * @param position La position de la cellule à modifier
+	 * @param cell La cellule à insérer 
+	 */
+	private void setCell(Vector2<Integer> position, CellColor cell)
+	{
+		this.cells[position.getX()][position.getY()] = cell;
+	}
+	
+	/**
+	 * Obtient la cellule dans la grille du plateau à la position spécifiée
+	 * @param position La position de la cellule à obtenir
+	 * @return La cellule
+	 */
+	private CellColor getCell(Vector2<Integer> position)
+	{
+		return this.cells[position.getX()][position.getY()];
+	}
+	
+	/**
 	 * Ajoute la tuile à la grille du tableau de jeu
 	 * @param tile La tuile à ajouter
 	 * @param position La position sur la grille
@@ -54,7 +74,7 @@ public class Board {
 							position.getX() + (fc.getX() - offsetX),
 							position.getY() + (fc.getY() - offsetY));
 					
-					this.cells[currentGridPosition.getX()][currentGridPosition.getY()] = tile.getCouleur();
+					this.setCell(currentGridPosition, tile.getCouleur());
 				}
 			}
 		}
@@ -189,7 +209,17 @@ public class Board {
 	 */
 	public Board copy()
 	{
-		return null;
+		Board result = new Board();
+		for(int x = 0; x < Board.WIDTH; x++)
+		{
+			for(int y = 0; y < Board.HEIGHT; y++)
+			{
+				Vector2<Integer> pos = new Vector2<Integer>(x, y);
+				result.setCell(pos, this.getCell(pos));
+			}
+		}
+		
+		return result;
 		
 	}
 }
