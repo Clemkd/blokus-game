@@ -9,34 +9,32 @@ public abstract class BoardManager {
 	/**
 	 * Le nombre de positions relatives (soit coins, soit adjacentes) d'une position
 	 */
-	private final static int RELATIVES_POSITION_COUNT = 4;
+	protected final static int RELATIVES_POSITION_COUNT = 4;
 	/**
 	 * La largeur du plateau de jeu en nombre de cellules
 	 */
-	private final static int WIDTH = 20;
+	protected final static int WIDTH = 20;
 	/**
 	 * La hauteur du plateau de jeu en nombre de cellules
 	 */
-	private final static int HEIGHT = 20;
+	protected final static int HEIGHT = 20;
 	/**
 	 * Le tableau de cellules du plateau de jeu
 	 */
-	private CellColor[][] cells;
+	protected CellColor[][] cells;
 	
 	/**
 	 * La liste des positions relatives adjacentes
 	 */
-	private static Vector2<Integer>[] adjacentPositions;
+	protected static Vector2<Integer>[] adjacentPositions;
 	
 	/**
 	 * La liste des positions relatives des coins
 	 */
-	private static Vector2<Integer>[] cornerPositions;
+	protected static Vector2<Integer>[] cornerPositions;
 	
-	/**
-	 * Important : Initialise les dépendances
-	 */
-	public static void initialize()
+	
+	public BoardManager()
 	{
 		// Positions adjacentes relatives
 		adjacentPositions[0] = new Vector2<Integer>(1, 0);
@@ -113,7 +111,7 @@ public abstract class BoardManager {
 	 * @param position La position de la cellule à tester
 	 * @return Vrai s'il existe une case adjacente de même couleur, Faux dans le cas contraire
 	 */
-	private boolean hasSameColorWithAnAdjacentCell(CellColor color, Vector2<Integer> position)
+	protected boolean hasSameColorWithAnAdjacentCell(CellColor color, Vector2<Integer> position)
 	{
 		for(int i = 0; i < RELATIVES_POSITION_COUNT; i++)
 		{
@@ -141,7 +139,7 @@ public abstract class BoardManager {
 	 * @param position La position de la cellule à tester
 	 * @return Vrai s'il existe une case en coin de même couleur, Faux dans le cas contraire
 	 */
-	private boolean hasSameColorWithACornerCell(CellColor color, Vector2<Integer> position)
+	protected boolean hasSameColorWithACornerCell(CellColor color, Vector2<Integer> position)
 	{
 		for(int i = 0; i < RELATIVES_POSITION_COUNT; i++)
 		{
