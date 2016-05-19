@@ -2,10 +2,16 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import entities.CellColor;
 import entities.Player;
 import entities.Tile;
+import navigation.Page;
 import utilities.Vector2;
 
 /**
@@ -126,6 +132,23 @@ public class PlayerPanel implements DrawableInterface{
 
 	@Override
 	public void draw(Graphics2D g) {
+		Graphics2D g2d = (Graphics2D) g.create();
+		
+		BufferedImage b = null;
+		try {
+			b = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"grisJ1.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		g2d.drawImage(b, 32, 32, null);
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(32, 32+49, 267, 700);
+		
+		tilePanel1.draw(g2d);
+		
+		g2d.dispose();
+		
 		
 	}
 }

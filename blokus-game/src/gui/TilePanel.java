@@ -3,14 +3,19 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import javax.imageio.ImageIO;
 
 import entities.CellColor;
 import entities.CellType;
 import entities.Player;
 import entities.Tile;
+import navigation.Page;
 import utilities.BufferedImageHelper;
 import utilities.Vector2;
 
@@ -189,6 +194,7 @@ public class TilePanel implements DrawableInterface{
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
+		
 		Tile t;
 		Vector2<Integer> posCell = new Vector2<Integer>(OFFSET_X, OFFSET_Y);
 		int nbTilesLine = 1;
