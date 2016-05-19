@@ -2,7 +2,14 @@ package utilities;
 
 public class Vector2<T> {
 
+	/**
+	 * Premier élément du couple
+	 */
 	private T x;
+	
+	/**
+	 * Second élément du couple
+	 */
 	private T y;
 
 	public Vector2(T x, T y) {
@@ -41,18 +48,34 @@ public class Vector2<T> {
 		return "Vector2 [x: " + this.x + " y: " + this.y + "]";
 	}
 
+	/**
+	 * Obtient le premier élément du couple
+	 * @return L'élément
+	 */
 	public T getX() {
 		return x;
 	}
 
+	/**
+	 * Définit le premier élément du couple
+	 * @param x Le nouvel élément
+	 */
 	public void setX(T x) {
 		this.x = x;
 	}
 
+	/**
+	 * Obtient le second élément du couple
+	 * @return L'élément
+	 */
 	public T getY() {
 		return y;
 	}
 
+	/**
+	 * Définit le second élément du couple
+	 * @param y Le nouvel élément
+	 */
 	public void setY(T y) {
 		this.y = y;
 	}
