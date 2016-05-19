@@ -44,7 +44,7 @@ public class BlokusButton implements DrawableInterface
 	/**
 	 * La position absolue du bouton dans son conteneur
 	 */
-	private Vector2<Integer> position;
+	private Vector2 position;
 	
 	/**
 	 * La taille du bouton
@@ -55,7 +55,7 @@ public class BlokusButton implements DrawableInterface
 	{
 		this.mouseHover = false;
 		this.wasClicked = false;
-		this.position = new Vector2<Integer>(0, 0);
+		this.position = new Vector2();
 		this.size = new Dimension();
 		this.listeners = new ArrayList<ActionListener>();
 		try {
@@ -86,7 +86,7 @@ public class BlokusButton implements DrawableInterface
 	 * Obtient la position absolue du bouton dans son conteneur
 	 * @return La position du bouton
 	 */
-	public Vector2<Integer> getPosition() {
+	public Vector2 getPosition() {
 		return this.position;
 	}
 
@@ -94,7 +94,7 @@ public class BlokusButton implements DrawableInterface
 	 * Définit la position absolue du bouton dans son conteneur
 	 * @param position La nouvelle position du bouton
 	 */
-	public void setPosition(Vector2<Integer> position) {
+	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
 	
@@ -103,7 +103,7 @@ public class BlokusButton implements DrawableInterface
 	 * @param position La position à tester
 	 * @return Vrai si la position donnée est disposée sur le bouton, Faux dans le cas contraire
 	 */
-	public boolean isInBounds(Vector2<Integer> p)
+	public boolean isInBounds(Vector2 p)
 	{
 		return p.getX() >= this.position.getX() &&
 				p.getX() < this.getSize().getWidth() + this.position.getX() &&

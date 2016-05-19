@@ -95,12 +95,12 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		Mouse.setMouseState(Mouse.MOUSE_PRESSED);
-		Mouse.setMousePosition(new Vector2<Integer>(e.getX(), e.getY()));
+		Mouse.setMousePosition(new Vector2(e.getX(), e.getY()));
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		Mouse.setMousePosition(new Vector2<Integer>(e.getX(), e.getY()));
+		Mouse.setMousePosition(new Vector2(e.getX(), e.getY()));
 	}
 
 	protected void clear(Graphics2D batch) {

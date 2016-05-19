@@ -15,14 +15,14 @@ public class Mouse
 	private static int lastScrollClicks = 0;
 	private static int lastMouseButton = NONE;
 	private static boolean mouseState = MOUSE_RELEASED;
-	private static Vector2<Integer> mousePosition = new Vector2<Integer>(0, 0);
+	private static Vector2 mousePosition = new Vector2();
 
 	/**
 	 * /!\ Réservé à l'écouteur de clics de souris /!\
 	 * Change la position du curseur de la souris
 	 * @param mouseReleased Nouvelle position
 	 */
-	public static void setMousePosition(Vector2<Integer> position)
+	public static void setMousePosition(Vector2 position)
 	{
 		mousePosition = position;
 	}
@@ -31,7 +31,7 @@ public class Mouse
 	 * Renvoi la position du curseur de la souris sous la forme de deux entiers
 	 * @return Position curseur
 	 */
-	public static Vector2<Integer> getPosition() {
+	public static Vector2 getPosition() {
 		return mousePosition;
 	}
 

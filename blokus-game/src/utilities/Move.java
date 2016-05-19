@@ -3,7 +3,7 @@ package utilities;
 import entities.Tile;
 
 public class Move {
-	private final Vector2<Integer> position;
+	private final Vector2 position;
 	private final Tile tile;
 	private int value;
 	
@@ -23,7 +23,7 @@ public class Move {
 	 * @param tile Tile utilisé
 	 * @param value	Valeur du coup
 	 */
-	public Move(Vector2<Integer> position, Tile tile, int value) {
+	public Move(Vector2 position, Tile tile, int value) {
 		this.value = value;
 		this.tile = tile;
 		this.position = position;
@@ -34,7 +34,7 @@ public class Move {
 	 * @param position Position de la première cellule du tile
 	 * @param tile Tile utilisé
 	 */
-	public Move(Vector2<Integer> position, Tile tile) {
+	public Move(Vector2 position, Tile tile) {
 		this.value = 0;
 		this.tile = tile;
 		this.position = position;
@@ -44,7 +44,7 @@ public class Move {
 	 * Transmet la position de la première cellule du tile
 	 * @return Position
 	 */
-	public Vector2<Integer> getPosition() {
+	public Vector2 getPosition() {
 		return this.position;
 	}
 	
