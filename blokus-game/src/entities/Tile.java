@@ -168,10 +168,10 @@ public class Tile {
 	public int getTileWidth(){
 		int width = 0;
 		int temp;
-		for(int i=0; i<Tile.WIDTH; i++){
+		for(int i=0; i<Tile.HEIGHT; i++){
 			temp = 0;
-			for(int j=0; j<Tile.HEIGHT; j++){
-				if(this.matrix[i][j] == CellType.PIECE){
+			for(int j=0; j<Tile.WIDTH; j++){
+				if(this.matrix[j][i] == CellType.PIECE){
 					temp++;
 				}
 			}
