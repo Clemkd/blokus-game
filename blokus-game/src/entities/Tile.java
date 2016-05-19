@@ -1,5 +1,8 @@
 package entities;
 
+import java.awt.Color;
+import java.util.ArrayList;
+
 import utilities.Vector2;
 
 public class Tile {
@@ -160,5 +163,88 @@ public class Tile {
 			
 		}
 		return false;
+	}
+	
+	public ArrayList<Tile> getListOfNeutralTile(CellColor cellColor){
+		ArrayList<Tile> listTile = new ArrayList<Tile>();
+		Tile tile;
+		
+		// * * * * *
+		CellType[][] matrix = { 
+	         {CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK},
+	         {CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK},
+	         {CellType.CORNER, CellType.ADJACENT, CellType.ADJACENT, CellType.ADJACENT, CellType.ADJACENT, CellType.ADJACENT, CellType.CORNER},
+	         {CellType.ADJACENT, CellType.PIECE, CellType.PIECE, CellType.PIECE, CellType.PIECE, CellType.PIECE, CellType.ADJACENT},
+	         {CellType.CORNER, CellType.ADJACENT, CellType.ADJACENT, CellType.ADJACENT, CellType.ADJACENT, CellType.ADJACENT, CellType.CORNER},
+	         {CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK},
+	         {CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
+	      };
+	
+		tile = new Tile(matrix, cellColor);
+		listTile.add(tile);
+		/*
+		// * * * *
+		// *
+		CellType[][] matrix2 = { 						 
+		         {0, 0, 0, 0, 0, 0, 0}, 				
+		         {0, 1, 2, 1, 0, 0, 0},
+		         {0, 2, 3, 2, 2, 2, 1},
+		         {0, 2, 3, 3, 3, 3, 2},
+		         {0, 1, 2, 2, 2, 2, 1},
+		         {0, 0, 0, 0, 0, 0, 0},
+		         {0, 0, 0, 0, 0, 0, 0}
+		      };
+		
+		tile = new Tile(matrix2, cellColor);
+		listTile.add(tile);
+		
+		//   * * *
+		// * *
+		CellType[][] matrix3 = {
+		         {0, 0, 1, 2, 1, 0, 0},   
+		         {0, 0, 2, 3, 2, 0, 0},
+		         {0, 0, 2, 3, 2, 1, 0},
+		         {0, 0, 2, 3, 3, 2, 0},
+		         {0, 0, 1, 2, 3, 2, 0},
+		         {0, 0, 0, 1, 2, 1, 0},
+		         {0, 0, 0, 0, 0, 0, 0}
+		      };
+		tile = new Tile(matrix3, cellColor);
+		listTile.add(tile);
+		
+		//     *
+		// * * * *
+		CellType[][] matrix4 = {
+		         {0, 0, 0, 0, 0, 0, 0},
+		         {0, 0, 1, 2, 1, 0, 0},
+		         {0, 1, 2, 3, 2, 2, 1},
+		         {0, 2, 3, 3, 3, 3, 2},
+		         {0, 1, 2, 2, 2, 2, 1},
+		         {0, 0, 0, 0, 0, 0, 0},
+		         {0, 0, 0, 0, 0, 0, 0}
+		      };
+		tile = new Tile(matrix4, cellColor);
+		listTile.add(tile);
+		
+		//     *
+		// * * *
+		//   *
+		CellType[][] matrix5 = { 
+		         {0, 0, 0, 0, 0, 0, 0}, 
+		         {0, 0, 1, 2, 1, 0, 0}, 
+		         {0, 1, 2, 3, 2, 1, 0},
+		         {0, 2, 3, 3, 3, 2, 0},
+		         {0, 1, 2, 2, 3, 2, 0},
+		         {0, 0, 0, 1, 2, 1, 0},
+		         {0, 0, 0, 0, 0, 0, 0}
+		      };
+		tile = new Tile(matrix5, cellColor);
+		listTile.add(tile);
+		
+		//   *
+		// * * *
+		//   *
+		 */
+		return listTile;
 	}
 }

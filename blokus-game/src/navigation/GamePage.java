@@ -14,14 +14,49 @@ import utilities.Vector2;
 
 public class GamePage extends Page implements ActionListener{
 	
+	/**
+	 * Constante pour la position en Y des boutons, permet un alignement correct
+	 */
 	private static final int POS_Y = 750;
+	
+	/**
+	 *Bouton représentant le choix option
+	 */
 	private BlokusButton buttonOption;
+	
+	/**
+	 * Bouton représentant l'annulation d'un coup
+	 */
 	private BlokusButton buttonUndo;
+	
+	/**
+	 * Bouton représentant l'action "refaire" d'un coup
+	 */
 	private BlokusButton buttonRedo;
+	
+	/**
+	 * Bouton représentant la sauvegarde
+	 */
 	private BlokusButton buttonSave;
+	
+	/**
+	 * Bouton représentant le choix de quitter le jeux
+	 */
 	private BlokusButton buttonExit;
+	
+	/**
+	 * Logo du jeu
+	 */
 	private BufferedImage titre;
+	
+	/**
+	 * en tete du joueur 1
+	 */
 	private BufferedImage headerPlayerOne;
+	
+	/**
+	 * en tete du joueur 2
+	 */
 	private BufferedImage headerPlayerTwo;
 
 	

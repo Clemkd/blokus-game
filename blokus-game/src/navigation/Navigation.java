@@ -12,8 +12,14 @@ public class Navigation {
 	 */
 	public static Page homePage = new HomePage();
 	
+	/**
+	 * L'état du  jeu: Page de sélection de l'IA
+	 */
 	public static Page iaPage = new IASelectionPage();
 	
+	/**
+	 * L'état du jeu: Page de jeu
+	 */
 	public static Page gamePage = new GamePage();
 	
 	/**
