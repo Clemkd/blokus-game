@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -9,6 +10,7 @@ import java.util.Map.Entry;
 import entities.CellColor;
 import entities.CellType;
 import entities.Tile;
+import utilities.BufferedImageHelper;
 import utilities.Vector2;
 
 /**
@@ -16,6 +18,9 @@ import utilities.Vector2;
  *
  */
 public class TilePanel implements DrawableInterface{
+	
+	private final static int OFFSET_X = 48;
+	private final static int OFFSET_Y = 91;
 	/**
 	 * Etat du panel des pièce
 	 */
@@ -24,7 +29,7 @@ public class TilePanel implements DrawableInterface{
 	/**
 	 * La couleur des pièces
 	 */
-	private Color tileColor;
+	//private Color tileColor;
 	
 	/**
 	 * La liste des pièces
@@ -46,16 +51,21 @@ public class TilePanel implements DrawableInterface{
 	 */
 	private Vector2<Integer> pos;
 	
+	private BufferedImage cellMaskImage;
+	
 	/**
 	 * Constructeur de TilePanel
 	 * @param color la couleur des pièces dans le panel
 	 */
-	public TilePanel(Color color, int width, int height, Vector2<Integer> pos) {
+	public TilePanel(CellColor color, int width, int height, Vector2<Integer> pos) {
 		this.state = false;
-		this.tileColor = color;
+		//this.tileColor = color;
 		this.width = width;
 		this.height = height;
 		this.pos = pos;
+		
+		
+		this.cellMaskImage = BufferedImageHelper.generateMask(color.getImage(), Color.BLACK, 0.5f);
 	}
 
 	/**
@@ -68,7 +78,15 @@ public class TilePanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui retire une pièce du panel
+	 * Fonction qui retire une pièce du panelbTilesLine<=4)
+			{
+				posCell.setX((x*nbTilesLine)+(width*4));
+				posCell.setY(y);
+			}
+			else
+			{
+				posCell.setX(x);
+				y = y + (he
 	 * @param t la pièce concernée
 	 */
 	public void removeTile(Tile t)
@@ -165,50 +183,47 @@ public class TilePanel implements DrawableInterface{
 		
 	}
 
+
+	
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-		CellType[][] matrix;
 		Tile t;
-		Vector2<Integer> pos1stCell;
-		int x = 48;
-		int y = 91;
-		Vector2<Integer> posCell = new Vector2<Integer>(x, y);
-		int width;
-		int height;
+		Vector2<Integer> posCell = new Vector2<Integer>(OFFSET_X, OFFSET_Y);
 		int nbTilesLine = 1;
 		
 		for(Entry<Tile, Vector2<Integer>> entry : this.tiles.entrySet())
 		{
 			t = entry.getKey();
-			matrix = t.getMatrix();
-			pos1stCell = t.getFirstCase();
-			width = t.getCouleur().getImage().getWidth();
-			height = t.getCouleur().getImage().getHeight();
-			for(int i=pos1stCell.getX(); i<Tile.WIDTH; i++)
+
+			for(int i=t.getFirstCase().getX(); i<Tile.WIDTH; i++)
 			{
-				for(int j=0; j<Tile.HEIGHT; i++)
+				for(int j=0; j< Tile.HEIGHT; i++)
 				{
-					if(matrix[i][j] == CellType.PIECE)
+					if(t.getMatrix()[i][j] == CellType.PIECE)
 					{
-						g.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), width, height, null);
+						g.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+
+						if(!this.state)
+						{
+							g.drawImage(this.cellMaskImage, posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+						}
 					}
-					posCell.setY(posCell.getY()+height);
+					posCell.setY(posCell.getY()+CellColor.CELL_HEIGHT);
 				}
-				posCell.setX(posCell.getX()+width);
+				posCell.setX(posCell.getX()+CellColor.CELL_WIDTH);
 			}
 			nbTilesLine++;
 			
 			if(nbTilesLine<=4)
 			{
-				posCell.setX((x*nbTilesLine)+(width*4));
-				posCell.setY(y);
+				posCell.setX((OFFSET_X*nbTilesLine)+(CellColor.CELL_WIDTH*4));
+				posCell.setY(OFFSET_Y);
 			}
 			else
 			{
-				posCell.setX(x);
-				y = y + (height*4);
-				posCell.setY(y);
+				posCell.setX(OFFSET_X);
+				posCell.setY(OFFSET_Y + (CellColor.CELL_HEIGHT*4));
 				nbTilesLine = 1;
 			}			
 		}

@@ -1,5 +1,6 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +39,9 @@ public enum CellColor {
 	 */
 	private BufferedImage image;
 	
+	public final static int CELL_WIDTH = 16;
+	public final static int CELL_HEIGHT = 16;
+	
 	/**
 	 * Constructeur de CellColor
 	 * @param path le chemin d'accès vers une image
@@ -71,5 +75,6 @@ public enum CellColor {
 	{
 		return this.image;
 	}
+
 	
 }
