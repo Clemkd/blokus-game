@@ -14,6 +14,8 @@ import utilities.Vector2;
 
 public class IASelectionPage extends Page implements ActionListener{
 	
+	private static final int POS_X = 395;
+
 	/**
 	 * Bouton représentant l'IA facile
 	 */
@@ -50,35 +52,7 @@ public class IASelectionPage extends Page implements ActionListener{
 	public IASelectionPage() {
 		super();
 		
-		try {
-			this.titre = ImageIO.read(new File("./resources/images/logo.png"));
-		} catch (IOException e) {
-			this.titre = null;
-			e.printStackTrace();
-		}
 		
-		try {
-			this.background = ImageIO.read(new File("resources/images/backgroundsolo.png"));
-		} catch (IOException e) {
-			this.background = null;
-			e.printStackTrace();
-		}
-		
-		this.buttonIAEasy = new BlokusButton("./resources/boutons/iaeasy.png");
-		this.buttonIAEasy.setPosition(new Vector2<Integer>(395, 275));
-		this.buttonIAEasy.addListener(this);
-		
-		this.buttonIAMedium = new BlokusButton("./resources/boutons/iamedium.png");
-		this.buttonIAMedium.setPosition(new Vector2<Integer>(395, 391));
-		this.buttonIAMedium.addListener(this);
-		
-		this.buttonIAHard = new BlokusButton("./resources/boutons/iahard.png");
-		this.buttonIAHard.setPosition(new Vector2<Integer>(395, 506));
-		this.buttonIAHard.addListener(this);
-		
-		this.buttonReturn = new BlokusButton("./resources/boutons/back.png");
-		this.buttonReturn.setPosition(new Vector2<Integer>(22,22));
-		this.buttonReturn.addListener(this);
 	}
 	
 	@Override
@@ -114,6 +88,46 @@ public class IASelectionPage extends Page implements ActionListener{
 				Navigation.NavigateTo(Navigation.homePage);
 			}
 		}
+		
+	}
+
+	@Override
+	public void loadContents() {
+		try {
+			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+		} catch (IOException e) {
+			this.titre = null;
+			e.printStackTrace();
+		}
+		
+		try {
+			this.background = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"backgroundsolo.png"));
+		} catch (IOException e) {
+			this.background = null;
+			e.printStackTrace();
+		}
+		
+		this.buttonIAEasy = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iaeasy.png");
+		this.buttonIAEasy.setPosition(new Vector2<Integer>(POS_X, 275));
+		this.buttonIAEasy.addListener(this);
+		
+		this.buttonIAMedium = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iamedium.png");
+		this.buttonIAMedium.setPosition(new Vector2<Integer>(POS_X, 391));
+		this.buttonIAMedium.addListener(this);
+		
+		this.buttonIAHard = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iahard.png");
+		this.buttonIAHard.setPosition(new Vector2<Integer>(POS_X, 506));
+		this.buttonIAHard.addListener(this);
+		
+		this.buttonReturn = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"back.png");
+		this.buttonReturn.setPosition(new Vector2<Integer>(22,22));
+		this.buttonReturn.addListener(this);
+		
+	}
+
+	@Override
+	public void unloadContents() {
+		// TODO Auto-generated method stub
 		
 	}
 

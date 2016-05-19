@@ -21,37 +21,12 @@ public class GamePage extends Page implements ActionListener{
 	private BlokusButton buttonSave;
 	private BlokusButton buttonExit;
 	private BufferedImage titre;
+	private BufferedImage headerPlayerOne;
+	private BufferedImage headerPlayerTwo;
 
 	
 	public GamePage() {
 		super();
-		
-		try {
-			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
-		} catch (IOException e) {
-			this.titre = null;
-			e.printStackTrace();
-		}
-		
-		this.buttonOption = new BlokusButton("./resources/boutons/optionsig.png");
-		this.buttonOption.setPosition(new Vector2<Integer>(32, POS_Y));
-		this.buttonOption.addListener(this);
-		
-		this.buttonUndo = new BlokusButton("./resources/boutons/annulerig.png");
-		this.buttonUndo.setPosition(new Vector2<Integer>(505, POS_Y));
-		this.buttonUndo.addListener(this);
-		
-		this.buttonRedo = new BlokusButton("./resources/boutons/refaireig.png");
-		this.buttonRedo.setPosition(new Vector2<Integer>(650, POS_Y));
-		this.buttonRedo.addListener(this);
-		
-		this.buttonSave = new BlokusButton("./resources/boutons/sauvegarder.png");
-		this.buttonSave.setPosition(new Vector2<Integer>(940, POS_Y));
-		this.buttonSave.addListener(this);
-		
-		this.buttonExit = new BlokusButton("./resources/boutons/exitig.png");
-		this.buttonExit.setPosition(new Vector2<Integer>(1120, POS_Y));
-		this.buttonExit.addListener(this);
 	}
 
 	@Override
@@ -67,6 +42,7 @@ public class GamePage extends Page implements ActionListener{
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(this.titre,500, 51, null);
+		g.drawImage(this.headerPlayerOne,32, 32, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
@@ -90,6 +66,50 @@ public class GamePage extends Page implements ActionListener{
 				Navigation.NavigateTo(Navigation.homePage);
 			}
 		}
+		
+	}
+
+	@Override
+	public void loadContents() {
+		try {
+			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+		} catch (IOException e) {
+			this.titre = null;
+			e.printStackTrace();
+		}
+		
+		try {
+			this.headerPlayerOne = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"greenJ1.png"));
+		} catch (IOException e) {
+			this.titre = null;
+			e.printStackTrace();
+		}
+		
+		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"optionsig.png");
+		this.buttonOption.setPosition(new Vector2<Integer>(32, POS_Y));
+		this.buttonOption.addListener(this);
+		
+		this.buttonUndo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"annulerig.png");
+		this.buttonUndo.setPosition(new Vector2<Integer>(505, POS_Y));
+		this.buttonUndo.addListener(this);
+		
+		this.buttonRedo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"refaireig.png");
+		this.buttonRedo.setPosition(new Vector2<Integer>(650, POS_Y));
+		this.buttonRedo.addListener(this);
+		
+		this.buttonSave = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"sauvegarder.png");
+		this.buttonSave.setPosition(new Vector2<Integer>(940, POS_Y));
+		this.buttonSave.addListener(this);
+		
+		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"exitig.png");
+		this.buttonExit.setPosition(new Vector2<Integer>(1120, POS_Y));
+		this.buttonExit.addListener(this);
+		
+	}
+
+	@Override
+	public void unloadContents() {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -8,13 +8,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.html.HTMLDocument.HTMLReader.BlockAction;
-
 import gui.BlokusButton;
 import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener{
 	
+
+	private static final int POS_X = 488;
 
 	/**
 	 * Bouton représentant le choix de 1 joueur
@@ -52,44 +52,10 @@ public class HomePage extends Page implements ActionListener{
 	private BufferedImage titre;
 	
 	/**
-	 * Constructeurd
+	 * Constructeur
 	 */
 	public HomePage() {
 		super();
-		
-		try {
-			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
-		} catch (IOException e) {
-			this.titre = null;
-			e.printStackTrace();
-		}
-		
-		this.buttonOnePLayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png");
-		this.buttonOnePLayer.setPosition(new Vector2<Integer>(488, 233));
-		this.buttonOnePLayer.addListener(this);
-		
-		this.buttonTwoPlayer = new BlokusButton("./resources/boutons/twoplayers.png");
-		this.buttonTwoPlayer.setPosition(new Vector2<Integer>(488, 318));
-		this.buttonTwoPlayer.addListener(this);
-		
-		this.buttonLoad = new BlokusButton("./resources/boutons/load.png");
-		this.buttonLoad.setPosition(new Vector2<Integer>(488, 406));
-		this.buttonLoad.addListener(this);
-		
-		this.buttonTutorial = new BlokusButton("./resources/boutons/tutorial.png");
-		this.buttonTutorial.setPosition(new Vector2<Integer>(488, 492));
-		this.buttonTutorial.addListener(this);
-		
-		this.buttonOption = new BlokusButton("./resources/boutons/options.png");
-		this.buttonOption.setPosition(new Vector2<Integer>(488, 577));
-		this.buttonOption.addListener(this);
-		
-		this.buttonExit = new BlokusButton("./resources/boutons/exit.png");
-		this.buttonExit.setPosition(new Vector2<Integer>(488, 662));
-		this.buttonExit.addListener(this);
-		
-		
-		
 	}
 
 	@Override
@@ -132,6 +98,47 @@ public class HomePage extends Page implements ActionListener{
 				System.exit(0);
 			}
 		}
+	}
+
+	@Override
+	public void loadContents() {
+		try {
+			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+		} catch (IOException e) {
+			this.titre = null;
+			e.printStackTrace();
+		}
+		
+		this.buttonOnePLayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png");
+		this.buttonOnePLayer.setPosition(new Vector2<Integer>(POS_X, 233));
+		this.buttonOnePLayer.addListener(this);
+		
+		this.buttonTwoPlayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"twoplayers.png");
+		this.buttonTwoPlayer.setPosition(new Vector2<Integer>(POS_X, 318));
+		this.buttonTwoPlayer.addListener(this);
+		
+		this.buttonLoad = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"load.png");
+		this.buttonLoad.setPosition(new Vector2<Integer>(POS_X, 406));
+		this.buttonLoad.addListener(this);
+		
+		this.buttonTutorial = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"tutorial.png");
+		this.buttonTutorial.setPosition(new Vector2<Integer>(POS_X, 492));
+		this.buttonTutorial.addListener(this);
+		
+		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"options.png");
+		this.buttonOption.setPosition(new Vector2<Integer>(POS_X, 577));
+		this.buttonOption.addListener(this);
+		
+		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"exit.png");
+		this.buttonExit.setPosition(new Vector2<Integer>(POS_X, 662));
+		this.buttonExit.addListener(this);
+		
+	}
+
+	@Override
+	public void unloadContents() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
