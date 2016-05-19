@@ -4,7 +4,14 @@ import gui.DrawableInterface;
 
 public abstract class Page implements DrawableInterface{
 	
+	/**
+	 * Constante d'accès au dossier de ressource des images
+	 */
 	public static final String PATH_RESOURCES_IMAGES = "./resources/images/";
+	
+	/**
+	 * Constante d'accès au dossier de resources des boutons
+	 */
 	public static final String PATH_RESOURCES_BOUTONS = "./resources/boutons/";
 	
 	/**

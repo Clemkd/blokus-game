@@ -1,6 +1,5 @@
 package navigation;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import entities.CellColor;
-import entities.Player;
 import entities.PlayerHuman;
 import gui.BlokusButton;
 import gui.PlayerPanel;
@@ -56,17 +54,13 @@ public class GamePage extends Page implements ActionListener{
 	private BufferedImage titre;
 	
 	/**
-	 * en tete du joueur 1
+	 * Plateau de jeu
 	 */
-	private BufferedImage headerPlayerOne;
+	private BufferedImage board;
 	
 	/**
-	 * en tete du joueur 2
+	 * Panel des pièces des
 	 */
-	private BufferedImage headerPlayerTwo;
-	
-	private BufferedImage board;
-
 	private PlayerPanel panelJoueur1;
 	
 	public GamePage() {
