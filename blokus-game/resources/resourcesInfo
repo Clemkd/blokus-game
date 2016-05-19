@@ -24,4 +24,5 @@ InGame :
 Coordonnes premiere piece panel gauche : 48, 91
 Coordonnes premiere piece panel droit : 995, 91
 Titre panel gauche : 32, 32
-Tiroir panel gauche : width=266px , heigth=652px
+Titre panel droit : 980, 32
+Dimensions tiroir panel : width=266px , heigth=652px
