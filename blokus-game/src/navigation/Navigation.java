@@ -22,11 +22,13 @@ public class Navigation {
 	 */
 	public static void NavigateTo(Page p)
 	{
-		if(page != null && p != page)
-		{
-			page.unloadContents();
-		}
+		Page oldpage = page;
 		page = p;
+		
+		if(oldpage != null && p != oldpage)
+		{
+			oldpage.unloadContents();
+		}
 		
 		page.loadContents();
 	}
