@@ -1,7 +1,5 @@
 package gui;
 
-import javax.xml.crypto.dsig.CanonicalizationMethod;
-
 import utilities.Vector2;
 
 public class Mouse 

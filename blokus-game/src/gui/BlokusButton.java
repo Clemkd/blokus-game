@@ -1,12 +1,8 @@
 package gui;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
-import java.awt.Transparency;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -15,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 
 import utilities.BufferedImageHelper;
 import utilities.Vector2;
@@ -94,7 +89,7 @@ public class BlokusButton implements DrawableInterface
 	 * @return La position du bouton
 	 */
 	public Vector2<Integer> getPosition() {
-		return position;
+		return this.position;
 	}
 
 	/**
@@ -110,12 +105,12 @@ public class BlokusButton implements DrawableInterface
 	 * @param position La position à tester
 	 * @return Vrai si la position donnée est disposée sur le bouton, Faux dans le cas contraire
 	 */
-	public boolean isInBounds(Vector2<Integer> position)
+	public boolean isInBounds(Vector2<Integer> p)
 	{
-		return position.getX() >= this.getPosition().getX() &&
-				position.getX() < this.getSize().getWidth() + this.position.getX() &&
-				position.getY() >= this.getPosition().getY() &&
-				position.getY() < this.getSize().getHeight() + this.position.getY();
+		return p.getX() >= this.position.getX() &&
+				p.getX() < this.getSize().getWidth() + this.position.getX() &&
+				p.getY() >= this.position.getY() &&
+				p.getY() < this.getSize().getHeight() + this.position.getY();
 	}
 	
 	/**
@@ -142,18 +137,26 @@ public class BlokusButton implements DrawableInterface
 	@Override
 	public void update(float elapsedTime) 
 	{
-		if(Mouse.getLastMouseButton() == Mouse.LEFT && this.isInBounds(Mouse.getPosition()))
+		if(this.isInBounds(Mouse.getPosition()))
 		{
 			this.mouseHover = true;
-			if(!this.wasClicked && !Mouse.isReleased())
+			if(Mouse.getLastMouseButton() == Mouse.LEFT)
 			{
-				this.raiseClickEvent(new ActionEvent(this, 0, null));
-				this.wasClicked = true;
+				if(this.wasClicked) {
+					if(Mouse.isReleased()) {
+						this.raiseClickEvent(new ActionEvent(this, 0, null));
+						this.wasClicked = false;
+					}
+				}
+				else {
+					this.wasClicked = true;
+				}
 			}
 		}
 		else
 		{
 			this.mouseHover = false;
+			this.wasClicked = false;
 		}
 		
 		if(this.wasClicked && Mouse.isReleased())
@@ -186,8 +189,6 @@ public class BlokusButton implements DrawableInterface
 			}
 			
 			g2d.dispose();
-			
-			
 		}
 	}
 }
