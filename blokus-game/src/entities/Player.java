@@ -15,8 +15,12 @@ public abstract class Player {
 	 * Les tuiles du joueur
 	 */
 	protected List<Tile>		tiles;
+	protected boolean			playing;
+	protected Move				chosenMove;
 
 	public Player(List<CellColor> colors) {
+		this.playing = false;
+		this.chosenMove = null;
 		this.colors = colors;
 		this.tiles = new ArrayList<Tile>();
 		for (CellColor c : colors)
@@ -54,12 +58,19 @@ public abstract class Player {
 	 * 
 	 * @return Etat
 	 */
-	public abstract boolean isPlaying();
+	public boolean isPlaying() {
+		return this.playing;
+	}
 
 	/**
 	 * Récupère le coup choisi par le joueur
 	 * 
 	 * @return Coup choisi
 	 */
-	public abstract Move getMove();
+	public Move getMove() {
+		Move m = this.chosenMove;
+		this.chosenMove = null;
+
+		return m;
+	}
 }
