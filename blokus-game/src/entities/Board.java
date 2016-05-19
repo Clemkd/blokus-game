@@ -24,22 +24,22 @@ public class Board {
 	/**
 	 * Couleur de départ pour l'angle haut gauche
 	 */
-	public final static CellColor UP_LEFT_BEGIN_COLOR = CellColor.RED;
+	public final static CellColor UP_LEFT_COLOR = CellColor.RED;
 	
 	/**
 	 * Couleur de départ pour l'angle haut droit
 	 */
-	public final static CellColor UP_RIGHT_BEGIN_COLOR = CellColor.GREEN;
+	public final static CellColor UP_RIGHT_COLOR = CellColor.GREEN;
 	
 	/**
 	 * Couleur de départ pour l'angle bas gauche
 	 */
-	public final static CellColor DOWN_LEFT_BEGIN_COLOR = CellColor.BLUE;
+	public final static CellColor DOWN_LEFT_COLOR = CellColor.BLUE;
 	
 	/**
 	 * Couleur de départ pour l'angle bas droit
 	 */
-	public final static CellColor DOWN_RIGHT_BEGIN_COLOR = CellColor.YELLOW;
+	public final static CellColor DOWN_RIGHT_COLOR = CellColor.YELLOW;
 	
 	/**
 	 * Le tableau de cellules du plateau de jeu
@@ -56,7 +56,7 @@ public class Board {
 	 * @param position La position de la cellule à modifier
 	 * @param cell La cellule à insérer 
 	 */
-	private void setCell(Vector2<Integer> position, CellColor cell)
+	private void setCell(Vector2 position, CellColor cell)
 	{
 		this.cells[position.getX()][position.getY()] = cell;
 	}
@@ -66,7 +66,7 @@ public class Board {
 	 * @param position La position de la cellule à obtenir
 	 * @return La cellule
 	 */
-	public CellColor getCell(Vector2<Integer> position) throws OutOfBoundsException
+	public CellColor getCell(Vector2 position) throws OutOfBoundsException
 	{
 		if(!this.isInBounds(position))
 			throw new OutOfBoundsException("Tentative d'accès à une cellule en dehors du plateau");
@@ -79,14 +79,14 @@ public class Board {
 	 * @param position La position sur la grille
 	 * @throws InvalidMoveException Exception levée si l'ajout n'est pas possible
 	 */
-	public void addTile(Tile tile, Vector2<Integer> position) throws InvalidMoveException
+	public void addTile(Tile tile, Vector2 position) throws InvalidMoveException
 	{
 		if(!isValidMove(tile, position))
 		{
 			throw new InvalidMoveException("Tentative d'ajout d'une tuile sur une zone interdite");
 		}
 		
-		Vector2<Integer> fc = tile.getFirstCase();
+		Vector2 fc = tile.getFirstCase();
 
 		for(int offsetX = fc.getX(); offsetX < Tile.WIDTH; offsetX++)
 		{
@@ -94,7 +94,7 @@ public class Board {
 			{	
 				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
 				{
-					Vector2<Integer> currentGridPosition = new Vector2<Integer>(
+					Vector2 currentGridPosition = new Vector2(
 							position.getX() + (fc.getX() - offsetX),
 							position.getY() + (fc.getY() - offsetY));
 					
@@ -110,9 +110,9 @@ public class Board {
 	 * @param position La position sur le plateau de jeu (case de la tuile la plus en haut à gauche)
 	 * @return Vrai si le placement est possible, Faux dans le cas contraire
 	 */
-	public boolean isValidMove(Tile tile, Vector2<Integer> position)
+	public boolean isValidMove(Tile tile, Vector2 position)
 	{
-		Vector2<Integer> fc = tile.getFirstCase();
+		Vector2 fc = tile.getFirstCase();
 
 		for(int offsetX = fc.getX(); offsetX < Tile.WIDTH; offsetX++)
 		{
@@ -120,7 +120,7 @@ public class Board {
 			{	
 				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
 				{
-					Vector2<Integer> v = new Vector2<Integer>(
+					Vector2 v = new Vector2(
 							position.getX() + (fc.getX() - offsetX),
 							position.getY() + (fc.getY() - offsetY));
 					
@@ -139,9 +139,9 @@ public class Board {
 	 * @param color La couleur à tester
 	 * @return La liste des emplacements possibles pour la couleur spécifiée
 	 */
-	public ArrayList<Vector2<Integer>> getValidMoves(CellColor color)
+	public ArrayList<Vector2> getValidMoves(CellColor color)
 	{
-		ArrayList<Vector2<Integer>> validMoves = new ArrayList<Vector2<Integer>>();
+		ArrayList<Vector2> validMoves = new ArrayList<Vector2>();
 		
 		try
 		{
@@ -149,14 +149,41 @@ public class Board {
 			{
 				for(int y = 0; y < Board.HEIGHT; y++)
 				{
-					Vector2<Integer> currentPosition = new Vector2<Integer>(x, y);
-					if(this.getCell(currentPosition) == null && (this.isBeginCellForColor(currentPosition, color) ||
-							(this.hasSameColorWithACornerCell(color, currentPosition) && !this.hasSameColorWithAnAdjacentCell(color, currentPosition))))
+					Vector2 currentPosition = new Vector2(x, y);
+					if(this.getCell(currentPosition) == null && (this.hasSameColorWithACornerCell(color, currentPosition) && !this.hasSameColorWithAnAdjacentCell(color, currentPosition)))
 					{
 						validMoves.add(currentPosition);
 					}
 				}
 			}
+			switch(color) {
+				case BLUE:
+					Vector2 v = new Vector2(0,0);
+					if(this.getCell(v)==null)
+						validMoves.add(v);
+					break;
+				case YELLOW:
+					Vector2 v = new Vector2(this.WIDTH-1,0);
+					if(this.getCell(v)==null)
+						validMoves.add(v);
+					break;
+				case RED:
+					Vector2 v = new Vector2(this.WIDTH-1,this.HEIGHT-1);
+					if(this.getCell(v)==null)
+						validMoves.add(v);
+					break;
+				case GREEN:
+					Vector2 v = new Vector2(0,this.HEIGHT-1);
+					if(this.getCell(v)==null)
+						validMoves.add(v);
+					break;
+				default:
+					Vector2 v = new Vector2(0,0);
+					if(this.getCell(v)==null)
+						validMoves.add(v);
+					break;
+			}
+			
 		}
 		catch(OutOfBoundsException e)
 		{
@@ -168,44 +195,17 @@ public class Board {
 	}
 	
 	/**
-	 * Determine si la cellule cible est une cellule de départ et si elle correspond à la couleur donnée
-	 * @param p La position de la cellule à tester
-	 * @param c La couleur à tester
-	 * @return Vrai s'il s'agit d'une cellule de départ et si elle correspond à la couleur donnée, Faux dans le cas contraire
-	 */
-	protected boolean isBeginCellForColor(Vector2<Integer> p, CellColor c)
-	{
-		if(p.getX() == 0 && p.getY() == 0)
-		{
-			return c == UP_LEFT_BEGIN_COLOR;
-		}
-		else if(p.getX() == (WIDTH - 1) && p.getY() == 0)
-		{
-			return c == UP_RIGHT_BEGIN_COLOR;
-		}
-		else if(p.getX() == 0 && p.getY() == (HEIGHT - 1))
-		{
-			return c == DOWN_LEFT_BEGIN_COLOR;
-		}
-		else if(p.getX() == (WIDTH - 1) && p.getY() == (HEIGHT - 1))
-		{
-			return c == DOWN_RIGHT_BEGIN_COLOR;
-		}
-		return false;
-	}
-	
-	/**
 	 * Détermine s'il existe une cellule adjacente à la position donnée, possèdant la couleur spécifiée
 	 * @param color La couleur à tester
 	 * @param position La position de la cellule à tester
 	 * @return Vrai s'il existe une case adjacente de même couleur, Faux dans le cas contraire
 	 */
-	protected boolean hasSameColorWithAnAdjacentCell(CellColor color, Vector2<Integer> position)
+	protected boolean hasSameColorWithAnAdjacentCell(CellColor color, Vector2 position)
 	{
 		for(int i = 0; i < RELATIVES_POSITION_COUNT; i++)
 		{
-			Vector2<Integer> currentAdjacentPosition = CellPositions.values()[i].getPosition();
-			Vector2<Integer> currentPosition = new Vector2<Integer>(
+			Vector2 currentAdjacentPosition = CellPositions.values()[i].getPosition();
+			Vector2 currentPosition = new Vector2(
 					position.getX() + currentAdjacentPosition.getX(),
 					position.getY() + currentAdjacentPosition.getY());
 			
@@ -228,12 +228,12 @@ public class Board {
 	 * @param position La position de la cellule à tester
 	 * @return Vrai s'il existe une case en coin de même couleur, Faux dans le cas contraire
 	 */
-	protected boolean hasSameColorWithACornerCell(CellColor color, Vector2<Integer> position)
+	protected boolean hasSameColorWithACornerCell(CellColor color, Vector2 position)
 	{
 		for(int i = 0; i < RELATIVES_POSITION_COUNT; i++)
 		{
-			Vector2<Integer> currentCornerPosition = CellPositions.values()[i + 4].getPosition();
-			Vector2<Integer> currentPosition = new Vector2<Integer>(
+			Vector2 currentCornerPosition = CellPositions.values()[i + 4].getPosition();
+			Vector2 currentPosition = new Vector2(
 					position.getX() + currentCornerPosition.getX(),
 					position.getY() + currentCornerPosition.getY());
 			
@@ -255,7 +255,7 @@ public class Board {
 	 * @param position La position à tester
 	 * @return Vrai si la position est dans la grille, Faux dans le cas contraire
 	 */
-	public boolean isInBounds(Vector2<Integer> position)
+	public boolean isInBounds(Vector2 position)
 	{
 		return position.getX() >= 0 && position.getX() < WIDTH && 
 				position.getY() >= 0 && position.getY() < HEIGHT;
@@ -273,7 +273,7 @@ public class Board {
 		{
 			for(int y = 0; y < Board.HEIGHT; y++)
 			{
-				Vector2<Integer> pos = new Vector2<Integer>(x, y);
+				Vector2 pos = new Vector2(x, y);
 				result.setCell(pos, this.getCell(pos));
 			}
 		}
@@ -282,6 +282,5 @@ public class Board {
 			e.printStackTrace();
 		}
 		return result;
-		
 	}
 }
