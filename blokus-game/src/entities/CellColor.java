@@ -1,6 +1,11 @@
 package entities;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public enum CellColor {
 	
@@ -38,12 +43,27 @@ public enum CellColor {
 	 * constante qui défini la hauteur en pixel d'une cellulle d'une pièce
 	 */
 	public static final int CELL_HEIGHT = 16;
+	
+	/**
+	 * Le rendu de la cellule
+	 */
+	private BufferedImage image;
+	
 	/**
 	 * Constructeur de CellColor
 	 * @param path le chemin d'accès vers une image
 	 */
 	private CellColor(String path){
 		this.path = path;
+		try 
+		{
+			this.image = ImageIO.read(new File(path));
+		} 
+		catch (IOException e) 
+		{
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -54,5 +74,13 @@ public enum CellColor {
 		return this.path;
 	}
 	
+	/**
+	 * Obtient le rendu de la cellule
+	 * @return Le rendu
+	 */
+	public BufferedImage getImage()
+	{
+		return this.image;
+	}
 	
 }
