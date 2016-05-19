@@ -17,8 +17,6 @@ import utilities.Vector2;
 
 public class BlokusButton implements DrawableInterface
 {
-	private static final long serialVersionUID = 1L;
-	
 	/**
 	 * Determine si le bouton a été cliqué
 	 */

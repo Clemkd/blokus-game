@@ -2,7 +2,6 @@ package entities;
 
 import java.util.ArrayList;
 
-import gui.BlokusButton;
 import utilities.Vector2;
 
 public abstract class BoardManager {

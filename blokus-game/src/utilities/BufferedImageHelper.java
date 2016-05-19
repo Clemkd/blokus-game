@@ -14,18 +14,14 @@ public class BufferedImageHelper
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
     }
 
-    public static BufferedImage createCompatibleImage(int width, int height, int transparency) {
-        BufferedImage image = getGraphicsConfiguration().createCompatibleImage(width, height, transparency);
-        image.coerceData(true);
-        return image;
-    }
-    
 	public static BufferedImage generateMask(BufferedImage imgSource, Color color, float alpha) {
         int imgWidth = imgSource.getWidth();
         int imgHeight = imgSource.getHeight();
 
-        BufferedImage imgMask = createCompatibleImage(imgWidth, imgHeight, Transparency.TRANSLUCENT);
-        Graphics2D g2 = imgMask.createGraphics();
+        BufferedImage image = getGraphicsConfiguration().createCompatibleImage(imgWidth, imgHeight, Transparency.TRANSLUCENT);
+        image.coerceData(true);
+        
+        Graphics2D g2 = image.createGraphics();
 
         g2.drawImage(imgSource, 0, 0, null);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, alpha));
@@ -34,6 +30,6 @@ public class BufferedImageHelper
         g2.fillRect(0, 0, imgSource.getWidth(), imgSource.getHeight());
         g2.dispose();
 
-        return imgMask;
+        return image;
     }
 }

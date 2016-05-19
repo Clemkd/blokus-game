@@ -22,7 +22,13 @@ public class Navigation {
 	 */
 	public static void NavigateTo(Page p)
 	{
+		if(page != null && p != page)
+		{
+			page.UnloadContents();
+		}
 		page = p;
+		
+		page.LoadContents();
 	}
 	
 	/**
