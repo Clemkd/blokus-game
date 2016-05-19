@@ -1,0 +1,34 @@
+//alphabeta(origin, depth, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+private Move alphabeta(Game node, int depth, boolean maximizingPlayer, int alpha, int beta) {
+    if (depth == 0 or node.isTerminated())
+        return new Move(node.getScore(this));
+
+	if (maximizingPlayer) {
+		Move bestMove = new Move(Integer.MIN_VALUE);
+		for (Move m : node.possibleMoves()) {
+			Game nextNode = node.simulateMove(m);
+			m.setValue() = alphabeta(nextNode, depth-1, false, alpha, beta).getValue());
+			if(m.getValue()>bestMove.getValue()) {
+				bestMove = m;
+			}
+			alpha = Math.max(alpha, m.getValue());
+			if (beta <= alpha)
+				break;
+		}
+		return bestMove;
+	}
+	else {
+		Move bestMove = new Move(Integer.MAX_VALUE);
+		for (Move m : node.possibleMoves()) {
+			Game nextNode = node.simulateMove(m);
+			m.setValue(alphabeta(nextNode, depth-1, true, alpha, beta).getValue());
+			if(m.getValue()<bestMove.getValue()) {
+				bestMove = m;
+			}
+			beta = Math.min(beta, m.getValue());
+			if (beta <= alpha)
+				break;
+		}
+		return bestMove;
+	}
+}
