@@ -15,6 +15,7 @@ import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener{
 	
+
 	/**
 	 * Bouton représentant le choix de 1 joueur
 	 */
@@ -51,19 +52,19 @@ public class HomePage extends Page implements ActionListener{
 	private BufferedImage titre;
 	
 	/**
-	 * Constructeur
+	 * Constructeurd
 	 */
 	public HomePage() {
 		super();
 		
 		try {
-			this.titre = ImageIO.read(new File("./resources/images/logo.png"));
+			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
 		} catch (IOException e) {
 			this.titre = null;
 			e.printStackTrace();
 		}
 		
-		this.buttonOnePLayer = new BlokusButton("./resources/boutons/oneplayer.png");
+		this.buttonOnePLayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png");
 		this.buttonOnePLayer.setPosition(new Vector2<Integer>(488, 233));
 		this.buttonOnePLayer.addListener(this);
 		

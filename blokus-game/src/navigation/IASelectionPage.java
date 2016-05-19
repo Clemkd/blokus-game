@@ -105,7 +105,7 @@ public class IASelectionPage extends Page implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof BlokusButton){
 			if(e.getSource().equals(this.buttonIAEasy)){
-				//TODO lancer une nouvelle partie avec une ia facile
+				Navigation.NavigateTo(Navigation.gamePage);
 			}else if(e.getSource().equals(this.buttonIAMedium)){
 				//TODO lancer une nouvelle partie avec une ia moyenne
 			}else if(e.getSource().equals(this.buttonIAHard)){
