@@ -87,7 +87,7 @@ public class HomePage extends Page implements ActionListener{
 			if(e.getSource().equals(this.buttonOnePLayer)){
 				Navigation.NavigateTo(Navigation.iaPage);
 			}else if(e.getSource().equals(this.buttonTwoPlayer)){
-				//TODO navigation plateau 2 joueurs
+				Navigation.NavigateTo(Navigation.gamePage);
 			}else if(e.getSource().equals(this.buttonLoad)){
 				//TODO navigation option
 			}else if(e.getSource().equals(this.buttonTutorial)){

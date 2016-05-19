@@ -1,5 +1,6 @@
 package navigation;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ public class GamePage extends Page implements ActionListener{
 	/**
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
-	private static final int POS_Y = 750;
+	private static final int POS_Y = 725;
 	
 	/**
 	 *Bouton représentant le choix option
@@ -58,6 +59,8 @@ public class GamePage extends Page implements ActionListener{
 	 * en tete du joueur 2
 	 */
 	private BufferedImage headerPlayerTwo;
+	
+	private BufferedImage board;
 
 	
 	public GamePage() {
@@ -77,7 +80,7 @@ public class GamePage extends Page implements ActionListener{
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.headerPlayerOne,32, 32, null);
+		g.drawImage(this.board, 450, 200, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
@@ -108,17 +111,12 @@ public class GamePage extends Page implements ActionListener{
 	public void loadContents() {
 		try {
 			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+			this.board = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"plateau.png"));
 		} catch (IOException e) {
-			this.titre = null;
 			e.printStackTrace();
 		}
 		
-		try {
-			this.headerPlayerOne = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"greenJ1.png"));
-		} catch (IOException e) {
-			this.titre = null;
-			e.printStackTrace();
-		}
+		
 		
 		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"optionsig.png");
 		this.buttonOption.setPosition(new Vector2<Integer>(32, POS_Y));

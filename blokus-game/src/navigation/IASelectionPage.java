@@ -81,8 +81,10 @@ public class IASelectionPage extends Page implements ActionListener{
 			if(e.getSource().equals(this.buttonIAEasy)){
 				Navigation.NavigateTo(Navigation.gamePage);
 			}else if(e.getSource().equals(this.buttonIAMedium)){
+				Navigation.NavigateTo(Navigation.gamePage);
 				//TODO lancer une nouvelle partie avec une ia moyenne
 			}else if(e.getSource().equals(this.buttonIAHard)){
+				Navigation.NavigateTo(Navigation.gamePage);
 				//TODO lancer une nouvelle partie avec une ia difficile
 			}else if(e.getSource().equals(this.buttonReturn)){
 				Navigation.NavigateTo(Navigation.homePage);
