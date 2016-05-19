@@ -3,9 +3,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import utilities.Move;
 import utilities.UndoRedoManager;
 
 public abstract class Game {
+	private static final int EVENT_TURN_ENDED = 5;
 	/**
 	 * Plateau de jeu courant
 	 */
@@ -70,13 +72,59 @@ public abstract class Game {
 	 * @return Joueur courant
 	 */
 	public Player getCurrentPlayer() {
-		return this.players.get(this.currentTurn%this.players.size());
+		CellColor c = getCurrentColor();
+		
+		for(Player p : this.players) {
+			if(p.colors.contains(c))
+				return p;
+		}
+		
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	private CellColor getCurrentColor() {
+		CellColor c;
+		switch(this.currentTurn%4) {
+			case 0:
+				c = CellColor.BLUE;
+				break;
+			case 1:
+				c = CellColor.YELLOW;
+				break;
+			case 2:
+				c = CellColor.RED;
+				break;
+			case 3:
+				c = CellColor.GREEN;
+				break;
+			default:
+				c = CellColor.BLUE;
+				break;
+		}
+		
+		return c;
 	}
 	
 	/**
-	 * Algorithme correspondant au traitement d'un tour de jeu
+	 * Appelé à chaque itération de jeu
 	 */
-	public abstract void doTurn();
+	public void update() {
+		if(!this.isTerminated()) {
+			Player p = this.getCurrentPlayer();
+			if(!p.isPlaying()) {
+				Move m = p.getMove();
+				if(m==null) {
+					p.play(this.getCurrentColor());
+				}
+				else {
+					this.doMove(m);
+				}
+			}
+		}
+	}
 	
 	/**
 	 * Sauvegarde la partie dans un fichier
@@ -85,15 +133,26 @@ public abstract class Game {
 	public abstract void save();
 	
 	/**
-	 * Fonction appellée quand un clic doit être traité par Game
-	 * @param x Colonne pointée
-	 * @param y Ligne pointée
+	 * Fonction appellée quand un coup valide doit être traité/appliqué par Game
+	 * @param m Coup joué
 	 */
-	public abstract void clickEvent(int x, int y);
+	public void doMove(Move m) {
+		this.undoRedoManager.add(this.board.copy());
+
+		try {
+			this.board.addTile(m.getTile(), m.getPosition());
+			this.currentTurn++;
+			this.raiseEvent(new ActionEvent(this, EVENT_TURN_ENDED, null));
+		}
+		catch (Exception e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 	
 	/**
-	 * Ajoute un listener � la classe de jeu
-	 * @param al Le listener � ajouter
+	 * Ajoute un listener à la classe de jeu
+	 * @param al Le listener à ajouter
 	 */
 	public void addListener(ActionListener al) {
 		this.listeners.add(al);
@@ -101,17 +160,17 @@ public abstract class Game {
 	
 	/**
 	 * Supprime un listener de la classe de jeu
-	 * @param al Le listener � supprimer
+	 * @param al Le listener à supprimer
 	 */
 	public void removeListener(ActionListener al) {
 		this.listeners.remove(al);
 	}
 	
 	/**
-	 * Lance l'�v�nement sur tous les listeners de la classe
-	 * @param e Les informtations de l'�v�nement lanc�
+	 * Lance l'évènement sur tous les listeners de la classe
+	 * @param e Les informtations de l'évènement lancé
 	 */
-	public void notifyListeners(ActionEvent e) {
+	public void raiseEvent(ActionEvent e) {
 		for(ActionListener al : this.listeners) {
 			al.actionPerformed(e);
 		}
