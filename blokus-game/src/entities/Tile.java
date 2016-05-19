@@ -165,6 +165,22 @@ public class Tile {
 		return false;
 	}
 	
+	public int getTileWidth(){
+		int width = 0;
+		int temp;
+		for(int i=0; i<Tile.WIDTH; i++){
+			temp = 0;
+			for(int j=0; j<Tile.HEIGHT; j++){
+				if(this.matrix[i][j] == CellType.PIECE){
+					temp++;
+				}
+			}
+			if(temp>width){
+				width = temp;
+			}
+		}
+		return width;
+	}
 	/**
 	 * Fonction permettant de recupérer une liste des tile en fonction d'une couleur
 	 * @param cellColor
