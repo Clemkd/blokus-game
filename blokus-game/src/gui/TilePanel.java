@@ -44,6 +44,7 @@ id: colonne,ligne
 21:	80,230
  */
 
+
 /**
  * @author Groupe 1
  *
@@ -100,10 +101,27 @@ public class TilePanel implements DrawableInterface{
 		this.tiles = new HashMap<Tile, Vector2>();
 		
 		ArrayList<Tile> listOfTiles = Tile.getListOfNeutralTile(color);
-		for(int i=0; i<listOfTiles.size();i++)
-		{
-			this.tiles.put(listOfTiles.get(i), new Vector2(0,0));
-		}
+		this.tiles.put(listOfTiles.get(0), new Vector2(10,10));
+		this.tiles.put(listOfTiles.get(1), new Vector2(40,10));
+		this.tiles.put(listOfTiles.get(2), new Vector2(130,220));
+		this.tiles.put(listOfTiles.get(3), new Vector2(50,200));
+		this.tiles.put(listOfTiles.get(4), new Vector2(40,60));
+		this.tiles.put(listOfTiles.get(5), new Vector2(180,180));
+		this.tiles.put(listOfTiles.get(6), new Vector2(220,210));
+		this.tiles.put(listOfTiles.get(7), new Vector2(70,10));
+		this.tiles.put(listOfTiles.get(8), new Vector2(90,60));
+		this.tiles.put(listOfTiles.get(9), new Vector2(10,40));
+		this.tiles.put(listOfTiles.get(10), new Vector2(200,10));
+		this.tiles.put(listOfTiles.get(11), new Vector2(160,260));
+		this.tiles.put(listOfTiles.get(12), new Vector2(10,150));
+		this.tiles.put(listOfTiles.get(13), new Vector2(120,10));
+		this.tiles.put(listOfTiles.get(14), new Vector2(120,90));
+		this.tiles.put(listOfTiles.get(15), new Vector2(130,140));
+		this.tiles.put(listOfTiles.get(16), new Vector2(10,240));
+		this.tiles.put(listOfTiles.get(17), new Vector2(70,150));
+		this.tiles.put(listOfTiles.get(18), new Vector2(180,110));
+		this.tiles.put(listOfTiles.get(19), new Vector2(190,40));
+		this.tiles.put(listOfTiles.get(20), new Vector2(80,230));
 		
 		this.cellMaskImage = BufferedImageHelper.generateMask(color.getImage(), Color.BLACK, 0.5f);
 	}
@@ -215,75 +233,122 @@ public class TilePanel implements DrawableInterface{
 		
 	}
 
-	private boolean aze = true;
 	
 	@Override
 	public void draw(Graphics2D g) {
-		if(aze)
-		{
-			aze = false;
 		Graphics2D g2d = (Graphics2D) g.create();
 		
 		Tile t;
+		Vector2 posTile;
 		Vector2 posCell = new Vector2(OFFSET_X, OFFSET_Y);
-		int nbTilesLine = 1;
+//		int nbTilesLine = 1;
+//		int nbTilesColonnes = 1;
 		ArrayList<Tile> ap = (ArrayList<Tile>) this.player.getTileInventory();
-		boolean firstMeet = false;
+		boolean colonneVide = true;
+		int dX = 0;
+		int diffX = 0;
+		int dY = 0;
+		int diffY = 0;
 		
 		for(Entry<Tile, Vector2> entry : this.tiles.entrySet())
 		{
 			t = entry.getKey();
+			posTile = entry.getValue();
+			
+			for(int i=0; i<Tile.WIDTH; i++)
+			{
+				for(int j=0; j< Tile.HEIGHT; j++)
+				{
+					if(t.getMatrix()[i][j] == CellType.PIECE)
+					{
+						if(dX==0&&dY==0)
+						{
+							dX = i;
+							dY = j;
+							System.out.println("1ere Piece trouvé en "+dX+","+dY+"pour la piece"+posTile.getX()+","+posTile.getY());
+
+							posCell.setX(OFFSET_X+posTile.getX());
+							posCell.setY(OFFSET_Y+posTile.getY());
+
+						}
+						else
+						{
+							
+							diffX = dX - i;
+							diffY = dY - j;
+							
+							System.out.println("diff x = "+diffX+" diff y = "+diffY+" posX = "+posTile.getX()+OFFSET_X+diffX*CellColor.CELL_WIDTH+" posY = "+posTile.getY()+OFFSET_Y+diffY*CellColor.CELL_HEIGHT);
+							posCell.setX(posTile.getX()+OFFSET_X+diffX*CellColor.CELL_WIDTH);
+							posCell.setY(posTile.getY()+OFFSET_Y+diffY*CellColor.CELL_HEIGHT);
+						}
+						g2d.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+
+
+						
+					}
+				}
+			}
+			dX = 0;
+			dY = 0;
+			diffX = 0;
+			diffY = 0;
+			
+			
 			
 			//if(ap.contains(entry.getKey()))
 			//{
-				for(int i=0; i<Tile.WIDTH; i++)
-				{
-					for(int j=0; j< Tile.HEIGHT; j++)
-					{
-						System.out.println(t.getMatrix());
-						if(t.getMatrix()[i][j] == CellType.PIECE)
-						{
-							firstMeet = true;
-							System.out.println("Y = "+posCell.getY()+" X = "+posCell.getX());
-							g2d.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
-	
-							if(!this.state)
-							{
-								g2d.drawImage(this.cellMaskImage, posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
-							}
-						}
-						if(firstMeet)
-						{
-							
-							posCell.setY(posCell.getY()+CellColor.CELL_HEIGHT);
-							
-						}
-					}
-					if(firstMeet)
-					{	
-
-						posCell.setX(posCell.getX()+CellColor.CELL_WIDTH);
-					}
-					
-				}
-				firstMeet = false;
-			//}
-			nbTilesLine++;
-			
-			if(nbTilesLine<=4)
-			{
-				posCell.setX((OFFSET_X*nbTilesLine)+(CellColor.CELL_WIDTH*3));
-				posCell.setY(OFFSET_Y);
-			}
-			else
-			{
-				posCell.setX(OFFSET_X);
-				posCell.setY(OFFSET_Y + (CellColor.CELL_HEIGHT*4));
-				nbTilesLine = 1;
-			}			
+//				for(int i=0; i<Tile.WIDTH; i++)
+//				{
+//					for(int j=0; j< Tile.HEIGHT; j++)
+//					{
+//						if(t.getMatrix()[i][j] == CellType.PIECE)
+//						{
+//							colonneVide = false;
+//							g2d.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+//	
+//							if(!this.state)
+//							{
+//								g2d.drawImage(this.cellMaskImage, posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+//							}
+//						}
+//						posCell.setY(posCell.getY()+CellColor.CELL_HEIGHT);
+//					}
+//					if(colonneVide)
+//					{
+//						posCell.setY(OFFSET_Y*nbTilesColonnes);
+//					}
+//					else
+//					{
+//						posCell.setY(OFFSET_Y*nbTilesColonnes);
+//						posCell.setX(posCell.getX()+CellColor.CELL_WIDTH);
+//					}
+//					colonneVide = true;
+//				}
+//				
+//			//}
+//			nbTilesLine++;
+//			
+//			if(nbTilesLine<=4)
+//			{
+//				posCell.setX((OFFSET_X*nbTilesLine)+(CellColor.CELL_WIDTH*(t.getTileWidth()+1)));
+//				posCell.setY(OFFSET_Y);
+//			}
+//			else
+//			{
+//				if(nbTilesColonnes == 6)
+//				{
+//					posCell.setX((OFFSET_X*nbTilesLine)+(CellColor.CELL_WIDTH*(t.getTileWidth()+1)));
+//				}
+//				else
+//				{
+//					nbTilesColonnes++;
+//					posCell.setX(OFFSET_X);
+//					nbTilesLine = 1;
+//				}
+//			}			
 		}
 		g2d.dispose();
-		}
 	}
 		
 }
+

@@ -115,19 +115,7 @@ public class PlayerPanel implements DrawableInterface{
 
 	@Override
 	public void update(float elapsedTime) {
-		if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased() && !this.isClicked)
-		{
-			Vector2 v = Mouse.getPosition();
-			Tile tileSelected = this.getTile(v);
-			
-			//TODO: debug
-			System.out.println(tileSelected);
-			this.isClicked = true;
-		}
-		else if (Mouse.isReleased())
-		{
-			this.isClicked = false;
-		}
+	
 	}
 
 	@Override
@@ -143,7 +131,7 @@ public class PlayerPanel implements DrawableInterface{
 		}
 		g2d.drawImage(b, 32, 32, null);
 		g2d.setColor(Color.WHITE);
-		g2d.fillRect(32, 32+49, 266, 652);
+		g2d.fillRect(32, 32+49, 266, 632);
 		
 		g2d.dispose();
 		
