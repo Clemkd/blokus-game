@@ -13,9 +13,11 @@ import javax.imageio.ImageIO;
 import entities.CellColor;
 import entities.Game;
 import entities.PlayerHuman;
+import entities.Tile;
 import gui.BlokusBoard;
 import gui.BlokusButton;
 import gui.PlayerPanel;
+import utilities.InvalidMoveException;
 import utilities.Vector2;
 
 public class GamePage extends Page implements ActionListener{
@@ -24,6 +26,9 @@ public class GamePage extends Page implements ActionListener{
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
 	private static final int POS_Y = 725;
+	private static final int OFFSET_X = 19 ;
+	private static final int OFFSET_Y = 20 ;
+	
 	
 	/**
 	 *Bouton représentant le choix option
@@ -117,9 +122,13 @@ public class GamePage extends Page implements ActionListener{
 			if(e.getSource().equals(this.buttonOption)){
 				//TODO navigation menu options
 			}else if(e.getSource().equals(this.buttonUndo)){
-				//TODO annuler le coup
+				if(this.game.canUndo()){
+					this.game.undoMove();
+				}
 			}else if(e.getSource().equals(this.buttonRedo)){
-				//TODO refaire le coup
+				if(this.game.canRedo()){
+					this.game.redoMove();
+				}
 			}else if(e.getSource().equals(this.buttonSave)){
 				//TODO sauvegarder l'état du jeu
 			}else if(e.getSource().equals(this.buttonExit)){
@@ -173,6 +182,13 @@ public class GamePage extends Page implements ActionListener{
 		this.panelJoueur2 = new PlayerPanel(new PlayerHuman("Lui", listColorsJ2));
 		
 		this.blokusBoard = new BlokusBoard(this.game.getBoard());
+		this.blokusBoard.setPosition(new Vector2(449 + OFFSET_X,212+OFFSET_Y));
+		try {
+			this.blokusBoard.getBoard().addTile(Tile.getListOfNeutralTile(CellColor.BLUE).get(5), new Vector2());
+		} catch (InvalidMoveException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
