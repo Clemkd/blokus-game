@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import gui.BlokusButton;
+import gui.Window;
 import utilities.Vector2;
 
 public class TutorialPage extends Page implements ActionListener{
@@ -25,7 +26,7 @@ public class TutorialPage extends Page implements ActionListener{
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(this.tutorialImage, 0, 0, null);
+		g.drawImage(this.tutorialImage, 0, 0, Window.WIDTH, Window.HEIGHT-35, null);
 		this.buttonReturn.draw(g);
 	}
 

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.Action;
 
 import gui.BlokusButton;
+import gui.Window;
 import utilities.Vector2;
 
 public class OptionPage extends Page implements ActionListener {
@@ -27,7 +28,7 @@ public class OptionPage extends Page implements ActionListener {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(this.optionImage, 0, 0, null, null);
+		g.drawImage(this.optionImage, 0, 0, Window.WIDTH, Window.HEIGHT-35, null);
 		this.buttonReturn.draw(g);
 	}
 
