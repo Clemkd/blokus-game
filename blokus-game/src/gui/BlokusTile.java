@@ -31,13 +31,7 @@ public class BlokusTile implements DrawableInterface {
 	
 	@Override
 	public void update(float elapsedTime) {
-		if(!Mouse.isReleased())
-		{
-			if(this.isInBounds(Mouse.getPosition()))
-			{
-				System.out.println(this.getTile().toString());
-			}
-		}
+		
 		
 	}
 
@@ -111,9 +105,6 @@ public class BlokusTile implements DrawableInterface {
 					Vector2 currentPosition = new Vector2(
 						this.position.getX() + ( - fc.getX() + i) * CellColor.CELL_WIDTH,
 						this.position.getY() + ( - fc.getY() + j) * CellColor.CELL_HEIGHT);
-					
-					System.out.println(currentPosition);
-					System.exit(1);
 					if(v.getX()>currentPosition.getX() && v.getY()>currentPosition.getY() && v.getX()<currentPosition.getX()+CellColor.CELL_WIDTH && v.getY()<currentPosition.getY()+CellColor.CELL_HEIGHT )
 					{
 						return true;

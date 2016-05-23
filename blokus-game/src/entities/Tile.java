@@ -139,32 +139,6 @@ public class Tile {
 		return this.matrix[x][y];
 	}
 
-	/**
-	 * Méthode qui dit si le clic est sur la pièce
-	 * @param v la position du clic
-	 * @param positionTile 
-	 * @return vrai si la position est dans la pièce, faux sinon
-	 */
-	public boolean isInBounds(Vector2 v, Vector2 positionTile)
-	{
-		for(int i=0; i<WIDTH; i++){
-			for(int j=0; j<HEIGHT; j++){
-				if(this.getCellType(i, j) == CellType.PIECE)
-				{
-					if(positionTile.getX()+i*CellColor.BLUE.getImage().getWidth() < v.getX() 
-							&& positionTile.getX()+(i+1)*CellColor.BLUE.getImage().getWidth() < v.getX() 
-							&& positionTile.getY()+i*CellColor.BLUE.getImage().getHeight() < v.getY() 
-							&& positionTile.getY()+(i+1)*CellColor.BLUE.getImage().getHeight() < v.getY())
-					{
-						return true;
-					}
-				}
-			}
-
-		}
-		return false;
-	}
-
 	public int getTileWidth(){
 		int width = 0;
 		int temp;
