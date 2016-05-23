@@ -113,13 +113,29 @@ public class GamePage extends Page implements ActionListener{
 			{
 				this.selectedTile = tile;
 			}
-			this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
+			else
+			{
+				this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
+			}
 		}
 		
 		if(this.selectedTile != null)
 		{
+			if(this.blokusBoard.isInBounds(Mouse.getPosition()))
+			{
+				int x = (Mouse.getPosition().getX() - this.blokusBoard.getPosition().getX()) / CellColor.CELL_WIDTH;
+				int y = (Mouse.getPosition().getY() - this.blokusBoard.getPosition().getY()) / CellColor.CELL_HEIGHT;
+				
+				this.selectedTile.setPosition(new Vector2(
+						(x * CellColor.CELL_WIDTH) + this.blokusBoard.getPosition().getX(),
+						(y * CellColor.CELL_HEIGHT) + this.blokusBoard.getPosition().getY()));
+				
+			}
+			else
+			{
+				this.selectedTile.setPosition(Mouse.getPosition());
+			}
 			this.selectedTile.update(elapsedTime);
-			this.selectedTile.setPosition(Mouse.getPosition());
 		}
 	}
 

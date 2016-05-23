@@ -82,5 +82,15 @@ public class BlokusBoard implements DrawableInterface
 	public Board getBoard() {
 		return this.board;
 	}
+
+	/**
+	 * Determine si la position est située sur le tableau
+	 * @param position La position à tester
+	 * @return Vrai si la position donnée est disposée sur le tableau, Faux dans le cas contraire
+	 */
+	public boolean isInBounds(Vector2 position) {
+		return position.getX() > this.getPosition().getX() && position.getX() < this.getPosition().getX() + Board.WIDTH * CellColor.CELL_WIDTH &&
+				position.getY() > this.getPosition().getY() && position.getY() < this.getPosition().getY() + Board.HEIGHT * CellColor.CELL_HEIGHT;
+	}
 	
 }
