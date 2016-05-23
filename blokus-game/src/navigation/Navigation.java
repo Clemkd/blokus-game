@@ -22,6 +22,7 @@ public class Navigation {
 	 */
 	public static Page gamePage = new GamePage();
 	
+	public static Page previous = null;
 	
 	/**
 	 * L'état du jeu: page des options

@@ -96,6 +96,7 @@ public class HomePage extends Page implements ActionListener{
 			}else if(e.getSource().equals(this.buttonTutorial)){
 				Navigation.NavigateTo(Navigation.tutorialPage);
 			}else if(e.getSource().equals(this.buttonOption)){
+				Navigation.previous = this;
 				Navigation.NavigateTo(Navigation.optionPage);
 			}else if(e.getSource().equals(this.buttonExit)){
 				System.exit(0);

@@ -56,7 +56,7 @@ public class OptionPage extends Page implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof BlokusButton){
 			if(e.getSource().equals(this.buttonReturn)){
-				Navigation.NavigateTo(Navigation.gamePage);
+				Navigation.NavigateTo(Navigation.previous);
 			}
 		}
 		

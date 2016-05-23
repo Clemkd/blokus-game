@@ -122,6 +122,7 @@ public class GamePage extends Page implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof BlokusButton){
 			if(e.getSource().equals(this.buttonOption)){
+				Navigation.previous = this;
 				Navigation.NavigateTo(Navigation.optionPage);
 			}else if(e.getSource().equals(this.buttonUndo)){
 				if(this.game.canUndo()){
