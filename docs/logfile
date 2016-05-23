@@ -25,3 +25,19 @@ L’UML est fini à ce jour.
 Suite au RDV avec notre tuteur, nous avons changé notre architecture afin de la rendre plus "facile" sans essayer d'optimiser le code en sachant que nous n'avons pas encore commencé a codé.
 
 L'implémentation du code débute donc à ce jour.
+
+5ème jour : 18 mai 2016
+Nous avons implémenté une IA en suivant l'algorithme alpha/beta, mais elle n'est pas encore testable car le moteur du jeu n'est pas encore prêt.
+
+6ème jour : 19 mai 2016
+Début de l'implémentation de l'IHM : nous avons le menu principal et les pages suivante.
+
+7ème jour : 20 mai 2016
+Audit IA : Il ne faut pas se focaliser uniquement sur la surface lors du parcourt de l'arbre avec alpha/beta mais aussi des stratégies comme : 
+  - Utiliser les pièces de 5 en premier
+  - Essayer de bloquer l'adversaire en atteignant le millieu de plus rapidement
+  - Essayer de "percer" le mur de l'adversaire
+Ces 3 stratégies permettront de faire une IA plus performante.
+
+8ème jour : 23 mai 2016
+Audit IHM : 
