@@ -17,6 +17,8 @@ import entities.PlayerHuman;
 import entities.Tile;
 import gui.BlokusBoard;
 import gui.BlokusButton;
+import gui.BlokusTile;
+import gui.Mouse;
 import gui.PlayerPanel;
 import gui.Window;
 import utilities.InvalidMoveException;
@@ -28,9 +30,13 @@ public class GamePage extends Page implements ActionListener{
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
 	private static final int POS_Y = 725;
-	private static final int OFFSET_X = 19 ;
-	private static final int OFFSET_Y = 20 ;
+	private static final int OFFSET_X = 15;
+	private static final int OFFSET_Y = 15;
 	
+	/**
+	 * Image correspondante au drag and drop courant
+	 */
+	private BlokusTile selectedTile;
 	
 	/**
 	 *Bouton représentant le choix option
@@ -99,13 +105,30 @@ public class GamePage extends Page implements ActionListener{
 		this.panelJoueur2.update(elapsedTime);
 		this.blokusBoard.update(elapsedTime);
 		
+		if(!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT)
+		{
+			Mouse.consumeLastMouseButton();
+			BlokusTile tile = this.panelJoueur1.getTile(Mouse.getPosition());
+			if(tile != null)
+			{
+				this.selectedTile = tile;
+			}
+			this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
+		}
 		
+		if(this.selectedTile != null)
+		{
+			this.selectedTile.update(elapsedTime);
+			this.selectedTile.setPosition(Mouse.getPosition());
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
+		Graphics2D g2d = (Graphics2D)g.create();
+		
 		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.board, Window.WIDTH/2 - this.board.getWidth()/2, 212, null, null);
+		g.drawImage(this.board, this.blokusBoard.getPosition().getX() - OFFSET_X, this.blokusBoard.getPosition().getY() - OFFSET_Y, null, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
@@ -115,7 +138,12 @@ public class GamePage extends Page implements ActionListener{
 		this.panelJoueur2.draw(g);
 		this.blokusBoard.draw(g);
 		
+		if(this.selectedTile != null)
+		{
+			this.selectedTile.draw(g2d); 
+		}
 		
+		g2d.dispose();
 	}
 
 	@Override
@@ -151,7 +179,7 @@ public class GamePage extends Page implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		
+		this.selectedTile = null;
 		this.game = new Game();
 		
 		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"optionsig.png");
@@ -186,7 +214,7 @@ public class GamePage extends Page implements ActionListener{
 		this.panelJoueur2 = new PlayerPanel(new PlayerHuman("Lui", listColorsJ2));
 		
 		this.blokusBoard = new BlokusBoard(this.game.getBoard());
-		this.blokusBoard.setPosition(new Vector2(449 + OFFSET_X,212+OFFSET_Y));
+		this.blokusBoard.setPosition(new Vector2(Window.WIDTH/2 - this.board.getWidth()/2,212));
 		try {
 			this.blokusBoard.getBoard().addTile(Tile.getListOfNeutralTile(CellColor.BLUE).get(5), new Vector2());
 		} catch (InvalidMoveException e) {
