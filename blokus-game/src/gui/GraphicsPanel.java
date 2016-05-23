@@ -20,7 +20,7 @@ import utilities.Vector2;
 
 public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener {
 	private static final long	serialVersionUID	= 1L;
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	private Image				background;
 	private long				framesRendered;
