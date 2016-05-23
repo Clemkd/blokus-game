@@ -58,10 +58,10 @@ public class TilePanel implements DrawableInterface{
 	private final static int OFFSET_Y_P2_YELLOW = 91;
 	
 	private final static int OFFSET_X_P1_RED = 48;
-	private final static int OFFSET_Y_P1_RED = 350;
+	private final static int OFFSET_Y_P1_RED = 400;
 	
 	private final static int OFFSET_X_P2_GREEN = 995;
-	private final static int OFFSET_Y_P2_GREEN = 350;
+	private final static int OFFSET_Y_P2_GREEN = 400;
 	/**
 	 * Etat du panel des pièce
 	 */
@@ -95,6 +95,8 @@ public class TilePanel implements DrawableInterface{
 	private BufferedImage cellMaskImage;
 	
 	private Player player;
+
+	private BlokusTile bt;
 	
 	/**
 	 * Constructeur de TilePanel
@@ -110,27 +112,49 @@ public class TilePanel implements DrawableInterface{
 		this.tiles = new HashMap<Tile, Vector2>();
 		
 		ArrayList<Tile> listOfTiles = Tile.getListOfNeutralTile(color);
+//		this.tiles.put(listOfTiles.get(0), new Vector2(0,0));
+//		this.tiles.put(listOfTiles.get(1), new Vector2(30,0));
+//		this.tiles.put(listOfTiles.get(2), new Vector2(120,210));
+//		this.tiles.put(listOfTiles.get(3), new Vector2(40,190));
+//		this.tiles.put(listOfTiles.get(4), new Vector2(30,50));
+//		this.tiles.put(listOfTiles.get(5), new Vector2(170,170));
+//		this.tiles.put(listOfTiles.get(6), new Vector2(210,200));
+//		this.tiles.put(listOfTiles.get(7), new Vector2(60,0));
+//		this.tiles.put(listOfTiles.get(8), new Vector2(80,50));
+//		this.tiles.put(listOfTiles.get(9), new Vector2(0,30)); //-40,70
+//		this.tiles.put(listOfTiles.get(10), new Vector2(190,0));
+//		this.tiles.put(listOfTiles.get(11), new Vector2(150,250));
+//		this.tiles.put(listOfTiles.get(12), new Vector2(0,140));
+//		this.tiles.put(listOfTiles.get(13), new Vector2(110,0));
+//		this.tiles.put(listOfTiles.get(14), new Vector2(110,80));
+//		this.tiles.put(listOfTiles.get(15), new Vector2(120,130));
+//		this.tiles.put(listOfTiles.get(16), new Vector2(00,230));
+//		this.tiles.put(listOfTiles.get(17), new Vector2(60,140));
+//		this.tiles.put(listOfTiles.get(18), new Vector2(170,100));
+//		this.tiles.put(listOfTiles.get(19), new Vector2(180,30));
+//		this.tiles.put(listOfTiles.get(20), new Vector2(70,220));
+		
 		this.tiles.put(listOfTiles.get(0), new Vector2(0,0));
-		this.tiles.put(listOfTiles.get(1), new Vector2(30,00));
-		this.tiles.put(listOfTiles.get(2), new Vector2(120,210));
-		this.tiles.put(listOfTiles.get(3), new Vector2(40,190));
-		this.tiles.put(listOfTiles.get(4), new Vector2(30,50));
-		this.tiles.put(listOfTiles.get(5), new Vector2(170,170));
-		this.tiles.put(listOfTiles.get(6), new Vector2(210,200));
+		this.tiles.put(listOfTiles.get(1), new Vector2(10,20));
+		this.tiles.put(listOfTiles.get(2), new Vector2(100,230));
+		this.tiles.put(listOfTiles.get(3), new Vector2(20,210));
+		this.tiles.put(listOfTiles.get(4), new Vector2(-10,90));
+		this.tiles.put(listOfTiles.get(5), new Vector2(190,150));
+		this.tiles.put(listOfTiles.get(6), new Vector2(190,220));
 		this.tiles.put(listOfTiles.get(7), new Vector2(60,0));
-		this.tiles.put(listOfTiles.get(8), new Vector2(80,50));
-		this.tiles.put(listOfTiles.get(9), new Vector2(0,30));
-		this.tiles.put(listOfTiles.get(10), new Vector2(190,0));
-		this.tiles.put(listOfTiles.get(11), new Vector2(150,250));
+		this.tiles.put(listOfTiles.get(8), new Vector2(60,70));
+		this.tiles.put(listOfTiles.get(9), new Vector2(-40,70)); //-40,70
+		this.tiles.put(listOfTiles.get(10), new Vector2(170,20));
+		this.tiles.put(listOfTiles.get(11), new Vector2(130,270));
 		this.tiles.put(listOfTiles.get(12), new Vector2(0,140));
-		this.tiles.put(listOfTiles.get(13), new Vector2(110,0));
-		this.tiles.put(listOfTiles.get(14), new Vector2(110,80));
+		this.tiles.put(listOfTiles.get(13), new Vector2(130,-20));
+		this.tiles.put(listOfTiles.get(14), new Vector2(70,120));
 		this.tiles.put(listOfTiles.get(15), new Vector2(120,130));
 		this.tiles.put(listOfTiles.get(16), new Vector2(00,230));
 		this.tiles.put(listOfTiles.get(17), new Vector2(60,140));
 		this.tiles.put(listOfTiles.get(18), new Vector2(170,100));
-		this.tiles.put(listOfTiles.get(19), new Vector2(180,30));
-		this.tiles.put(listOfTiles.get(20), new Vector2(70,220));
+		this.tiles.put(listOfTiles.get(19), new Vector2(140,70));
+		this.tiles.put(listOfTiles.get(20), new Vector2(50,240));
 		
 		this.cellMaskImage = BufferedImageHelper.generateMask(color.getImage(), Color.BLACK, 0.5f);
 	}
@@ -257,28 +281,28 @@ public class TilePanel implements DrawableInterface{
 		int diffX = 0;
 		int dY = 0;
 		int diffY = 0;
-		int posCellx = 0;
-		int posCelly = 0;
+		int basePosCellX = 0;
+		int basePosCellY = 0;
 		
 		if(this.tileColor == CellColor.BLUE)
 		{
-			posCellx = OFFSET_X_P1_BLUE;
-			posCelly = OFFSET_Y_P1_BLUE;
+			basePosCellX = OFFSET_X_P1_BLUE;
+			basePosCellY = OFFSET_Y_P1_BLUE;
 		}
 		else if(this.tileColor == CellColor.YELLOW)
 		{
-			posCellx = OFFSET_X_P2_YELLOW;
-			posCelly = OFFSET_Y_P2_YELLOW;
+			basePosCellX = OFFSET_X_P2_YELLOW;
+			basePosCellY = OFFSET_Y_P2_YELLOW;
 		}
 		else if(this.tileColor == CellColor.RED)
 		{
-			posCellx = OFFSET_X_P1_RED;
-			posCelly = OFFSET_Y_P1_RED; 
+			basePosCellX = OFFSET_X_P1_RED;
+			basePosCellY = OFFSET_Y_P1_RED; 
 		}
 		else if(this.tileColor == CellColor.GREEN)
 		{
-			posCellx = OFFSET_X_P2_GREEN;
-			posCelly = OFFSET_Y_P2_GREEN;
+			basePosCellX = OFFSET_X_P2_GREEN;
+			basePosCellY = OFFSET_Y_P2_GREEN;
 		}
 		
 		for(Entry<Tile, Vector2> entry : this.tiles.entrySet())
@@ -286,36 +310,46 @@ public class TilePanel implements DrawableInterface{
 			t = entry.getKey();
 			posTile = entry.getValue();
 			
-			for(int i=0; i<Tile.WIDTH; i++)
-			{
-				for(int j=0; j< Tile.HEIGHT; j++)
-				{
-					if(t.getMatrix()[j][i] == CellType.PIECE)
-					{
-						if(dX==0&&dY==0)
-						{
-							dX = j;
-							dY = i;
-
-							posCell.setX(posCellx+posTile.getX());
-							posCell.setY(posCelly+posTile.getY());
-						}
-						else
-						{
-							diffX = dX - j;
-							diffY = dY - i;
-							
-							posCell.setX(posTile.getX()+posCellx+diffX*CellColor.CELL_WIDTH);
-							posCell.setY(posTile.getY()+posCelly+diffY*CellColor.CELL_HEIGHT);
-						}
-						g2d.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
-					}
-				}
-			}
-			dX = 0;
-			dY = 0;
-			diffX = 0;
-			diffY = 0;
+			bt = new BlokusTile(t);
+			posCell.setX(basePosCellX+posTile.getX());
+			posCell.setY(basePosCellY+posTile.getY());
+			bt.setPosition(posCell);
+			bt.draw(g2d);
+			
+			posCell.setX(0);
+			posCell.setY(0);
+			
+			
+//			for(int i=0; i<Tile.WIDTH; i++)
+//			{
+//				for(int j=0; j< Tile.HEIGHT; j++)
+//				{
+//					if(t.getMatrix()[i][j] == CellType.PIECE)
+//					{
+//						if(dX==0&&dY==0)
+//						{
+//							dX = i; //2
+//							dY = j; //1
+//
+//							posCell.setX(posCellx+posTile.getX());
+//							posCell.setY(posCelly+posTile.getY());
+//						}
+//						else
+//						{
+//							diffX = dX - i; // 2 - 3 = -1
+//							diffY = dY - j; // 1 - 1 = 0
+//							
+//							posCell.setX(posTile.getX()+posCellx+diffX*CellColor.CELL_WIDTH); //
+//							posCell.setY(posTile.getY()+posCelly+diffY*CellColor.CELL_HEIGHT);
+//						}
+//						g2d.drawImage(t.getCouleur().getImage(), posCell.getX(), posCell.getY(), CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+//					}
+//				}
+//			}
+//			dX = 0;
+//			dY = 0;
+//			diffX = 0;
+//			diffY = 0;
 		}
 		g2d.dispose();
 	}

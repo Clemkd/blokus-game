@@ -41,7 +41,7 @@ public class BlokusTile implements DrawableInterface {
 		{
 			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
 			{	
-				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
+				if(tile.getCellType(offsetY, offsetX) == CellType.PIECE)
 				{
 					Vector2 currentPosition = new Vector2(
 							this.position.getX() + ( - fc.getX() + offsetX) * CellColor.CELL_WIDTH,
