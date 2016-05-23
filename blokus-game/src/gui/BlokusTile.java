@@ -100,7 +100,7 @@ public class BlokusTile implements DrawableInterface {
 		
 		for(int i=0; i<Tile.WIDTH; i++){
 			for(int j=0; j<Tile.HEIGHT; j++){
-				if(this.tile.getCellType(i, j) == CellType.PIECE)
+				if(this.tile.getCellType(j, i) == CellType.PIECE)
 				{
 					Vector2 currentPosition = new Vector2(
 						this.position.getX() + ( - fc.getX() + i) * CellColor.CELL_WIDTH,
