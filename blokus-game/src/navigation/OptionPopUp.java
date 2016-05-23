@@ -28,5 +28,7 @@ public class OptionPopUp extends JDialog {
 		JPanel panFond = new JPanel();
 		panFond.setBackground(new Color(24, 99, 138));
 		this.getContentPane().add(panFond, null);
+		
+		
 	}
 }
