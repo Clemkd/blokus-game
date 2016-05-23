@@ -18,11 +18,14 @@ public class Window implements Runnable , ActionListener
 	private Timer timer;
 
 	private long startTime;
+	
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 800;
 
-	public Window(String name, int width, int height) {
+	public Window(String name) {
 		this.frame = new JFrame();
 		this.frame.setName(name);
-		this.frame.setSize(width, height);
+		this.frame.setSize(WIDTH, HEIGHT);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.gameGraphics = new GraphicsPanel();
 		this.frame.getContentPane().add(this.gameGraphics, BorderLayout.CENTER);

@@ -17,6 +17,7 @@ import entities.Tile;
 import gui.BlokusBoard;
 import gui.BlokusButton;
 import gui.PlayerPanel;
+import gui.Window;
 import utilities.InvalidMoveException;
 import utilities.Vector2;
 
@@ -103,7 +104,7 @@ public class GamePage extends Page implements ActionListener{
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.board, 449, 212, null, null);
+		g.drawImage(this.board, Window.WIDTH/2 - this.board.getWidth()/2, 212, null, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
