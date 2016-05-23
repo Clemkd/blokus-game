@@ -188,6 +188,7 @@ public class Tile {
 	 */
 	public static ArrayList<Tile> getListOfNeutralTile(CellColor cellColor){
 		ArrayList<Tile> listTile = new ArrayList<Tile>();
+		Tile temp;
 
 		// *
 		CellType[][] matrix21 = { 
@@ -213,7 +214,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK},
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
-
+		
 		listTile.add(new Tile(matrix20, cellColor));
 
 		// * * *
@@ -226,8 +227,10 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK},
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
-
-		listTile.add(new Tile(matrix18, cellColor));
+		
+		temp = new Tile(matrix18, cellColor);
+		temp.rotateClockwise();
+		listTile.add(temp);
 
 		// *
 		// * *
