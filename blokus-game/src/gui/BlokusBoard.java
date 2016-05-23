@@ -34,7 +34,6 @@ public class BlokusBoard implements DrawableInterface
 
 	@Override
 	public void draw(Graphics2D g) {
-		// TODO Auto-generated method stub
 		Graphics2D g2d = (Graphics2D)g.create();
 		
 		for(int x = 0; x < Board.WIDTH; x++)
@@ -42,12 +41,16 @@ public class BlokusBoard implements DrawableInterface
 			for(int y = 0; y < Board.WIDTH; y++)
 			{
 				try {
-					g2d.drawImage(this.board.getCell(new Vector2(x, y)).getImage(),
-							this.position.getX() + x * CellColor.CELL_WIDTH, 
-							this.position.getY() + y * CellColor.CELL_HEIGHT,
-							CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+					CellColor c = this.board.getCell(new Vector2(x, y));
+					if(c != null)
+					{
+						g2d.drawImage(c.getImage(),
+								this.position.getX() + x * CellColor.CELL_WIDTH, 
+								this.position.getY() + y * CellColor.CELL_HEIGHT,
+								CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+					}
 				} catch (OutOfBoundsException e) {
-					System.err.println(e.getMessage());
+					System.err.println("EN DEHORS\n" + e.getMessage());
 					e.printStackTrace();
 				}
 			}
