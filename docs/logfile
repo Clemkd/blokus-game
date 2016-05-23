@@ -40,4 +40,9 @@ Audit IA : Il ne faut pas se focaliser uniquement sur la surface lors du parcour
 Ces 3 stratégies permettront de faire une IA plus performante.
 
 8ème jour : 23 mai 2016
-Audit IHM : 
+Audit IHM :
+  - Le bouton retour sur la page de la selection du niveau d'IA devrai etre mis plus en évidence et en bas a gauche
+  - InGame : le bouton quitter a gauche et option a droite
+  - InGame : possibilité de modifier le nom du joueur en double cliquant sur le nom "Joueur 1/2"
+  - "Acceuil" au lieu de "Quitter"
+  - Lorsqu'on clique sur "Acceuil" , il faut afficher une pop-up qui demande la confirmation de retour a l'acceuil
