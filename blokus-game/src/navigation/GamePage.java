@@ -59,10 +59,18 @@ public class GamePage extends Page implements ActionListener{
 	private BufferedImage board;
 	
 	/**
-	 * Panel des pièces des
+	 * Panel des pièces du joueur 1
 	 */
 	private PlayerPanel panelJoueur1;
 	
+	/**
+	 * Panel des pièces du joueur 2
+	 */
+	private PlayerPanel panelJoueur2;
+	
+	/**
+	 * Constructeur
+	 */
 	public GamePage() {
 		super();
 	}
@@ -75,19 +83,22 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonSave.update(elapsedTime);
 		this.buttonExit.update(elapsedTime);
 		this.panelJoueur1.update(elapsedTime);
+		this.panelJoueur2.update(elapsedTime);
+		
 		
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.board, 400, 200, this.board.getWidth(), this.board.getHeight(), null, null);
+		g.drawImage(this.board, 449, 212, null, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
 		this.buttonSave.draw(g);
 		this.buttonExit.draw(g);
 		this.panelJoueur1.draw(g);
+		this.panelJoueur2.draw(g);
 		
 		
 	}
@@ -140,12 +151,17 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"exitig.png");
 		this.buttonExit.setPosition(new Vector2(1120, POS_Y));
 		this.buttonExit.addListener(this);
-		ArrayList<CellColor> listColors = new ArrayList<>();
-		listColors.add(CellColor.BLUE);
-		listColors.add(CellColor.GREEN);
+		ArrayList<CellColor> listColorsJ1 = new ArrayList<>();
+		listColorsJ1.add(CellColor.BLUE);
+		listColorsJ1.add(CellColor.RED);
 		
-		this.panelJoueur1 = new PlayerPanel(new PlayerHuman("Moi", listColors));
+		ArrayList<CellColor> listColorsJ2 = new ArrayList<>();
+		listColorsJ2.add(CellColor.YELLOW);
+		listColorsJ2.add(CellColor.GREEN);
 		
+		
+		this.panelJoueur1 = new PlayerPanel(new PlayerHuman("Moi", listColorsJ1));
+		this.panelJoueur2 = new PlayerPanel(new PlayerHuman("Lui", listColorsJ2));
 		
 	}
 

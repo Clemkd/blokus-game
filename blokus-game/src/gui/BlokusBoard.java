@@ -7,7 +7,7 @@ import entities.CellColor;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
-public class DrawableBoard implements DrawableInterface
+public class BlokusBoard implements DrawableInterface
 {
 	/**
 	 * L'objet correspondant aux données à représenter
@@ -19,7 +19,7 @@ public class DrawableBoard implements DrawableInterface
 	 */
 	private Vector2 position;
 	
-	public DrawableBoard(Board board)
+	public BlokusBoard(Board board)
 	{
 		this.position = new Vector2();
 		this.board = board;
