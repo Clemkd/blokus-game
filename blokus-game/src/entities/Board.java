@@ -15,11 +15,11 @@ public class Board {
 	/**
 	 * La largeur du plateau de jeu en nombre de cellules
 	 */
-	protected final static int WIDTH = 20;
+	public final static int WIDTH = 20;
 	/**
 	 * La hauteur du plateau de jeu en nombre de cellules
 	 */
-	protected final static int HEIGHT = 20;
+	public final static int HEIGHT = 20;
 	
 	/**
 	 * Le tableau de cellules du plateau de jeu
