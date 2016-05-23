@@ -29,6 +29,26 @@ public class Game {
 	 */
 	protected ArrayList<ActionListener> listeners;
 	
+	public Game() {
+		this.currentTurn = 0;
+		
+		this.board = new Board();
+		
+		this.players = new ArrayList<Player>();
+		ArrayList<CellColor> colorsP1 = new ArrayList<CellColor>();
+		colorsP1.add(CellColor.BLUE);
+		colorsP1.add(CellColor.RED);
+		this.players.add(new PlayerHuman("J1", colorsP1));
+		ArrayList<CellColor> colorsP2 = new ArrayList<CellColor>();
+		colorsP2.add(CellColor.YELLOW);
+		colorsP2.add(CellColor.GREEN);
+		this.players.add(new PlayerHuman("J2", colorsP2));
+		
+		this.undoRedoManager = new UndoRedoManager<Board>();
+		
+		this.listeners = new ArrayList<ActionListener>();
+	}
+	
 	/**
 	 * Renvoie l'état de la partie, la partie est finie quand aucun joueur ne peut jouer un coup supplémentaire.
 	 * @return Etat de la partie, true si elle est terminée.

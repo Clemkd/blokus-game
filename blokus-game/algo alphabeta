@@ -12,7 +12,7 @@ Critères suppélmentaires
 private int evaluate(Game node) {
 	int res = node.getScore(this); // La valeur de base correspond au score qu'on peut esperer obtenir
 	
-	res+= bidule
+	
 	
 	return res;
 }
