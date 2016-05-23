@@ -27,7 +27,13 @@ public class BlokusTile implements DrawableInterface {
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
+		if(!Mouse.isReleased())
+		{
+			if(this.isInBounds(Mouse.getPosition()))
+			{
+				System.out.println(this.getTile().toString());
+			}
+		}
 		
 	}
 
@@ -82,5 +88,36 @@ public class BlokusTile implements DrawableInterface {
 	 */
 	public Tile getTile() {
 		return tile;
+	}
+	
+	/**
+	 * Méthode qui dit si le clic est sur la pièce
+	 * @param v la position du clic
+	 * @param positionTile 
+	 * @return vrai si la position est dans la pièce, faux sinon
+	 */
+	public boolean isInBounds(Vector2 v)
+	{
+		Vector2 fc = this.tile.getFirstCase();
+		
+		for(int i=0; i<Tile.WIDTH; i++){
+			for(int j=0; j<Tile.HEIGHT; j++){
+				if(this.tile.getCellType(i, j) == CellType.PIECE)
+				{
+					Vector2 currentPosition = new Vector2(
+						this.position.getX() + ( - fc.getX() + i) * CellColor.CELL_WIDTH,
+						this.position.getY() + ( - fc.getY() + j) * CellColor.CELL_HEIGHT);
+					
+					System.out.println(currentPosition);
+					System.exit(1);
+					if(v.getX()>currentPosition.getX() && v.getY()>currentPosition.getY() && v.getX()<currentPosition.getX()+CellColor.CELL_WIDTH && v.getY()<currentPosition.getY()+CellColor.CELL_HEIGHT )
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 }
