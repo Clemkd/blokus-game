@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import entities.CellColor;
+import entities.Game;
 import entities.PlayerHuman;
+import gui.BlokusBoard;
 import gui.BlokusButton;
 import gui.PlayerPanel;
 import utilities.Vector2;
@@ -68,6 +70,10 @@ public class GamePage extends Page implements ActionListener{
 	 */
 	private PlayerPanel panelJoueur2;
 	
+	private BlokusBoard blokusBoard;
+	
+	private Game game;
+	
 	/**
 	 * Constructeur
 	 */
@@ -84,6 +90,7 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonExit.update(elapsedTime);
 		this.panelJoueur1.update(elapsedTime);
 		this.panelJoueur2.update(elapsedTime);
+		this.blokusBoard.update(elapsedTime);
 		
 		
 	}
@@ -99,6 +106,7 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonExit.draw(g);
 		this.panelJoueur1.draw(g);
 		this.panelJoueur2.draw(g);
+		this.blokusBoard.draw(g);
 		
 		
 	}
@@ -131,6 +139,7 @@ public class GamePage extends Page implements ActionListener{
 		}
 		
 		
+		this.game = new Game();
 		
 		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"optionsig.png");
 		this.buttonOption.setPosition(new Vector2(32, POS_Y));
@@ -162,6 +171,8 @@ public class GamePage extends Page implements ActionListener{
 		
 		this.panelJoueur1 = new PlayerPanel(new PlayerHuman("Moi", listColorsJ1));
 		this.panelJoueur2 = new PlayerPanel(new PlayerHuman("Lui", listColorsJ2));
+		
+		this.blokusBoard = new BlokusBoard(this.game.getBoard());
 		
 	}
 
