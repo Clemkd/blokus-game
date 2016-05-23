@@ -121,21 +121,39 @@ public class PlayerPanel implements DrawableInterface{
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d= (Graphics2D) g.create();
-		
+		g2d.setColor(Color.WHITE);
 		BufferedImage  b = null;
+		
 		try {
-			b = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"grisJ1.png"));
+			if(player.getColors().get(0) != CellColor.YELLOW)
+			{
+				b = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"grisJ1.png"));
+			}
+			else
+			{
+				b = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"grisJ2.png"));
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		g2d.drawImage(b, 32, 32, null);
-		g2d.setColor(Color.WHITE);
-		g2d.fillRect(32, 32+49, 266, 632);
-		
-		g2d.dispose();
+
+		if(this.player.getColors().get(0) != CellColor.YELLOW)
+		{
+			g2d.drawImage(b, 32, 32, null);
+			g2d.fillRect(32, 32+49, 266, 632);
+			g2d.dispose();
+		}
+		else
+		{
+			g2d.drawImage(b, 980, 32, null);
+			g2d.fillRect(980, 32+49, 266, 632);
+			g2d.dispose();
+		}
 		
 		tilePanel1.draw(g);
+		tilePanel2.draw(g);
 		
 	}
 }
