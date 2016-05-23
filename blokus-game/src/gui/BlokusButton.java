@@ -18,6 +18,10 @@ import utilities.Vector2;
 public class BlokusButton implements DrawableInterface
 {
 	/**
+	 * Determine si le bouton est activé
+	 */
+	private boolean isEnabled;
+	/**
 	 * Determine si le bouton a été cliqué
 	 */
 	private boolean wasClicked;
@@ -42,6 +46,10 @@ public class BlokusButton implements DrawableInterface
 	private BufferedImage backgroundImageHover;
 	
 	/**
+	 * Le mask du fond du bouton lorsque celui est désactivé
+	 */
+	private BufferedImage backgroundImageDisable;
+	/**
 	 * La position absolue du bouton dans son conteneur
 	 */
 	private Vector2 position;
@@ -57,10 +65,12 @@ public class BlokusButton implements DrawableInterface
 		this.wasClicked = false;
 		this.position = new Vector2();
 		this.size = new Dimension();
+		this.isEnabled = true;
 		this.listeners = new ArrayList<ActionListener>();
 		try {
 			this.backgroundImage = ImageIO.read(new File(file));
-			this.backgroundImageHover = BufferedImageHelper.generateMask(this.backgroundImage, Color.BLACK, 0.3f);
+			this.backgroundImageHover = BufferedImageHelper.generateMask(this.backgroundImage, Color.BLACK, 0.5f);
+			this.backgroundImageDisable = BufferedImageHelper.generateMask(this.backgroundImage, Color.GRAY, 0.8f);
 			this.size = new Dimension(this.backgroundImage.getWidth(), this.backgroundImage.getHeight());
 		} catch (IOException e) {
 			System.err.println("Impossible de charger l'image " + file + " pour le bouton\nMessage : " + e.getMessage());
@@ -96,6 +106,22 @@ public class BlokusButton implements DrawableInterface
 	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
+	}
+	
+	/**
+	 * Obtient l'état courant du bouton
+	 * @return L'état courant du bouton (Activé / désactivé)
+	 */
+	public boolean isEnabled() {
+		return this.isEnabled;
+	}
+
+	/**
+	 * Définit l'activation du bouton
+	 * @param state Le nouvel état du bouton (Activé / désactivé)
+	 */
+	public void setEnabled(boolean state) {
+		this.isEnabled = state;
 	}
 	
 	/**
@@ -135,7 +161,7 @@ public class BlokusButton implements DrawableInterface
 	@Override
 	public void update(float elapsedTime) 
 	{
-		if(this.isInBounds(Mouse.getPosition()))
+		if(this.isInBounds(Mouse.getPosition()) && this.isEnabled)
 		{
 			this.mouseHover = true;
 			if(Mouse.getLastMouseButton() == Mouse.LEFT)
@@ -179,6 +205,15 @@ public class BlokusButton implements DrawableInterface
 			if(this.mouseHover)
 			{
 				g2d.drawImage(this.backgroundImageHover,
+						this.position.getX(),
+						this.position.getY(), 
+						(int)this.size.getWidth(),
+						(int)this.size.getHeight(),
+						null);
+			}
+			else if(!this.isEnabled)
+			{
+				g2d.drawImage(this.backgroundImageDisable,
 						this.position.getX(),
 						this.position.getY(), 
 						(int)this.size.getWidth(),
