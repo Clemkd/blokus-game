@@ -130,32 +130,10 @@ public class TilePanel implements DrawableInterface{
 	@Override
 	public void update(float elapsedTime) {
 		
-		BlokusTile tileRemoved = null;
 		for(BlokusTile entry : this.tiles)
 		{
-			if(this.wasClicked)
-			{
-				if(Mouse.isReleased())
-				{
-					this.wasClicked = false;
-					if(entry.isInBounds(Mouse.getPosition()))
-					{
-						tileRemoved = entry;
-					}
-				}
-			}
-			else
-			{
-				this.wasClicked = true;
-			}
-			
 			entry.update(elapsedTime);
 		}
-		if(this.wasClicked && Mouse.isReleased())
-		{
-			this.wasClicked = false;
-		}
-		this.removeTile(tileRemoved);
 	}
 
 	
