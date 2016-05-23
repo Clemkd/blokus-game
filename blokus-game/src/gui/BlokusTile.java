@@ -18,12 +18,16 @@ public class BlokusTile implements DrawableInterface {
 	 */
 	private Vector2 position;
 	
-	public BlokusTile(Tile tile)
+	public BlokusTile(Tile tile, Vector2 position)
 	{
-		this.position = new Vector2();
+		this.position = position;
 		this.tile = tile;
 	}
 	
+	public BlokusTile(Tile tile)
+	{
+		this(tile, new Vector2());
+	}
 	
 	@Override
 	public void update(float elapsedTime) {
