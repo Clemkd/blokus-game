@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import utilities.Move;
 import utilities.UndoRedoManager;
 
-public abstract class Game {
+public class Game {
 	private static final int EVENT_TURN_ENDED = 5;
 	/**
 	 * Plateau de jeu courant
@@ -33,7 +33,9 @@ public abstract class Game {
 	 * Renvoie l'état de la partie, la partie est finie quand aucun joueur ne peut jouer un coup supplémentaire.
 	 * @return Etat de la partie, true si elle est terminée.
 	 */
-	public abstract boolean isTerminated();
+	public boolean isTerminated() {
+		return false;
+	}
 	
 	/**
 	 * Transmet une copie du plateau courant
@@ -130,7 +132,7 @@ public abstract class Game {
 	 * Sauvegarde la partie dans un fichier
 	 * TODO: do it
 	 */
-	public abstract void save();
+	//public abstract void save();
 	
 	/**
 	 * Fonction appellée quand un coup valide doit être traité/appliqué par Game

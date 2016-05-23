@@ -1,7 +1,26 @@
+Critères suppélmentaires
+	Passer à travers
+	Bloquer adversaire
+	Surface disponible
+	Mieux = traverser ou bloquer ? => Paramètres IA, pondération
+	Aller vers le centre
+	Fonction d'évaluation de minimax à améliorer
+	Phases de jeu: début, milieu, fin
+	Ameliorer fonction coups possibles, moins de mises à jour, sauvegarde de ce qui existe
+	3X
+	
+private int evaluate(Game node) {
+	int res = node.getScore(this); // La valeur de base correspond au score qu'on peut esperer obtenir
+	
+	res+= bidule
+	
+	return res;
+}
+
 //alphabeta(origin, depth, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
 private Move alphabeta(Game node, int depth, boolean maximizingPlayer, int alpha, int beta) {
     if (depth == 0 or node.isTerminated())
-        return new Move(node.getScore(this));
+        return new Move(this.evaluate(node));
 
 	if (maximizingPlayer) {
 		Move bestMove = new Move(Integer.MIN_VALUE);
