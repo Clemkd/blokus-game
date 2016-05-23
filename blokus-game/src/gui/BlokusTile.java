@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Graphics2D;
 
+import entities.CellColor;
+import entities.CellType;
 import entities.Tile;
 import utilities.Vector2;
 
@@ -31,8 +33,31 @@ public class BlokusTile implements DrawableInterface {
 
 	@Override
 	public void draw(Graphics2D g) {
-		// TODO Auto-generated method stub
+		Graphics2D g2d = (Graphics2D)g.create();
 		
+		Vector2 fc = this.tile.getFirstCase();
+		
+		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
+		{
+			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
+			{	
+				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
+				{
+					Vector2 currentPosition = new Vector2(
+							this.position.getX() + ( - fc.getX() + offsetX) * CellColor.CELL_WIDTH,
+							this.position.getY() + ( - fc.getY() + offsetY) * CellColor.CELL_HEIGHT);
+					
+					g2d.drawImage(this.tile.getCouleur().getImage(), 
+							currentPosition.getX(),
+							currentPosition.getY(), 
+							CellColor.CELL_WIDTH, 
+							CellColor.CELL_HEIGHT, 
+							null);
+				}
+			}
+		}
+		
+		g2d.dispose();
 	}
 	
 	/**
