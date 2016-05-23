@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import entities.Board;
 import entities.CellColor;
+import entities.Tile;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
@@ -69,6 +70,14 @@ public class BlokusBoard implements DrawableInterface
 	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
+	}
+	
+	/**
+	 * Obtient l'objet de données de la représentation
+	 * @return L'objet de données
+	 */
+	public Board getBoard() {
+		return this.board;
 	}
 	
 }
