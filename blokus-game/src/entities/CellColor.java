@@ -39,8 +39,8 @@ public enum CellColor {
 	 */
 	private BufferedImage image;
 	
-	public final static int CELL_WIDTH = 16;
-	public final static int CELL_HEIGHT = 16;
+	public final static int CELL_WIDTH = 20;
+	public final static int CELL_HEIGHT = 20;
 	
 	/**
 	 * Constructeur de CellColor
