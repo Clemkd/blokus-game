@@ -22,6 +22,11 @@ public class Navigation {
 	 */
 	public static Page gamePage = new GamePage();
 	
+	
+	/**
+	 * L'état du jeu: page des options
+	 */
+	public static Page optionPage = new OptionPage();
 	/**
 	 * Change l'état de jeu et navigue vers cet état
 	 * @param p Le nouvel état de jeu
@@ -38,6 +43,8 @@ public class Navigation {
 		
 		page.loadContents();
 	}
+	
+	
 	
 	/**
 	 * Obtient l'état courant du jeu

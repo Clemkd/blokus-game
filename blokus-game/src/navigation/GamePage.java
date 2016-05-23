@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 import entities.CellColor;
 import entities.Game;
@@ -121,7 +122,7 @@ public class GamePage extends Page implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof BlokusButton){
 			if(e.getSource().equals(this.buttonOption)){
-				//TODO navigation menu options
+				Navigation.NavigateTo(Navigation.optionPage);
 			}else if(e.getSource().equals(this.buttonUndo)){
 				if(this.game.canUndo()){
 					this.game.undoMove();
@@ -131,7 +132,8 @@ public class GamePage extends Page implements ActionListener{
 					this.game.redoMove();
 				}
 			}else if(e.getSource().equals(this.buttonSave)){
-				//TODO sauvegarder l'état du jeu
+				JFileChooser jFileChooser = new JFileChooser();
+				jFileChooser.showSaveDialog(jFileChooser);
 			}else if(e.getSource().equals(this.buttonExit)){
 				Navigation.NavigateTo(Navigation.homePage);
 			}

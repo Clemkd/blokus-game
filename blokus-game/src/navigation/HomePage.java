@@ -93,7 +93,7 @@ public class HomePage extends Page implements ActionListener{
 			}else if(e.getSource().equals(this.buttonTutorial)){
 				//TODO navigation Tutorial
 			}else if(e.getSource().equals(this.buttonOption)){
-				//TODO navigation exit
+				Navigation.NavigateTo(Navigation.optionPage);
 			}else if(e.getSource().equals(this.buttonExit)){
 				System.exit(0);
 			}
