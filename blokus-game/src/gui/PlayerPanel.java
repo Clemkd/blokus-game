@@ -34,15 +34,7 @@ public class PlayerPanel implements DrawableInterface{
 	private TilePanel tilePanel2;
 	
 	private BufferedImage  b;
-	
-	private static final int TILE_PANEL_WIDTH = 200;
-	
-	private static final int TILE_PANEL_HEIGHT = 400;
-	
-	private static final int POS_X = 0;
-	
-	private static final int POS_Y = 0;
-	
+
 	private Player player;
 	/**
 	 * Constructeur de PlayerPanel
@@ -52,8 +44,16 @@ public class PlayerPanel implements DrawableInterface{
 	public PlayerPanel(Player p) {
 		this.player = p;
 		this.state = false;
-		this.tilePanel1 = new TilePanel(CellColor.BLUE, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2(POS_X, POS_Y), p );
-		this.tilePanel2 = new TilePanel(CellColor.RED, TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT, new Vector2(POS_X, POS_Y+TILE_PANEL_HEIGHT), p );;
+		if(player.getColors().get(0) != CellColor.YELLOW)
+		{
+			this.tilePanel1 = new TilePanel(CellColor.BLUE, p );
+			this.tilePanel2 = new TilePanel(CellColor.RED, p );;
+		}
+		else
+		{
+			this.tilePanel1 = new TilePanel(CellColor.YELLOW, p );
+			this.tilePanel2 = new TilePanel(CellColor.GREEN, p );;
+		}
 		b = null;
 		
 		try {

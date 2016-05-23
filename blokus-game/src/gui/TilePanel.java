@@ -33,7 +33,7 @@ public class TilePanel implements DrawableInterface{
 	 */
 	private boolean state;
 	
-	private boolean clicked;
+	private boolean wasClicked;
 	
 	/**
 	 * La couleur des pièces
@@ -44,22 +44,7 @@ public class TilePanel implements DrawableInterface{
 	 * La liste des pièces
 	 */
 	private ArrayList<BlokusTile> tiles;
-	
-	/**
-	 * La longueur du panel
-	 */
-	private int width;
 
-	/**
-	 * La largeur du panel
-	 */
-	private int height;
-	
-	/**
-	 * Position du panel dans le panel joueur (PlayerPanel)
-	 */
-	private Vector2 pos;
-	
 	private BufferedImage cellMaskImage;
 	
 	private Player player;
@@ -70,15 +55,13 @@ public class TilePanel implements DrawableInterface{
 	 * Constructeur de TilePanel
 	 * @param color la couleur des pièces dans le panel
 	 */
-	public TilePanel(CellColor color, int width, int height, Vector2 pos, Player p) {
+	public TilePanel(CellColor color, Player p) {
 		this.state = false;
 		this.tileColor = color;
-		this.width = width;
-		this.height = height;
-		this.pos = pos;
+		
 		this.player = p;
 		this.tiles = new ArrayList<BlokusTile>();
-		this.clicked = false;
+		this.wasClicked = false;
 		
 		ArrayList<Tile> listOfTiles = Tile.getListOfNeutralTile(color);
 		this.initColor(listOfTiles);
@@ -106,16 +89,16 @@ public class TilePanel implements DrawableInterface{
 	
 	/**
 	 * Fonction qui renvoie la pièce sélectionnée lors du clic grâce à la position v
-	 * @param clickedPosition la position du clic
+	 * @param v la position du clic
 	 * @return la pièce cliquée
 	 */
-	public BlokusTile getTile(Vector2 clickedPosition)
+	public BlokusTile getTile(Vector2 v)
 	{
 		BlokusTile res = null;
 		
 		for(BlokusTile entry : this.tiles)
 		{
-			if(entry.isInBounds(clickedPosition))
+			if(entry.isInBounds(v))
 			{
 				res = entry;
 				break;
@@ -140,54 +123,6 @@ public class TilePanel implements DrawableInterface{
 		this.state = false;
 	}
 	
-	/**
-	 * Getter de la longueur
-	 * @return la longueur
-	 */
-	public int getWidth() {
-		return width;
-	}
-
-	/**
-	 * Settter de la longueur
-	 * @param width la longueur
-	 */
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	/**
-	 * Getter de la largeur
-	 * @return la largeur
-	 */
-	public int getHeight() {
-		return height;
-	}
-
-	/**
-	 * Setter de la largeur
-	 * @param height la largeur
-	 */
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	/**
-	 * Getter de la position du panel
-	 * @return la position du panel
-	 */
-	public Vector2 getPos() {
-		return pos;
-	}
-
-	/**
-	 * Setter de la position du panel
-	 * @param pos la position du panel
-	 */
-	public void setPos(Vector2 pos) {
-		this.pos = pos;
-	}
-	
 	private int basePosCellX = 0;
 	private int basePosCellY = 0;
 	
@@ -198,20 +133,27 @@ public class TilePanel implements DrawableInterface{
 		BlokusTile tileRemoved = null;
 		for(BlokusTile entry : this.tiles)
 		{
-			if(!Mouse.isReleased())
+			if(this.wasClicked)
 			{
-				clicked = true;
-				if(clicked)
+				if(Mouse.isReleased())
 				{
+					this.wasClicked = false;
 					if(entry.isInBounds(Mouse.getPosition()))
 					{
-						
 						tileRemoved = entry;
 					}
 				}
 			}
-			clicked = false;
+			else
+			{
+				this.wasClicked = true;
+			}
+			
 			entry.update(elapsedTime);
+		}
+		if(this.wasClicked && Mouse.isReleased())
+		{
+			this.wasClicked = false;
 		}
 		this.removeTile(tileRemoved);
 	}
