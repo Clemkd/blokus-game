@@ -26,6 +26,12 @@ public class Navigation {
 	/**
 	 * L'état du jeu: page des options
 	 */
+	
+	/**
+	 * L'état du jeu: page de tutorial
+	 */
+	public static Page tutorialPage = new TutorialPage();
+	
 	public static Page optionPage = new OptionPage();
 	/**
 	 * Change l'état de jeu et navigue vers cet état

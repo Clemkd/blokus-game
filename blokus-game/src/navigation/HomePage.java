@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+
 import gui.BlokusButton;
 import utilities.Vector2;
 
@@ -89,9 +91,10 @@ public class HomePage extends Page implements ActionListener{
 			}else if(e.getSource().equals(this.buttonTwoPlayer)){
 				Navigation.NavigateTo(Navigation.gamePage);
 			}else if(e.getSource().equals(this.buttonLoad)){
-				//TODO navigation option
+				JFileChooser jFileChooser = new JFileChooser();
+				jFileChooser.showOpenDialog(jFileChooser);
 			}else if(e.getSource().equals(this.buttonTutorial)){
-				//TODO navigation Tutorial
+				Navigation.NavigateTo(Navigation.tutorialPage);
 			}else if(e.getSource().equals(this.buttonOption)){
 				Navigation.NavigateTo(Navigation.optionPage);
 			}else if(e.getSource().equals(this.buttonExit)){
