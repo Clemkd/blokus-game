@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
 import entities.CellColor;
+import entities.CellType;
 import entities.Game;
 import entities.PlayerHuman;
 import entities.Tile;
@@ -135,20 +136,53 @@ public class GamePage extends Page implements ActionListener{
 		
 		if(this.selectedTile != null)
 		{
+			int xMatrix = 0;
+			int yMatrix = 0;
+			int xMatrix2 = 0;
+			int yMatrix2 = 0;
+			
+			CellType[][] matrix = this.selectedTile.getTile().getMatrix();
+			
+			xMatrix = this.selectedTile.getTile().getFirstCase().getX();
+			yMatrix = this.selectedTile.getTile().getFirstCase().getY();
+			
+			for(int i = 0; i<Tile.WIDTH; i++)
+			{
+				for (int j=0; j<Tile.HEIGHT; j++)
+				{
+					if(matrix[j][i] == CellType.PIECE)
+					{
+						xMatrix2 = i;
+						yMatrix2 = j;
+						break;
+					}
+				}
+			}			
+			int offsetPosX = (xMatrix-xMatrix2)*CellColor.CELL_WIDTH;
+			int offsetPosY = (yMatrix-xMatrix2)*CellColor.CELL_HEIGHT;
+			
 			if(this.blokusBoard.isInBounds(Mouse.getPosition()))
 			{
+				
+				
+				
 				int x = (Mouse.getPosition().getX() - this.blokusBoard.getPosition().getX()) / CellColor.CELL_WIDTH;
 				int y = (Mouse.getPosition().getY() - this.blokusBoard.getPosition().getY()) / CellColor.CELL_HEIGHT;
 				
+				
+				
 				this.selectedTile.setPosition(new Vector2(
-						(x * CellColor.CELL_WIDTH) + this.blokusBoard.getPosition().getX(),
-						(y * CellColor.CELL_HEIGHT) + this.blokusBoard.getPosition().getY()));
+						(x * CellColor.CELL_WIDTH) + this.blokusBoard.getPosition().getX()+offsetPosX,
+						(y * CellColor.CELL_HEIGHT) + this.blokusBoard.getPosition().getY()+offsetPosY));
 				
 			}
 			else
 			{
-				this.selectedTile.setPosition(Mouse.getPosition());
+				//this.selectedTile.setPosition(Mouse.getPosition());
+				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX()+offsetPosX, Mouse.getPosition().getY()+offsetPosY));
 			}
+			offsetPosX = 0;
+			offsetPosY = 0;
 			this.selectedTile.update(elapsedTime);
 			/**********************************************/
 			/************** Drag and drop *****************/
