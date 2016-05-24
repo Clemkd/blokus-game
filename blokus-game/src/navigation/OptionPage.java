@@ -109,11 +109,11 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonToValid.setPosition(new Vector2(1035, 653));
 		this.buttonToValid.addListener(this);
 		
-		this.checkBox = new BlokusCheckBox(true, false);
+		/*this.checkBox = new BlokusCheckBox(true, false);
 		this.checkBox.setPosition(new Vector2(100, 100));
 		
 		this.titre1 = new JLabel();
-		
+		*/
 	}
 
 	@Override
