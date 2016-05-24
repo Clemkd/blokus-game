@@ -65,7 +65,7 @@ public class OptionPage extends Page implements ActionListener{
 		this.checkBox.draw(g2d);
 		
 		g2d.setFont(this.font);
-		g2d.drawString("ccc", 50, 50);
+		g2d.drawString("JEU", 50, 50);
 		
 		if(this.onGeneral){
 			g2d.setColor(new Color(0, 93, 188));
