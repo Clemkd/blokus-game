@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 
 import gui.BlokusButton;
 import utilities.Vector2;
@@ -53,6 +55,8 @@ public class HomePage extends Page implements ActionListener{
 	 */
 	private BufferedImage titre;
 	
+	private OptionPopup imageOption = null;
+	
 	/**
 	 * Constructeur
 	 */
@@ -73,13 +77,18 @@ public class HomePage extends Page implements ActionListener{
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(this.titre,500, 51, null);
-		this.buttonOnePLayer.draw(g);
-		this.buttonTwoPlayer.draw(g);
-		this.buttonLoad.draw(g);
-		this.buttonTutorial.draw(g);
-		this.buttonOption.draw(g);
-		this.buttonExit.draw(g);
+		Graphics2D batch = (Graphics2D) g.create();
+		batch.drawImage(this.titre,500, 51, null);
+		this.buttonOnePLayer.draw(batch);
+		this.buttonTwoPlayer.draw(batch);
+		this.buttonLoad.draw(batch);
+		this.buttonTutorial.draw(batch);
+		this.buttonOption.draw(batch);
+		this.buttonExit.draw(batch);
+		if(this.imageOption != null){
+			imageOption.draw(batch);
+		}
+		batch.dispose();
 		
 	}
 
@@ -96,9 +105,15 @@ public class HomePage extends Page implements ActionListener{
 			}else if(e.getSource().equals(this.buttonTutorial)){
 				Navigation.NavigateTo(Navigation.tutorialPage);
 			}else if(e.getSource().equals(this.buttonOption)){
-				Navigation.previous = this;
-				//Navigation.NavigateTo(Navigation.optionPage);
-				OptionPopUp popUp = new OptionPopUp(null, "options", true, null);
+				/*Navigation.previous = this;
+				Navigation.NavigateTo(Navigation.optionPage);
+				OptionPopUp popUp = new OptionPopUp(null, "options", false, null);*/
+				
+				this.imageOption = new OptionPopup();
+				
+				
+				
+				
 			}else if(e.getSource().equals(this.buttonExit)){
 				System.exit(0);
 			}
