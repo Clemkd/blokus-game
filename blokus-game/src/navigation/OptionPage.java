@@ -64,12 +64,14 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonRules.draw(g2d);
 		this.checkBox.draw(g2d);
 		
-		g2d.setFont(this.font);
-		g2d.drawString("JEU", 50, 50);
-		
 		if(this.onGeneral){
 			g2d.setColor(new Color(0, 93, 188));
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
+			
+			g2d.setFont(this.font);
+			g2d.setColor(Color.WHITE);
+			g2d.drawString("JEU", 391, 112);
+			
 		}else if(this.onControl){
 			g2d.setColor(new Color(0, 141,44));
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
@@ -78,6 +80,8 @@ public class OptionPage extends Page implements ActionListener{
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
 		}
 		this.buttonToValid.draw(g2d);
+
+		
 		g2d.dispose();
 	}
 
