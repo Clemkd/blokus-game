@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import navigation.Page;
-import utilities.BufferedImageHelper;
+import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class BlokusCheckBox implements DrawableInterface {
