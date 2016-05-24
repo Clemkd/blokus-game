@@ -1,10 +1,13 @@
 package gui;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import entities.Board;
 import entities.CellColor;
 import entities.Tile;
+import utilities.BufferedImageHelper;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
@@ -20,27 +23,56 @@ public class BlokusBoard implements DrawableInterface
 	 */
 	private Vector2 position;
 	
+	/**
+	 * Determine si l'affichage du plateau doit prendre en compte l'affichage des placements possibles
+	 */
+	private boolean isValidMovesShown;
+	
+	/**
+	 * Le mask de cellule
+	 */
+	private BufferedImage cellMask;
+	
+	/**
+	 * La couleur actuelle pour la recherche des placements possibles
+	 */
+	private CellColor cellColorForValidMoves;
+	
+	/**
+	 * La liste des placements possibles
+	 */
+	private ArrayList<Vector2> validsMoves; 
+	
 	public BlokusBoard(Board board)
 	{
 		this.position = new Vector2();
 		this.board = board;
+		this.isValidMovesShown = false;
+		this.cellColorForValidMoves = CellColor.BLUE;
+		this.validsMoves = new ArrayList<Vector2>();
+		this.cellMask = BufferedImageHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
 	}
 	
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-		
+		if(this.isValidMovesShown)
+		{
+			this.validsMoves = this.board.getValidMoves(this.cellColorForValidMoves);
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D)g.create();
 		
+		
 		for(int x = 0; x < Board.WIDTH; x++)
 		{
 			for(int y = 0; y < Board.WIDTH; y++)
 			{
-				try {
+				try 
+				{
+					
 					CellColor c = this.board.getCell(new Vector2(x, y));
 					if(c != null)
 					{
@@ -49,8 +81,21 @@ public class BlokusBoard implements DrawableInterface
 								this.position.getY() + y * CellColor.CELL_HEIGHT,
 								CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
 					}
-				} catch (OutOfBoundsException e) {
-					System.err.println("EN DEHORS\n" + e.getMessage());
+					
+					if(this.isValidMovesShown)
+					{
+						if(this.validsMoves != null && !this.validsMoves.contains(new Vector2(x, y)))
+						{
+							g2d.drawImage(this.cellMask, 
+									this.position.getX() + x * CellColor.CELL_WIDTH, 
+									this.position.getY() + y * CellColor.CELL_HEIGHT,
+									CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
+						}
+					}
+				} 
+				catch (OutOfBoundsException e) 
+				{
+					System.err.println(e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -91,6 +136,17 @@ public class BlokusBoard implements DrawableInterface
 	public boolean isInBounds(Vector2 position) {
 		return position.getX() > this.getPosition().getX() && position.getX() < this.getPosition().getX() + Board.WIDTH * CellColor.CELL_WIDTH &&
 				position.getY() > this.getPosition().getY() && position.getY() < this.getPosition().getY() + Board.HEIGHT * CellColor.CELL_HEIGHT;
+	}
+	
+	/**
+	 * Determine l'�tat d'affichage des placements possibles sur la grille de jeu
+	 * @param state L'�tat d'affichage (True pour afficher, False dans la cas contraire)
+	 * @param color La couleur � tester pour les possibilit�s
+	 */
+	public void showValidMoves(boolean state, CellColor color)
+	{
+		this.isValidMovesShown = state;
+		this.cellColorForValidMoves = color;
 	}
 	
 }
