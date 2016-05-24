@@ -150,21 +150,36 @@ public class PlayerPanel implements DrawableInterface{
 		g2d.dispose();
 		
 	}
-	
+	/**
+	 * Obtient la position du panel
+	 * @return La position courante du panel
+	 */
 	public Vector2 getPosition() {
 		return position;
 	}
 
+	/**
+	 * Determine la position du panel
+	 * @param position La nouvelle position du panel
+	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
 		this.tilePanel1.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), OFFSET_Y_TILE_PANEL + this.position.getY()));
 		this.tilePanel2.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), this.position.getY() + (int)this.tilePanel1.getSize().getHeight()));
 	}
 
+	/**
+	 * Obtient la taille du panel
+	 * @return La taille du panel
+	 */
 	public Dimension getSize() {
 		return size;
 	}
 
+	/**
+	 * Determine la taille du panel
+	 * @param size La nouvelle taille du panel
+	 */
 	public void setSize(Dimension size) {
 		this.size = size;
 	}

@@ -76,7 +76,7 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public TilePanel() 
 	{
-		this.state = false;
+		this.setState(false);
 		this.position = new Vector2();
 		this.tiles = new BlokusTile[Tile.MAX_COUNT];
 		this.size = new Dimension(TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT);
@@ -163,18 +163,21 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public void setEnabled(boolean state)
 	{
-		this.state = state;
+		this.setState(state);
 	}
 	
 
 	@Override
 	public void update(float elapsedTime) 
 	{	
-		for(int i = 0; i < this.tiles.length; i++)
+		if(this.getState())
 		{
-			if(tiles[i] != null)
+			for(int i = 0; i < this.tiles.length; i++)
 			{
-				tiles[i].update(elapsedTime);
+				if(tiles[i] != null)
+				{
+					tiles[i].update(elapsedTime);
+				}
 			}
 		}
 	}
@@ -205,23 +208,58 @@ public class TilePanel implements DrawableInterface{
 				p.getY() < this.getSize().getHeight() + this.position.getY();
 	}
 	
+	/**
+	 * Obtient la position du panel
+	 * @return La position du panel
+	 */
 	public Vector2 getPosition() {
 		return position;
 	}
 
+	/**
+	 * Determine la position du panel
+	 * @param position La nouvelle position du panel
+	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
 		this.refreshTilesPositions();
 	}
 	
+	/**
+	 * Obtient la taille du panel
+	 * @return La taille du panel
+	 */
 	public Dimension getSize() {
 		return size;
 	}
 
+	/**
+	 * Determine la taille du panel
+	 * @param size La nouvelle taille du panel
+	 */
 	public void setSize(Dimension size) {
 		this.size = size;
 	}
 	
+	/**
+	 * Obtient l'état du panel
+	 * @return L'état courant du panel
+	 */
+	public boolean getState() {
+		return state;
+	}
+
+	/**
+	 * Determine l'état du panel
+	 * @param state Le nouvel état du panel
+	 */
+	public void setState(boolean state) {
+		this.state = state;
+	}
+	
+	/**
+	 * Met à jour la position des tuiles du panel
+	 */
 	private void refreshTilesPositions()
 	{
 		for(int i = 0; i < this.tiles.length; i++)
@@ -233,6 +271,5 @@ public class TilePanel implements DrawableInterface{
 						tilesPosition[i].getY() + this.position.getY()));
 			}
 		}
-		
 	}
 }
