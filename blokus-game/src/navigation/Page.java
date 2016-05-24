@@ -15,6 +15,12 @@ public abstract class Page implements DrawableInterface{
 	public static final String PATH_RESOURCES_BOUTONS = "./resources/boutons/";
 	
 	/**
+	 * Constante d'accès au dossier de resources des fonts
+	 */
+	public static final String PATH_RESOURCES_FONTS = "./resources/fonts/";
+	
+	
+	/**
 	 * Méthode de chargement du contenu de l'état de jeu
 	 */
 	public abstract void loadContents();
