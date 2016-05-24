@@ -87,6 +87,8 @@ public class GamePage extends Page implements ActionListener{
 
 	private Vector2 initialPositionTile;
 	
+	private Vector2 oldVector;
+	
 	/**
 	 * Constructeur
 	 */
@@ -171,12 +173,21 @@ public class GamePage extends Page implements ActionListener{
 				}
 			}			
 			int offsetPosX = (xMatrix-xMatrix2)*CellColor.CELL_WIDTH;
-			int offsetPosY = (yMatrix-xMatrix2)*CellColor.CELL_HEIGHT;
+			int offsetPosY = (yMatrix-yMatrix2)*CellColor.CELL_HEIGHT;
 
 			if(this.blokusBoard.isInBounds(Mouse.getPosition()))
 			{
 				int x = (Mouse.getPosition().getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X)) / CellColor.CELL_WIDTH;
 				int y = (Mouse.getPosition().getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)) / CellColor.CELL_HEIGHT;
+				
+				if(x!=oldVector.getX()||y!=oldVector.getY())
+				{
+					oldVector.setX(x);
+					oldVector.setY(y);
+					
+					
+					System.out.println(this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), new Vector2(x,y)));
+				}
 
 				this.selectedTile.setPosition(new Vector2(
 						(x * CellColor.CELL_WIDTH) + (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X) + offsetPosX,
@@ -185,7 +196,6 @@ public class GamePage extends Page implements ActionListener{
 			}
 			else
 			{
-				//this.selectedTile.setPosition(Mouse.getPosition());
 				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX()+offsetPosX, Mouse.getPosition().getY()+offsetPosY));
 			}
 			offsetPosX = 0;
@@ -294,6 +304,8 @@ public class GamePage extends Page implements ActionListener{
 			
 			this.blokusBoard = new BlokusBoard(this.game.getBoard());
 			this.blokusBoard.setPosition(new Vector2(Window.WIDTH / 2 - (int)this.blokusBoard.getSize().getWidth() / 2, 212));
+			
+			this.oldVector = new Vector2(-1,-1);
 			
 			flagLoad = true;
 		}
