@@ -30,8 +30,6 @@ public class GamePage extends Page implements ActionListener{
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
 	private static final int POS_Y = 725;
-	private static final int OFFSET_X = 15;
-	private static final int OFFSET_Y = 15;
 	
 	private boolean inDragAndDrop;
 	
@@ -163,7 +161,7 @@ public class GamePage extends Page implements ActionListener{
 		Graphics2D g2d = (Graphics2D)g.create();
 		
 		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.board, this.blokusBoard.getPosition().getX() - OFFSET_X, this.blokusBoard.getPosition().getY() - OFFSET_Y, null, null);
+		g.drawImage(this.board, this.blokusBoard.getPosition().getX(), this.blokusBoard.getPosition().getY(), null, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
@@ -218,23 +216,23 @@ public class GamePage extends Page implements ActionListener{
 		this.game = new Game();
 		
 		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"optionsig.png");
-		this.buttonOption.setPosition(new Vector2(32, POS_Y));
+		this.buttonOption.setPosition(new Vector2(1143, POS_Y));
 		this.buttonOption.addListener(this);
 		
 		this.buttonUndo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"annulerig.png");
-		this.buttonUndo.setPosition(new Vector2(505, POS_Y));
+		this.buttonUndo.setPosition(new Vector2(526, POS_Y));
 		this.buttonUndo.addListener(this);
 		
 		this.buttonRedo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"refaireig.png");
-		this.buttonRedo.setPosition(new Vector2(650, POS_Y));
+		this.buttonRedo.setPosition(new Vector2(647, POS_Y));
 		this.buttonRedo.addListener(this);
 		
 		this.buttonSave = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"sauvegarder.png");
-		this.buttonSave.setPosition(new Vector2(940, POS_Y));
+		this.buttonSave.setPosition(new Vector2(980, POS_Y));
 		this.buttonSave.addListener(this);
 		
-		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"exitig.png");
-		this.buttonExit.setPosition(new Vector2(1120, POS_Y));
+		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"accueil.png");
+		this.buttonExit.setPosition(new Vector2(32, POS_Y));
 		this.buttonExit.addListener(this);
 		ArrayList<CellColor> listColorsJ1 = new ArrayList<>();
 		listColorsJ1.add(CellColor.BLUE);
