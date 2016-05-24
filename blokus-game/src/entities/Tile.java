@@ -61,6 +61,10 @@ public class Tile {
 	}
 
 
+	public int getId() {
+		return id;
+	}
+
 	/**
 	 * Accessseur de couleur
 	 * @return le type de cellule

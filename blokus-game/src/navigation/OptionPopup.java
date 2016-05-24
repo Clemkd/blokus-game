@@ -37,9 +37,6 @@ public class OptionPopup implements ActionListener, DrawableInterface {
 		batch.dispose();
 		g2.drawImage(this.imageOption, 10, 10, 1200, 800, null);
 		g2.dispose();
-		
-		
-		
 	}
 
 	@Override
