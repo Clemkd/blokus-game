@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import entities.CellColor;
 import entities.Player;
+import entities.Tile;
 import navigation.Page;
 import utilities.Vector2;
 
@@ -20,17 +21,13 @@ import utilities.Vector2;
  */
 public class PlayerPanel implements DrawableInterface{
 	
-	private final static int OFFSET_X_P1_BLUE = 48;
-	private final static int OFFSET_Y_P1_BLUE = 91;
+	// p2 995
+	private final static int OFFSET_X_TILE_PANEL = 20;
+	private final static int OFFSET_Y_TILE_PANEL1 = 80;
+	private final static int OFFSET_Y_TILE_PANEL2 = 400;
 	
-	private final static int OFFSET_X_P2_YELLOW = 995;
-	private final static int OFFSET_Y_P2_YELLOW = 91;
-	
-	private final static int OFFSET_X_P1_RED = 48;
-	private final static int OFFSET_Y_P1_RED = 400;
-	
-	private final static int OFFSET_X_P2_GREEN = 995;
-	private final static int OFFSET_Y_P2_GREEN = 400;
+	private final static int DEFAULT_WIDTH = 266;
+	private final static int DEFAULT_HEIGHT = 632;
 	
 	/**
 	 * Etat du panel joueur
@@ -47,9 +44,14 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	private TilePanel tilePanel2;
 	
-	private BufferedImage b;
+	private BufferedImage headerPanelImage;
 
 	private Player player;
+	
+	private Vector2 position;
+
+	private Dimension size;
+	
 	/**
 	 * Constructeur de PlayerPanel
 	 * @param t1 le premier panel du joueur
@@ -58,39 +60,41 @@ public class PlayerPanel implements DrawableInterface{
 	public PlayerPanel(Player p) {
 		this.player = p;
 		this.state = false;
-		if(player.getColors().get(0) != CellColor.YELLOW)
-		{
-			this.tilePanel1 = new TilePanel(CellColor.BLUE);
-			this.tilePanel1.setPosition(new Vector2(OFFSET_X_P1_BLUE, OFFSET_Y_P1_BLUE));
-			this.tilePanel1.setSize(new Dimension(267, 652));
-			this.tilePanel2 = new TilePanel(CellColor.RED);
-			this.tilePanel2.setPosition(new Vector2(OFFSET_X_P1_RED, OFFSET_Y_P1_RED));
-			this.tilePanel1.setSize(new Dimension(267, 652));
-		}
-		else
-		{
-			this.tilePanel1 = new TilePanel(CellColor.YELLOW);
-			this.tilePanel2.setPosition(new Vector2(OFFSET_X_P2_YELLOW, OFFSET_Y_P2_YELLOW));
-			this.tilePanel1.setSize(new Dimension(267, 652));
-			this.tilePanel2 = new TilePanel(CellColor.GREEN);
-			this.tilePanel2.setPosition(new Vector2(OFFSET_X_P2_GREEN, OFFSET_Y_P2_GREEN));
-			this.tilePanel1.setSize(new Dimension(267, 652));
-		}
-		b = null;
+		this.size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+		this.tilePanel1 = new TilePanel();
+		this.tilePanel2 = new TilePanel();
+		this.setPosition(new Vector2());
 		
-		try {
-			if(player.getColors().get(0) != CellColor.YELLOW)
-			{
-				b = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"grisJ1.png"));
-			}
-			else
-			{
-				b = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"grisJ2.png"));
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		try 
+		{
+			this.headerPanelImage = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"grisJ1.png"));
+		} 
+		catch (IOException e) 
+		{
 			e.printStackTrace();
+		}
+		
+		this.refreshTiles();
+	}
+	
+	/**
+	 * Met à jour la liste des tuiles
+	 */
+	public void refreshTiles()
+	{
+		this.tilePanel1.clear();
+		this.tilePanel2.clear();
+		for(Tile t : this.player.getTileInventory())
+		{
+			if(t.getCouleur() == this.player.getColors().get(0))
+			{
+				this.tilePanel1.addTile(t);
+			}
+			else if(t.getCouleur() == this.player.getColors().get(1))
+			{
+				this.tilePanel2.addTile(t);
+			}
 		}
 	}
 
@@ -134,24 +138,34 @@ public class PlayerPanel implements DrawableInterface{
 
 	@Override
 	public void draw(Graphics2D g) {
-		Graphics2D g2d= (Graphics2D) g.create();
-		g2d.setColor(Color.BLACK);
+		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.drawImage(this.headerPanelImage, this.position.getX(), this.position.getY(), null);
+		g2d.setColor(Color.WHITE);
 		
-		if(this.player.getColors().get(0) != CellColor.YELLOW)
-		{
-			g2d.drawImage(this.b, 32, 32, null);
-			g2d.fillRect(32, 32+49, 266, 632);
-			g2d.dispose();
-		}
-		else
-		{
-			g2d.drawImage(this.b, 980, 32, null);
-			g2d.fillRect(980, 32+49, 266, 632);
-			g2d.dispose();
-		}
+		g2d.fillRect(this.position.getX(), this.position.getY() + this.headerPanelImage.getHeight(), (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
 		
-		tilePanel1.draw(g);
-		tilePanel2.draw(g);
+		this.tilePanel1.draw(g2d);
+		this.tilePanel2.draw(g2d);
 		
+		g2d.dispose();
+		
+	}
+	
+	public Vector2 getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
+		this.tilePanel1.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), OFFSET_Y_TILE_PANEL1 + this.position.getY()));
+		this.tilePanel2.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), OFFSET_Y_TILE_PANEL2 + this.position.getY()));
+	}
+
+	public Dimension getSize() {
+		return size;
+	}
+
+	public void setSize(Dimension size) {
+		this.size = size;
 	}
 }

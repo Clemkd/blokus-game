@@ -1,13 +1,11 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import entities.CellColor;
-import entities.Player;
 import entities.Tile;
 import utilities.BufferedImageHelper;
 import utilities.Vector2;
@@ -62,40 +60,38 @@ public class TilePanel implements DrawableInterface{
 	private boolean state;
 	
 	/**
-	 * Determine si le panel a été cliqué
-	 */
-	private boolean wasClicked;
-	
-	/**
-	 * La couleur des pièces
-	 */
-	private CellColor tileColor;
-	
-	/**
 	 * La liste des pièces
 	 */
 	private BlokusTile[] tiles;
 
 	@SuppressWarnings("unused")
 	private BufferedImage cellMaskImage;
-
-
-	private BlokusTile bt;
 	
 	/**
 	 * Constructeur de TilePanel
 	 * @param color la couleur des pièces dans le panel
 	 */
-	public TilePanel(CellColor color) {
+	public TilePanel() 
+	{
 		this.state = false;
-		this.tileColor = color;
-		
+		this.position = new Vector2();
 		this.tiles = new BlokusTile[Tile.MAX_COUNT];
-		this.wasClicked = false;
+		this.size = new Dimension(267, 652);
 		
-		this.cellMaskImage = BufferedImageHelper.generateMask(color.getImage(), Color.BLACK, 0.5f);
+		this.cellMaskImage = BufferedImageHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
 	}
-
+	
+	/**
+	 * Vide le panel de toutes ses tuiles
+	 */
+	public void clear()
+	{
+		for(int i = 0; i < this.tiles.length; i++)
+		{
+			this.tiles[i] = null;
+		}
+	}
+	
 	/**
 	 * Fonction qui ajoute une pièce dans le panel
 	 * @param t la pièce concernée
@@ -103,7 +99,9 @@ public class TilePanel implements DrawableInterface{
 	public void addTile(Tile t)
 	{
 		Vector2 tilePosition = tilesPosition[t.getId()];
-		this.tiles[t.getId()] = new BlokusTile(t, new Vector2(tilePosition.getX() + this.position.getX(), tilePosition.getY() + this.position.getY()));
+		Vector2 absoluteTilePosition = new Vector2(tilePosition.getX() + this.position.getX(), tilePosition.getY() + this.position.getY());
+		System.out.println(absoluteTilePosition);
+		this.tiles[t.getId()] = new BlokusTile(t, absoluteTilePosition);
 	}
 	
 	/**
@@ -168,11 +166,14 @@ public class TilePanel implements DrawableInterface{
 	
 
 	@Override
-	public void update(float elapsedTime) {
-		
-		for(BlokusTile entry : this.tiles)
+	public void update(float elapsedTime) 
+	{	
+		for(int i = 0; i < this.tiles.length; i++)
 		{
-			entry.update(elapsedTime);
+			if(tiles[i] != null)
+			{
+				tiles[i].update(elapsedTime);
+			}
 		}
 	}
 
@@ -181,9 +182,10 @@ public class TilePanel implements DrawableInterface{
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		
-		for(BlokusTile entry : this.tiles)
+		for(int i = 0; i < this.tiles.length; i++)
 		{
-			entry.draw(g2d);
+			if(tiles[i] != null)
+				tiles[i].draw(g2d);
 		}
 		g2d.dispose();
 	}
@@ -207,6 +209,7 @@ public class TilePanel implements DrawableInterface{
 
 	public void setPosition(Vector2 position) {
 		this.position = position;
+		this.refreshTilesPositions();
 	}
 	
 	public Dimension getSize() {
@@ -215,5 +218,19 @@ public class TilePanel implements DrawableInterface{
 
 	public void setSize(Dimension size) {
 		this.size = size;
+	}
+	
+	private void refreshTilesPositions()
+	{
+		for(int i = 0; i < this.tiles.length; i++)
+		{
+			if(tiles[i] != null)
+			{
+				tiles[i].setPosition(new Vector2(
+						tilesPosition[i].getX() + this.position.getX(),
+						tilesPosition[i].getY() + this.position.getY()));
+			}
+		}
+		
 	}
 }

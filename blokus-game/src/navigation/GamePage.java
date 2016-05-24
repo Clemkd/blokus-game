@@ -1,4 +1,4 @@
-	package navigation;
+package navigation;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -90,6 +90,8 @@ public class GamePage extends Page implements ActionListener{
 
 	private boolean flagLoad;
 
+	private Vector2 initialPositionTile;
+	
 	/**
 	 * Constructeur
 	 */
@@ -128,15 +130,21 @@ public class GamePage extends Page implements ActionListener{
 				{
 					this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
 				}
+				this.initialPositionTile = selectedTile.getPosition();
 				this.inDragAndDrop = this.selectedTile != null;
 			}
 			else
 			{
+				if(!this.blokusBoard.isInBounds(Mouse.getPosition()))
+				{
+					this.selectedTile.setPosition(initialPositionTile);
+					this.initialPositionTile = null;
+				}
 				this.inDragAndDrop = false;
 				this.selectedTile = null;
+				
 			}
 		}
-
 		if(this.selectedTile != null)
 		{
 			int xMatrix = 0;
@@ -149,6 +157,8 @@ public class GamePage extends Page implements ActionListener{
 			xMatrix = this.selectedTile.getTile().getFirstCase().getX();
 			yMatrix = this.selectedTile.getTile().getFirstCase().getY();
 
+			
+			
 			for(int i = 0; i<Tile.WIDTH; i++)
 			{
 				for (int j=0; j<Tile.HEIGHT; j++)
@@ -197,16 +207,16 @@ public class GamePage extends Page implements ActionListener{
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D)g.create();
 
-		g2d.drawImage(this.titre,500, 51, null);
-		g2d.drawImage(this.board, this.blokusBoard.getPosition().getX(), this.blokusBoard.getPosition().getY(), null, null);
-		this.buttonOption.draw(g2d);
-		this.buttonUndo.draw(g2d);
-		this.buttonRedo.draw(g2d);
-		this.buttonSave.draw(g2d);
-		this.buttonExit.draw(g2d);
-		this.panelJoueur1.draw(g2d);
-		this.panelJoueur2.draw(g2d);
-		this.blokusBoard.draw(g2d);
+		g.drawImage(this.titre,500, 51, null);
+		g.drawImage(this.board, this.blokusBoard.getPosition().getX(), this.blokusBoard.getPosition().getY(), null, null);
+		this.buttonOption.draw(g);
+		this.buttonUndo.draw(g);
+		this.buttonRedo.draw(g);
+		this.buttonSave.draw(g);
+		this.buttonExit.draw(g);
+		this.panelJoueur1.draw(g);
+		this.panelJoueur2.draw(g);
+		this.blokusBoard.draw(g);
 
 		if(this.selectedTile != null)
 		{
@@ -284,8 +294,11 @@ public class GamePage extends Page implements ActionListener{
 
 
 			this.panelJoueur1 = new PlayerPanel(new PlayerHuman("Moi", listColorsJ1));
+			this.panelJoueur1.setPosition(new Vector2(32, 32));
 			this.panelJoueur2 = new PlayerPanel(new PlayerHuman("Lui", listColorsJ2));
+			this.panelJoueur2.setPosition(new Vector2(980, 32));
 
+			
 			this.blokusBoard = new BlokusBoard(this.game.getBoard());
 			this.blokusBoard.setPosition(new Vector2(Window.WIDTH/2 - this.board.getWidth()/2,212));
 			try {
