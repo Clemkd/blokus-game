@@ -33,7 +33,9 @@ Options :
 - controles : 72, 374
 - regles : 72, 433
 - panneau : 341, 72
-	background-color: rgb(0, 93, 188);
   	width: 867px;
   	height: 656px;
+  	bleu : rgb(0, 93, 188);
+  	vert : rgb(0, 141, 44);
+	jaune : rgb(233, 188, 0);
 - valider : 1035, 653
