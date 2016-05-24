@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -17,22 +18,52 @@ import utilities.Vector2;
  */
 public class TilePanel implements DrawableInterface{
 	
-	private final static int OFFSET_X_P1_BLUE = 48;
-	private final static int OFFSET_Y_P1_BLUE = 91;
+	/**
+	 * La liste des positions relatives
+	 */
+	private static Vector2[] tilesPosition =
+	{
+		new Vector2(0,0),
+		new Vector2(10,20),
+		new Vector2(100,230),
+		new Vector2(20,210),
+		new Vector2(-10,90),
+		new Vector2(190,150),
+		new Vector2(190,220),
+		new Vector2(60,0),
+		new Vector2(60,70),
+		new Vector2(-40,70),
+		new Vector2(170,20),
+		new Vector2(130,270),
+		new Vector2(0,140),
+		new Vector2(130,-20),
+		new Vector2(70,120),
+		new Vector2(120,130),
+		new Vector2(0,230),
+		new Vector2(60,140),
+		new Vector2(170,100),
+		new Vector2(140,70),
+		new Vector2(50,240)
+	};
 	
-	private final static int OFFSET_X_P2_YELLOW = 995;
-	private final static int OFFSET_Y_P2_YELLOW = 91;
+	/**
+	 * La position courante du panel
+	 */
+	private Vector2 position;
 	
-	private final static int OFFSET_X_P1_RED = 48;
-	private final static int OFFSET_Y_P1_RED = 400;
-	
-	private final static int OFFSET_X_P2_GREEN = 995;
-	private final static int OFFSET_Y_P2_GREEN = 400;
+	/**
+	 * La taille du panel
+	 */
+	private Dimension size;
+
 	/**
 	 * Etat du panel des pièce
 	 */
 	private boolean state;
 	
+	/**
+	 * Determine si le panel a été cliqué
+	 */
 	private boolean wasClicked;
 	
 	/**
@@ -43,11 +74,11 @@ public class TilePanel implements DrawableInterface{
 	/**
 	 * La liste des pièces
 	 */
-	private ArrayList<BlokusTile> tiles;
+	private BlokusTile[] tiles;
 
+	@SuppressWarnings("unused")
 	private BufferedImage cellMaskImage;
-	
-	private Player player;
+
 
 	private BlokusTile bt;
 	
@@ -55,16 +86,12 @@ public class TilePanel implements DrawableInterface{
 	 * Constructeur de TilePanel
 	 * @param color la couleur des pièces dans le panel
 	 */
-	public TilePanel(CellColor color, Player p) {
+	public TilePanel(CellColor color) {
 		this.state = false;
 		this.tileColor = color;
 		
-		this.player = p;
-		this.tiles = new ArrayList<BlokusTile>();
+		this.tiles = new BlokusTile[Tile.MAX_COUNT];
 		this.wasClicked = false;
-		
-		ArrayList<Tile> listOfTiles = Tile.getListOfNeutralTile(color);
-		this.initColor(listOfTiles);
 		
 		this.cellMaskImage = BufferedImageHelper.generateMask(color.getImage(), Color.BLACK, 0.5f);
 	}
@@ -75,16 +102,37 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public void addTile(Tile t)
 	{
-		this.tiles.add(new BlokusTile(t));
+		Vector2 tilePosition = tilesPosition[t.getId()];
+		this.tiles[t.getId()] = new BlokusTile(t, new Vector2(tilePosition.getX() + this.position.getX(), tilePosition.getY() + this.position.getY()));
 	}
 	
 	/**
-	 * Fonction qui retire une pièce du panelbTilesLine<=4)
-	 * @param t la pièce concernée
+	 * Charge la liste des tiles d'un inventaire de joueur dans le panel
+	 * @param tiles La liste des tiles de l'inventaire du joueur
+	 */
+	public void loadTileInventory(ArrayList<Tile> tiles)
+	{
+		for(Tile t : tiles)
+		{
+			this.addTile(t);
+		}
+	}
+	
+	/**
+	 * Supprime la tuile spécifiée si existante
+	 * @param t La pièce spécifiée
 	 */
 	public void removeTile(BlokusTile t)
 	{
-		this.tiles.remove(t);
+		int index = -1;
+		for(int i = 0; i < this.tiles.length; i++)
+		{
+			if(this.tiles[i] == t)
+			{
+				this.tiles[index] = null;
+				return;
+			}
+		}
 	}
 	
 	/**
@@ -94,6 +142,9 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public BlokusTile getTile(Vector2 v)
 	{
+		if(!this.isInBounds(v))
+			return null;
+		
 		BlokusTile res = null;
 		
 		for(BlokusTile entry : this.tiles)
@@ -108,23 +159,12 @@ public class TilePanel implements DrawableInterface{
 	}
 	
 	/**
-	 * Fonction qui rend la main au panel joueur
+	 * Determine l'état du panel
 	 */
-	public void enable()
+	public void setEnabled(boolean state)
 	{
-		this.state = true;
+		this.state = state;
 	}
-	
-	/**
-	 * Fonction qui désactive le panel joueur
-	 */
-	public void disable()
-	{
-		this.state = false;
-	}
-	
-	private int basePosCellX = 0;
-	private int basePosCellY = 0;
 	
 
 	@Override
@@ -148,49 +188,32 @@ public class TilePanel implements DrawableInterface{
 		g2d.dispose();
 	}
 	
-	public void initColor(ArrayList<Tile> listOfTiles)
+	/**
+	 * Determine si la position est située sur le panel
+	 * @param position La position à tester
+	 * @return Vrai si la position donnée est disposée sur le panel, Faux dans le cas contraire
+	 */
+	public boolean isInBounds(Vector2 p)
 	{
-		if(this.tileColor == CellColor.BLUE)
-		{
-			basePosCellX = OFFSET_X_P1_BLUE;
-			basePosCellY = OFFSET_Y_P1_BLUE;
-		}
-		else if(this.tileColor == CellColor.YELLOW)
-		{
-			basePosCellX = OFFSET_X_P2_YELLOW;
-			basePosCellY = OFFSET_Y_P2_YELLOW;
-		}
-		else if(this.tileColor == CellColor.RED)
-		{
-			basePosCellX = OFFSET_X_P1_RED;
-			basePosCellY = OFFSET_Y_P1_RED; 
-		}
-		else if(this.tileColor == CellColor.GREEN)
-		{
-			basePosCellX = OFFSET_X_P2_GREEN;
-			basePosCellY = OFFSET_Y_P2_GREEN;
-		}
-		
-		this.tiles.add(new BlokusTile(listOfTiles.get(0), new Vector2(basePosCellX+0,basePosCellY+0)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(1), new Vector2(basePosCellX+10,basePosCellY+20)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(2), new Vector2(basePosCellX+100,basePosCellY+230)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(3), new Vector2(basePosCellX+20,basePosCellY+210)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(4), new Vector2(basePosCellX-10,basePosCellY+90)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(5), new Vector2(basePosCellX+190,basePosCellY+150)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(6), new Vector2(basePosCellX+190,basePosCellY+220)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(7), new Vector2(basePosCellX+60,basePosCellY+0)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(8), new Vector2(basePosCellX+60,basePosCellY+70)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(9), new Vector2(basePosCellX-40,basePosCellY+70))); //-40,70
-		this.tiles.add(new BlokusTile(listOfTiles.get(10), new Vector2(basePosCellX+170,basePosCellY+20)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(11), new Vector2(basePosCellX+130,basePosCellY+270)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(12), new Vector2(basePosCellX+0,basePosCellY+140)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(13), new Vector2(basePosCellX+130,basePosCellY-20)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(14), new Vector2(basePosCellX+70,basePosCellY+120)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(15), new Vector2(basePosCellX+120,basePosCellY+130)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(16), new Vector2(basePosCellX+00,basePosCellY+230)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(17), new Vector2(basePosCellX+60,basePosCellY+140)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(18), new Vector2(basePosCellX+170,basePosCellY+100)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(19), new Vector2(basePosCellX+140,basePosCellY+70)));
-		this.tiles.add(new BlokusTile(listOfTiles.get(20), new Vector2(basePosCellX+50,basePosCellY+240)));
+		return p.getX() >= this.position.getX() &&
+				p.getX() < this.getSize().getWidth() + this.position.getX() &&
+				p.getY() >= this.position.getY() &&
+				p.getY() < this.getSize().getHeight() + this.position.getY();
+	}
+	
+	public Vector2 getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+	
+	public Dimension getSize() {
+		return size;
+	}
+
+	public void setSize(Dimension size) {
+		this.size = size;
 	}
 }

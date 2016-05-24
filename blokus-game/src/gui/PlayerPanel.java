@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,6 +19,19 @@ import utilities.Vector2;
  *
  */
 public class PlayerPanel implements DrawableInterface{
+	
+	private final static int OFFSET_X_P1_BLUE = 48;
+	private final static int OFFSET_Y_P1_BLUE = 91;
+	
+	private final static int OFFSET_X_P2_YELLOW = 995;
+	private final static int OFFSET_Y_P2_YELLOW = 91;
+	
+	private final static int OFFSET_X_P1_RED = 48;
+	private final static int OFFSET_Y_P1_RED = 400;
+	
+	private final static int OFFSET_X_P2_GREEN = 995;
+	private final static int OFFSET_Y_P2_GREEN = 400;
+	
 	/**
 	 * Etat du panel joueur
 	 */
@@ -33,7 +47,7 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	private TilePanel tilePanel2;
 	
-	private BufferedImage  b;
+	private BufferedImage b;
 
 	private Player player;
 	/**
@@ -46,13 +60,21 @@ public class PlayerPanel implements DrawableInterface{
 		this.state = false;
 		if(player.getColors().get(0) != CellColor.YELLOW)
 		{
-			this.tilePanel1 = new TilePanel(CellColor.BLUE, p );
-			this.tilePanel2 = new TilePanel(CellColor.RED, p );;
+			this.tilePanel1 = new TilePanel(CellColor.BLUE);
+			this.tilePanel1.setPosition(new Vector2(OFFSET_X_P1_BLUE, OFFSET_Y_P1_BLUE));
+			this.tilePanel1.setSize(new Dimension(267, 652));
+			this.tilePanel2 = new TilePanel(CellColor.RED);
+			this.tilePanel2.setPosition(new Vector2(OFFSET_X_P1_RED, OFFSET_Y_P1_RED));
+			this.tilePanel1.setSize(new Dimension(267, 652));
 		}
 		else
 		{
-			this.tilePanel1 = new TilePanel(CellColor.YELLOW, p );
-			this.tilePanel2 = new TilePanel(CellColor.GREEN, p );;
+			this.tilePanel1 = new TilePanel(CellColor.YELLOW);
+			this.tilePanel2.setPosition(new Vector2(OFFSET_X_P2_YELLOW, OFFSET_Y_P2_YELLOW));
+			this.tilePanel1.setSize(new Dimension(267, 652));
+			this.tilePanel2 = new TilePanel(CellColor.GREEN);
+			this.tilePanel2.setPosition(new Vector2(OFFSET_X_P2_GREEN, OFFSET_Y_P2_GREEN));
+			this.tilePanel1.setSize(new Dimension(267, 652));
 		}
 		b = null;
 		
@@ -73,19 +95,11 @@ public class PlayerPanel implements DrawableInterface{
 	}
 
 	/**
-	 * Fonction qui rend la main au panel joueur
+	 * Determine l'état du panel
 	 */
-	public void enable()
+	public void setEnabled(boolean state)
 	{
-		this.state = true;
-	}
-	
-	/**
-	 * Fonction qui désactive le panel joueur
-	 */
-	public void disable()
-	{
-		this.state = false;
+		this.state = state;
 	}
 	
 	/**
@@ -121,7 +135,7 @@ public class PlayerPanel implements DrawableInterface{
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d= (Graphics2D) g.create();
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(Color.BLACK);
 		
 		if(this.player.getColors().get(0) != CellColor.YELLOW)
 		{

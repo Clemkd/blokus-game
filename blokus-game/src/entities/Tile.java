@@ -7,6 +7,10 @@ import utilities.Vector2;
 
 public class Tile {
 	/**
+	 * Le nombre maximal de tiles
+	 */
+	public static final int MAX_COUNT = 21;
+	/**
 	 * Constante pour la hauteur de la matrice d'une Tile
 	 */
 	public static final int HEIGHT = 7;
