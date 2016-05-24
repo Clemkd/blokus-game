@@ -33,6 +33,8 @@ public class GamePage extends Page implements ActionListener{
 	private static final int OFFSET_X = 15;
 	private static final int OFFSET_Y = 15;
 	
+	private boolean inDragAndDrop;
+	
 	/**
 	 * Image correspondante au drag and drop courant
 	 */
@@ -92,7 +94,9 @@ public class GamePage extends Page implements ActionListener{
 	 */
 	public GamePage() {
 		super();
+		this.inDragAndDrop = false;
 	}
+	
 
 	@Override
 	public void update(float elapsedTime) {
@@ -105,17 +109,29 @@ public class GamePage extends Page implements ActionListener{
 		this.panelJoueur2.update(elapsedTime);
 		this.blokusBoard.update(elapsedTime);
 		
+		/**********************************************/
+		/************** Drag and drop *****************/
+		/**********************************************/
 		if(!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT)
 		{
 			Mouse.consumeLastMouseButton();
-			BlokusTile tile = this.panelJoueur1.getTile(Mouse.getPosition());
-			if(tile != null)
+			if(!this.inDragAndDrop)
 			{
-				this.selectedTile = tile;
+				BlokusTile tile = this.panelJoueur1.getTile(Mouse.getPosition());
+				if(tile != null)
+				{
+					this.selectedTile = tile;
+				}
+				else
+				{
+					this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
+				}
+				this.inDragAndDrop = this.selectedTile != null;
 			}
 			else
 			{
-				this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
+				this.inDragAndDrop = false;
+				this.selectedTile = null;
 			}
 		}
 		
@@ -136,6 +152,9 @@ public class GamePage extends Page implements ActionListener{
 				this.selectedTile.setPosition(Mouse.getPosition());
 			}
 			this.selectedTile.update(elapsedTime);
+			/**********************************************/
+			/************** Drag and drop *****************/
+			/**********************************************/
 		}
 	}
 
