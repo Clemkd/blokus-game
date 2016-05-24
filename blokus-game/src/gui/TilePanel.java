@@ -44,6 +44,9 @@ public class TilePanel implements DrawableInterface{
 		new Vector2(50,240)
 	};
 	
+	private final static int TILE_PANEL_WIDTH = 267;
+	private final static int TILE_PANEL_HEIGHT = 380;
+	
 	/**
 	 * La position courante du panel
 	 */
@@ -76,7 +79,7 @@ public class TilePanel implements DrawableInterface{
 		this.state = false;
 		this.position = new Vector2();
 		this.tiles = new BlokusTile[Tile.MAX_COUNT];
-		this.size = new Dimension(267, 652);
+		this.size = new Dimension(TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT);
 		
 		this.cellMaskImage = BufferedImageHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
 	}
@@ -100,7 +103,6 @@ public class TilePanel implements DrawableInterface{
 	{
 		Vector2 tilePosition = tilesPosition[t.getId()];
 		Vector2 absoluteTilePosition = new Vector2(tilePosition.getX() + this.position.getX(), tilePosition.getY() + this.position.getY());
-		System.out.println(absoluteTilePosition);
 		this.tiles[t.getId()] = new BlokusTile(t, absoluteTilePosition);
 	}
 	

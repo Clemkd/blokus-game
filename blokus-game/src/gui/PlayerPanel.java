@@ -23,8 +23,7 @@ public class PlayerPanel implements DrawableInterface{
 	
 	// p2 995
 	private final static int OFFSET_X_TILE_PANEL = 20;
-	private final static int OFFSET_Y_TILE_PANEL1 = 80;
-	private final static int OFFSET_Y_TILE_PANEL2 = 400;
+	private final static int OFFSET_Y_TILE_PANEL = 68;
 	
 	private final static int DEFAULT_WIDTH = 266;
 	private final static int DEFAULT_HEIGHT = 632;
@@ -72,6 +71,7 @@ public class PlayerPanel implements DrawableInterface{
 		} 
 		catch (IOException e) 
 		{
+			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -157,8 +157,8 @@ public class PlayerPanel implements DrawableInterface{
 
 	public void setPosition(Vector2 position) {
 		this.position = position;
-		this.tilePanel1.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), OFFSET_Y_TILE_PANEL1 + this.position.getY()));
-		this.tilePanel2.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), OFFSET_Y_TILE_PANEL2 + this.position.getY()));
+		this.tilePanel1.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), OFFSET_Y_TILE_PANEL + this.position.getY()));
+		this.tilePanel2.setPosition(new Vector2(OFFSET_X_TILE_PANEL + this.position.getX(), this.position.getY() + (int)this.tilePanel1.getSize().getHeight()));
 	}
 
 	public Dimension getSize() {
