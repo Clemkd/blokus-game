@@ -1,10 +1,13 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import entities.CellColor;
 import entities.CellType;
 import entities.Tile;
+import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class BlokusTile implements DrawableInterface {
@@ -17,11 +20,23 @@ public class BlokusTile implements DrawableInterface {
 	 * La position de l'objet sur la zone de dessin parente
 	 */
 	private Vector2 position;
+
+	/**
+	 * L'état du tile
+	 */
+	private boolean enabled;
+	
+	/**
+	 * Le mask du tile
+	 */
+	private BufferedImage caseMaskImage;
 	
 	public BlokusTile(Tile tile, Vector2 position)
 	{
 		this.position = position;
 		this.tile = tile;
+		this.enabled = true;
+		this.caseMaskImage = BufferedHelper.generateMask(this.tile.getCouleur().getImage(), new Color(128, 128, 128), 0.7f);
 	}
 	
 	public BlokusTile(Tile tile)
@@ -57,6 +72,16 @@ public class BlokusTile implements DrawableInterface {
 							CellColor.CELL_WIDTH, 
 							CellColor.CELL_HEIGHT, 
 							null);
+					
+					if(!this.isEnabled())
+					{
+						g2d.drawImage(this.caseMaskImage, 
+								currentPosition.getX(),
+								currentPosition.getY(), 
+								CellColor.CELL_WIDTH, 
+								CellColor.CELL_HEIGHT, 
+								null);
+					}
 				}
 			}
 		}
@@ -114,5 +139,22 @@ public class BlokusTile implements DrawableInterface {
 		}
 		
 		return false;
+	}
+
+	/**
+	 * Determine l'état du tile
+	 * @param enabled Le nouvel état du tile
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	/**
+	 * Obtient l'état courant du tile
+	 * @return L'état courant du tile
+	 */
+	public boolean isEnabled()
+	{
+		return this.enabled;
 	}
 }

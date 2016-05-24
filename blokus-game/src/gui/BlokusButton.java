@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import utilities.BufferedImageHelper;
+import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class BlokusButton implements DrawableInterface
@@ -69,8 +69,8 @@ public class BlokusButton implements DrawableInterface
 		this.listeners = new ArrayList<ActionListener>();
 		try {
 			this.backgroundImage = ImageIO.read(new File(file));
-			this.backgroundImageHover = BufferedImageHelper.generateMask(this.backgroundImage, Color.BLACK, 0.5f);
-			this.backgroundImageDisable = BufferedImageHelper.generateMask(this.backgroundImage, Color.GRAY, 0.8f);
+			this.backgroundImageHover = BufferedHelper.generateMask(this.backgroundImage, Color.BLACK, 0.5f);
+			this.backgroundImageDisable = BufferedHelper.generateMask(this.backgroundImage, Color.GRAY, 0.8f);
 			this.size = new Dimension(this.backgroundImage.getWidth(), this.backgroundImage.getHeight());
 		} catch (IOException e) {
 			System.err.println("Impossible de charger l'image " + file + " pour le bouton\nMessage : " + e.getMessage());

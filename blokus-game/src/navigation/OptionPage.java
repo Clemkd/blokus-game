@@ -2,9 +2,13 @@ package navigation;
 
 import java.awt.Checkbox;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JLabel;
 
@@ -19,8 +23,9 @@ public class OptionPage extends Page implements ActionListener{
 	private BlokusButton buttonRules;
 	private BlokusButton buttonToValid;
 	private BlokusCheckBox checkBox;
-	private JLabel titre1;
 	
+	private Font font;
+
 	private boolean onControl;
 	private boolean onRules;
 	private boolean onGeneral;
@@ -56,6 +61,8 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonRules.draw(g2d);
 		this.checkBox.draw(g2d);
 		
+		g2d.setFont(this.font);
+		g2d.drawString("ccc", 50, 50);
 		
 		if(this.onGeneral){
 			g2d.setColor(new Color(0, 93, 188));
@@ -90,9 +97,22 @@ public class OptionPage extends Page implements ActionListener{
 				Navigation.NavigateTo(Navigation.previous);
 		}
 	}
+	
 
 	@Override
 	public void loadContents() {
+		
+        try {
+        	InputStream fontStream = getClass().getResourceAsStream(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf");
+        	System.out.println(fontStream);
+        	this.font = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+        	System.out.println("d");
+        	this.font = font.deriveFont(36.0f);
+        	fontStream.close();
+        } catch (FontFormatException | IOException ex) {
+        	System.out.println("nop");
+        }
+		
 		this.buttonGeneral = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"general.png");
 		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS,314));
 		this.buttonGeneral.addListener(this);
@@ -111,9 +131,7 @@ public class OptionPage extends Page implements ActionListener{
 		
 		this.checkBox = new BlokusCheckBox(true, false);
 		this.checkBox.setPosition(new Vector2(100, 100));
-		
-		this.titre1 = new JLabel();
-		
+
 	}
 
 	@Override
