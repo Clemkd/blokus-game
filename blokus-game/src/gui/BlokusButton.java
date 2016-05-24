@@ -192,6 +192,7 @@ public class BlokusButton implements DrawableInterface
 	@Override
 	public void draw(Graphics2D g) 
 	{
+		
 		if(this.backgroundImage != null)
 		{
 			Graphics2D g2d = (Graphics2D) g.create();
@@ -208,7 +209,7 @@ public class BlokusButton implements DrawableInterface
 						this.position.getX(),
 						this.position.getY(), 
 						(int)this.size.getWidth(),
-						(int)this.size.getHeight(),
+					 	(int)this.size.getHeight(),
 						null);
 			}
 			else if(!this.isEnabled)
