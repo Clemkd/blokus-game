@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
 import entities.CellColor;
+import entities.CellType;
 import entities.Game;
 import entities.PlayerHuman;
 import entities.Tile;
@@ -30,8 +31,6 @@ public class GamePage extends Page implements ActionListener{
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
 	private static final int POS_Y = 725;
-	private static final int OFFSET_X = 15;
-	private static final int OFFSET_Y = 15;
 	
 	private boolean inDragAndDrop;
 	
@@ -137,20 +136,53 @@ public class GamePage extends Page implements ActionListener{
 		
 		if(this.selectedTile != null)
 		{
+			int xMatrix = 0;
+			int yMatrix = 0;
+			int xMatrix2 = 0;
+			int yMatrix2 = 0;
+			
+			CellType[][] matrix = this.selectedTile.getTile().getMatrix();
+			
+			xMatrix = this.selectedTile.getTile().getFirstCase().getX();
+			yMatrix = this.selectedTile.getTile().getFirstCase().getY();
+			
+			for(int i = 0; i<Tile.WIDTH; i++)
+			{
+				for (int j=0; j<Tile.HEIGHT; j++)
+				{
+					if(matrix[j][i] == CellType.PIECE)
+					{
+						xMatrix2 = i;
+						yMatrix2 = j;
+						break;
+					}
+				}
+			}			
+			int offsetPosX = (xMatrix-xMatrix2)*CellColor.CELL_WIDTH;
+			int offsetPosY = (yMatrix-xMatrix2)*CellColor.CELL_HEIGHT;
+			
 			if(this.blokusBoard.isInBounds(Mouse.getPosition()))
 			{
+				
+				
+				
 				int x = (Mouse.getPosition().getX() - this.blokusBoard.getPosition().getX()) / CellColor.CELL_WIDTH;
 				int y = (Mouse.getPosition().getY() - this.blokusBoard.getPosition().getY()) / CellColor.CELL_HEIGHT;
 				
+				
+				
 				this.selectedTile.setPosition(new Vector2(
-						(x * CellColor.CELL_WIDTH) + this.blokusBoard.getPosition().getX(),
-						(y * CellColor.CELL_HEIGHT) + this.blokusBoard.getPosition().getY()));
+						(x * CellColor.CELL_WIDTH) + this.blokusBoard.getPosition().getX()+offsetPosX,
+						(y * CellColor.CELL_HEIGHT) + this.blokusBoard.getPosition().getY()+offsetPosY));
 				
 			}
 			else
 			{
-				this.selectedTile.setPosition(Mouse.getPosition());
+				//this.selectedTile.setPosition(Mouse.getPosition());
+				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX()+offsetPosX, Mouse.getPosition().getY()+offsetPosY));
 			}
+			offsetPosX = 0;
+			offsetPosY = 0;
 			this.selectedTile.update(elapsedTime);
 			/**********************************************/
 			/************** Drag and drop *****************/
@@ -163,7 +195,7 @@ public class GamePage extends Page implements ActionListener{
 		Graphics2D g2d = (Graphics2D)g.create();
 		
 		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.board, this.blokusBoard.getPosition().getX() - OFFSET_X, this.blokusBoard.getPosition().getY() - OFFSET_Y, null, null);
+		g.drawImage(this.board, this.blokusBoard.getPosition().getX(), this.blokusBoard.getPosition().getY(), null, null);
 		this.buttonOption.draw(g);
 		this.buttonUndo.draw(g);
 		this.buttonRedo.draw(g);
@@ -186,7 +218,6 @@ public class GamePage extends Page implements ActionListener{
 		if(e.getSource() instanceof BlokusButton){
 			if(e.getSource().equals(this.buttonOption)){
 				Navigation.previous = this;
-				Navigation.NavigateTo(Navigation.optionPage);
 			}else if(e.getSource().equals(this.buttonUndo)){
 				if(this.game.canUndo()){
 					this.game.undoMove();
@@ -218,23 +249,23 @@ public class GamePage extends Page implements ActionListener{
 		this.game = new Game();
 		
 		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"optionsig.png");
-		this.buttonOption.setPosition(new Vector2(32, POS_Y));
+		this.buttonOption.setPosition(new Vector2(1143, POS_Y));
 		this.buttonOption.addListener(this);
 		
 		this.buttonUndo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"annulerig.png");
-		this.buttonUndo.setPosition(new Vector2(505, POS_Y));
+		this.buttonUndo.setPosition(new Vector2(526, POS_Y));
 		this.buttonUndo.addListener(this);
 		
 		this.buttonRedo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"refaireig.png");
-		this.buttonRedo.setPosition(new Vector2(650, POS_Y));
+		this.buttonRedo.setPosition(new Vector2(647, POS_Y));
 		this.buttonRedo.addListener(this);
 		
 		this.buttonSave = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"sauvegarder.png");
-		this.buttonSave.setPosition(new Vector2(940, POS_Y));
+		this.buttonSave.setPosition(new Vector2(980, POS_Y));
 		this.buttonSave.addListener(this);
 		
-		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"exitig.png");
-		this.buttonExit.setPosition(new Vector2(1120, POS_Y));
+		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"accueil.png");
+		this.buttonExit.setPosition(new Vector2(32, POS_Y));
 		this.buttonExit.addListener(this);
 		ArrayList<CellColor> listColorsJ1 = new ArrayList<>();
 		listColorsJ1.add(CellColor.BLUE);

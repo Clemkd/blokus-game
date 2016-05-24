@@ -29,20 +29,27 @@ public class Tile {
 	 * Couleur de la Tile
 	 */
 	private CellColor couleur;
+	
+	/**
+	 * identifiant de la tuile
+	 */
+	private int id;
 
 	/**
 	 * Emplacement dans la matrice de la premiere case de la piece
 	 */
 	private Vector2 firstCase;
+	
 
 	/**
 	 * 
 	 * @param matrix la matrice représentant la forme de la Tile à instancier
 	 * @param couleur le type de cellule de la Tile (couleur de la cellule)
 	 */
-	public Tile(CellType[][] matrix, CellColor couleur) {
+	public Tile(CellType[][] matrix, CellColor couleur, int id) {
 		this.matrix = matrix;
 		this.couleur = couleur;
+		this.id = id;
 	}
 
 	/**
@@ -179,7 +186,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix21, cellColor));
+		listTile.add(new Tile(matrix21, cellColor, 0));
 
 		// *
 		// *
@@ -193,7 +200,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 		
-		listTile.add(new Tile(matrix20, cellColor));
+		listTile.add(new Tile(matrix20, cellColor, 1));
 
 		// *
 		// *
@@ -208,8 +215,8 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 		
-		temp = new Tile(matrix18, cellColor);
-		listTile.add(temp);
+		
+		listTile.add(new Tile(matrix18, cellColor, 2));
 
 		// * *
 		// * 
@@ -223,7 +230,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix19, cellColor));
+		listTile.add(new Tile(matrix19, cellColor, 3));
 
 		// *
 		// *
@@ -239,7 +246,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix13, cellColor));
+		listTile.add(new Tile(matrix13, cellColor, 4));
 
 		// * * *
 		// * 
@@ -253,7 +260,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix17, cellColor));
+		listTile.add(new Tile(matrix17, cellColor, 5));
 
 		//   *
 		// * *
@@ -268,7 +275,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};	
 
-		listTile.add(new Tile(matrix16, cellColor));
+		listTile.add(new Tile(matrix16, cellColor, 6));
 
 		// * *
 		// * *
@@ -282,7 +289,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix15, cellColor));
+		listTile.add(new Tile(matrix15, cellColor, 7));
 
 
 		// 	 * *
@@ -297,7 +304,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix14, cellColor));
+		listTile.add(new Tile(matrix14, cellColor, 8));
 
 
 		// *
@@ -315,7 +322,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.CORNER, CellType.ADJACENT, CellType.CORNER, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix, cellColor));
+		listTile.add(new Tile(matrix, cellColor, 9));
 
 
 
@@ -333,7 +340,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix2, cellColor));
+		listTile.add(new Tile(matrix2, cellColor, 10));
 		
 		
 		// * *
@@ -348,7 +355,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix3, cellColor));
+		listTile.add(new Tile(matrix3, cellColor, 11));
 
 
 		// * * 
@@ -364,7 +371,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.CORNER, CellType.ADJACENT, CellType.CORNER, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix8, cellColor));
+		listTile.add(new Tile(matrix8, cellColor, 12));
 
 
 		// * * *
@@ -379,7 +386,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix7, cellColor));
+		listTile.add(new Tile(matrix7, cellColor, 13));
 
 
 		//     * 
@@ -394,7 +401,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix4, cellColor));
+		listTile.add(new Tile(matrix4, cellColor, 14));
 
 
 		// * * *
@@ -410,7 +417,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix10, cellColor));
+		listTile.add(new Tile(matrix10, cellColor, 15));
 
 
 		// *
@@ -427,7 +434,7 @@ public class Tile {
 
 		};
 
-		listTile.add(new Tile(matrix11, cellColor));
+		listTile.add(new Tile(matrix11, cellColor, 16));
 
 
 		// * *
@@ -443,7 +450,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix9, cellColor));
+		listTile.add(new Tile(matrix9, cellColor, 17));
 
 
 		// * *
@@ -459,7 +466,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix12, cellColor));
+		listTile.add(new Tile(matrix12, cellColor, 18));
 
 
 		//      *
@@ -475,7 +482,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix5, cellColor));
+		listTile.add(new Tile(matrix5, cellColor, 19));
 
 		//   *
 		// * * *
@@ -490,7 +497,7 @@ public class Tile {
 				{CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK}
 		};
 
-		listTile.add(new Tile(matrix6, cellColor));
+		listTile.add(new Tile(matrix6, cellColor, 20));
 
 		return listTile;
 	}

@@ -33,7 +33,7 @@ public class Navigation {
 	 */
 	public static Page tutorialPage = new TutorialPage();
 	
-	public static Page optionPage = new OptionPage();
+	
 	/**
 	 * Change l'état de jeu et navigue vers cet état
 	 * @param p Le nouvel état de jeu
