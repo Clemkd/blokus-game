@@ -27,3 +27,8 @@ Titre panel gauche : 32, 32
 Titre panel droit : 980, 32
 Dimensions tiroir panel : width=267px , heigth=652px
 Coordonnes plateau : 449, 212
+
+Options :
+- general : 72, 314
+- controles : 72, 374
+- regles : 72, 433
