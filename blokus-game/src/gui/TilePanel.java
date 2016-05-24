@@ -76,7 +76,7 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public TilePanel() 
 	{
-		this.setState(false);
+		this.setEnabled(true);
 		this.position = new Vector2();
 		this.tiles = new BlokusTile[Tile.MAX_COUNT];
 		this.size = new Dimension(TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT);
@@ -158,26 +158,16 @@ public class TilePanel implements DrawableInterface{
 		return res;
 	}
 	
-	/**
-	 * Determine l'état du panel
-	 */
-	public void setEnabled(boolean state)
-	{
-		this.setState(state);
-	}
-	
 
 	@Override
 	public void update(float elapsedTime) 
 	{	
-		if(this.getState())
+		for(int i = 0; i < this.tiles.length; i++)
 		{
-			for(int i = 0; i < this.tiles.length; i++)
+			if(tiles[i] != null)
 			{
-				if(tiles[i] != null)
-				{
-					tiles[i].update(elapsedTime);
-				}
+				tiles[i].setEnabled(this.isEnabled());
+				tiles[i].update(elapsedTime);
 			}
 		}
 	}
@@ -190,7 +180,9 @@ public class TilePanel implements DrawableInterface{
 		for(int i = 0; i < this.tiles.length; i++)
 		{
 			if(tiles[i] != null)
+			{
 				tiles[i].draw(g2d);
+			}
 		}
 		g2d.dispose();
 	}
@@ -245,7 +237,7 @@ public class TilePanel implements DrawableInterface{
 	 * Obtient l'état du panel
 	 * @return L'état courant du panel
 	 */
-	public boolean getState() {
+	public boolean isEnabled() {
 		return state;
 	}
 
@@ -253,7 +245,7 @@ public class TilePanel implements DrawableInterface{
 	 * Determine l'état du panel
 	 * @param state Le nouvel état du panel
 	 */
-	public void setState(boolean state) {
+	public void setEnabled(boolean state) {
 		this.state = state;
 	}
 	
