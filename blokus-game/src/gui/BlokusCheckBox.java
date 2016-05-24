@@ -30,6 +30,10 @@ public class BlokusCheckBox implements DrawableInterface {
 	
 	private BufferedImage noCheckedHover;
 	
+	private BufferedImage checkedDisable;
+	
+	private BufferedImage noCheckedDisable;
+	
 	private Vector2 position;
 	
 	private boolean mouseHover;
@@ -134,13 +138,13 @@ public class BlokusCheckBox implements DrawableInterface {
 	@Override
 	public void draw(Graphics2D g) {
 		
-		/*
+		
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.drawImage(this.isChecked ?this.checked: this.noChecked, this.position.getX(), this.position.getY(), (int) this.size.getWidth(), (int) this.size.getHeight(), null);
 		g2d.dispose();
-		*/
 		
-		if(this.backgroundImage != null)
+		
+		/*if(this.backgroundImage != null)
 		{
 			Graphics2D g2d = (Graphics2D) g.create();
 			g2d.drawImage(this.checked, 
@@ -152,7 +156,7 @@ public class BlokusCheckBox implements DrawableInterface {
 			
 			if(this.mouseHover)
 			{
-				g2d.drawImage(this.checkHover,
+				g2d.drawImage(this.checkedHover,
 						this.position.getX(),
 						this.position.getY(), 
 						(int)this.size.getWidth(),
@@ -161,16 +165,17 @@ public class BlokusCheckBox implements DrawableInterface {
 			}
 			else if(!this.isEnabled)
 			{
-				g2d.drawImage(this.backgroundImageDisable,
+				g2d.drawImage(this.checkedDisable,
 						this.position.getX(),
 						this.position.getY(), 
 						(int)this.size.getWidth(),
 						(int)this.size.getHeight(),
 						null);
 			}
-			
-			g2d.dispose();
 		}
+			*/
+			g2d.dispose();
+		
 	}
 	
 	public void setChecked(){
