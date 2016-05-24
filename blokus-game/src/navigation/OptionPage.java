@@ -7,14 +7,17 @@ import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
 import utilities.Vector2;
+import utilities.BufferedHelper;
 
 public class OptionPage extends Page implements ActionListener{
 	
@@ -102,16 +105,7 @@ public class OptionPage extends Page implements ActionListener{
 	@Override
 	public void loadContents() {
 		
-        try {
-        	InputStream fontStream = getClass().getResourceAsStream(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf");
-        	System.out.println(fontStream);
-        	this.font = Font.createFont(Font.TRUETYPE_FONT, fontStream);
-        	System.out.println("d");
-        	this.font = font.deriveFont(36.0f);
-        	fontStream.close();
-        } catch (FontFormatException | IOException ex) {
-        	System.out.println("nop");
-        }
+        this.font = BufferedHelper.getFontFromFile(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf");
 		
 		this.buttonGeneral = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"general.png");
 		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS,314));
