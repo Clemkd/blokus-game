@@ -1,11 +1,13 @@
 package navigation;
 
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import gui.BlokusButton;
+import gui.BlokusCheckBox;
 import utilities.Vector2;
 
 public class OptionPage extends Page implements ActionListener{
@@ -14,6 +16,7 @@ public class OptionPage extends Page implements ActionListener{
 	private BlokusButton buttonControl;
 	private BlokusButton buttonRules;
 	private BlokusButton buttonToValid;
+	private BlokusCheckBox checkBox;
 	
 	private boolean onControl;
 	private boolean onRules;
@@ -38,6 +41,8 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonGeneral.update(elapsedTime);
 		this.buttonRules.update(elapsedTime);
 		this.buttonToValid.update(elapsedTime);
+		this.checkBox.update(elapsedTime);
+		
 	}
 
 	@Override
@@ -46,6 +51,7 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonControl.draw(g2d);
 		this.buttonGeneral.draw(g2d);
 		this.buttonRules.draw(g2d);
+		this.checkBox.draw(g2d);
 		
 		
 		if(this.onGeneral){
@@ -99,6 +105,10 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonToValid = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"valider.png");
 		this.buttonToValid.setPosition(new Vector2(1035, 653));
 		this.buttonToValid.addListener(this);
+		
+		this.checkBox = new BlokusCheckBox(true, false);
+		this.checkBox.setPosition(new Vector2(100, 100));
+		
 	}
 
 	@Override
