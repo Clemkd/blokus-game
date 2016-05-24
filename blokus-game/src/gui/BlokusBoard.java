@@ -1,18 +1,32 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import entities.Board;
 import entities.CellColor;
 import entities.Tile;
+import navigation.Page;
 import utilities.BufferedImageHelper;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
 public class BlokusBoard implements DrawableInterface
 {
+	public static final int OFFSET_X = 15;
+	public static final int OFFSET_Y = 15;
+	
+	/**
+	 * Plateau de jeu
+	 */
+	private BufferedImage boardImage;
+	
 	/**
 	 * L'objet correspondant aux données à représenter
 	 */
@@ -23,6 +37,11 @@ public class BlokusBoard implements DrawableInterface
 	 */
 	private Vector2 position;
 	
+	/**
+	 * La taille du plateau
+	 */
+	private Dimension size;
+
 	/**
 	 * Determine si l'affichage du plateau doit prendre en compte l'affichage des placements possibles
 	 */
@@ -51,6 +70,14 @@ public class BlokusBoard implements DrawableInterface
 		this.cellColorForValidMoves = CellColor.BLUE;
 		this.validsMoves = new ArrayList<Vector2>();
 		this.cellMask = BufferedImageHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
+		this.size = new Dimension();
+		try 
+		{
+			this.boardImage = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES + "plateau.png"));
+			this.size = new Dimension(this.boardImage.getWidth(), this.boardImage.getHeight());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -65,6 +92,7 @@ public class BlokusBoard implements DrawableInterface
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D)g.create();
 		
+		g2d.drawImage(this.boardImage, this.position.getX(), this.position.getY(), null, null);
 		
 		for(int x = 0; x < Board.WIDTH; x++)
 		{
@@ -127,6 +155,14 @@ public class BlokusBoard implements DrawableInterface
 	public Board getBoard() {
 		return this.board;
 	}
+	
+	/**
+	 * Obtient la taille du plateau
+	 * @return La taille du plateau
+	 */
+	public Dimension getSize() {
+		return size;
+	}
 
 	/**
 	 * Determine si la position est située sur le tableau
@@ -134,8 +170,10 @@ public class BlokusBoard implements DrawableInterface
 	 * @return Vrai si la position donnée est disposée sur le tableau, Faux dans le cas contraire
 	 */
 	public boolean isInBounds(Vector2 position) {
-		return position.getX() > this.getPosition().getX() && position.getX() < this.getPosition().getX() + Board.WIDTH * CellColor.CELL_WIDTH &&
-				position.getY() > this.getPosition().getY() && position.getY() < this.getPosition().getY() + Board.HEIGHT * CellColor.CELL_HEIGHT;
+		return position.getX() > (this.getPosition().getX() + OFFSET_X) &&
+				position.getX() < (this.getPosition().getX() + (int)this.getSize().getWidth() - OFFSET_X) &&
+				position.getY() > (this.getPosition().getY() + OFFSET_Y) &&
+				position.getY() < (this.getPosition().getY() + (int)this.getSize().getHeight() - OFFSET_Y);
 	}
 	
 	/**
