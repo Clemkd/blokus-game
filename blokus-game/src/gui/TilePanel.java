@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import entities.CellColor;
 import entities.Tile;
-import utilities.BufferedImageHelper;
+import utilities.BufferedHelper;
 import utilities.Vector2;
 
 /**
@@ -81,7 +81,7 @@ public class TilePanel implements DrawableInterface{
 		this.tiles = new BlokusTile[Tile.MAX_COUNT];
 		this.size = new Dimension(TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT);
 		
-		this.cellMaskImage = BufferedImageHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
+		this.cellMaskImage = BufferedHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
 	}
 	
 	/**

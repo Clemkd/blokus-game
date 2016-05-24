@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import entities.CellColor;
 import entities.CellType;
 import entities.Tile;
-import utilities.BufferedImageHelper;
+import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class BlokusTile implements DrawableInterface {
@@ -36,7 +36,7 @@ public class BlokusTile implements DrawableInterface {
 		this.position = position;
 		this.tile = tile;
 		this.enabled = true;
-		this.caseMaskImage = BufferedImageHelper.generateMask(this.tile.getCouleur().getImage(), new Color(128, 128, 128), 0.7f);
+		this.caseMaskImage = BufferedHelper.generateMask(this.tile.getCouleur().getImage(), new Color(128, 128, 128), 0.7f);
 	}
 	
 	public BlokusTile(Tile tile)

@@ -2,15 +2,19 @@ package utilities;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import entities.CellColor;
 
-public class BufferedImageHelper 
+public class BufferedHelper 
 {
 	/**
 	 * Obtient les configurations de la librairie de dessin
@@ -20,6 +24,27 @@ public class BufferedImageHelper
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
     }
 
+    public static Font getFontFromFile(String file)
+    {
+    	Font customFont = null;
+		try 
+		{
+			File fontFile = new File(file);
+			customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(12f);
+		
+	        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	        //register the font
+	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, fontFile));
+	        
+		} 
+		catch (FontFormatException | IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return customFont;
+    }
+    
     /**
      * Génère le mask d'une image donnée
      * @param imgSource L'image donnée

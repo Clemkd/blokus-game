@@ -13,7 +13,7 @@ import entities.Board;
 import entities.CellColor;
 import entities.Tile;
 import navigation.Page;
-import utilities.BufferedImageHelper;
+import utilities.BufferedHelper;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
@@ -69,7 +69,7 @@ public class BlokusBoard implements DrawableInterface
 		this.isValidMovesShown = false;
 		this.cellColorForValidMoves = CellColor.BLUE;
 		this.validsMoves = new ArrayList<Vector2>();
-		this.cellMask = BufferedImageHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
+		this.cellMask = BufferedHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
 		this.size = new Dimension();
 		try 
 		{
