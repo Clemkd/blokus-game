@@ -32,3 +32,8 @@ Options :
 - general : 72, 314
 - controles : 72, 374
 - regles : 72, 433
+- panneau : 341, 72
+	background-color: rgb(0, 93, 188);
+  	width: 867px;
+  	height: 656px;
+- valider : 1035, 653
