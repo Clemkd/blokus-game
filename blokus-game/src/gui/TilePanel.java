@@ -66,9 +66,6 @@ public class TilePanel implements DrawableInterface{
 	 * La liste des pièces
 	 */
 	private BlokusTile[] tiles;
-
-	@SuppressWarnings("unused")
-	private BufferedImage cellMaskImage;
 	
 	/**
 	 * Constructeur de TilePanel
@@ -80,8 +77,6 @@ public class TilePanel implements DrawableInterface{
 		this.position = new Vector2();
 		this.tiles = new BlokusTile[Tile.MAX_COUNT];
 		this.size = new Dimension(TILE_PANEL_WIDTH, TILE_PANEL_HEIGHT);
-		
-		this.cellMaskImage = BufferedHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);
 	}
 	
 	/**

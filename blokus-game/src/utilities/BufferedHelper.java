@@ -24,6 +24,11 @@ public class BufferedHelper
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
     }
 
+    /**
+     * Charge une police d'écriture depuis un fichier spécifié
+     * @param file Le chemin + nom du fichier de la police d'écriture
+     * @return La police d'écriture si le fichier existe, null dans le cas contraire
+     */
     public static Font getFontFromFile(String file)
     {
     	Font customFont = null;
