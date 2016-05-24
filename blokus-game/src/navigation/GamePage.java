@@ -125,12 +125,16 @@ public class GamePage extends Page implements ActionListener{
 				if(tile != null)
 				{
 					this.selectedTile = tile;
+					this.initialPositionTile = selectedTile.getPosition();
 				}
 				else
 				{
 					this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
 				}
-				this.initialPositionTile = selectedTile.getPosition();
+				if(tile!=null)
+				{
+					this.initialPositionTile = selectedTile.getPosition();
+				}
 				this.inDragAndDrop = this.selectedTile != null;
 			}
 			else
