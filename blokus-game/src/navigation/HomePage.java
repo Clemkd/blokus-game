@@ -55,7 +55,6 @@ public class HomePage extends Page implements ActionListener{
 	 */
 	private BufferedImage titre;
 	
-	private OptionPopup imageOption = null;
 	
 	/**
 	 * Constructeur
@@ -85,9 +84,6 @@ public class HomePage extends Page implements ActionListener{
 		this.buttonTutorial.draw(batch);
 		this.buttonOption.draw(batch);
 		this.buttonExit.draw(batch);
-		if(this.imageOption != null){
-			imageOption.draw(batch);
-		}
 		batch.dispose();
 		
 	}
@@ -105,15 +101,8 @@ public class HomePage extends Page implements ActionListener{
 			}else if(e.getSource().equals(this.buttonTutorial)){
 				Navigation.NavigateTo(Navigation.tutorialPage);
 			}else if(e.getSource().equals(this.buttonOption)){
-				/*Navigation.previous = this;
+				Navigation.previous = this;
 				Navigation.NavigateTo(Navigation.optionPage);
-				OptionPopUp popUp = new OptionPopUp(null, "options", false, null);*/
-				
-				this.imageOption = new OptionPopup();
-				
-				
-				
-				
 			}else if(e.getSource().equals(this.buttonExit)){
 				System.exit(0);
 			}

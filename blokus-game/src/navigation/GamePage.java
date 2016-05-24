@@ -1,4 +1,4 @@
-package navigation;
+	package navigation;
 
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -197,16 +197,16 @@ public class GamePage extends Page implements ActionListener{
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D)g.create();
 
-		g.drawImage(this.titre,500, 51, null);
-		g.drawImage(this.board, this.blokusBoard.getPosition().getX(), this.blokusBoard.getPosition().getY(), null, null);
-		this.buttonOption.draw(g);
-		this.buttonUndo.draw(g);
-		this.buttonRedo.draw(g);
-		this.buttonSave.draw(g);
-		this.buttonExit.draw(g);
-		this.panelJoueur1.draw(g);
-		this.panelJoueur2.draw(g);
-		this.blokusBoard.draw(g);
+		g2d.drawImage(this.titre,500, 51, null);
+		g2d.drawImage(this.board, this.blokusBoard.getPosition().getX(), this.blokusBoard.getPosition().getY(), null, null);
+		this.buttonOption.draw(g2d);
+		this.buttonUndo.draw(g2d);
+		this.buttonRedo.draw(g2d);
+		this.buttonSave.draw(g2d);
+		this.buttonExit.draw(g2d);
+		this.panelJoueur1.draw(g2d);
+		this.panelJoueur2.draw(g2d);
+		this.blokusBoard.draw(g2d);
 
 		if(this.selectedTile != null)
 		{
