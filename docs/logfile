@@ -46,3 +46,8 @@ Audit IHM :
   - InGame : possibilité de modifier le nom du joueur en double cliquant sur le nom "Joueur 1/2"
   - "Acceuil" au lieu de "Quitter"
   - Lorsqu'on clique sur "Acceuil" , il faut afficher une pop-up qui demande la confirmation de retour a l'acceuil
+
+9ème jour : 24 mai 2016
+Correction des erreurs de placement de pièces lors de la selection de celle-ci.
+Ajout d'une page options.
+Gestion d'un état d'une pièce posée ou non lors du clic
