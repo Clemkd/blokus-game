@@ -11,6 +11,11 @@ import utilities.Move;
  * 2- Cut les coups orientés vers ma zone
  * 3- Aller vers zones voisines
  * 4- ?
+ * 
+ * Monte Carlo pour determiner si plateau interessant
+ * Plutot que d'explo tout les plateaux on en genere quelques un au pif et on en prend un selon pondération par score estimé
+ * 
+ * Estimer complexité alphabeta/montecarlo
  */
 
 public class PlayerIA extends Player {
