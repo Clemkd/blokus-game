@@ -151,7 +151,7 @@ public class Game {
 			if (!p.isPlaying()) {
 				Move m = p.getMove();
 				if (m == null) {
-					p.play(this.getCurrentColor());
+					p.play(this, this.getCurrentColor());
 				}
 				else {
 					this.doMove(m);

@@ -53,7 +53,7 @@ public abstract class Player {
 	 * @param c
 	 *            Couleur à jouer
 	 */
-	public abstract void play(CellColor c);
+	public abstract void play(Game game, CellColor c);
 
 	/**
 	 * Permet de vérifier si un joueur est en train de jouer.

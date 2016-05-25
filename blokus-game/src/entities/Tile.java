@@ -40,7 +40,11 @@ public class Tile {
 	 */
 	private Vector2 firstCase;
 	
-
+	/**
+	 * La liste des rotations et flips du tile
+	 */
+	private ArrayList<Tile> tilesRotationsAndFlipsList;
+	
 	/**
 	 * 
 	 * @param matrix la matrice représentant la forme de la Tile à instancier
@@ -50,6 +54,7 @@ public class Tile {
 		this.matrix = matrix;
 		this.couleur = couleur;
 		this.id = id;
+		this.tilesRotationsAndFlipsList = new ArrayList<Tile>();
 	}
 
 	/**
@@ -82,9 +87,9 @@ public class Tile {
 	}
 
 	/**
-	 * Méthode permettant la rotation dans un sens horaire de la matrice de la Tile
+	 * Retourne la rotation horaire du tile
 	 */
-	public void rotateClockwise() {
+	public Tile rotateClockwise() {
 		CellType[][] temp = new CellType[WIDTH][HEIGHT];
 
 		for (int x = 0; x < WIDTH; x++){
@@ -93,13 +98,13 @@ public class Tile {
 			}
 		}
 
-		matrix = temp;
+		return new Tile(temp, this.getCouleur(), this.id + MAX_COUNT);
 	}
 
 	/**
-	 * Méthode permettant la rotation dans un sens anti-horaire de la matrice de la Tile
+	 * Retourne la rotation anti-horaire du tile
 	 */
-	public void rotateCounterClockwise()
+	public Tile rotateCounterClockwise()
 	{
 		CellType[][] temp = new CellType[WIDTH][HEIGHT];
 
@@ -110,21 +115,21 @@ public class Tile {
 		}
 
 
-		this.matrix = temp;
+		return new Tile(temp, this.getCouleur(), this.id + MAX_COUNT);
 	}
 
 
 	/**
-	 * Méthode permettant d'effectuer une symétrie de la Tile
+	 * Retourne la symétrie du tile
 	 */
-	public void flip(){
+	public Tile flip(){
 		CellType[][] temp = new CellType[WIDTH][HEIGHT];
 
 		for (int x = 0; x < WIDTH; x++)
 			for (int y = 0; y < HEIGHT; y++)
 				temp[WIDTH - x - 1][y] = matrix[x][y];
 
-		this.matrix = temp;
+		return new Tile(temp, this.getCouleur(), this.id + MAX_COUNT);
 	}
 
 	/**
@@ -170,6 +175,26 @@ public class Tile {
 		}
 		return width;
 	}
+	
+	
+	public ArrayList<Tile> getTilesListOfRotationsAndFlips()
+	{
+		if(this.tilesRotationsAndFlipsList.isEmpty())
+		{
+			Tile t = this;
+			this.tilesRotationsAndFlipsList.add(t);
+			this.tilesRotationsAndFlipsList.add(t.flip());
+			
+			for(int i = 0; i < 3; i++)
+			{
+				t = t.rotateClockwise();
+				this.tilesRotationsAndFlipsList.add(t);
+				this.tilesRotationsAndFlipsList.add(t.flip());
+			}
+		}
+		return this.tilesRotationsAndFlipsList;
+	}
+	
 	/**
 	 * Fonction permettant de recupérer une liste des tile en fonction d'une couleur
 	 * @param cellColor
