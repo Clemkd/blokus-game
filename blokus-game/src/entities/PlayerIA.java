@@ -5,6 +5,14 @@ import java.util.Random;
 
 import utilities.Move;
 
+/*
+ * 0- Toujours utiliser les pièces les plus grosses quand c'est possible
+ * 1- Aller vers le centre
+ * 2- Cut les coups orientés vers ma zone
+ * 3- Aller vers zones voisines
+ * 4- ?
+ */
+
 public class PlayerIA extends Player {
 
 	private static final int MAX_DEPTH = 4;
