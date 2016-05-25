@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import navigation.OptionPage;
 import navigation.Page;
 import utilities.Vector2;
 

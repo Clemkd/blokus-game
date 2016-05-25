@@ -14,7 +14,6 @@ import javax.swing.JFileChooser;
 import entities.CellColor;
 import entities.CellType;
 import entities.Game;
-import entities.PlayerHuman;
 import entities.Tile;
 import gui.BlokusBoard;
 import gui.BlokusButton;

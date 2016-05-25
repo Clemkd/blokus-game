@@ -2,10 +2,8 @@ package entities;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.swing.Timer;
@@ -29,9 +27,9 @@ public class PlayerRandom extends Player implements ActionListener {
 	}
 
 	@Override
-	public void play(Game game, CellColor c) {
+	public void play(Game g, CellColor c) {
 		this.playing = true;
-		this.game = game;
+		this.game = g;
 		this.color = c;
 		this.timer = new Timer(800 + rand.nextInt(400), this);
 		timer.start();
