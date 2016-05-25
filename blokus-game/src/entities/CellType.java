@@ -3,9 +3,8 @@ package entities;
 public enum CellType {
 	
 	BLANK(0),
-	PIECE(1),
-	ADJACENT(2),
-	CORNER(3);
+	BODY(1),
+	EXTREMITY(2);
 	
 	private int value;
 	
