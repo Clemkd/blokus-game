@@ -11,6 +11,9 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 
 public class BufferedHelper 
@@ -28,19 +31,19 @@ public class BufferedHelper
      * @param file Le chemin + nom du fichier de la police d'écriture
      * @return La police d'écriture si le fichier existe, null dans le cas contraire
      */
-    public static Font getFontFromFile(String file, float fontSize)
+    public static Font getFontFromFile(URL file, float fontSize)
     {
     	Font customFont = null;
 		try 
 		{
-			File fontFile = new File(file);
+			File fontFile = new File(file.toURI());
 			customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(fontSize);
 	        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	        //register the font
 	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, fontFile));
 	        
 		} 
-		catch (FontFormatException | IOException e) 
+		catch (FontFormatException | IOException | URISyntaxException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

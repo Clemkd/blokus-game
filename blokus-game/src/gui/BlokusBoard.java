@@ -72,7 +72,7 @@ public class BlokusBoard implements DrawableInterface
 		this.size = new Dimension();
 		try 
 		{
-			this.boardImage = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES + "plateau.png"));
+			this.boardImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "plateau.png"));
 			this.size = new Dimension(this.boardImage.getWidth(), this.boardImage.getHeight());
 		} catch (IOException e) {
 			e.printStackTrace();

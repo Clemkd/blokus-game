@@ -33,12 +33,12 @@ public class TutorialPage extends Page implements ActionListener{
 	@Override
 	public void loadContents() {
 		try {
-			this.tutorialImage = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"tutoriel.png"));
+			this.tutorialImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"tutoriel.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.buttonReturn = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"back.png");
+		this.buttonReturn = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"back.png"));
 		this.buttonReturn.setPosition(new Vector2(10,10));
 		this.buttonReturn.addListener(this);
 	}

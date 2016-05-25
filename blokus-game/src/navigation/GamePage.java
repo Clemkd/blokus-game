@@ -316,30 +316,30 @@ public class GamePage extends Page implements ActionListener{
 	public void loadContents() {
 		if(!flagLoad){
 			try {
-				this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+				this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"logo.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			this.selectedTile = null;
 			this.game = new Game();
 
-			this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"optionsig.png");
+			this.buttonOption = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"optionsig.png"));
 			this.buttonOption.setPosition(new Vector2(1143, BUTTONS_Y_POSITION));
 			this.buttonOption.addListener(this);
 
-			this.buttonUndo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"annulerig.png");
+			this.buttonUndo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"annulerig.png"));
 			this.buttonUndo.setPosition(new Vector2(526, BUTTONS_Y_POSITION));
 			this.buttonUndo.addListener(this);
 
-			this.buttonRedo = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"refaireig.png");
+			this.buttonRedo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"refaireig.png"));
 			this.buttonRedo.setPosition(new Vector2(647, BUTTONS_Y_POSITION));
 			this.buttonRedo.addListener(this);
 
-			this.buttonSave = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"sauvegarder.png");
+			this.buttonSave = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"sauvegarder.png"));
 			this.buttonSave.setPosition(new Vector2(980, BUTTONS_Y_POSITION));
 			this.buttonSave.addListener(this);
 
-			this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"accueil.png");
+			this.buttonExit = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"accueil.png"));
 			this.buttonExit.setPosition(new Vector2(32, BUTTONS_Y_POSITION));
 			this.buttonExit.addListener(this);
 

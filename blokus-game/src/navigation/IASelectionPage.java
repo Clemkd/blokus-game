@@ -96,32 +96,32 @@ public class IASelectionPage extends Page implements ActionListener{
 	@Override
 	public void loadContents() {
 		try {
-			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+			this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"logo.png"));
 		} catch (IOException e) {
 			this.titre = null;
 			e.printStackTrace();
 		}
 		
 		try {
-			this.background = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"backgroundsolo.png"));
+			this.background = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"backgroundsolo.png"));
 		} catch (IOException e) {
 			this.background = null;
 			e.printStackTrace();
 		}
 		
-		this.buttonIAEasy = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iaeasy.png");
+		this.buttonIAEasy = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"iaeasy.png"));
 		this.buttonIAEasy.setPosition(new Vector2(POS_X, 275));
 		this.buttonIAEasy.addListener(this);
 		
-		this.buttonIAMedium = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iamedium.png");
+		this.buttonIAMedium = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"iamedium.png"));
 		this.buttonIAMedium.setPosition(new Vector2(POS_X, 391));
 		this.buttonIAMedium.addListener(this);
 		
-		this.buttonIAHard = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"iahard.png");
+		this.buttonIAHard = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"iahard.png"));
 		this.buttonIAHard.setPosition(new Vector2(POS_X, 506));
 		this.buttonIAHard.addListener(this);
 		
-		this.buttonReturn = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"accueil.png");
+		this.buttonReturn = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"accueil.png"));
 		this.buttonReturn.setPosition(new Vector2(32, 725));
 		this.buttonReturn.addListener(this);
 		

@@ -1,6 +1,7 @@
 package navigation;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -110,33 +111,35 @@ public class HomePage extends Page implements ActionListener{
 	@Override
 	public void loadContents() {
 		try {
-			this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+			this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"logo.png"));
 		} catch (IOException e) {
 			this.titre = null;
 			e.printStackTrace();
 		}
 		
-		this.buttonOnePLayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png");
+		//this.buttonOnePLayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png");
+		
+		this.buttonOnePLayer = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png"));
 		this.buttonOnePLayer.setPosition(new Vector2(POS_X, 233));
 		this.buttonOnePLayer.addListener(this);
 		
-		this.buttonTwoPlayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"twoplayers.png");
+		this.buttonTwoPlayer = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"twoplayers.png"));
 		this.buttonTwoPlayer.setPosition(new Vector2(POS_X, 318));
 		this.buttonTwoPlayer.addListener(this);
 		
-		this.buttonLoad = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"load.png");
+		this.buttonLoad = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"load.png"));
 		this.buttonLoad.setPosition(new Vector2(POS_X, 406));
 		this.buttonLoad.addListener(this);
 		
-		this.buttonTutorial = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"tutorial.png");
+		this.buttonTutorial = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"tutorial.png"));
 		this.buttonTutorial.setPosition(new Vector2(POS_X, 492));
 		this.buttonTutorial.addListener(this);
 		
-		this.buttonOption = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"options.png");
+		this.buttonOption = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"options.png"));
 		this.buttonOption.setPosition(new Vector2(POS_X, 577));
 		this.buttonOption.addListener(this);
 		
-		this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"exit.png");
+		this.buttonExit = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"exit.png"));
 		this.buttonExit.setPosition(new Vector2(POS_X, 662));
 		this.buttonExit.addListener(this);
 		

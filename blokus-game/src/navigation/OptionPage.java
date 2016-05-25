@@ -43,8 +43,8 @@ public class OptionPage extends Page implements ActionListener{
 	
 	private static final int POS_X_TITLE = 371;
 	
-	private static Font customFontCheckbox = BufferedHelper.getFontFromFile(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf", 16f);
-	private static Font customFontTitle = BufferedHelper.getFontFromFile(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf", 20f);
+	private static Font customFontCheckbox = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 16f);
+	private static Font customFontTitle = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 20f);
 	
 	public OptionPage() {
 		super();
@@ -129,19 +129,19 @@ public class OptionPage extends Page implements ActionListener{
 	public void loadContents() {
 		
 		
-		this.buttonGeneral = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"general.png");
+		this.buttonGeneral = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"general.png"));
 		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS,314));
 		this.buttonGeneral.addListener(this);
 		
-		this.buttonRules = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"regles.png");
+		this.buttonRules = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"regles.png"));
 		this.buttonRules.setPosition(new Vector2(POS_X_BOUTONS, 374));
 		this.buttonRules.addListener(this);
 		
-		this.buttonControl = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"controles.png");
+		this.buttonControl = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"controles.png"));
 		this.buttonControl.setPosition(new Vector2(POS_X_BOUTONS, 433));
 		this.buttonControl.addListener(this);
 		
-		this.buttonToValid = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"valider.png");
+		this.buttonToValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"valider.png"));
 		this.buttonToValid.setPosition(new Vector2(1035, 653));
 		this.buttonToValid.addListener(this);
 		

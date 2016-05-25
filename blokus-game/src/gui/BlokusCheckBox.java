@@ -46,8 +46,8 @@ public class BlokusCheckBox implements DrawableInterface {
 		this.size = new Dimension(20, 20);
 		this.listeners = new ArrayList<ActionListener>();
 		try {
-			this.checked = ImageIO.read(new File(Page.PATH_RESOURCES_BOUTONS+"boxchecked.png"));
-			this.noChecked = ImageIO.read(new File(Page.PATH_RESOURCES_BOUTONS+"box.png"));
+			this.checked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"boxchecked.png"));
+			this.noChecked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"box.png"));
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();

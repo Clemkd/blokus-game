@@ -66,7 +66,7 @@ public class PlayerPanel implements DrawableInterface{
 		
 		try 
 		{
-			this.headerPanelImage = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES + "fondgris.png"));
+			this.headerPanelImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "fondgris.png"));
 		} 
 		catch (IOException e) 
 		{

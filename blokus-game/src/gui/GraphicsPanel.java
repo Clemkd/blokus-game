@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 import navigation.Navigation;
+import navigation.Page;
 import utilities.Vector2;
 
 public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener {
@@ -33,7 +34,7 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 		this.addMouseMotionListener(this);
 		this.addMouseWheelListener(this);
 		try {
-			this.background = ImageIO.read(new File("./resources/images/background.png"));
+			this.background = ImageIO.read(getClass().getResource("/images/background.png"));
 		}
 		catch (IOException e) {
 			System.out.println("erreur chargement fond");

@@ -7,17 +7,17 @@ public abstract class Page implements DrawableInterface{
 	/**
 	 * Constante d'accès au dossier de ressource des images
 	 */
-	public static final String PATH_RESOURCES_IMAGES = "./resources/images/";
+	public static final String PATH_RESOURCES_IMAGES = "/images/";
 	
 	/**
 	 * Constante d'accès au dossier de resources des boutons
 	 */
-	public static final String PATH_RESOURCES_BOUTONS = "./resources/boutons/";
+	public static final String PATH_RESOURCES_BOUTONS = "/boutons/";
 	
 	/**
 	 * Constante d'accès au dossier de resources des fonts
 	 */
-	public static final String PATH_RESOURCES_FONTS = "./resources/fonts/";
+	public static final String PATH_RESOURCES_FONTS = "/fonts/";
 	
 	
 	/**

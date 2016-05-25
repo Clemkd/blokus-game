@@ -6,27 +6,29 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import navigation.Page;
+
 public enum CellColor {
 	
 	/**
 	 * Cellule de couleur bleu avec le chemin d'accès vers l'image correspondante
 	 */
-	BLUE("./resources/cells/bluecell.png"),
+	BLUE("/cells/bluecell.png"),
 	
 	/**
 	 * Cellule de couleur rouge avec le chemin d'accès vers l'image correspondante
 	 */
-	RED("./resources/cells/redcell.png"),
+	RED("/cells/redcell.png"),
 	
 	/**
 	 * Cellule de couleur verte avec le chemin d'accès vers l'image correspondante
 	 */
-	GREEN("./resources/cells/greencell.png"),
+	GREEN("/cells/greencell.png"),
 	
 	/**
 	 * Cellule de couleur jaune avec le chemin d'accès vers l'image correspondante
 	 */
-	YELLOW("./resources/cells/yellowcell.png");
+	YELLOW("/cells/yellowcell.png");
 	
 	/**
 	 * attribut représentant le chemin d'accès vers l'image correspondate au type de celulle
@@ -49,7 +51,7 @@ public enum CellColor {
 		this.path = path;
 		try 
 		{
-			this.image = ImageIO.read(new File(path));
+			this.image = ImageIO.read(getClass().getResource(path));
 		} 
 		catch (IOException e) 
 		{
