@@ -1,6 +1,8 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import navigation.OptionPage;
 import navigation.Page;
 import utilities.Vector2;
 
@@ -24,6 +27,7 @@ public class BlokusCheckBox implements DrawableInterface {
 	
 	private BufferedImage noChecked;
 	
+	private String text;
 	
 	private Vector2 position;
 	
@@ -31,10 +35,14 @@ public class BlokusCheckBox implements DrawableInterface {
 	
 	private ArrayList<ActionListener> listeners;
 	
-	public BlokusCheckBox(boolean enabled, boolean checked) {
+	private Font font;
+	
+	public BlokusCheckBox(boolean enabled, boolean checked, String text, Font font) {
 
 		this.isChecked = checked;
 		this.isEnabled = enabled;
+		this.text = text;
+		this.font = font;
 		this.position = new Vector2();
 		this.size = new Dimension(20, 20);
 		this.listeners = new ArrayList<ActionListener>();
@@ -106,40 +114,10 @@ public class BlokusCheckBox implements DrawableInterface {
 		
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.drawImage(this.isChecked ?this.checked: this.noChecked, this.position.getX(), this.position.getY(), (int) this.size.getWidth(), (int) this.size.getHeight(), null);
-		
-		
-		
-		/*if(this.backgroundImage != null)
-		{
-			Graphics2D g2d = (Graphics2D) g.create();
-			g2d.drawImage(this.checked, 
-					this.position.getX(), 
-					this.position.getY(), 
-					(int) this.size.getWidth(), 
-					(int) this.size.getHeight(), 
-					null);
-			
-			if(this.mouseHover)
-			{
-				g2d.drawImage(this.checkedHover,
-						this.position.getX(),
-						this.position.getY(), 
-						(int)this.size.getWidth(),
-						(int)this.size.getHeight(),
-						null);
-			}
-			else if(!this.isEnabled)
-			{
-				g2d.drawImage(this.checkedDisable,
-						this.position.getX(),
-						this.position.getY(), 
-						(int)this.size.getWidth(),
-						(int)this.size.getHeight(),
-						null);
-			}
-		}
-			*/
-			g2d.dispose();
+		g2d.setColor(Color.WHITE);
+		g2d.setFont(this.font);
+		g2d.drawString(this.text, (int) (this.position.getX()+this.size.getWidth()+10), (int) (this.position.getY()+this.size.getHeight()));
+		g2d.dispose();
 		
 	}
 	

@@ -8,22 +8,31 @@ import java.awt.event.ActionListener;
 
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
+import gui.BlokusLabel;
 import utilities.Vector2;
 import utilities.BufferedHelper;
 
 public class OptionPage extends Page implements ActionListener{
 	
+	private static final int POS_X_CHECKBOX = 400;
 	private BlokusButton buttonGeneral;
 	private BlokusButton buttonControl;
 	private BlokusButton buttonRules;
 	private BlokusButton buttonToValid;
-	private BlokusCheckBox checkBox;
 	
-	private Font font;
-
+	private BlokusCheckBox checkBoxGeneral1;
+	private BlokusCheckBox checkBoxAutoSave;
+	private BlokusCheckBox checkBoxActivateAudio;
+	private BlokusCheckBox checkBoxDaltonienMode;
+	
+	private BlokusLabel titleGame;
+	private BlokusLabel titleAudio;
+	private BlokusLabel titleVideo;
+	
 	private boolean onControl;
 	private boolean onRules;
 	private boolean onGeneral;
+	
 	
 	private static final int POS_X_BOUTONS = 72;
 	
@@ -31,6 +40,11 @@ public class OptionPage extends Page implements ActionListener{
 	private static final int POS_Y_PANEL = 72;
 	private static final int PANEL_WIDTH = 867;
 	private static final int PANEL_HEIGHT = 656;
+	
+	private static final int POS_X_TITLE = 371;
+	
+	private static Font customFontCheckbox = BufferedHelper.getFontFromFile(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf", 16f);
+	private static Font customFontTitle = BufferedHelper.getFontFromFile(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf", 20f);
 	
 	public OptionPage() {
 		super();
@@ -44,7 +58,13 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonGeneral.update(elapsedTime);
 		this.buttonRules.update(elapsedTime);
 		this.buttonToValid.update(elapsedTime);
-		this.checkBox.update(elapsedTime);
+		this.checkBoxGeneral1.update(elapsedTime);
+		this.checkBoxAutoSave.update(elapsedTime);
+		this.titleGame.update(elapsedTime);
+		this.titleAudio.update(elapsedTime);
+		this.checkBoxActivateAudio.update(elapsedTime);
+		this.titleVideo.update(elapsedTime);
+		this.checkBoxDaltonienMode.update(elapsedTime);
 		
 	}
 
@@ -54,15 +74,22 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonControl.draw(g2d);
 		this.buttonGeneral.draw(g2d);
 		this.buttonRules.draw(g2d);
-		this.checkBox.draw(g2d);
+		
 		
 		if(this.onGeneral){
 			g2d.setColor(new Color(0, 93, 188));
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
 			
-			g2d.setFont(this.font);
-			g2d.setColor(Color.WHITE);
-			g2d.drawString("JEU", 391, 112);
+			this.titleGame.draw(g2d);
+			this.checkBoxGeneral1.draw(g2d);
+			this.checkBoxAutoSave.draw(g2d);
+			
+			this.titleAudio.draw(g2d);
+			this.checkBoxActivateAudio.draw(g2d);
+			
+			this.titleVideo.draw(g2d);
+			this.checkBoxDaltonienMode.draw(g2d);
+			
 			
 		}else if(this.onControl){
 			g2d.setColor(new Color(0, 141,44));
@@ -101,7 +128,6 @@ public class OptionPage extends Page implements ActionListener{
 	@Override
 	public void loadContents() {
 		
-        this.font = BufferedHelper.getFontFromFile(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf");
 		
 		this.buttonGeneral = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"general.png");
 		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS,314));
@@ -119,8 +145,26 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonToValid.setPosition(new Vector2(1035, 653));
 		this.buttonToValid.addListener(this);
 		
-		this.checkBox = new BlokusCheckBox(true, false);
-		this.checkBox.setPosition(new Vector2(100, 100));
+		this.titleGame = new BlokusLabel("JEU", customFontTitle);
+		this.titleGame.setPosition(new Vector2(POS_X_TITLE, 102));
+		
+		this.checkBoxGeneral1 = new BlokusCheckBox(true, false, "METTRE EN SURBRILLANCE LES COUPS POSSIBLES", OptionPage.customFontCheckbox);
+		this.checkBoxGeneral1.setPosition(new Vector2(POS_X_CHECKBOX, 150));
+		
+		this.checkBoxAutoSave = new BlokusCheckBox(true, false, "SAUVEGARDE AUTOMATIQUE", OptionPage.customFontCheckbox);
+		this.checkBoxAutoSave.setPosition(new Vector2(POS_X_CHECKBOX, 180));
+		
+		this.titleAudio = new BlokusLabel("AUDIO", customFontTitle);
+		this.titleAudio.setPosition(new Vector2(POS_X_TITLE, 252));
+		
+		this.checkBoxActivateAudio = new BlokusCheckBox(true, false, "MUSIQUE DE FOND", OptionPage.customFontCheckbox);
+		this.checkBoxActivateAudio.setPosition(new Vector2(POS_X_CHECKBOX, 300));
+		
+		this.titleVideo= new BlokusLabel("VIDEO", customFontTitle);
+		this.titleVideo.setPosition(new Vector2(POS_X_TITLE, 402));
+		
+		this.checkBoxDaltonienMode = new BlokusCheckBox(true, false, "MODE DALTONIEN", OptionPage.customFontCheckbox);
+		this.checkBoxDaltonienMode.setPosition(new Vector2(POS_X_CHECKBOX, 450));
 
 	}
 

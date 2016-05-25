@@ -28,14 +28,13 @@ public class BufferedHelper
      * @param file Le chemin + nom du fichier de la police d'écriture
      * @return La police d'écriture si le fichier existe, null dans le cas contraire
      */
-    public static Font getFontFromFile(String file)
+    public static Font getFontFromFile(String file, float fontSize)
     {
     	Font customFont = null;
 		try 
 		{
 			File fontFile = new File(file);
-			customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(12f);
-		
+			customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(fontSize);
 	        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	        //register the font
 	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, fontFile));
