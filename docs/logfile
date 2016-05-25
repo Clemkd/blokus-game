@@ -51,3 +51,10 @@ Audit IHM :
 Correction des erreurs de placement de pièces lors de la selection de celle-ci.
 Ajout d'une page options.
 Gestion d'un état d'une pièce posée ou non lors du clic
+
+
+10ème jour : 25 mai 2016
+Meilleur gestion des matrices des pièces + changement de notre matrice.. On peux poser des pieces sur le plateau, (non sur le dessin) uniquement si la pièce est posable.
+Mise en place d'une partie entre 2 IA (random).
+Ajout d'une musique de fond.
+
