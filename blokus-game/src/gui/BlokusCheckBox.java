@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import navigation.Page;
-import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class BlokusCheckBox implements DrawableInterface {

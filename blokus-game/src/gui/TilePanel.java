@@ -2,12 +2,9 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import entities.CellColor;
 import entities.Tile;
-import utilities.BufferedHelper;
 import utilities.Vector2;
 
 /**
@@ -105,9 +102,9 @@ public class TilePanel implements DrawableInterface{
 	 * Charge la liste des tiles d'un inventaire de joueur dans le panel
 	 * @param tiles La liste des tiles de l'inventaire du joueur
 	 */
-	public void loadTileInventory(ArrayList<Tile> tiles)
+	public void loadTileInventory(ArrayList<Tile> tileInventory)
 	{
-		for(Tile t : tiles)
+		for(Tile t : tileInventory)
 		{
 			this.addTile(t);
 		}

@@ -11,7 +11,7 @@ public class PlayerHuman extends Player {
 	}
 
 	@Override
-	public void play(CellColor c) {
+	public void play(Game game, CellColor c) {
 		this.chosenMove = null;
 		this.playing = true;
 	}

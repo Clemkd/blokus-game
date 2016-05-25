@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 
 import entities.Board;
 import entities.CellColor;
-import entities.Tile;
 import navigation.Page;
 import utilities.BufferedHelper;
 import utilities.OutOfBoundsException;
@@ -169,11 +168,11 @@ public class BlokusBoard implements DrawableInterface
 	 * @param position La position à tester
 	 * @return Vrai si la position donnée est disposée sur le tableau, Faux dans le cas contraire
 	 */
-	public boolean isInBounds(Vector2 position) {
-		return position.getX() > (this.getPosition().getX() + OFFSET_X) &&
-				position.getX() < (this.getPosition().getX() + (int)this.getSize().getWidth() - OFFSET_X) &&
-				position.getY() > (this.getPosition().getY() + OFFSET_Y) &&
-				position.getY() < (this.getPosition().getY() + (int)this.getSize().getHeight() - OFFSET_Y);
+	public boolean isInBounds(Vector2 p) {
+		return p.getX() > (this.getPosition().getX() + OFFSET_X) &&
+				p.getX() < (this.getPosition().getX() + (int)this.getSize().getWidth() - OFFSET_X) &&
+				p.getY() > (this.getPosition().getY() + OFFSET_Y) &&
+				p.getY() < (this.getPosition().getY() + (int)this.getSize().getHeight() - OFFSET_Y);
 	}
 	
 	/**

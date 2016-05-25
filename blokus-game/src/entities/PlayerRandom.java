@@ -28,7 +28,7 @@ public class PlayerRandom extends Player {
 		ArrayList<Entry<Tile, Vector2>> validMovesWithTiles = new ArrayList<Entry<Tile, Vector2>>();
 		
 		// La liste des tiles représentant les rotations et flips de tile
-		ArrayList<Tile> tiles = new ArrayList<Tile>();
+		ArrayList<Tile> tileVariations = new ArrayList<Tile>();
 		
 		// Les placements actuels possibles
 		ArrayList<Vector2> validMoves = game.board.getValidMoves(c);
@@ -40,10 +40,10 @@ public class PlayerRandom extends Player {
 			for(Tile tile : this.getTileInventory())
 			{
 				// La liste des rotations et flips de la pièce
-				tiles = tile.getTilesListOfRotationsAndFlips();
+				tileVariations = tile.getTilesListOfRotationsAndFlips();
 				
 				// Pour chaque rotation et flip possible de la pièce
-				for(Tile t : tiles)
+				for(Tile t : tileVariations)
 				{
 					if(game.board.isValidMove(t, validMove))
 					{

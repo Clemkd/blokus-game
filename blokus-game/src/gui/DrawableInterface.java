@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.Graphics2D;
 
-import utilities.Vector2;
-
 public interface DrawableInterface {
 	
 	/**

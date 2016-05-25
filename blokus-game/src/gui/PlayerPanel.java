@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import entities.CellColor;
 import entities.Player;
 import entities.Tile;
 import navigation.Page;

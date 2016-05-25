@@ -24,7 +24,7 @@ public class PlayerIA extends Player {
 	}
 
 	@Override
-	public void play(CellColor c) {
+	public void play(Game game, CellColor c) {
 		//TODO: changer prototype fonction vers public void play(Game origin, CellColor c)
 		//this.chosenMove = this.alphaBeta(origin, MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
@@ -64,7 +64,7 @@ public class PlayerIA extends Player {
 	}
 
 	private int evaluate(Game node) {
-		int res = node.getScore(this); // La valeur de base correspond au score qu'on peut esperer obtenir
+		int res = node.getScore(this); // Score qu'on peut esperer obtenir si la partie se terminait maintenant
 		/* TODO
 		 * Critères suppélmentaires 
 		 * - Passer à travers 

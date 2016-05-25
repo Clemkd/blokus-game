@@ -1,6 +1,5 @@
 package entities;
 
-import java.awt.Color;
 import java.util.ArrayList;
 
 import utilities.Vector2;
@@ -202,7 +201,6 @@ public class Tile {
 	 */
 	public static ArrayList<Tile> getListOfNeutralTile(CellColor cellColor){
 		ArrayList<Tile> listTile = new ArrayList<Tile>();
-		Tile temp;
 
 		// *
 		CellType[][] matrix21 = { 
