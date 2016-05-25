@@ -21,27 +21,27 @@ public class TilePanel implements DrawableInterface{
 	 */
 	private static Vector2[] tilesPosition =
 	{
-		new Vector2(0,0),
-		new Vector2(10,20),
-		new Vector2(100,230),
-		new Vector2(20,210),
-		new Vector2(-10,90),
-		new Vector2(190,150),
-		new Vector2(190,220),
+		new Vector2(0,0), 
+		new Vector2(30,0),
+		new Vector2(120,210),
+		new Vector2(40,190),
+		new Vector2(30,50),
+		new Vector2(170,170),
+		new Vector2(210,200),
 		new Vector2(60,0),
-		new Vector2(60,70),
-		new Vector2(-40,70),
-		new Vector2(170,20),
-		new Vector2(130,270),
+		new Vector2(80,50),
+		new Vector2(0,30),
+		new Vector2(190,0),
+		new Vector2(150,250),
 		new Vector2(0,140),
-		new Vector2(130,-20),
-		new Vector2(70,120),
+		new Vector2(110,0),
+		new Vector2(110,80),
 		new Vector2(120,130),
 		new Vector2(0,230),
 		new Vector2(60,140),
 		new Vector2(170,100),
-		new Vector2(140,70),
-		new Vector2(50,240)
+		new Vector2(180,30),
+		new Vector2(70,220)
 	};
 	
 	private final static int TILE_PANEL_WIDTH = 267;

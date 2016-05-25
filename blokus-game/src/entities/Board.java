@@ -93,6 +93,7 @@ public class Board {
 	public boolean isValidMove(Tile tile, Vector2 position)
 	{
 		Vector2 fc = tile.getFirstCase();
+		this.displayMatrix(tile.getMatrix(), Tile.WIDTH);
 
 		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
 		{
@@ -101,17 +102,47 @@ public class Board {
 				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
 				{
 					Vector2 v = new Vector2(
-							position.getX() - fc.getX() + offsetX,
-							position.getY() - fc.getY() + offsetY);
+							position.getX() - fc.getY() + offsetY,
+							position.getY() - fc.getX() + offsetX);
 					
-					if(!this.isInBounds(v) || this.cells[v.getX()][v.getY()] != null || this.hasSameColorWithAnAdjacentCell(tile.getCouleur(), v))
+					if(!this.isInBounds(v))
 					{
+						System.out.println("Bounds : NO OK "+v.toString());
 						return false;
+					}
+					else
+					{
+						if(this.cells[v.getX()][v.getY()] != null)
+						{
+							System.out.println("Cell : NO OK");
+							return false;
+						}
+						else
+						{
+							if(this.hasSameColorWithAnAdjacentCell(tile.getCouleur(), v))
+							{
+								System.out.println("Adjacent : NO OK");
+								return false;
+							}
+						}
 					}
 				}
 			}
 		}
 		return true;
+	}
+	
+	public void displayMatrix(CellType[][] matrix, int n) {
+		for (int i = 0; i < n; ++i) {
+			System.out.print('{');
+	        for (int j = 0; j < n; ++j) {
+	            System.out.print(matrix[i][j]);
+	            if(j+1!=n)
+	            	System.out.print(", ");
+	        }
+	        System.out.print("}\n");
+	    }
+		System.out.print('\n');
 	}
 	
 	/**

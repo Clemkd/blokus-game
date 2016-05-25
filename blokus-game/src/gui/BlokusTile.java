@@ -130,7 +130,7 @@ public class BlokusTile implements DrawableInterface {
 					Vector2 currentPosition = new Vector2(
 						this.position.getX() + ( - fc.getY() + j) * CellColor.CELL_WIDTH,
 						this.position.getY() + ( - fc.getX() + i) * CellColor.CELL_HEIGHT);
-					if(v.getX()>currentPosition.getX() && v.getY()>currentPosition.getY() && v.getX()<currentPosition.getX()+CellColor.CELL_WIDTH && v.getY()<currentPosition.getY()+CellColor.CELL_HEIGHT )
+					if(v.getX()>=currentPosition.getX() && v.getY()>=currentPosition.getY() && v.getX()<=currentPosition.getX()+CellColor.CELL_WIDTH && v.getY()<=currentPosition.getY()+CellColor.CELL_HEIGHT )
 					{
 						return true;
 					}
