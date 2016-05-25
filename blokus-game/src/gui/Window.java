@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -18,6 +19,8 @@ public class Window implements Runnable , ActionListener
 	private Timer timer;
 
 	private long startTime;
+
+	private static MusicPlayer musicPlayer = new MusicPlayer("/backgroundMusic.mp3");
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 800;
@@ -40,15 +43,24 @@ public class Window implements Runnable , ActionListener
 			float elapsedTime = (System.nanoTime() - this.startTime)/1000000f;
 			this.startTime = System.nanoTime();
 			
+			if(musicPlayer.isTerminated()) {
+				musicPlayer.playSound();
+			}
 			this.gameGraphics.update(elapsedTime);
 		}
 	}
 
 	@Override
 	public void run() {
+		musicPlayer.playSound();
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);
 		this.startTime = System.nanoTime();
 		this.timer.start();
+		
+	}
+	
+	public static MusicPlayer getMusicPlayer() {
+		return musicPlayer;
 	}
 }

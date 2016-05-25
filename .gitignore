@@ -5,6 +5,7 @@
 
 # Package Files #
 *.jar
+!jl1.0.1.jar
 *.war
 *.ear
 
