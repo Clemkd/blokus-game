@@ -60,11 +60,11 @@ public class BlokusTile implements DrawableInterface {
 		{
 			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
 			{	
-				if(tile.getCellType(offsetY, offsetX) == CellType.PIECE)
+				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
 				{
 					Vector2 currentPosition = new Vector2(
-							this.position.getX() + ( - fc.getX() + offsetX) * CellColor.CELL_WIDTH,
-							this.position.getY() + ( - fc.getY() + offsetY) * CellColor.CELL_HEIGHT);
+							this.position.getX() + ( - fc.getY() + offsetY) * CellColor.CELL_WIDTH,
+							this.position.getY() + ( - fc.getX() + offsetX) * CellColor.CELL_HEIGHT);
 					
 					g2d.drawImage(this.tile.getCouleur().getImage(), 
 							currentPosition.getX(),
@@ -125,11 +125,11 @@ public class BlokusTile implements DrawableInterface {
 		
 		for(int i=0; i<Tile.WIDTH; i++){
 			for(int j=0; j<Tile.HEIGHT; j++){
-				if(this.tile.getCellType(j, i) == CellType.PIECE)
+				if(this.tile.getCellType(i, j) == CellType.PIECE)
 				{
 					Vector2 currentPosition = new Vector2(
-						this.position.getX() + ( - fc.getX() + i) * CellColor.CELL_WIDTH,
-						this.position.getY() + ( - fc.getY() + j) * CellColor.CELL_HEIGHT);
+						this.position.getX() + ( - fc.getY() + j) * CellColor.CELL_WIDTH,
+						this.position.getY() + ( - fc.getX() + i) * CellColor.CELL_HEIGHT);
 					if(v.getX()>currentPosition.getX() && v.getY()>currentPosition.getY() && v.getX()<currentPosition.getX()+CellColor.CELL_WIDTH && v.getY()<currentPosition.getY()+CellColor.CELL_HEIGHT )
 					{
 						return true;

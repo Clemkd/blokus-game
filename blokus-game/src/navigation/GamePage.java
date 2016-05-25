@@ -164,7 +164,7 @@ public class GamePage extends Page implements ActionListener{
 			{
 				for (int j=0; j<Tile.HEIGHT; j++)
 				{
-					if(matrix[j][i] == CellType.PIECE)
+					if(matrix[i][j] == CellType.PIECE)
 					{
 						xMatrix2 = i;
 						yMatrix2 = j;
@@ -190,13 +190,13 @@ public class GamePage extends Page implements ActionListener{
 				}
 
 				this.selectedTile.setPosition(new Vector2(
-						(x * CellColor.CELL_WIDTH) + (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X) + offsetPosX,
-						(y * CellColor.CELL_HEIGHT) + (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y) + offsetPosY));
+						(x * CellColor.CELL_WIDTH) + (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X),
+						(y * CellColor.CELL_HEIGHT) + (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)));
 
 			}
 			else
 			{
-				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX()+offsetPosX, Mouse.getPosition().getY()+offsetPosY));
+				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX(), Mouse.getPosition().getY()));
 			}
 			offsetPosX = 0;
 			offsetPosY = 0;
