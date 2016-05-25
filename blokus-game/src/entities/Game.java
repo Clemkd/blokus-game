@@ -139,7 +139,7 @@ public class Game
 	/**
 	 * @return
 	 */
-	private CellColor getCurrentColor()
+	public CellColor getCurrentColor()
 	{
 		CellColor c;
 		switch (this.currentTurn % 4)

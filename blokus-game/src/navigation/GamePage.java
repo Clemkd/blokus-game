@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import entities.CellColor;
 import entities.CellType;
 import entities.Game;
+import entities.PlayerHuman;
 import entities.Tile;
 import gui.BlokusBoard;
 import gui.BlokusButton;
@@ -111,12 +112,16 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonRedo.update(elapsedTime);
 		this.buttonSave.update(elapsedTime);
 		this.buttonExit.update(elapsedTime);
-		this.panelJoueur1.update(elapsedTime);
-		this.panelJoueur2.update(elapsedTime);
 		this.game.update();
 		this.blokusBoard.setBoard(this.game.getBoard());
 		this.blokusBoard.update(elapsedTime);
 		
+		this.updatePlayerPanels(elapsedTime);
+		this.updateDragAndDrop(elapsedTime);
+	}
+
+	private void updateDragAndDrop(float elapsedTime)
+	{
 		/**********************************************/
 		/************** Drag and drop *****************/
 		/**********************************************/
@@ -124,13 +129,12 @@ public class GamePage extends Page implements ActionListener{
 		{
 			Mouse.consumeLastMouseButton();
 			if(!this.inDragAndDrop)
-			{
-				BlokusTile tile = this.panelJoueur1.getTile(Mouse.getPosition());
-				if(tile != null)
+			{			
+				if(this.game.getCurrentPlayer() == this.game.getPlayers().get(0))
 				{
-					this.selectedTile = tile;
+					this.selectedTile = this.panelJoueur1.getTile(Mouse.getPosition());
 				}
-				else
+				else if(this.game.getCurrentPlayer() == this.game.getPlayers().get(1))
 				{
 					this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
 				}
@@ -225,11 +229,41 @@ public class GamePage extends Page implements ActionListener{
 				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX(), Mouse.getPosition().getY()));
 			}
 			this.selectedTile.update(elapsedTime);
-			/**********************************************/
-			/************** Drag and drop *****************/
-			/**********************************************/
+		}
+		/**********************************************/
+		/************** Drag and drop *****************/
+		/**********************************************/
+	}
+
+
+	private void updatePlayerPanels(float elapsedTime)
+	{
+		this.panelJoueur1.update(elapsedTime);
+		this.panelJoueur2.update(elapsedTime);
+		
+		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman)) // Si n'est pas Humain faire
+		{
+			this.panelJoueur1.setEnabled(false);
+		}
+		else 
+		{
+			boolean firstColor = this.game.getCurrentPlayer().getColors().get(0) == this.game.getCurrentColor();
+			boolean secondColor = this.game.getCurrentPlayer().getColors().get(1) == this.game.getCurrentColor();
+			this.panelJoueur1.setEnabled(firstColor, secondColor);
+		}
+		
+		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman)) // Si n'est pas Humain faire
+		{
+			this.panelJoueur2.setEnabled(false);
+		}
+		else
+		{
+			boolean firstColor = this.game.getCurrentPlayer().getColors().get(0) == this.game.getCurrentColor();
+			boolean secondColor = this.game.getCurrentPlayer().getColors().get(1) == this.game.getCurrentColor();
+			this.panelJoueur2.setEnabled(firstColor, secondColor);
 		}
 	}
+
 
 	@Override
 	public void draw(Graphics2D g) {
@@ -286,7 +320,6 @@ public class GamePage extends Page implements ActionListener{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 			this.selectedTile = null;
 			this.game = new Game();
 

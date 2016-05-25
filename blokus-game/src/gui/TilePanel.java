@@ -134,6 +134,8 @@ public class TilePanel implements DrawableInterface{
 	 */
 	public BlokusTile getTile(Vector2 v)
 	{
+		if(!this.isEnabled())
+			return null;
 		if(!this.isInBounds(v))
 			return null;
 		
@@ -141,6 +143,7 @@ public class TilePanel implements DrawableInterface{
 		
 		for(BlokusTile entry : this.tiles)
 		{
+			// TODO : Erreur NullPointerException : entry (Appel de getTile() lorsque le tour est à l'IA
 			if(entry.isInBounds(v))
 			{
 				res = entry;

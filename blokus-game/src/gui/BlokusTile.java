@@ -36,7 +36,7 @@ public class BlokusTile implements DrawableInterface {
 		this.position = position;
 		this.tile = tile;
 		this.enabled = true;
-		this.caseMaskImage = BufferedHelper.generateMask(this.tile.getCouleur().getImage(), new Color(128, 128, 128), 0.7f);
+		this.caseMaskImage = BufferedHelper.generateMask(this.tile.getCouleur().getImage(), new Color(128, 128, 128), 0.9f);
 	}
 	
 	public BlokusTile(Tile tile)
@@ -121,6 +121,10 @@ public class BlokusTile implements DrawableInterface {
 	 */
 	public boolean isInBounds(Vector2 v)
 	{
+		// TODO : ?
+		if(!this.isEnabled())
+			return false;
+		
 		Vector2 fc = this.tile.getFirstCase();
 		
 		for(int i=0; i<Tile.WIDTH; i++){

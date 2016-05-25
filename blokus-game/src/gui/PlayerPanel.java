@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import entities.CellColor;
 import entities.Player;
 import entities.Tile;
 import navigation.Page;
@@ -59,7 +60,6 @@ public class PlayerPanel implements DrawableInterface{
 		this.player = p;
 		this.state = false;
 		this.size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-
 		this.tilePanel1 = new TilePanel();
 		this.tilePanel2 = new TilePanel();
 		this.setPosition(new Vector2());
@@ -103,6 +103,18 @@ public class PlayerPanel implements DrawableInterface{
 	public void setEnabled(boolean state)
 	{
 		this.state = state;
+		this.tilePanel1.setEnabled(state);
+		this.tilePanel2.setEnabled(state);
+	}
+	
+	/**
+	 * Determine l'état des sous panels
+	 */
+	public void setEnabled(boolean statePanel1, boolean statePanel2)
+	{
+		this.state = state;
+		this.tilePanel1.setEnabled(statePanel1);
+		this.tilePanel2.setEnabled(statePanel2);
 	}
 	
 	/**
