@@ -83,7 +83,7 @@ public class BlokusBoard implements DrawableInterface
 	public void update(float elapsedTime) {
 		if(this.isValidMovesShown)
 		{
-			this.validsMoves = this.board.getValidMoves(this.cellColorForValidMoves);
+			this.validsMoves = this.board.getFreePositions(this.cellColorForValidMoves);
 		}
 	}
 
@@ -104,8 +104,8 @@ public class BlokusBoard implements DrawableInterface
 					if(c != null)
 					{
 						g2d.drawImage(c.getImage(),
-								this.position.getX() + x * CellColor.CELL_WIDTH, 
-								this.position.getY() + y * CellColor.CELL_HEIGHT,
+								OFFSET_X + this.position.getX() + x * CellColor.CELL_WIDTH, 
+								OFFSET_Y + this.position.getY() + y * CellColor.CELL_HEIGHT,
 								CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
 					}
 					
@@ -114,8 +114,8 @@ public class BlokusBoard implements DrawableInterface
 						if(this.validsMoves != null && !this.validsMoves.contains(new Vector2(x, y)))
 						{
 							g2d.drawImage(this.cellMask, 
-									this.position.getX() + x * CellColor.CELL_WIDTH, 
-									this.position.getY() + y * CellColor.CELL_HEIGHT,
+									OFFSET_X + this.position.getX() + x * CellColor.CELL_WIDTH, 
+									OFFSET_Y + this.position.getY() + y * CellColor.CELL_HEIGHT,
 									CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, null);
 						}
 					}
@@ -156,6 +156,14 @@ public class BlokusBoard implements DrawableInterface
 	}
 	
 	/**
+	 * Determine l'objet de données de la représentation
+	 * @param b Le board a représenter
+	 */
+	public Board setBoard(Board b) {
+		return this.board = b;
+	}
+	
+	/**
 	 * Obtient la taille du plateau
 	 * @return La taille du plateau
 	 */
@@ -176,9 +184,9 @@ public class BlokusBoard implements DrawableInterface
 	}
 	
 	/**
-	 * Determine l'�tat d'affichage des placements possibles sur la grille de jeu
-	 * @param state L'�tat d'affichage (True pour afficher, False dans la cas contraire)
-	 * @param color La couleur � tester pour les possibilit�s
+	 * Determine l'état d'affichage des placements possibles sur la grille de jeu
+	 * @param state L'état d'affichage (True pour afficher, False dans la cas contraire)
+	 * @param color La couleur à tester pour les possibilités
 	 */
 	public void showValidMoves(boolean state, CellColor color)
 	{

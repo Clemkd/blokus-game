@@ -131,6 +131,7 @@ public class PlayerPanel implements DrawableInterface{
 
 	@Override
 	public void update(float elapsedTime) {
+		this.refreshTiles();
 		tilePanel1.update(elapsedTime);
 		tilePanel2.update(elapsedTime);
 	}

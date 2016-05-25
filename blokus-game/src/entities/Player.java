@@ -71,8 +71,26 @@ public abstract class Player {
 	 */
 	public Move getMove() {
 		Move m = this.chosenMove;
+		
+		if(m != null && m.getTile()!=null)
+		{
+			// Suppression du tile joué de l'inventaire
+			Tile tile = null;
+			
+			int id = m.getTile().getId();
+			for(Tile t : this.tiles)
+			{
+				if(t.getId() == id && t.getCouleur() == m.getTile().getCouleur())
+				{
+					tile = t;
+					break;
+				}
+			}
+			this.tiles.remove(tile);
+		}
+		
 		this.chosenMove = null;
-
+		
 		return m;
 	}
 	

@@ -33,6 +33,12 @@ public class GamePage extends Page implements ActionListener{
 	private static final int BUTTONS_Y_POSITION = 725;
 
 	private boolean inDragAndDrop;
+	
+	private ArrayList<Vector2> validMoves;
+	
+	private ArrayList<Vector2> cellsOfTile;
+	
+	private Vector2 mousePosInBoard;
 
 	/**
 	 * Image correspondante au drag and drop courant
@@ -108,8 +114,10 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonExit.update(elapsedTime);
 		this.panelJoueur1.update(elapsedTime);
 		this.panelJoueur2.update(elapsedTime);
+		this.game.update();
+		this.blokusBoard.setBoard(this.game.getBoard());
 		this.blokusBoard.update(elapsedTime);
-
+		
 		/**********************************************/
 		/************** Drag and drop *****************/
 		/**********************************************/
@@ -141,6 +149,31 @@ public class GamePage extends Page implements ActionListener{
 					this.selectedTile.setPosition(initialPositionTile);
 					this.initialPositionTile = null;
 				}
+				else
+				{
+					// TODO tester le placement pour chaque extrémité du Tile en main 
+					Vector2 tileOrigin = this.selectedTile.getTile().getExtremities().get(0);
+					if(this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, this.mousePosInBoard))
+					{
+						for(int k = 0; k<this.validMoves.size();k++)
+						{
+							for(int l = 0; l<this.cellsOfTile.size(); l++)
+							{
+								if(this.validMoves.get(k).getX() == this.cellsOfTile.get(l).getX() && this.validMoves.get(k).getY() == this.cellsOfTile.get(l).getY())
+								{
+									
+									try {
+										this.blokusBoard.getBoard().addTile(this.selectedTile.getTile(), tileOrigin, this.mousePosInBoard);
+									} catch (InvalidMoveException e) {
+										e.printStackTrace();
+									}
+									break;
+								}
+							}
+						}
+					}
+					this.cellsOfTile = new ArrayList<Vector2>();
+				}
 				this.inDragAndDrop = false;
 				this.selectedTile = null;
 				
@@ -148,33 +181,6 @@ public class GamePage extends Page implements ActionListener{
 		}
 		if(this.selectedTile != null)
 		{
-			int xMatrix = 0;
-			int yMatrix = 0;
-			int xMatrix2 = 0;
-			int yMatrix2 = 0;
-
-			CellType[][] matrix = this.selectedTile.getTile().getMatrix();
-
-			xMatrix = this.selectedTile.getTile().getFirstCase().getX();
-			yMatrix = this.selectedTile.getTile().getFirstCase().getY();
-
-			
-			
-			for(int i = 0; i<Tile.WIDTH; i++)
-			{
-				for (int j=0; j<Tile.HEIGHT; j++)
-				{
-					if(matrix[i][j] == CellType.PIECE)
-					{
-						xMatrix2 = i;
-						yMatrix2 = j;
-						break;
-					}
-				}
-			}			
-			int offsetPosX = (xMatrix-xMatrix2)*CellColor.CELL_WIDTH;
-			int offsetPosY = (yMatrix-yMatrix2)*CellColor.CELL_HEIGHT;
-
 			if(this.blokusBoard.isInBounds(Mouse.getPosition()))
 			{
 				int x = (Mouse.getPosition().getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X)) / CellColor.CELL_WIDTH;
@@ -185,21 +191,40 @@ public class GamePage extends Page implements ActionListener{
 					oldVector.setX(x);
 					oldVector.setY(y);
 					
+					this.validMoves = this.blokusBoard.getBoard().getFreePositions(this.selectedTile.getTile().getCouleur());
+					this.cellsOfTile = new ArrayList<Vector2>();
 					
-					System.out.println(this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), new Vector2(x,y)));
-				}
+					for(int k =0;k<this.validMoves.size();k++)
+					{
+						System.out.println(this.validMoves.get(k).toString());
+					}
 
+					Vector2 fc = this.selectedTile.getTile().getFirstCase();
+
+					for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
+					{
+						for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
+						{	
+							if(this.selectedTile.getTile().getCellType(offsetX, offsetY) != CellType.BLANK)
+							{
+								Vector2 v = new Vector2(
+										x - fc.getY() + offsetY,
+										y - fc.getX() + offsetX);
+								this.cellsOfTile.add(v);
+								
+							}
+						}
+					}
+					this.mousePosInBoard = new Vector2(x,y);
+				}
 				this.selectedTile.setPosition(new Vector2(
 						(x * CellColor.CELL_WIDTH) + (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X),
 						(y * CellColor.CELL_HEIGHT) + (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)));
-
 			}
 			else
 			{
 				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX(), Mouse.getPosition().getY()));
 			}
-			offsetPosX = 0;
-			offsetPosY = 0;
 			this.selectedTile.update(elapsedTime);
 			/**********************************************/
 			/************** Drag and drop *****************/
@@ -257,8 +282,6 @@ public class GamePage extends Page implements ActionListener{
 	@Override
 	public void loadContents() {
 		if(!flagLoad){
-
-
 			try {
 				this.titre = ImageIO.read(new File(Page.PATH_RESOURCES_IMAGES+"logo.png"));
 			} catch (IOException e) {
@@ -287,18 +310,10 @@ public class GamePage extends Page implements ActionListener{
 			this.buttonExit = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"accueil.png");
 			this.buttonExit.setPosition(new Vector2(32, BUTTONS_Y_POSITION));
 			this.buttonExit.addListener(this);
-			ArrayList<CellColor> listColorsJ1 = new ArrayList<>();
-			listColorsJ1.add(CellColor.BLUE);
-			listColorsJ1.add(CellColor.RED);
 
-			ArrayList<CellColor> listColorsJ2 = new ArrayList<>();
-			listColorsJ2.add(CellColor.YELLOW);
-			listColorsJ2.add(CellColor.GREEN);
-
-
-			this.panelJoueur1 = new PlayerPanel(new PlayerHuman("Moi", listColorsJ1));
+			this.panelJoueur1 = new PlayerPanel(this.game.getPlayers().get(0));
 			this.panelJoueur1.setPosition(new Vector2(32, 32));
-			this.panelJoueur2 = new PlayerPanel(new PlayerHuman("Lui", listColorsJ2));
+			this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
 			this.panelJoueur2.setPosition(new Vector2(980, 32));
 
 			
@@ -306,10 +321,12 @@ public class GamePage extends Page implements ActionListener{
 			this.blokusBoard.setPosition(new Vector2(Window.WIDTH / 2 - (int)this.blokusBoard.getSize().getWidth() / 2, 212));
 			
 			this.oldVector = new Vector2(-1,-1);
+			this.cellsOfTile = new ArrayList<Vector2>();
+			this.mousePosInBoard = new Vector2(0,0);
+			this.validMoves = new ArrayList<Vector2>();
 			
 			flagLoad = true;
 		}
-
 	}
 
 	@Override

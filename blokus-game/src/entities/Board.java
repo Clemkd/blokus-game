@@ -59,24 +59,26 @@ public class Board {
 	 * @param position La position sur la grille
 	 * @throws InvalidMoveException Exception levée si l'ajout n'est pas possible
 	 */
-	public void addTile(Tile tile, Vector2 position) throws InvalidMoveException
+	public void addTile(Tile tile, Vector2 tileOrigin, Vector2 position) throws InvalidMoveException
 	{
-		if(!this.getValidMoves(tile.getCouleur()).contains(position) || !isValidMove(tile, position))
-		{
+		if(!this.getFreePositions(tile.getCouleur()).contains(position))
+		{			
 			throw new InvalidMoveException("Tentative d'ajout d'une tuile sur une zone interdite");
 		}
-		
-		Vector2 fc = tile.getFirstCase();
+		else if(!isValidMove(tile, tileOrigin, position))
+		{
+			throw new InvalidMoveException("IS VALID MOVE : Tentative d'ajout d'une tuile sur une zone interdite");
+		}
 
 		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
 		{
 			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
 			{	
-				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
+				if(tile.getCellType(offsetX, offsetY) != CellType.BLANK)
 				{
 					Vector2 currentGridPosition = new Vector2(
-							position.getX() - fc.getX() + offsetX,
-							position.getY() - fc.getY() + offsetY);
+							position.getX() - tileOrigin.getY() + offsetY,
+							position.getY() - tileOrigin.getX() + offsetX);
 					
 					this.setCell(currentGridPosition, tile.getCouleur());
 				}
@@ -90,38 +92,37 @@ public class Board {
 	 * @param position La position sur le plateau de jeu (case de la tuile la plus en haut à gauche)
 	 * @return Vrai si le placement est possible, Faux dans le cas contraire
 	 */
-	public boolean isValidMove(Tile tile, Vector2 position)
+	public boolean isValidMove(Tile tile, Vector2 tileOrigin, Vector2 position)
 	{
-		Vector2 fc = tile.getFirstCase();
-		this.displayMatrix(tile.getMatrix(), Tile.WIDTH);
+		//this.displayMatrix(tile.getMatrix(), Tile.WIDTH);
 
 		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
 		{
 			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
 			{	
-				if(tile.getCellType(offsetX, offsetY) == CellType.PIECE)
+				if(tile.getCellType(offsetX, offsetY) != CellType.BLANK)
 				{
 					Vector2 v = new Vector2(
-							position.getX() - fc.getY() + offsetY,
-							position.getY() - fc.getX() + offsetX);
+							position.getX() - tileOrigin.getY() + offsetY,
+							position.getY() - tileOrigin.getX() + offsetX);
 					
 					if(!this.isInBounds(v))
 					{
-						System.out.println("Bounds : NO OK "+v.toString());
+						//System.out.println("Bounds : NO OK "+v.toString());
 						return false;
 					}
 					else
 					{
 						if(this.cells[v.getX()][v.getY()] != null)
 						{
-							System.out.println("Cell : NO OK");
+							//System.out.println("Cell : NO OK");
 							return false;
 						}
 						else
 						{
 							if(this.hasSameColorWithAnAdjacentCell(tile.getCouleur(), v))
 							{
-								System.out.println("Adjacent : NO OK");
+								//System.out.println("Adjacent : NO OK");
 								return false;
 							}
 						}
@@ -150,7 +151,7 @@ public class Board {
 	 * @param color La couleur à tester
 	 * @return La liste des emplacements possibles pour la couleur spécifiée
 	 */
-	public ArrayList<Vector2> getValidMoves(CellColor color)
+	public ArrayList<Vector2> getFreePositions(CellColor color)
 	{
 		ArrayList<Vector2> validMoves = new ArrayList<Vector2>();
 		
