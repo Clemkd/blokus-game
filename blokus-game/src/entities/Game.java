@@ -345,4 +345,20 @@ public class Game
 	{
 		return players;
 	}
+
+	/**
+	 * Annule le tour de jeu effectué
+	 * @param m Les données du tour de jeu
+	 */
+	public void revertMove(Move m)
+	{
+		// Revert du move sur le plateau
+		// TODO : A FAIRE
+		
+		// Revert des tiles du joueur
+		// TODO : A FAIRE
+		
+		// Revert des joueurs en jeu (si besoin)
+		// TODO : A FAIRE
+	}
 }

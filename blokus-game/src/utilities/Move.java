@@ -1,5 +1,9 @@
 package utilities;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import entities.Game;
 import entities.Tile;
 
 public class Move {
@@ -80,5 +84,46 @@ public class Move {
 
 	public Vector2 getTileOrigin() {
 		return this.tileOrigin;
+	}
+	
+	public static Move generateRandomValidMove(Game game)
+	{
+		Random rand = new Random();
+		
+		// La liste des placements possibles avec les tiles correspondants
+		ArrayList<Move> validMovesWithTiles = new ArrayList<Move>();
+
+		// La liste des tiles représentant les rotations et flips de tile
+		ArrayList<Tile> tileVariations = new ArrayList<Tile>();
+
+		// Les placements actuels possibles
+		ArrayList<Vector2> validMoves = game.getBoard().getFreePositions(game.getCurrentColor());
+
+		// La liste des pièces possibles avec leur position possible
+		for (Vector2 position : validMoves) {
+			// Pour chaque pièce du joueur
+			for (Tile tile : game.getCurrentPlayer().getTileInventory()) {
+				if (tile.getCouleur() == game.getCurrentColor()) {
+					// La liste des rotations et flips de la pièce
+					tileVariations = tile.getTilesListOfRotationsAndFlips();
+
+					// Pour chaque rotation et flip possible de la pièce
+					for (Tile t : tileVariations) {
+						for (Vector2 tileOrigin : t.getExtremities()) {
+							if (game.getBoard().isValidMove(t, tileOrigin, position)) {
+								validMovesWithTiles.add(new Move(position, t, tileOrigin));
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (validMovesWithTiles.size() > 0) {
+			int index = rand.nextInt(validMovesWithTiles.size());
+			return validMovesWithTiles.get(index);
+		}
+		
+		return null;
 	}
 }
