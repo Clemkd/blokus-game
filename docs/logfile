@@ -58,3 +58,10 @@ Meilleur gestion des matrices des pièces + changement de notre matrice.. On peu
 Mise en place d'une partie entre 2 IA (random).
 Ajout d'une musique de fond.
 
+11ème jour : 26 mai 2016
+Audit de code : 
+  - Boucle de rafraichissement "en trop" car Swing a une boucle interne.
+  - GUI : Possiblité de fonction qui génère les ressources
+  - GUI : Implémenter la sauvegarde et le chargement des partie pour tester les IA plus facilement.
+  - IA : Eviter des new, et faire des stacks/listes d'objets qui vont être modifiés.
+  - Matrices des tiles dans des fichiers.
