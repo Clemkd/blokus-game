@@ -7,6 +7,8 @@ import entities.Game;
 import entities.Tile;
 
 public class Move {
+	public static final Move EMPTY = new Move(0);
+	
 	private final Vector2 position;
 	private final Tile tile;
 	private int value;
@@ -124,6 +126,6 @@ public class Move {
 			return validMovesWithTiles.get(index);
 		}
 		
-		return null;
+		return Move.EMPTY;
 	}
 }
