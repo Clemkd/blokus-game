@@ -3,6 +3,7 @@ package gui;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import javazoom.jl.decoder.JavaLayerException;
@@ -21,12 +22,13 @@ public class MusicPlayer {
 	public void playSound() {
 		if(this.player == null) {
 			try {
-				FileInputStream fis = new FileInputStream(new File(getClass().getResource(soundPath).toURI()));
-				player = new Player(fis);
+				InputStream is = getClass().getResourceAsStream(soundPath);
+				player = new Player(is);
 			}
-			catch (JavaLayerException | FileNotFoundException | URISyntaxException e) {
+			catch (JavaLayerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				
 			}
 			
 			this.thread = new Thread(new Runnable() {
