@@ -240,26 +240,19 @@ public class GamePage extends Page implements ActionListener{
 		this.panelJoueur1.update(elapsedTime);
 		this.panelJoueur2.update(elapsedTime);
 		
-		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman)) // Si n'est pas Humain faire
-		{
-			this.panelJoueur1.setEnabled(false);
-		}
-		else 
+		if(this.game.getCurrentPlayer() == this.game.getPlayers().get(0))
 		{
 			boolean firstColor = this.game.getCurrentPlayer().getColors().get(0) == this.game.getCurrentColor();
 			boolean secondColor = this.game.getCurrentPlayer().getColors().get(1) == this.game.getCurrentColor();
 			this.panelJoueur1.setEnabled(firstColor, secondColor);
+			this.panelJoueur2.setEnabled(false, false);
 		}
-		
-		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman)) // Si n'est pas Humain faire
-		{
-			this.panelJoueur2.setEnabled(false);
-		}
-		else
+		else if(this.game.getCurrentPlayer() == this.game.getPlayers().get(1))
 		{
 			boolean firstColor = this.game.getCurrentPlayer().getColors().get(0) == this.game.getCurrentColor();
 			boolean secondColor = this.game.getCurrentPlayer().getColors().get(1) == this.game.getCurrentColor();
 			this.panelJoueur2.setEnabled(firstColor, secondColor);
+			this.panelJoueur1.setEnabled(false, false);
 		}
 	}
 
@@ -355,6 +348,15 @@ public class GamePage extends Page implements ActionListener{
 			this.cellsOfTile = new ArrayList<Vector2>();
 			this.mousePosInBoard = new Vector2(0,0);
 			this.validMoves = new ArrayList<Vector2>();
+			
+			if(!(this.game.getPlayers().get(0) instanceof PlayerHuman)) // Si n'est pas Humain faire
+			{
+				this.panelJoueur1.setEnabled(false);
+			}
+			if(!(this.game.getPlayers().get(1) instanceof PlayerHuman)) // Si n'est pas Humain faire
+			{
+				this.panelJoueur1.setEnabled(false);
+			}
 			
 			flagLoad = true;
 		}

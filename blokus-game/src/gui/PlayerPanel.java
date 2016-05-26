@@ -101,8 +101,6 @@ public class PlayerPanel implements DrawableInterface{
 	public void setEnabled(boolean state)
 	{
 		this.state = state;
-		this.tilePanel1.setEnabled(state);
-		this.tilePanel2.setEnabled(state);
 	}
 	
 	/**
@@ -110,7 +108,6 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	public void setEnabled(boolean statePanel1, boolean statePanel2)
 	{
-		this.state = state;
 		this.tilePanel1.setEnabled(statePanel1);
 		this.tilePanel2.setEnabled(statePanel2);
 	}
@@ -131,6 +128,9 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	public BlokusTile getTile(Vector2 clickedPosition)
 	{
+		if(!this.getState())
+			return null;
+		
 		BlokusTile res = tilePanel1.getTile(clickedPosition);
 		if(res != null)
 		{

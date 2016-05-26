@@ -36,7 +36,7 @@ public class BlokusTile implements DrawableInterface {
 		this.position = position;
 		this.tile = tile;
 		this.enabled = true;
-		this.caseMaskImage = BufferedHelper.generateMask(this.tile.getCouleur().getImage(), new Color(128, 128, 128), 0.9f);
+		this.caseMaskImage = BufferedHelper.generateMask(this.tile.getCouleur().getImage(), new Color(128, 128, 128), 0.75f);
 	}
 	
 	public BlokusTile(Tile tile)
