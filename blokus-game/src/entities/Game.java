@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
+
 import utilities.Move;
 import utilities.UndoRedoManager;
 
@@ -204,7 +207,12 @@ public class Game
 	/**
 	 * Sauvegarde la partie dans un fichier TODO: do it
 	 */
-	// public abstract void save();
+	public void save(){
+		System.out.println("save");
+		/*Gson gson = new Gson();
+		gson.toJson(this);
+		System.out.println(gson);*/
+	}
 
 	/**
 	 * Fonction appellée quand un coup valide doit être traité/appliqué par Game
