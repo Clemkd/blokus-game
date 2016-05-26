@@ -30,7 +30,7 @@ public class PlayerMCIA extends Player implements ActionListener
 	{
 		this.playing = true;
 		this.game = game;
-		this.timer = new Timer(800 + rand.nextInt(400), this);
+		this.timer = new Timer(5000 + rand.nextInt(400), this);
 		timer.start();
 	}
 
@@ -39,19 +39,17 @@ public class PlayerMCIA extends Player implements ActionListener
 	{
 		this.timer.stop();
 		
-		Move move = this.monteCarlo(this.game, DEFAULT_SAMPLE_SIZE);
-		if(move != null)
-			this.chosenMove = move;
-		else
-			this.chosenMove = new Move(0);
+		// TODO : Usage de la copie de this.game
+		this.chosenMove = this.monteCarlo(this.game, DEFAULT_SAMPLE_SIZE);
 		
 		this.game = null;
 		this.playing = false;
 	}
 	
+	// TODO : Reste à fix
 	private Move monteCarlo(Game game, int sampleSize)
 	{
-		Move bestMove = null;
+		Move bestMove = Move.EMPTY;
 		Stack<Move> moves = new Stack<Move>();
 		Player firstPlayer = game.getCurrentPlayer();
 		

@@ -270,6 +270,9 @@ public class Game
 
 		try
 		{
+			System.out.println(m.getTile());
+			System.out.println(m.getTileOrigin());
+			System.out.println(m.getPosition());
 			this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
 			this.currentTurn++;
 			this.raiseEvent(new ActionEvent(this, EVENT_TURN_ENDED, null));
@@ -278,6 +281,7 @@ public class Game
 		{
 			System.err.println(e.getMessage());
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 
