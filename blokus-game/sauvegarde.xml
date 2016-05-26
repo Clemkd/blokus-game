@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_72" class="java.beans.XMLDecoder">
+ <object class="entities.PlayerHuman">
+  <void property="colors">
+   <object class="java.util.ArrayList">
+    <void method="add">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>entities.CellColor</class>
+      <string>BLUE</string>
+     </object>
+    </void>
+    <void method="add">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>entities.CellColor</class>
+      <string>YELLOW</string>
+     </object>
+    </void>
+    <void method="add">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>entities.CellColor</class>
+      <string>RED</string>
+     </object>
+    </void>
+    <void method="add">
+     <object class="java.lang.Enum" method="valueOf">
+      <class>entities.CellColor</class>
+      <string>GREEN</string>
+     </object>
+    </void>
+   </object>
+  </void>
+  <void property="name">
+   <string>joueur</string>
+  </void>
+ </object>
+</java>
