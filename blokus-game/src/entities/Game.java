@@ -1,14 +1,22 @@
 package entities;
 
+import java.awt.Checkbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Base64.Decoder;
 import java.util.List;
+
+import javax.swing.JDialog;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -223,9 +231,22 @@ public class Game
 	 * Sauvegarde la partie dans un fichier TODO: do it
 	 */
 	public void save(){
-		File file = new File("sauvegarde");
-		FileWriter fileWriter;
-		JsonObject obj = new JsonObject();
+		final PlayerHuman currentPLayer = new PlayerHuman();
+		currentPLayer.setName("joueur");
+		currentPLayer.setColors(playingColors);
+		XMLEncoder encoder = null;
+		
+		try {
+			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream("sauvegarde.xml")));
+			encoder.writeObject(currentPLayer);
+			encoder.flush();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			if(encoder != null)
+				encoder.close();
+		}
 		
 		
 	

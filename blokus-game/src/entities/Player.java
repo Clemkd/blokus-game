@@ -29,6 +29,9 @@ public abstract class Player {
 			this.tiles.addAll(Tile.getListOfNeutralTile(c));
 	}
 
+	public Player(){
+		
+	}
 	/**
 	 * Obtient la liste des tuiles du joueur
 	 * 
@@ -101,4 +104,34 @@ public abstract class Player {
 	public String getName() {
 		return this.name;
 	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+
+	public void setTiles(List<Tile> tiles) {
+		this.tiles = tiles;
+	}
+
+	public Move getChosenMove() {
+		return chosenMove;
+	}
+
+	public void setChosenMove(Move chosenMove) {
+		this.chosenMove = chosenMove;
+	}
+
+	public void setColors(List<CellColor> colors) {
+		this.colors = colors;
+	}
+
+	public void setPlaying(boolean playing) {
+		this.playing = playing;
+	}
+	
+	
 }

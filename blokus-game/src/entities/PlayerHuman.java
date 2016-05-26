@@ -9,6 +9,10 @@ public class PlayerHuman extends Player {
 	public PlayerHuman(String name, List<CellColor> colors) {
 		super(name, colors);
 	}
+	
+	public PlayerHuman(){
+		super();
+	};
 
 	@Override
 	public void play(Game game, CellColor c) {
