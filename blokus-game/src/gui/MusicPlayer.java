@@ -27,7 +27,6 @@ public class MusicPlayer {
 			this.clip.open(audioIn);
 			this.gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
 			this.gainControl.setValue(-10.0f);
-			this.clip.loop(Clip.LOOP_CONTINUOUSLY);
 		}
 		catch (LineUnavailableException | IOException e) {
 			// TODO Auto-generated catch block
@@ -44,6 +43,7 @@ public class MusicPlayer {
 	 */
 	public void playSound() {
 		if (this.clip != null) {
+			this.clip.loop(Clip.LOOP_CONTINUOUSLY);
 			this.clip.start();
 		}
 	}

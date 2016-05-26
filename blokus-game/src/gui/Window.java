@@ -20,7 +20,7 @@ public class Window implements Runnable , ActionListener
 
 	private long startTime;
 
-	private static MusicPlayer musicPlayer = new MusicPlayer("/test.wav");
+	private static MusicPlayer musicPlayer = new MusicPlayer("/backgroundMusic.wav");
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 800;
