@@ -30,8 +30,9 @@ public class PlayerIA extends Player {
 
 	@Override
 	public void play(Game game, CellColor c) {
-		//TODO: changer prototype fonction vers public void play(Game origin, CellColor c)
-		//this.chosenMove = this.alphaBeta(origin, MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		this.playing = true;
+		this.chosenMove = this.alphaBeta(game, MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		this.playing = false;
 	}
 	
 	private Move alphaBeta(Game node, int depth, boolean maximizingPlayer, int alpha, int beta) {
