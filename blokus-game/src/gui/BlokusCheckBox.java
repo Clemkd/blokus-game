@@ -35,15 +35,21 @@ public class BlokusCheckBox implements DrawableInterface {
 	
 	private Font font;
 	
-	public BlokusCheckBox(boolean enabled, boolean checked, String text, Font font) {
-
+	private BlokusCheckBox(boolean enabled, boolean checked){
 		this.isChecked = checked;
 		this.isEnabled = enabled;
-		this.text = text;
-		this.font = font;
+		this.text = "";
+		this.font = null;
 		this.position = new Vector2();
 		this.size = new Dimension(20, 20);
 		this.listeners = new ArrayList<ActionListener>();
+	}
+	
+	public BlokusCheckBox(boolean enabled, boolean checked, String text, Font font) {
+
+		this(enabled, checked);
+		this.text = text;
+		this.font = font;
 		try {
 			this.checked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"boxchecked.png"));
 			this.noChecked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"box.png"));
@@ -52,6 +58,12 @@ public class BlokusCheckBox implements DrawableInterface {
 			e.printStackTrace();
 			System.exit(0);
 		}
+	}
+	
+	public BlokusCheckBox(boolean enabled, boolean checked, BufferedImage checkedImage, BufferedImage uncheckedImage) {
+		this(enabled, checked);
+		this.checked = checkedImage;
+		this.noChecked = uncheckedImage;
 	}
 	
 	public boolean isEnabled() {

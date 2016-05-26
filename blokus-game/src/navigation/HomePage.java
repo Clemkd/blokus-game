@@ -1,5 +1,6 @@
 package navigation;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
 import gui.BlokusButton;
+import gui.BlokusCheckBox;
+import gui.Window;
 import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener{
@@ -17,6 +20,10 @@ public class HomePage extends Page implements ActionListener{
 
 	private static final int POS_X = 488;
 
+	
+	
+	private BlokusCheckBox buttonMusic;
+	
 	/**
 	 * Bouton représentant le choix de 1 joueur
 	 */
@@ -62,6 +69,7 @@ public class HomePage extends Page implements ActionListener{
 
 	@Override
 	public void update(float elapsedTime) {
+		this.buttonMusic.update(elapsedTime);
 		this.buttonOnePLayer.update(elapsedTime);
 		this.buttonTwoPlayer.update(elapsedTime);
 		this.buttonLoad.update(elapsedTime);
@@ -75,6 +83,7 @@ public class HomePage extends Page implements ActionListener{
 	public void draw(Graphics2D g) {
 		Graphics2D batch = (Graphics2D) g.create();
 		batch.drawImage(this.titre,500, 51, null);
+		this.buttonMusic.draw(batch);
 		this.buttonOnePLayer.draw(batch);
 		this.buttonTwoPlayer.draw(batch);
 		this.buttonLoad.draw(batch);
@@ -88,7 +97,11 @@ public class HomePage extends Page implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof BlokusButton){
-			if(e.getSource().equals(this.buttonOnePLayer)){
+			if(e.getSource().equals(this.buttonMusic)){
+				System.out.println("ddddd");
+				Window.getMusicPlayer().stopSound();
+				
+			}else if(e.getSource().equals(this.buttonOnePLayer)){
 				Navigation.NavigateTo(Navigation.iaPage);
 			}else if(e.getSource().equals(this.buttonTwoPlayer)){
 				Navigation.NavigateTo(Navigation.gamePage);
@@ -116,6 +129,24 @@ public class HomePage extends Page implements ActionListener{
 		}
 		
 		//this.buttonOnePLayer = new BlokusButton(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png");
+
+		
+		BufferedImage checked = null;
+		BufferedImage nochecked = null;
+		
+		try{
+			checked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"musicon.png"));
+			nochecked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"musicoff.png"));
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		this.buttonMusic = new BlokusCheckBox(true, true, checked, nochecked);
+		this.buttonMusic.setPosition(new Vector2(1190, 50));
+		this.buttonMusic.setSize(new Dimension(checked.getWidth(), checked.getHeight()));
+		this.buttonMusic.addListener(this);
 		
 		this.buttonOnePLayer = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"oneplayer.png"));
 		this.buttonOnePLayer.setPosition(new Vector2(POS_X, 233));
