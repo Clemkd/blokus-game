@@ -2,10 +2,22 @@ package entities;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.stream.JsonWriter;
 
 import utilities.Move;
 import utilities.UndoRedoManager;
@@ -35,9 +47,12 @@ public class Game
 	 */
 	private ArrayList<ActionListener> listeners;
 	private ArrayList<CellColor> playingColors;
+	
+	private Gson gson;
 
 	public Game()
-	{
+	{	
+		this.gson = new Gson();
 		this.currentTurn = 0;
 
 		this.board = new Board();
@@ -208,10 +223,17 @@ public class Game
 	 * Sauvegarde la partie dans un fichier TODO: do it
 	 */
 	public void save(){
-		System.out.println("save");
-		/*Gson gson = new Gson();
-		gson.toJson(this);
-		System.out.println(gson);*/
+		File file = new File("sauvegarde");
+		FileWriter fileWriter;
+		JsonObject obj = new JsonObject();
+		
+		
+	
+	}
+	
+	public void load(){
+		System.out.println("load");
+		
 	}
 
 	/**
