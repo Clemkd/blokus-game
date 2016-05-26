@@ -35,7 +35,7 @@ public class GamePage extends Page implements ActionListener{
 	
 	private ArrayList<Vector2> validMoves;
 	
-	private ArrayList<Vector2> cellsOfTile;
+	private ArrayList<Vector2> extremityOfTile;
 	
 	private Vector2 mousePosInBoard;
 
@@ -94,6 +94,8 @@ public class GamePage extends Page implements ActionListener{
 	
 	private Vector2 oldVector;
 	
+	private Vector2 xy;
+	
 	/**
 	 * Constructeur
 	 */
@@ -132,10 +134,20 @@ public class GamePage extends Page implements ActionListener{
 				if(this.game.getCurrentPlayer() == this.game.getPlayers().get(0))
 				{
 					this.selectedTile = this.panelJoueur1.getTile(Mouse.getPosition());
+					if(this.selectedTile != null)
+					{
+						System.out.println("Tile n"+this.selectedTile.getTile().getId()+" selected and removed from inventory");
+						this.game.getPlayers().get(0).getTileInventory().remove(this.selectedTile.getTile().getId());
+					}
+					
 				}
 				else if(this.game.getCurrentPlayer() == this.game.getPlayers().get(1))
 				{
 					this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
+					if(this.selectedTile != null)
+					{
+						this.game.getPlayers().get(1).getTileInventory().remove(this.selectedTile.getTile().getId());
+					}
 				}
 				
 				if(this.selectedTile != null)
@@ -143,38 +155,51 @@ public class GamePage extends Page implements ActionListener{
 					this.initialPositionTile = selectedTile.getPosition();
 				}
 				this.inDragAndDrop = this.selectedTile != null;
+			
 			}
 			else
 			{
 				if(!this.blokusBoard.isInBounds(Mouse.getPosition()))
 				{
 					this.selectedTile.setPosition(initialPositionTile);
+					if(this.game.getCurrentPlayer() == this.game.getPlayers().get(0))
+					{
+						this.game.getPlayers().get(0).getTileInventory().add(this.selectedTile.getTile().getId(), this.selectedTile.getTile());
+					}
+					else if(this.game.getCurrentPlayer() == this.game.getPlayers().get(1))
+					{
+						this.game.getPlayers().get(1).getTileInventory().add(this.selectedTile.getTile().getId(), this.selectedTile.getTile());
+					}
 					this.initialPositionTile = null;
 				}
 				else
 				{
 					// TODO tester le placement pour chaque extrémité du Tile en main 
-					Vector2 tileOrigin = this.selectedTile.getTile().getExtremities().get(0);
+					//Vector2 tileOrigin = this.selectedTile.getTile().getExtremities().get(0);
+					Vector2 tileOrigin = this.xy;
 					if(this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, this.mousePosInBoard))
 					{
+						System.out.println("Yes, it's a validMove");
 						for(int k = 0; k<this.validMoves.size();k++)
 						{
-							for(int l = 0; l<this.cellsOfTile.size(); l++)
+							for(int l = 0; l<this.extremityOfTile.size(); l++)
 							{
-								if(this.validMoves.get(k).getX() == this.cellsOfTile.get(l).getX() && this.validMoves.get(k).getY() == this.cellsOfTile.get(l).getY())
+								if(this.validMoves.get(k).getX() == this.extremityOfTile.get(l).getX() && this.validMoves.get(k).getY() == this.extremityOfTile.get(l).getY())
 								{
 									
 									try {
+										System.out.println("Adding tile in the board");
 										this.blokusBoard.getBoard().addTile(this.selectedTile.getTile(), tileOrigin, this.mousePosInBoard);
 									} catch (InvalidMoveException e) {
 										e.printStackTrace();
 									}
+									
 									break;
 								}
 							}
 						}
 					}
-					this.cellsOfTile = new ArrayList<Vector2>();
+					this.extremityOfTile = new ArrayList<Vector2>();
 				}
 				this.inDragAndDrop = false;
 				this.selectedTile = null;
@@ -185,16 +210,16 @@ public class GamePage extends Page implements ActionListener{
 		{
 			if(this.blokusBoard.isInBounds(Mouse.getPosition()))
 			{
-				int x = (Mouse.getPosition().getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X)) / CellColor.CELL_WIDTH;
-				int y = (Mouse.getPosition().getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)) / CellColor.CELL_HEIGHT;
+				this.xy.setX((Mouse.getPosition().getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X)) / CellColor.CELL_WIDTH);
+				this.xy.setY((Mouse.getPosition().getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)) / CellColor.CELL_HEIGHT);
 				
-				if(x!=oldVector.getX()||y!=oldVector.getY())
+				if(this.xy.getX()!=oldVector.getX()||this.xy.getY()!=oldVector.getY())
 				{
-					oldVector.setX(x);
-					oldVector.setY(y);
+					oldVector.setX(this.xy.getX());
+					oldVector.setY(this.xy.getY());
 					
 					this.validMoves = this.blokusBoard.getBoard().getFreePositions(this.selectedTile.getTile().getCouleur());
-					this.cellsOfTile = new ArrayList<Vector2>();
+					this.extremityOfTile = new ArrayList<Vector2>();
 					
 					for(int k =0;k<this.validMoves.size();k++)
 					{
@@ -207,21 +232,21 @@ public class GamePage extends Page implements ActionListener{
 					{
 						for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
 						{	
-							if(this.selectedTile.getTile().getCellType(offsetX, offsetY) != CellType.BLANK)
+							if(this.selectedTile.getTile().getCellType(offsetX, offsetY) == CellType.EXTREMITY)
 							{
 								Vector2 v = new Vector2(
-										x - fc.getY() + offsetY,
-										y - fc.getX() + offsetX);
-								this.cellsOfTile.add(v);
+										this.xy.getX() - fc.getY() + offsetY,
+										this.xy.getY() - fc.getX() + offsetX);
+								this.extremityOfTile.add(v);
 								
 							}
 						}
 					}
-					this.mousePosInBoard = new Vector2(x,y);
+					this.mousePosInBoard = new Vector2(this.xy.getX(), this.xy.getY());
 				}
 				this.selectedTile.setPosition(new Vector2(
-						(x * CellColor.CELL_WIDTH) + (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X),
-						(y * CellColor.CELL_HEIGHT) + (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)));
+						(this.xy.getX() * CellColor.CELL_WIDTH) + (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X),
+						(this.xy.getY() * CellColor.CELL_HEIGHT) + (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)));
 			}
 			else
 			{
@@ -295,8 +320,9 @@ public class GamePage extends Page implements ActionListener{
 					this.game.redoMove();
 				}
 			}else if(e.getSource().equals(this.buttonSave)){
-				JFileChooser jFileChooser = new JFileChooser();
-				jFileChooser.showSaveDialog(jFileChooser);
+				this.game.save();
+				//JFileChooser jFileChooser = new JFileChooser();
+				//jFileChooser.showSaveDialog(jFileChooser);
 			}else if(e.getSource().equals(this.buttonExit)){
 				Navigation.NavigateTo(Navigation.homePage);
 			}
@@ -345,9 +371,10 @@ public class GamePage extends Page implements ActionListener{
 			this.blokusBoard.setPosition(new Vector2(Window.WIDTH / 2 - (int)this.blokusBoard.getSize().getWidth() / 2, 212));
 			
 			this.oldVector = new Vector2(-1,-1);
-			this.cellsOfTile = new ArrayList<Vector2>();
+			this.extremityOfTile = new ArrayList<Vector2>();
 			this.mousePosInBoard = new Vector2(0,0);
 			this.validMoves = new ArrayList<Vector2>();
+			this.xy = new Vector2(0,0);
 			
 			if(!(this.game.getPlayers().get(0) instanceof PlayerHuman)) // Si n'est pas Humain faire
 			{
