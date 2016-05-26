@@ -16,21 +16,18 @@ public class PlayerRandom extends Player implements ActionListener {
 	private Random rand;
 	private Timer timer;
 	private Game game;
-	private CellColor color;
 
 	public PlayerRandom(String name, List<CellColor> colors) {
 		super(name, colors);
 		this.rand = new Random();
 		this.timer = null;
 		this.game = null;
-		this.color = null;
 	}
 
 	@Override
 	public void play(Game g, CellColor c) {
 		this.playing = true;
 		this.game = g;
-		this.color = c;
 		this.timer = new Timer(800 + rand.nextInt(400), this);
 		timer.start();
 	}
@@ -42,7 +39,6 @@ public class PlayerRandom extends Player implements ActionListener {
 		this.chosenMove = Move.generateRandomValidMove(this.game);
 
 		this.game = null;
-		this.color = null;
 		this.playing = false;
 	}
 

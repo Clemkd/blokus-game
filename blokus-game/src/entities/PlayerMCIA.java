@@ -16,7 +16,6 @@ public class PlayerMCIA extends Player implements ActionListener
 	private Random rand;
 	private Timer timer;
 	private Game game;
-	private CellColor color;
 	
 	public PlayerMCIA(String name, List<CellColor> colors)
 	{
@@ -24,7 +23,6 @@ public class PlayerMCIA extends Player implements ActionListener
 		this.rand = new Random();
 		this.timer = null;
 		this.game = null;
-		this.color = null;
 	}
 
 	@Override
@@ -32,7 +30,6 @@ public class PlayerMCIA extends Player implements ActionListener
 	{
 		this.playing = true;
 		this.game = game;
-		this.color = c;
 		this.timer = new Timer(800 + rand.nextInt(400), this);
 		timer.start();
 	}
@@ -49,7 +46,6 @@ public class PlayerMCIA extends Player implements ActionListener
 			this.chosenMove = new Move(0);
 		
 		this.game = null;
-		this.color = null;
 		this.playing = false;
 	}
 	

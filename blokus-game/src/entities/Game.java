@@ -29,6 +29,7 @@ import com.google.gson.stream.JsonWriter;
 
 import utilities.Move;
 import utilities.UndoRedoManager;
+import utilities.Vector2;
 
 public class Game
 {
@@ -367,6 +368,7 @@ public class Game
 		return players;
 	}
 
+	// TODO : A Verifier
 	/**
 	 * Annule le tour de jeu effectué
 	 * @param m Les données du tour de jeu
@@ -374,12 +376,18 @@ public class Game
 	public void revertMove(Move m)
 	{
 		// Revert du move sur le plateau
-		// TODO : A FAIRE
+		this.getBoard().revertMove(m);
 		
 		// Revert des tiles du joueur
-		// TODO : A FAIRE
+		if(!this.getCurrentPlayer().getColors().contains(m.getTile().getCouleur()))
+			throw new InternalError("Essai d'ajout d'un tile incompatible dans l'inventaire du joueur courant");
+		
+		this.getCurrentPlayer().getTileInventory().add(m.getTile());
 		
 		// Revert des joueurs en jeu (si besoin)
-		// TODO : A FAIRE
+		if(!this.playingColors.contains(this.getCurrentColor()))
+		{
+			this.playingColors.add(this.getCurrentColor());
+		}
 	}
 }

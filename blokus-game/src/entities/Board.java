@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import utilities.CellPositions;
 import utilities.InvalidMoveException;
+import utilities.Move;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
@@ -39,6 +40,28 @@ public class Board {
 	private void setCell(Vector2 position, CellColor cell)
 	{
 		this.cells[position.getX()][position.getY()] = cell;
+	}
+	
+	/**
+	 * Annule le tour de jeu auprès du plateau
+	 * @param m Le tour de jeu à annuler
+	 */
+	public void revertMove(Move m)
+	{
+		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
+		{
+			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
+			{	
+				if(m.getTile().getCellType(offsetX, offsetY) != CellType.BLANK)
+				{
+					Vector2 currentGridPosition = new Vector2(
+							m.getPosition().getX() - m.getTileOrigin().getY() + offsetY,
+							m.getPosition().getY() - m.getTileOrigin().getX() + offsetX);
+					
+					this.setCell(currentGridPosition, null);
+				}
+			}
+		}
 	}
 	
 	/**
