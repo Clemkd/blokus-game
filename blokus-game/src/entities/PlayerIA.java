@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 
 import utilities.Move;
+import utilities.OutOfBoundsException;
+import utilities.Vector2;
 
 /*
  * 0- Toujours utiliser les pièces les plus grosses quand c'est possible
@@ -82,6 +84,13 @@ public class PlayerIA extends Player {
 		 * - Phases de jeu: début, milieu, fin
 		 * - Ameliorer fonction coups possibles, moins de mises à jour, sauvegarde de ce qui existe
 		 */
+		res -= this.distanceToCenter(node);
+		
 		return res;
+	}
+
+	private int distanceToCenter(Game node) {
+		//TODOOOO, TODO, TODO, TODOOOOO, TODOOO, TODOOOO...
+		return 0;
 	}
 }

@@ -169,35 +169,9 @@ public class Board {
 				}
 			}
 			
-			Vector2 v;
-			switch(color) {
-				case BLUE:
-					v = new Vector2(0,0);
-					if(this.getCell(v)==null)
-						validMoves.add(v);
-					break;
-				case YELLOW:
-					v = new Vector2(WIDTH-1,0);
-					if(this.getCell(v)==null)
-						validMoves.add(v);
-					break;
-				case RED:
-					v = new Vector2(WIDTH-1,HEIGHT-1);
-					if(this.getCell(v)==null)
-						validMoves.add(v);
-					break;
-				case GREEN:
-					v = new Vector2(0,HEIGHT-1);
-					if(this.getCell(v)==null)
-						validMoves.add(v);
-					break;
-				default:
-					v = new Vector2(0,0);
-					if(this.getCell(v)==null)
-						validMoves.add(v);
-					break;
-			}
-			
+			Vector2 v = color.getStartPosition();
+			if(this.getCell(v)==null)
+				validMoves.add(v);
 		}
 		catch(OutOfBoundsException e)
 		{

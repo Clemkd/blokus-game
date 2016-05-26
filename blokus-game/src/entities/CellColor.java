@@ -5,27 +5,29 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import utilities.Vector2;
+
 public enum CellColor {
 	
 	/**
 	 * Cellule de couleur bleu avec le chemin d'accès vers l'image correspondante
 	 */
-	BLUE("/cells/bluecell.png"),
+	BLUE("/cells/bluecell.png",new Vector2(0,0)),
 	
 	/**
 	 * Cellule de couleur rouge avec le chemin d'accès vers l'image correspondante
 	 */
-	RED("/cells/redcell.png"),
+	RED("/cells/redcell.png",new Vector2(Board.WIDTH-1,Board.HEIGHT-1)),
 	
 	/**
 	 * Cellule de couleur verte avec le chemin d'accès vers l'image correspondante
 	 */
-	GREEN("/cells/greencell.png"),
+	GREEN("/cells/greencell.png",new Vector2(0,Board.HEIGHT-1)),
 	
 	/**
 	 * Cellule de couleur jaune avec le chemin d'accès vers l'image correspondante
 	 */
-	YELLOW("/cells/yellowcell.png");
+	YELLOW("/cells/yellowcell.png",new Vector2(Board.WIDTH-1,0));
 	
 	/**
 	 * attribut représentant le chemin d'accès vers l'image correspondate au type de celulle
@@ -37,6 +39,8 @@ public enum CellColor {
 	 */
 	private BufferedImage image;
 	
+	private Vector2 startPosition;
+	
 	public final static int CELL_WIDTH = 20;
 	public final static int CELL_HEIGHT = 20;
 	
@@ -44,7 +48,7 @@ public enum CellColor {
 	 * Constructeur de CellColor
 	 * @param path le chemin d'accès vers une image
 	 */
-	private CellColor(String path){
+	private CellColor(String path, Vector2 startPos){
 		this.path = path;
 		try 
 		{
@@ -55,6 +59,8 @@ public enum CellColor {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
+		
+		this.startPosition = startPos;
 	}
 	
 	/**
@@ -77,5 +83,9 @@ public enum CellColor {
 	public boolean equals(CellColor c)
 	{
 		return this.getPath() == c.getPath();
+	}
+
+	public Vector2 getStartPosition() {
+		return this.startPosition;
 	}
 }
