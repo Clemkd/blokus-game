@@ -6,6 +6,7 @@
 # Package Files #
 *.jar
 !jl1.0.1.jar
+!gson-2.6.2.jar
 *.war
 *.ear
 
