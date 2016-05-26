@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
@@ -43,8 +44,9 @@ public class OptionPage extends Page implements ActionListener{
 	
 	private static final int POS_X_TITLE = 371;
 	
-	private static Font customFontCheckbox = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 16f);
-	private static Font customFontTitle = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 20f);
+	
+	private static Font customFontCheckbox = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResourceAsStream(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 16f);
+	private static Font customFontTitle = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResourceAsStream(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 20f);
 	
 	public OptionPage() {
 		super();

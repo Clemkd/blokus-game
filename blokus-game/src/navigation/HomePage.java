@@ -109,7 +109,7 @@ public class HomePage extends Page implements ActionListener{
 	@Override
 	public void loadContents() {
 		try {
-			this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"logo.png"));
+			this.titre = ImageIO.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES+"logo.png"));
 		} catch (IOException e) {
 			this.titre = null;
 			e.printStackTrace();
