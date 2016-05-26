@@ -20,7 +20,7 @@ public class Window implements Runnable , ActionListener
 
 	private long startTime;
 
-	private static MusicPlayer musicPlayer = new MusicPlayer("/backgroundMusic.mp3");
+	private static MusicPlayer musicPlayer = new MusicPlayer("/test.wav");
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 800;
@@ -43,9 +43,6 @@ public class Window implements Runnable , ActionListener
 			float elapsedTime = (System.nanoTime() - this.startTime)/1000000f;
 			this.startTime = System.nanoTime();
 			
-			if(musicPlayer.isTerminated()) {
-				musicPlayer.playSound();
-			}
 			this.gameGraphics.update(elapsedTime);
 		}
 	}
