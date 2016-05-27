@@ -5,9 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import entities.CellColor;
+import entities.Game;
+import entities.PlayerHuman;
+import entities.PlayerRandom;
 import gui.BlokusButton;
 import utilities.Vector2;
 
@@ -77,12 +82,22 @@ public class IASelectionPage extends Page implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof BlokusButton){
+			ArrayList<CellColor> colorsP1 = new ArrayList<CellColor>();
+			colorsP1.add(CellColor.BLUE);
+			colorsP1.add(CellColor.RED);
+			ArrayList<CellColor> colorsP2 = new ArrayList<CellColor>();
+			colorsP2.add(CellColor.YELLOW);
+			colorsP2.add(CellColor.GREEN);
+			
 			if(e.getSource().equals(this.buttonIAEasy)){
+				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur Humain", colorsP1), new PlayerRandom("IA Facile", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
 			}else if(e.getSource().equals(this.buttonIAMedium)){
+				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur Humain", colorsP1), new PlayerRandom("IA Moyenne", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
 				//TODO lancer une nouvelle partie avec une ia moyenne
 			}else if(e.getSource().equals(this.buttonIAHard)){
+				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur Humain", colorsP1), new PlayerRandom("IA Difficile", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
 				//TODO lancer une nouvelle partie avec une ia difficile
 			}else if(e.getSource().equals(this.buttonReturn)){

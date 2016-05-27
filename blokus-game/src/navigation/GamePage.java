@@ -344,6 +344,14 @@ public class GamePage extends Page implements ActionListener {
 
 	}
 
+	public void setGame(Game g) {
+		this.game = g;
+		this.inDragAndDrop = false;
+		this.selectedTile = null;
+		this.selectedTileHeldCell = null;
+		this.flagLoad = false;
+	}
+	
 	@Override
 	public void loadContents() {
 		if (!flagLoad) {
@@ -354,7 +362,6 @@ public class GamePage extends Page implements ActionListener {
 				e.printStackTrace();
 			}
 			this.selectedTile = null;
-			this.game = new Game();
 
 			this.buttonOption = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
 			this.buttonOption.setPosition(new Vector2(1143, BUTTONS_Y_POSITION));

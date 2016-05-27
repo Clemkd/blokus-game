@@ -41,12 +41,13 @@ public class Game
 	private ArrayList<CellColor> playingColors;
 	
 	private Gson gson;
+	private boolean testedMove;
 
 	public Game()
 	{	
 		this.gson = new Gson();
 		this.currentTurn = 0;
-
+		this.testedMove = false;
 		this.board = new Board();
 
 		this.players = new ArrayList<Player>();
@@ -68,6 +69,13 @@ public class Game
 		this.playingColors.add(CellColor.YELLOW);
 		this.playingColors.add(CellColor.RED);
 		this.playingColors.add(CellColor.GREEN);
+	}
+
+	public Game(Player player1, Player player2) {
+		this();
+		this.players.clear();
+		this.players.add(player1);
+		this.players.add(player2);
 	}
 
 	/**
@@ -181,6 +189,13 @@ public class Game
 	{
 		if (!this.isTerminated())
 		{
+			if(!this.testedMove) {
+				this.testedMove = true;
+				if (Move.generateRandomValidMove(this).getTile() == null)
+				{
+					this.playingColors.remove(this.getCurrentColor());
+				}
+			}
 			if (this.playingColors.contains(this.getCurrentColor()))
 			{
 				Player p = this.getCurrentPlayer();
@@ -207,7 +222,12 @@ public class Game
 			else
 			{
 				this.currentTurn++;
+				this.testedMove = false;
 			}
+		}
+		else
+		{
+			System.out.println("Partie terminée !");
 		}
 	}
 
