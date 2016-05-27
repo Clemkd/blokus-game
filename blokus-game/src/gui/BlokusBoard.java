@@ -64,7 +64,7 @@ public class BlokusBoard implements DrawableInterface
 	{
 		this.position = new Vector2();
 		this.board = board;
-		this.isValidMovesShown = false;
+		this.isValidMovesShown = true;
 		this.cellColorForValidMoves = CellColor.BLUE;
 		this.validsMoves = new ArrayList<Vector2>();
 		this.cellMask = BufferedHelper.generateSampleMask(CellColor.CELL_WIDTH, CellColor.CELL_HEIGHT, 0.5f);

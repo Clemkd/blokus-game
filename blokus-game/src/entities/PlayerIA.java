@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import utilities.Move;
-import utilities.OutOfBoundsException;
-import utilities.Vector2;
 
 /*
  * 0- Toujours utiliser les pièces les plus grosses quand c'est possible

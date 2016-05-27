@@ -19,6 +19,7 @@ public class Tile {
 	 * Constante pour la matrice de la matrice d'une Tile
 	 */
 	public static final int WIDTH = 5;
+	public static final int SINGLE_CELL_ID = 0;
 
 	/**
 	 * Matrice d'entier permettant de représenter la forme d'une tuile et les
@@ -78,7 +79,7 @@ public class Tile {
 	 * 
 	 * @return le type de cellule
 	 */
-	public CellColor getCouleur() {
+	public CellColor getColor() {
 		return couleur;
 	}
 
@@ -104,7 +105,7 @@ public class Tile {
 			}
 		}
 
-		return new Tile(temp, this.getCouleur(), this.id);
+		return new Tile(temp, this.getColor(), this.id);
 	}
 
 	/**
@@ -119,7 +120,7 @@ public class Tile {
 			}
 		}
 
-		return new Tile(temp, this.getCouleur(), this.id);
+		return new Tile(temp, this.getColor(), this.id);
 	}
 
 	/**
@@ -132,7 +133,7 @@ public class Tile {
 			for (int y = 0; y < HEIGHT; y++)
 				temp[WIDTH - x - 1][y] = matrix[x][y];
 
-		return new Tile(temp, this.getCouleur(), this.id);
+		return new Tile(temp, this.getColor(), this.id);
 	}
 
 	/**
@@ -216,7 +217,7 @@ public class Tile {
 				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix21, cellColor, 0));
+		listTile.add(new Tile(matrix21, cellColor, SINGLE_CELL_ID));
 
 		// *
 		// *

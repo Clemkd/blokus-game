@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.InputStream;
-
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
 import gui.BlokusLabel;

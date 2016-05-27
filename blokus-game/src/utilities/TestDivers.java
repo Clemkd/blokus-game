@@ -4,27 +4,25 @@ public class TestDivers {
 
 	public static void main(String[] args) {
 		int[][] matrice = {
-				{101,102,103,104,105,106,107},
-				{124,125,126,127,128,129,108},
-				{123,141,142,143,144,130,109},
-				{122,140,149,150,145,131,110},
-				{121,139,148,147,146,132,111},
-				{120,138,137,136,135,134,112},
-				{119,118,117,116,115,114,113},
+				{100,100,100,100,100},
+				{777,777,666,666,100},
+				{777,777,666,666,100},
+				{100,100,555,555,100},
+				{100,100,555,555,100}
 		};
-		displayMatrix(matrice, 7);
+		displayMatrix(matrice, 5);
 		
-		int[][] matrice2 = flip(matrice, 7);
-		displayMatrix(matrice2, 7);
+		int[][] matrice2 = flip(matrice);
+		displayMatrix(matrice2, 5);
 		
-		int[][] matrice3 = flip(matrice2, 7);
-		displayMatrix(matrice3, 7);
+		int[][] matrice3 = flip(matrice2);
+		displayMatrix(matrice3, 5);
 		
-		int[][] matrice4 = flip(matrice3, 7);
-		displayMatrix(matrice4, 7);
+		int[][] matrice4 = flip(matrice3);
+		displayMatrix(matrice4, 5);
 		
-		int[][] matrice5 = flip(matrice4, 7);
-		displayMatrix(matrice5, 7);
+		int[][] matrice5 = flip(matrice4);
+		displayMatrix(matrice5, 5);
 	}
 	
 	public static int[][] RotateMatrix(int[][] matrix, int n) {
@@ -90,6 +88,16 @@ public class TestDivers {
 		for (int x = 0; x < n; x++)
 			for (int y = 0; y < n; y++)
 				temp[n - x - 1][y] = matrix[x][y];
+
+		return temp;
+	}
+	
+	public static int[][] flip(int[][] matrix) {
+		int[][] temp = new int[5][5];
+
+		for (int x = 0; x < 5; x++)
+			for (int y = 0; y < 5; y++)
+				temp[5 - x - 1][y] = matrix[x][y];
 
 		return temp;
 	}

@@ -1,34 +1,16 @@
 package entities;
 
-import java.awt.Checkbox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Base64.Decoder;
 import java.util.List;
-
-import javax.swing.JDialog;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import com.google.gson.stream.JsonWriter;
-
 import utilities.Move;
+import utilities.OutOfBoundsException;
 import utilities.UndoRedoManager;
 import utilities.Vector2;
 
@@ -71,7 +53,7 @@ public class Game
 		ArrayList<CellColor> colorsP1 = new ArrayList<CellColor>();
 		colorsP1.add(CellColor.BLUE);
 		colorsP1.add(CellColor.RED);
-		this.players.add(new PlayerRandom("J1", colorsP1));
+		this.players.add(new PlayerHuman("J1", colorsP1));
 		ArrayList<CellColor> colorsP2 = new ArrayList<CellColor>();
 		colorsP2.add(CellColor.YELLOW);
 		colorsP2.add(CellColor.GREEN);
@@ -271,9 +253,6 @@ public class Game
 
 		try
 		{
-			System.out.println(m.getTile());
-			System.out.println(m.getTileOrigin());
-			System.out.println(m.getPosition());
 			this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
 			this.currentTurn++;
 			this.raiseEvent(new ActionEvent(this, EVENT_TURN_ENDED, null));
@@ -359,8 +338,33 @@ public class Game
 	 */
 	public int getScore(Player player)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		int score = 0;
+		Vector2 v = new Vector2();
+		
+		for(int i=0; i<Board.HEIGHT; i++) {
+			for(int j=0; j<Board.WIDTH; j++) {
+				v.setX(i);
+				v.setY(j);
+				try {
+					if(player.getColors().contains(this.board.getCell(v))) {
+						score++;
+					}
+				}
+				catch (OutOfBoundsException e) {
+					e.printStackTrace();
+					System.exit(0);
+				}
+			}
+		}
+		if(player.getTileInventory().isEmpty()) {
+			score += 15;
+			if(player.lastTileWasSingleCell()) {
+				score += 5;
+			}
+		}
+
+		
+		return score;
 	}
 
 	/**
@@ -370,7 +374,7 @@ public class Game
 	 */
 	public ArrayList<Player> getPlayers()
 	{
-		return players;
+		return this.players;
 	}
 
 	// TODO : A Verifier
@@ -384,7 +388,7 @@ public class Game
 		this.getBoard().revertMove(m);
 		
 		// Revert des tiles du joueur
-		if(!this.getCurrentPlayer().getColors().contains(m.getTile().getCouleur()))
+		if(!this.getCurrentPlayer().getColors().contains(m.getTile().getColor()))
 			throw new InternalError("Essai d'ajout d'un tile incompatible dans l'inventaire du joueur courant");
 		
 		this.getCurrentPlayer().getTileInventory().add(m.getTile());

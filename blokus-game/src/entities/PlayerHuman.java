@@ -20,8 +20,8 @@ public class PlayerHuman extends Player {
 		this.playing = true;
 	}
 	
-	public void setMove(Move m) {
-		this.chosenMove = m;
+	public void setChosenMove(Move m) {
+		super.setChosenMove(m);
 		this.playing = false;
 	}
 }

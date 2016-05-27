@@ -84,7 +84,7 @@ public class Board {
 	 */
 	public void addTile(Tile tile, Vector2 tileOrigin, Vector2 position) throws InvalidMoveException
 	{
-		if(!this.getFreePositions(tile.getCouleur()).contains(position))
+		if(!this.getFreePositions(tile.getColor()).contains(position))
 		{			
 			throw new InvalidMoveException("Tentative d'ajout d'une tuile sur une zone interdite");
 		}
@@ -103,7 +103,7 @@ public class Board {
 							position.getX() - tileOrigin.getY() + offsetY,
 							position.getY() - tileOrigin.getX() + offsetX);
 					
-					this.setCell(currentGridPosition, tile.getCouleur());
+					this.setCell(currentGridPosition, tile.getColor());
 				}
 			}
 		}
@@ -143,7 +143,7 @@ public class Board {
 						}
 						else
 						{
-							if(this.hasSameColorWithAnAdjacentCell(tile.getCouleur(), v))
+							if(this.hasSameColorWithAnAdjacentCell(tile.getColor(), v))
 							{
 								//System.out.println("Adjacent : NO OK");
 								return false;

@@ -84,11 +84,11 @@ public class PlayerPanel implements DrawableInterface{
 		this.tilePanel2.clear();
 		for(Tile t : this.player.getTileInventory())
 		{
-			if(t.getCouleur() == this.player.getColors().get(0))
+			if(t.getColor() == this.player.getColors().get(0))
 			{
 				this.tilePanel1.addTile(t);
 			}
-			else if(t.getCouleur() == this.player.getColors().get(1))
+			else if(t.getColor() == this.player.getColors().get(1))
 			{
 				this.tilePanel2.addTile(t);
 			}
@@ -184,6 +184,14 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	public Dimension getSize() {
 		return size;
+	}
+	
+	/**
+	 * Obtient le joueur associé
+	 * @return Le joueur
+	 */
+	public Player getAssociatedPlayer() {
+		return this.player;
 	}
 
 	/**

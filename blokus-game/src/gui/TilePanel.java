@@ -144,7 +144,7 @@ public class TilePanel implements DrawableInterface{
 		for(BlokusTile entry : this.tiles)
 		{
 			// TODO : Erreur NullPointerException : entry (Appel de getTile() lorsque le tour est à l'IA
-			if(entry.isInBounds(v))
+			if(entry !=null && entry.isInBounds(v))
 			{
 				res = entry;
 				break;

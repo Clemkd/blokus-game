@@ -5,13 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
 
 import entities.CellColor;
-import entities.CellType;
 import entities.Game;
 import entities.PlayerHuman;
 import entities.Tile;
@@ -21,90 +19,81 @@ import gui.BlokusTile;
 import gui.Mouse;
 import gui.PlayerPanel;
 import gui.Window;
-import utilities.InvalidMoveException;
+import utilities.Move;
 import utilities.Vector2;
 
-public class GamePage extends Page implements ActionListener{
+public class GamePage extends Page implements ActionListener {
 
 	/**
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
-	private static final int BUTTONS_Y_POSITION = 725;
+	private static final int	BUTTONS_Y_POSITION	= 725;
 
-	private boolean inDragAndDrop;
-	
-	private ArrayList<Vector2> validMoves;
-	
-	private ArrayList<Vector2> extremityOfTile;
-	
-	private Vector2 mousePosInBoard;
+	private boolean				inDragAndDrop;
 
 	/**
 	 * Image correspondante au drag and drop courant
 	 */
-	private BlokusTile selectedTile;
+	private BlokusTile			selectedTile;
 
 	/**
-	 *Bouton représentant le choix option
+	 * Bouton représentant le choix option
 	 */
-	private BlokusButton buttonOption;
+	private BlokusButton		buttonOption;
 
 	/**
 	 * Bouton représentant l'annulation d'un coup
 	 */
-	private BlokusButton buttonUndo;
+	private BlokusButton		buttonUndo;
 
 	/**
 	 * Bouton représentant l'action "refaire" d'un coup
 	 */
-	private BlokusButton buttonRedo;
+	private BlokusButton		buttonRedo;
 
 	/**
 	 * Bouton représentant la sauvegarde
 	 */
-	private BlokusButton buttonSave;
+	private BlokusButton		buttonSave;
 
 	/**
 	 * Bouton représentant le choix de quitter le jeux
 	 */
-	private BlokusButton buttonExit;
+	private BlokusButton		buttonExit;
 
 	/**
 	 * Logo du jeu
 	 */
-	private BufferedImage titre;
+	private BufferedImage		titre;
 
 	/**
 	 * Panel des pièces du joueur 1
 	 */
-	private PlayerPanel panelJoueur1;
+	private PlayerPanel			panelJoueur1;
 
 	/**
 	 * Panel des pièces du joueur 2
 	 */
-	private PlayerPanel panelJoueur2;
+	private PlayerPanel			panelJoueur2;
 
-	private BlokusBoard blokusBoard;
+	private BlokusBoard			blokusBoard;
 
-	private Game game;
+	private Game				game;
 
-	private boolean flagLoad;
+	private boolean				flagLoad;
 
-	private Vector2 initialPositionTile;
-	
-	private Vector2 oldVector;
-	
-	private Vector2 xy;
-	
+	private Vector2				selectedTileHeldCell;
+
 	/**
 	 * Constructeur
 	 */
 	public GamePage() {
 		super();
 		this.inDragAndDrop = false;
+		this.selectedTile = null;
+		this.selectedTileHeldCell = null;
 		this.flagLoad = false;
 	}
-
 
 	@Override
 	public void update(float elapsedTime) {
@@ -116,177 +105,199 @@ public class GamePage extends Page implements ActionListener{
 		this.game.update();
 		this.blokusBoard.setBoard(this.game.getBoard());
 		this.blokusBoard.update(elapsedTime);
-		
-		this.updatePlayerPanels(elapsedTime);
-		this.updateDragAndDrop(elapsedTime);
-	}
 
-	private void updateDragAndDrop(float elapsedTime)
-	{
-		/**********************************************/
-		/************** Drag and drop *****************/
-		/**********************************************/
-		if(!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT)
-		{
-			Mouse.consumeLastMouseButton();
-			if(!this.inDragAndDrop)
-			{			
-				if(this.game.getCurrentPlayer() == this.game.getPlayers().get(0))
-				{
-					this.selectedTile = this.panelJoueur1.getTile(Mouse.getPosition());
-					if(this.selectedTile != null)
-					{
-						System.out.println("Tile n"+this.selectedTile.getTile().getId()+" selected and removed from inventory");
-						this.game.getPlayers().get(0).getTileInventory().remove(this.selectedTile.getTile().getId());
-					}
-					
-				}
-				else if(this.game.getCurrentPlayer() == this.game.getPlayers().get(1))
-				{
-					this.selectedTile = this.panelJoueur2.getTile(Mouse.getPosition());
-					if(this.selectedTile != null)
-					{
-						this.game.getPlayers().get(1).getTileInventory().remove(this.selectedTile.getTile().getId());
-					}
-				}
-				
-				if(this.selectedTile != null)
-				{
-					this.initialPositionTile = selectedTile.getPosition();
-				}
-				this.inDragAndDrop = this.selectedTile != null;
-			
-			}
-			else
-			{
-				if(!this.blokusBoard.isInBounds(Mouse.getPosition()))
-				{
-					this.selectedTile.setPosition(initialPositionTile);
-					if(this.game.getCurrentPlayer() == this.game.getPlayers().get(0))
-					{
-						this.game.getPlayers().get(0).getTileInventory().add(this.selectedTile.getTile().getId(), this.selectedTile.getTile());
-					}
-					else if(this.game.getCurrentPlayer() == this.game.getPlayers().get(1))
-					{
-						this.game.getPlayers().get(1).getTileInventory().add(this.selectedTile.getTile().getId(), this.selectedTile.getTile());
-					}
-					this.initialPositionTile = null;
-				}
-				else
-				{
-					// TODO tester le placement pour chaque extrémité du Tile en main 
-					//Vector2 tileOrigin = this.selectedTile.getTile().getExtremities().get(0);
-					Vector2 tileOrigin = this.xy;
-					if(this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, this.mousePosInBoard))
-					{
-						System.out.println("Yes, it's a validMove");
-						for(int k = 0; k<this.validMoves.size();k++)
-						{
-							for(int l = 0; l<this.extremityOfTile.size(); l++)
-							{
-								if(this.validMoves.get(k).getX() == this.extremityOfTile.get(l).getX() && this.validMoves.get(k).getY() == this.extremityOfTile.get(l).getY())
-								{
-									
-									try {
-										System.out.println("Adding tile in the board");
-										this.blokusBoard.getBoard().addTile(this.selectedTile.getTile(), tileOrigin, this.mousePosInBoard);
-									} catch (InvalidMoveException e) {
-										e.printStackTrace();
-									}
-									
-									break;
-								}
-							}
-						}
-					}
-					this.extremityOfTile = new ArrayList<Vector2>();
-				}
-				this.inDragAndDrop = false;
-				this.selectedTile = null;
-				
+		if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
+			if (this.panelJoueur1.getAssociatedPlayer() instanceof PlayerHuman) {
+				this.panelJoueur1.setEnabled(true);
 			}
 		}
-		if(this.selectedTile != null)
+		else if (this.game.getCurrentPlayer() == this.panelJoueur2.getAssociatedPlayer()) {
+			if (this.panelJoueur2.getAssociatedPlayer() instanceof PlayerHuman) {
+				this.panelJoueur2.setEnabled(true);
+			}
+		}
+
+		this.updatePlayerPanels(elapsedTime);
+		this.updateMouse(elapsedTime);
+	}
+
+	/**
+	 * Gestion de la souris lors du mode drag&drop
+	 * 
+	 * @param elapsedTime
+	 */
+	private void processDragAndDrop(float elapsedTime) {
+		Vector2 mPos = Mouse.getPosition();
+
+		// Gestion des clics
+		if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT) // Bouton souris gauche enfoncé
 		{
-			if(this.blokusBoard.isInBounds(Mouse.getPosition()))
+			if (!this.blokusBoard.isInBounds(mPos)) // Clic en dehors du plateau, on remet la pièce dans le PlayerPanel
 			{
-				this.xy.setX((Mouse.getPosition().getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X)) / CellColor.CELL_WIDTH);
-				this.xy.setY((Mouse.getPosition().getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)) / CellColor.CELL_HEIGHT);
-				
-				if(this.xy.getX()!=oldVector.getX()||this.xy.getY()!=oldVector.getY())
-				{
-					oldVector.setX(this.xy.getX());
-					oldVector.setY(this.xy.getY());
-					
-					this.validMoves = this.blokusBoard.getBoard().getFreePositions(this.selectedTile.getTile().getCouleur());
-					this.extremityOfTile = new ArrayList<Vector2>();
-					
-					for(int k =0;k<this.validMoves.size();k++)
-					{
-						System.out.println(this.validMoves.get(k).toString());
-					}
+				this.game.getCurrentPlayer().addTileToInventory(this.selectedTile.getTile());
 
-					Vector2 fc = this.selectedTile.getTile().getFirstCase();
+				this.selectedTile = null;
+				this.inDragAndDrop = false;
+			}
+			else // Clic dans le plateau, on tente de poser la pièce
+			{
+				int cellX = (mPos.getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X))
+						/ CellColor.CELL_HEIGHT;
+				int cellY = (mPos.getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y))
+						/ CellColor.CELL_HEIGHT;
+				Vector2 cell = new Vector2(cellX, cellY);
+				Vector2 fc = this.selectedTile.getTile().getFirstCase();
 
-					for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
-					{
-						for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
-						{	
-							if(this.selectedTile.getTile().getCellType(offsetX, offsetY) == CellType.EXTREMITY)
-							{
-								Vector2 v = new Vector2(
-										this.xy.getX() - fc.getY() + offsetY,
-										this.xy.getY() - fc.getX() + offsetX);
-								this.extremityOfTile.add(v);
-								
-							}
-						}
+				List<Vector2> validDropCells = this.blokusBoard.getBoard()
+						.getFreePositions(this.selectedTile.getTile().getColor());
+				List<Vector2> extremities = this.selectedTile.getTile().getExtremities();
+				Vector2 tileOrigin = null;
+				Vector2 position = new Vector2();
+
+				for (Vector2 e : extremities) {
+					position.setX(cell.getX() + (e.getY() - this.selectedTileHeldCell.getY()) - fc.getY());
+					position.setY(cell.getY() + (e.getX() - this.selectedTileHeldCell.getX()) - fc.getX());
+					if (validDropCells.contains(position)) {
+						tileOrigin = e;
+						break;
 					}
-					this.mousePosInBoard = new Vector2(this.xy.getX(), this.xy.getY());
 				}
-				this.selectedTile.setPosition(new Vector2(
-						(this.xy.getX() * CellColor.CELL_WIDTH) + (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X),
-						(this.xy.getY() * CellColor.CELL_HEIGHT) + (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y)));
+
+				if (tileOrigin != null) {
+					if (this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, position)) {
+						((PlayerHuman) this.game.getCurrentPlayer())
+								.setChosenMove(new Move(position, this.selectedTile.getTile(), tileOrigin));
+						this.selectedTile = null;
+						this.inDragAndDrop = false;
+					}
+				}
 			}
-			else
+
+			Mouse.consumeLastMouseButton();
+		}
+		else if (Mouse.getLastScrollClicks() != 0) // Gestion de la rotation de la pièce
+		{
+			Vector2 fc = this.selectedTile.getTile().getFirstCase();
+			Vector2 fc2;
+			Vector2 v = new Vector2();
+			if (Mouse.getLastScrollClicks() > 0) {
+				this.selectedTile.setTile(this.selectedTile.getTile().rotateClockwise());
+				fc2 = this.selectedTile.getTile().getFirstCase();
+				v.setX((Tile.WIDTH - (this.selectedTileHeldCell.getY() + fc.getY()) - 1) - fc2.getX());
+				v.setY(this.selectedTileHeldCell.getX() + fc.getX() - fc2.getY());
+				this.selectedTileHeldCell = v;
+			}
+			else if (Mouse.getLastScrollClicks() < 0) {
+				this.selectedTile.setTile(this.selectedTile.getTile().rotateCounterClockwise());
+				fc2 = this.selectedTile.getTile().getFirstCase();
+				v.setX(this.selectedTileHeldCell.getY() + fc.getY() - fc2.getX());
+				v.setY((Tile.WIDTH - (this.selectedTileHeldCell.getX() + fc.getX()) - 1) - fc2.getY());
+				this.selectedTileHeldCell = v;
+			}
+
+			Mouse.consumeLastScroll();
+		}
+		else if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.RIGHT) // Bouton droit enfoncé, gestion de la symétrie
+		{
+			Vector2 fc = this.selectedTile.getTile().getFirstCase();
+			Vector2 fc2;
+			Vector2 v = new Vector2();
+
+			this.selectedTile.setTile(this.selectedTile.getTile().flip());
+			fc2 = this.selectedTile.getTile().getFirstCase();
+			v.setX((Tile.WIDTH - (this.selectedTileHeldCell.getX() + fc.getX()) - 1) - fc2.getX());
+			v.setY(this.selectedTileHeldCell.getY() + fc.getY() - fc2.getY());
+			this.selectedTileHeldCell = v;
+
+			Mouse.consumeLastMouseButton();
+		}
+
+		if (this.inDragAndDrop) // Si on est toujours en drag&drop après le traitement des clics
+		{
+			// Gestion du déplacement de la pièce avec le curseur
+			if (this.blokusBoard.isInBounds(mPos)) // La souris survole le plateau
 			{
-				this.selectedTile.setPosition(new Vector2(Mouse.getPosition().getX(), Mouse.getPosition().getY()));
+				int innerX = (mPos.getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X))
+						% CellColor.CELL_HEIGHT;
+				int innerY = (mPos.getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y))
+						% CellColor.CELL_HEIGHT;
+
+				this.selectedTile.getPosition()
+						.setX(mPos.getX() - (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getY()) - innerX);
+				this.selectedTile.getPosition()
+						.setY(mPos.getY() - (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getX()) - innerY);
 			}
+			else // La souris survole autre chose
+			{
+				this.selectedTile.getPosition().setX(mPos.getX()
+						- (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getY()) - CellColor.CELL_HEIGHT / 2);
+				this.selectedTile.getPosition().setY(mPos.getY()
+						- (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getX()) - CellColor.CELL_HEIGHT / 2);
+			}
+
 			this.selectedTile.update(elapsedTime);
 		}
-		/**********************************************/
-		/************** Drag and drop *****************/
-		/**********************************************/
 	}
 
-
-	private void updatePlayerPanels(float elapsedTime)
+	/**
+	 * Gestion de la souris en dehors du mode drag&drop
+	 * 
+	 * @param elapsedTime
+	 */
+	private void processTileSelection(float elapsedTime) // Gestion des clics
 	{
+		if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT) // Bouton souris gauche enfoncé
+		{
+			Vector2 mPos = Mouse.getPosition();
+
+			if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
+				this.selectedTile = this.panelJoueur1.getTile(mPos);
+			}
+			else if (this.game.getCurrentPlayer() == this.panelJoueur2.getAssociatedPlayer()) {
+				this.selectedTile = this.panelJoueur2.getTile(mPos);
+			}
+
+			if (this.selectedTile != null) {
+				this.game.getCurrentPlayer().removeTileFromInventory(this.selectedTile.getTile());
+				this.selectedTileHeldCell = this.selectedTile.getCellOffset(mPos);
+				this.inDragAndDrop = true;
+			}
+
+			Mouse.consumeLastMouseButton();
+		}
+	}
+
+	private void updateMouse(float elapsedTime) {
+		if (this.inDragAndDrop) {
+			this.processDragAndDrop(elapsedTime);
+		}
+		else {
+			this.processTileSelection(elapsedTime);
+		}
+	}
+
+	private void updatePlayerPanels(float elapsedTime) {
 		this.panelJoueur1.update(elapsedTime);
 		this.panelJoueur2.update(elapsedTime);
-		
-		if(this.game.getCurrentPlayer() == this.game.getPlayers().get(0))
-		{
-			boolean firstColor = this.game.getCurrentPlayer().getColors().get(0) == this.game.getCurrentColor();
-			boolean secondColor = this.game.getCurrentPlayer().getColors().get(1) == this.game.getCurrentColor();
+
+		boolean firstColor = this.game.getCurrentPlayer().getColors().get(0) == this.game.getCurrentColor();
+		boolean secondColor = this.game.getCurrentPlayer().getColors().get(1) == this.game.getCurrentColor();
+
+		if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
 			this.panelJoueur1.setEnabled(firstColor, secondColor);
 			this.panelJoueur2.setEnabled(false, false);
 		}
-		else if(this.game.getCurrentPlayer() == this.game.getPlayers().get(1))
-		{
-			boolean firstColor = this.game.getCurrentPlayer().getColors().get(0) == this.game.getCurrentColor();
-			boolean secondColor = this.game.getCurrentPlayer().getColors().get(1) == this.game.getCurrentColor();
-			this.panelJoueur2.setEnabled(firstColor, secondColor);
+		else if (this.game.getCurrentPlayer() == this.panelJoueur2.getAssociatedPlayer()) {
 			this.panelJoueur1.setEnabled(false, false);
+			this.panelJoueur2.setEnabled(firstColor, secondColor);
 		}
 	}
 
-
 	@Override
 	public void draw(Graphics2D g) {
-		Graphics2D g2d = (Graphics2D)g.create();
+		Graphics2D g2d = (Graphics2D) g.create();
 
-		g2d.drawImage(this.titre,500, 51, null);
+		g2d.drawImage(this.titre, 500, 51, null);
 		this.blokusBoard.draw(g2d);
 		this.buttonOption.draw(g2d);
 		this.buttonUndo.draw(g2d);
@@ -295,11 +306,9 @@ public class GamePage extends Page implements ActionListener{
 		this.buttonExit.draw(g2d);
 		this.panelJoueur1.draw(g2d);
 		this.panelJoueur2.draw(g2d);
-		
 
-		if(this.selectedTile != null)
-		{
-			this.selectedTile.draw(g2d); 
+		if (this.selectedTile != null) {
+			this.selectedTile.draw(g2d);
 		}
 
 		g2d.dispose();
@@ -307,23 +316,27 @@ public class GamePage extends Page implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() instanceof BlokusButton){
-			if(e.getSource().equals(this.buttonOption)){
+		if (e.getSource() instanceof BlokusButton) {
+			if (e.getSource().equals(this.buttonOption)) {
 				Navigation.previous = this;
-				
-			}else if(e.getSource().equals(this.buttonUndo)){
-				if(this.game.canUndo()){
+
+			}
+			else if (e.getSource().equals(this.buttonUndo)) {
+				if (this.game.canUndo()) {
 					this.game.undoMove();
 				}
-			}else if(e.getSource().equals(this.buttonRedo)){
-				if(this.game.canRedo()){
+			}
+			else if (e.getSource().equals(this.buttonRedo)) {
+				if (this.game.canRedo()) {
 					this.game.redoMove();
 				}
-			}else if(e.getSource().equals(this.buttonSave)){
+			}
+			else if (e.getSource().equals(this.buttonSave)) {
 				this.game.save();
-				//JFileChooser jFileChooser = new JFileChooser();
-				//jFileChooser.showSaveDialog(jFileChooser);
-			}else if(e.getSource().equals(this.buttonExit)){
+				// JFileChooser jFileChooser = new JFileChooser();
+				// jFileChooser.showSaveDialog(jFileChooser);
+			}
+			else if (e.getSource().equals(this.buttonExit)) {
 				Navigation.NavigateTo(Navigation.homePage);
 			}
 		}
@@ -332,32 +345,33 @@ public class GamePage extends Page implements ActionListener{
 
 	@Override
 	public void loadContents() {
-		if(!flagLoad){
+		if (!flagLoad) {
 			try {
-				this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"logo.png"));
-			} catch (IOException e) {
+				this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "logo.png"));
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 			this.selectedTile = null;
 			this.game = new Game();
 
-			this.buttonOption = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"optionsig.png"));
+			this.buttonOption = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
 			this.buttonOption.setPosition(new Vector2(1143, BUTTONS_Y_POSITION));
 			this.buttonOption.addListener(this);
 
-			this.buttonUndo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"annulerig.png"));
+			this.buttonUndo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "annulerig.png"));
 			this.buttonUndo.setPosition(new Vector2(526, BUTTONS_Y_POSITION));
 			this.buttonUndo.addListener(this);
 
-			this.buttonRedo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"refaireig.png"));
+			this.buttonRedo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "refaireig.png"));
 			this.buttonRedo.setPosition(new Vector2(647, BUTTONS_Y_POSITION));
 			this.buttonRedo.addListener(this);
 
-			this.buttonSave = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"sauvegarder.png"));
+			this.buttonSave = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "sauvegarder.png"));
 			this.buttonSave.setPosition(new Vector2(980, BUTTONS_Y_POSITION));
 			this.buttonSave.addListener(this);
 
-			this.buttonExit = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"accueil.png"));
+			this.buttonExit = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "accueil.png"));
 			this.buttonExit.setPosition(new Vector2(32, BUTTONS_Y_POSITION));
 			this.buttonExit.addListener(this);
 
@@ -366,26 +380,11 @@ public class GamePage extends Page implements ActionListener{
 			this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
 			this.panelJoueur2.setPosition(new Vector2(980, 32));
 
-			
 			this.blokusBoard = new BlokusBoard(this.game.getBoard());
-			this.blokusBoard.setPosition(new Vector2(Window.WIDTH / 2 - (int)this.blokusBoard.getSize().getWidth() / 2, 212));
-			
-			this.oldVector = new Vector2(-1,-1);
-			this.extremityOfTile = new ArrayList<Vector2>();
-			this.mousePosInBoard = new Vector2(0,0);
-			this.validMoves = new ArrayList<Vector2>();
-			this.xy = new Vector2(0,0);
-			
-			if(!(this.game.getPlayers().get(0) instanceof PlayerHuman)) // Si n'est pas Humain faire
-			{
-				this.panelJoueur1.setEnabled(false);
-			}
-			if(!(this.game.getPlayers().get(1) instanceof PlayerHuman)) // Si n'est pas Humain faire
-			{
-				this.panelJoueur1.setEnabled(false);
-			}
-			
-			flagLoad = true;
+			this.blokusBoard
+					.setPosition(new Vector2(Window.WIDTH / 2 - (int) this.blokusBoard.getSize().getWidth() / 2, 212));
+
+			this.flagLoad = true;
 		}
 	}
 
@@ -394,5 +393,4 @@ public class GamePage extends Page implements ActionListener{
 		// TODO Auto-generated method stub
 
 	}
-
 }

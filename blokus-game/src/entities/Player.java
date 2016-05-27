@@ -10,7 +10,7 @@ public abstract class Player {
 	 * Les couleurs du joueur
 	 */
 	protected List<CellColor>	colors;
-	protected String name;
+	protected String			name;
 
 	/**
 	 * Les tuiles du joueur
@@ -18,20 +18,23 @@ public abstract class Player {
 	protected List<Tile>		tiles;
 	protected boolean			playing;
 	protected Move				chosenMove;
+	private boolean				singleCellLast;
 
 	public Player(String name, List<CellColor> colors) {
 		this.playing = false;
 		this.chosenMove = null;
 		this.colors = colors;
 		this.name = name;
+		this.singleCellLast = false;
 		this.tiles = new ArrayList<Tile>();
 		for (CellColor c : colors)
 			this.tiles.addAll(Tile.getListOfNeutralTile(c));
 	}
 
-	public Player(){
-		
+	public Player() {
+
 	}
+
 	/**
 	 * Obtient la liste des tuiles du joueur
 	 * 
@@ -74,38 +77,22 @@ public abstract class Player {
 	 */
 	public Move getMove() {
 		Move m = this.chosenMove;
-		
-		if(m != null && m.getTile()!=null)
-		{
-			// Suppression du tile joué de l'inventaire
-			Tile tile = null;
-			
-			int id = m.getTile().getId();
-			for(Tile t : this.tiles)
-			{
-				if(t.getId() == id && t.getCouleur() == m.getTile().getCouleur())
-				{
-					tile = t;
-					break;
-				}
-			}
-			this.tiles.remove(tile);
-		}
-		
+
 		this.chosenMove = null;
-		
+
 		return m;
 	}
-	
+
 	/**
 	 * Transmet le nom du joueur
+	 * 
 	 * @return
 	 */
 	public String getName() {
 		return this.name;
 	}
-	
-	public void setName(String name){
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -118,6 +105,10 @@ public abstract class Player {
 	}
 
 	public Move getChosenMove() {
+		if(chosenMove.getTile().getId()==Tile.SINGLE_CELL_ID)
+			this.singleCellLast = true;
+		else
+			this.singleCellLast = false;
 		return chosenMove;
 	}
 
@@ -132,6 +123,60 @@ public abstract class Player {
 	public void setPlaying(boolean playing) {
 		this.playing = playing;
 	}
-	
-	
+
+	/**
+	 * Enlève le tile transmis de l'inventaire, renvoi vrai si un tile a bien été supprimé
+	 * 
+	 * @param tile
+	 *            Tile à retirer de l'inventaire
+	 * @return True si le tile recherché était présent et a été retiré, false sinon
+	 */
+	public boolean removeTileFromInventory(Tile tile) {
+		if (tile != null) {
+			// Tile bin, lol 
+			Tile bin = null;
+
+			int id = tile.getId();
+			CellColor color = tile.getColor();
+			for (Tile t : this.tiles) {
+				if (t.getId() == id && t.getColor() == color) {
+					bin = t;
+					break;
+				}
+			}
+
+			if (bin != null) {
+				this.tiles.remove(bin);
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Rajoute le tile fourni à l'inventaire, renvoi vrai si un tile a bien été ajouté
+	 * 
+	 * @param tile
+	 *            Tile à ajouter dans l'inventaire
+	 * @return True si le tile fourni a bien été ajouté, false sinon
+	 */
+	public boolean addTileToInventory(Tile tile) {
+		if (tile != null) {
+			int id = tile.getId();
+			CellColor color = tile.getColor();
+			for (Tile t : Tile.getListOfNeutralTile(color)) {
+				if (t.getId() == id) {
+					this.tiles.add(t);
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public boolean lastTileWasSingleCell() {
+		return this.singleCellLast;
+	}
 }

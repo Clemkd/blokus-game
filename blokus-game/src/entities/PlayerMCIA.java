@@ -26,10 +26,10 @@ public class PlayerMCIA extends Player implements ActionListener
 	}
 
 	@Override
-	public void play(Game game, CellColor c)
+	public void play(Game g, CellColor c)
 	{
 		this.playing = true;
-		this.game = game;
+		this.game = g;
 		this.timer = new Timer(5000 + rand.nextInt(400), this);
 		timer.start();
 	}
@@ -47,27 +47,27 @@ public class PlayerMCIA extends Player implements ActionListener
 	}
 	
 	// TODO : Reste à fix
-	private Move monteCarlo(Game game, int sampleSize)
+	private Move monteCarlo(Game g, int sampleSize)
 	{
 		Move bestMove = Move.EMPTY;
 		Stack<Move> moves = new Stack<Move>();
-		Player firstPlayer = game.getCurrentPlayer();
+		Player firstPlayer = g.getCurrentPlayer();
 		
 		for(int i = 0; i < sampleSize; i++)
 		{
-			while(!game.isTerminated())
+			while(!g.isTerminated())
 			{
-				Move move = Move.generateRandomValidMove(game);
-				game.doMove(move);
+				Move move = Move.generateRandomValidMove(g);
+				g.doMove(move);
 				moves.push(move);
 			}
 			
-			int value = game.getScore(firstPlayer);
+			int value = g.getScore(firstPlayer);
 			Move m = null;
 			while(!moves.isEmpty())
 			{
 				m = moves.pop();
-				game.revertMove(m);
+				g.revertMove(m);
 			}
 			
 			if(m == null)

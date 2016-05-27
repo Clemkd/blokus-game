@@ -105,7 +105,7 @@ public class Move {
 		for (Vector2 position : validMoves) {
 			// Pour chaque pièce du joueur
 			for (Tile tile : game.getCurrentPlayer().getTileInventory()) {
-				if (tile.getCouleur() == game.getCurrentColor()) {
+				if (tile.getColor() == game.getCurrentColor()) {
 					// La liste des rotations et flips de la pièce
 					tileVariations = tile.getTilesListOfRotationsAndFlips();
 
