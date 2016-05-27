@@ -104,6 +104,7 @@ public class GamePage extends Page implements ActionListener {
 		this.buttonExit.update(elapsedTime);
 		this.game.update();
 		this.blokusBoard.setBoard(this.game.getBoard());
+		this.blokusBoard.showValidMoves(this.inDragAndDrop, this.game.getCurrentColor());
 		this.blokusBoard.update(elapsedTime);
 
 		if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
