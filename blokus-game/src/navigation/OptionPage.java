@@ -5,6 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
 import gui.BlokusLabel;
@@ -32,6 +36,8 @@ public class OptionPage extends Page implements ActionListener{
 	private boolean onRules;
 	private boolean onGeneral;
 	
+	private Font customFontCheckbox;
+	private Font customFontTitle;
 	
 	private static final int POS_X_BOUTONS = 72;
 	
@@ -42,15 +48,20 @@ public class OptionPage extends Page implements ActionListener{
 	
 	private static final int POS_X_TITLE = 371;
 	
-	
-	private static Font customFontCheckbox = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResourceAsStream(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 16f);
-	private static Font customFontTitle = BufferedHelper.getFontFromFile(OptionPage.class.getClass().getResourceAsStream(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf"), 20f);
-	
 	public OptionPage() {
 		super();
 		this.onControl = false;
 		this.onGeneral = true;
 		this.onRules = false;
+		try {
+			this.customFontCheckbox = BufferedHelper.getFontFromFile(new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 16f);
+			this.customFontTitle = BufferedHelper.getFontFromFile(new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 20f);
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	@Override
 	public void update(float elapsedTime) {
@@ -148,22 +159,22 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleGame = new BlokusLabel("JEU", customFontTitle);
 		this.titleGame.setPosition(new Vector2(POS_X_TITLE, 102));
 		
-		this.checkBoxGeneral1 = new BlokusCheckBox(true, false, "METTRE EN SURBRILLANCE LES COUPS POSSIBLES", OptionPage.customFontCheckbox);
+		this.checkBoxGeneral1 = new BlokusCheckBox(true, false, "METTRE EN SURBRILLANCE LES COUPS POSSIBLES", this.customFontCheckbox);
 		this.checkBoxGeneral1.setPosition(new Vector2(POS_X_CHECKBOX, 150));
 		
-		this.checkBoxAutoSave = new BlokusCheckBox(true, false, "SAUVEGARDE AUTOMATIQUE", OptionPage.customFontCheckbox);
+		this.checkBoxAutoSave = new BlokusCheckBox(true, false, "SAUVEGARDE AUTOMATIQUE", this.customFontCheckbox);
 		this.checkBoxAutoSave.setPosition(new Vector2(POS_X_CHECKBOX, 180));
 		
 		this.titleAudio = new BlokusLabel("AUDIO", customFontTitle);
 		this.titleAudio.setPosition(new Vector2(POS_X_TITLE, 252));
 		
-		this.checkBoxActivateAudio = new BlokusCheckBox(true, false, "MUSIQUE DE FOND", OptionPage.customFontCheckbox);
+		this.checkBoxActivateAudio = new BlokusCheckBox(true, false, "MUSIQUE DE FOND", this.customFontCheckbox);
 		this.checkBoxActivateAudio.setPosition(new Vector2(POS_X_CHECKBOX, 300));
 		
 		this.titleVideo= new BlokusLabel("VIDEO", customFontTitle);
 		this.titleVideo.setPosition(new Vector2(POS_X_TITLE, 402));
 		
-		this.checkBoxDaltonienMode = new BlokusCheckBox(true, false, "MODE DALTONIEN", OptionPage.customFontCheckbox);
+		this.checkBoxDaltonienMode = new BlokusCheckBox(true, false, "MODE DALTONIEN", this.customFontCheckbox);
 		this.checkBoxDaltonienMode.setPosition(new Vector2(POS_X_CHECKBOX, 450));
 
 	}

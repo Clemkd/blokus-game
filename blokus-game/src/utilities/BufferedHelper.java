@@ -9,6 +9,7 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,15 +29,15 @@ public class BufferedHelper
      * @param file Le chemin + nom du fichier de la police d'écriture
      * @return La police d'écriture si le fichier existe, null dans le cas contraire
      */
-    public static Font getFontFromFile(InputStream stream, float fontSize)
+    public static Font getFontFromFile(File file, float fontSize)
     {
     	Font customFont = null;
 		try 
 		{
-			customFont = Font.createFont(Font.TRUETYPE_FONT, stream).deriveFont(fontSize);
+			customFont = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(fontSize);
 	        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	        //register the font
-	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, stream));
+	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
 	        
 		} 
 		catch (FontFormatException | IOException e) 
