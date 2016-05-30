@@ -265,8 +265,7 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleGoal = new BlokusLabel("BUT du jeu : Pour chaque joueur, placer ses 21 pièces sur le plateau", customFontTitle);
 		this.titleGoal.setPosition(new Vector2(POS_X_TITLE, 102));
 		
-		
-		this.titleRunning = new BlokusLabel("DÉROULEMENT", customFontTitle);
+		this.titleRunning = new BlokusLabel("DÉROULEMENT", customFontTitle);
 		this.titleRunning.setPosition(new Vector2(POS_X_TITLE, 163));
 		
 		this.textRunning1 = new BlokusText("L'ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert.", customFontText);
