@@ -18,13 +18,13 @@ public class TutorialPage extends Page implements ActionListener{
 	BlokusButton buttonReturn;
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void updatePage(float elapsedTime) {
 		this.buttonReturn.update(elapsedTime);
 	
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void drawPage(Graphics2D g) {
 		g.drawImage(this.tutorialImage, 0, 0, Window.WIDTH, Window.HEIGHT-35, null);
 		this.buttonReturn.draw(g);
 	}

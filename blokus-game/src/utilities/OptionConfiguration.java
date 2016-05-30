@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class OptionConfiguration implements Serializable {
 	
+	private static final long serialVersionUID = -1912346656700146846L;
+
 	private boolean playSong;
 	
 	public boolean isPlaySong() {

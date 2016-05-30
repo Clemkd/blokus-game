@@ -5,6 +5,9 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class UndoRedoManager<T> implements Serializable {
+
+	private static final long serialVersionUID = -5999461635455831789L;
+
 	/**
 	 * Le stack de "annuler"
 	 */

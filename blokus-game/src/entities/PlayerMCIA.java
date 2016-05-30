@@ -12,6 +12,8 @@ import utilities.Move;
 
 public class PlayerMCIA extends Player implements ActionListener
 {
+	private static final long serialVersionUID = -8387538910197440018L;
+	
 	private static final int DEFAULT_SAMPLE_SIZE = 5;
 	private Random rand;
 	private Timer timer;

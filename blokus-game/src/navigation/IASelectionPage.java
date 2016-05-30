@@ -60,7 +60,7 @@ public class IASelectionPage extends Page implements ActionListener{
 	}
 	
 	@Override
-	public void update(float elapsedTime) {
+	public void updatePage(float elapsedTime) {
 		this.buttonIAEasy.update(elapsedTime);
 		this.buttonIAMedium.update(elapsedTime);
 		this.buttonIAHard.update(elapsedTime);
@@ -69,7 +69,7 @@ public class IASelectionPage extends Page implements ActionListener{
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void drawPage(Graphics2D g) {
 		g.drawImage(this.titre,500, 51, null);
 		g.drawImage(this.background, 371, 200, null);
 		this.buttonIAEasy.draw(g);

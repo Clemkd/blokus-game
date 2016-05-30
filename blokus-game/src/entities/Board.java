@@ -10,6 +10,8 @@ import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
 public class Board implements Serializable{
+
+	private static final long serialVersionUID = -6700653387420833207L;
 	/**
 	 * Le nombre de positions relatives (soit coins, soit adjacentes) d'une position
 	 */

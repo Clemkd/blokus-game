@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
 
 import entities.CellColor;
 import entities.Game;
@@ -68,7 +67,7 @@ public class HomePage extends Page implements ActionListener {
 	}
 
 	@Override
-	public void update(float elapsedTime) {
+	public void updatePage(float elapsedTime) {
 		this.buttonMusic.update(elapsedTime);
 		this.buttonOnePLayer.update(elapsedTime);
 		this.buttonTwoPlayer.update(elapsedTime);
@@ -80,7 +79,7 @@ public class HomePage extends Page implements ActionListener {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void drawPage(Graphics2D g) {
 		Graphics2D batch = (Graphics2D) g.create();
 		batch.drawImage(this.titre, 500, 51, null);
 		this.buttonMusic.draw(batch);

@@ -7,6 +7,8 @@ import java.util.List;
 import utilities.Vector2;
 
 public class Tile implements Serializable{
+	
+	private static final long serialVersionUID = 8909911977070049898L;
 	/**
 	 * Le nombre maximal de tiles
 	 */

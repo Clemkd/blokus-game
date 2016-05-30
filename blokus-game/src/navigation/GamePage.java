@@ -1,10 +1,13 @@
 package navigation;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -15,10 +18,14 @@ import entities.PlayerHuman;
 import entities.Tile;
 import gui.BlokusBoard;
 import gui.BlokusButton;
+import gui.BlokusMessageBox;
 import gui.BlokusTile;
 import gui.Mouse;
 import gui.PlayerPanel;
 import gui.Window;
+import utilities.BlokusMessageBoxButtonState;
+import utilities.BlokusMessageBoxResult;
+import utilities.BufferedHelper;
 import utilities.Move;
 import utilities.Vector2;
 
@@ -83,20 +90,23 @@ public class GamePage extends Page implements ActionListener {
 	private boolean				flagLoad;
 
 	private Vector2				selectedTileHeldCell;
+	
+	private Font font;
 
 	/**
 	 * Constructeur
 	 */
 	public GamePage() {
 		super();
+		this.font = null;
 		this.inDragAndDrop = false;
 		this.selectedTile = null;
 		this.selectedTileHeldCell = null;
 		this.flagLoad = false;
 	}
-
+	
 	@Override
-	public void update(float elapsedTime) {
+	public void updatePage(float elapsedTime) {
 		this.buttonOption.update(elapsedTime);
 		this.buttonUndo.update(elapsedTime);
 		this.buttonRedo.update(elapsedTime);
@@ -120,6 +130,27 @@ public class GamePage extends Page implements ActionListener {
 
 		this.updatePlayerPanels(elapsedTime);
 		this.updateMouse(elapsedTime);
+	}
+	
+	@Override
+	public void drawPage(Graphics2D g) {
+		Graphics2D g2d = (Graphics2D) g.create();
+
+		g2d.drawImage(this.titre, 500, 51, null);
+		this.blokusBoard.draw(g2d);
+		this.buttonOption.draw(g2d);
+		this.buttonUndo.draw(g2d);
+		this.buttonRedo.draw(g2d);
+		this.buttonSave.draw(g2d);
+		this.buttonExit.draw(g2d);
+		this.panelJoueur1.draw(g2d);
+		this.panelJoueur2.draw(g2d);
+
+		if (this.selectedTile != null) {
+			this.selectedTile.draw(g2d);
+		}
+		
+		g2d.dispose();
 	}
 
 	/**
@@ -295,27 +326,6 @@ public class GamePage extends Page implements ActionListener {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
-		Graphics2D g2d = (Graphics2D) g.create();
-
-		g2d.drawImage(this.titre, 500, 51, null);
-		this.blokusBoard.draw(g2d);
-		this.buttonOption.draw(g2d);
-		this.buttonUndo.draw(g2d);
-		this.buttonRedo.draw(g2d);
-		this.buttonSave.draw(g2d);
-		this.buttonExit.draw(g2d);
-		this.panelJoueur1.draw(g2d);
-		this.panelJoueur2.draw(g2d);
-
-		if (this.selectedTile != null) {
-			this.selectedTile.draw(g2d);
-		}
-
-		g2d.dispose();
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof BlokusButton) {
 			if (e.getSource().equals(this.buttonOption)) {
@@ -347,10 +357,22 @@ public class GamePage extends Page implements ActionListener {
 				// jFileChooser.showSaveDialog(jFileChooser);
 			}
 			else if (e.getSource().equals(this.buttonExit)) {
-				Navigation.NavigateTo(Navigation.homePage);
+				this.setMessageBox(new BlokusMessageBox("Êtes-vous sûr de vouloir quitter ?", this.font, BlokusMessageBoxButtonState.YES_OR_NO));
+				this.getMessageBox().show(this);
 			}
 		}
-
+		else if(e.getSource() instanceof BlokusMessageBox)
+		{
+			if(e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand())
+			{
+				Navigation.NavigateTo(Navigation.homePage);
+			}
+			
+			if(this.getMessageBox() != null)
+			{
+				this.getMessageBox().close(this);
+			}
+		}
 	}
 
 	public void setGame(Game g) {
@@ -364,10 +386,12 @@ public class GamePage extends Page implements ActionListener {
 	@Override
 	public void loadContents() {
 		if (!flagLoad) {
+			
 			try {
+				this.font = BufferedHelper.getFontFromFile(new File(GamePage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 20f);
 				this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "logo.png"));
 			}
-			catch (IOException e) {
+			catch (IOException | URISyntaxException e) {
 				e.printStackTrace();
 			}
 			this.selectedTile = null;
@@ -398,8 +422,7 @@ public class GamePage extends Page implements ActionListener {
 			this.panelJoueur2.setPosition(new Vector2(980, 32));
 
 			this.blokusBoard = new BlokusBoard(this.game.getBoard());
-			this.blokusBoard
-					.setPosition(new Vector2(Window.WIDTH / 2 - (int) this.blokusBoard.getSize().getWidth() / 2, 212));
+			this.blokusBoard.setPosition(new Vector2(Window.WIDTH / 2 - (int) this.blokusBoard.getSize().getWidth() / 2, 212));
 
 			this.flagLoad = true;
 		}

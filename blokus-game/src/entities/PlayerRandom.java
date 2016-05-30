@@ -7,6 +7,8 @@ import utilities.Move;
 
 public class PlayerRandom extends Player {
 
+	private static final long serialVersionUID = -8981196791159515517L;
+	
 	private Random rand;
 	private Game game;
 

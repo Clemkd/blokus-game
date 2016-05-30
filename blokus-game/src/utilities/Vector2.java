@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Vector2 implements Serializable {
 
+	private static final long serialVersionUID = 1753883029768467866L;
+
 	/**
 	 * Premier élément du couple
 	 */

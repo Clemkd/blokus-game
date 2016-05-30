@@ -87,7 +87,7 @@ public class OptionPage extends Page implements ActionListener{
 		
 	}
 	@Override
-	public void update(float elapsedTime) {
+	public void updatePage(float elapsedTime) {
 		this.buttonControl.update(elapsedTime);
 		this.buttonGeneral.update(elapsedTime);
 		this.buttonRules.update(elapsedTime);
@@ -119,7 +119,7 @@ public class OptionPage extends Page implements ActionListener{
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void drawPage(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		this.buttonControl.draw(g2d);
 		this.buttonGeneral.draw(g2d);

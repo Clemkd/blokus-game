@@ -3,12 +3,12 @@ package gui;
 import java.awt.Color;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 import navigation.Page;
 import utilities.BlokusMessageBoxButtonState;
@@ -20,6 +20,8 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	private final static Dimension DEFAULT_SIZE = new Dimension(Window.WIDTH, 300);
 	
 	private final static Vector2 DEFAULT_POSITION = new Vector2(0, (int)((Window.HEIGHT / 2) - (DEFAULT_SIZE.getHeight() / 2)));
+	
+	private final static int DEFAULT_MARGIN_X = 10;
 	
 	private BlokusMessageBoxButtonState buttonState;
 	
@@ -33,17 +35,20 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	
 	private boolean visible;
 	
-	private BlokusMessageBoxResult result;
+	private Font font;
 	
-	public BlokusMessageBox(String message, BlokusMessageBoxButtonState state)
+	private List<ActionListener> listeners;
+	
+	public BlokusMessageBox(String message, Font font, BlokusMessageBoxButtonState state)
 	{
-		this.result = null;
 		this.position = DEFAULT_POSITION;
 		this.size = DEFAULT_SIZE;
 		this.message = message;
+		this.font = font;
 		this.buttonState = state;
 		this.buttons = new ArrayList<BlokusButton>();
 		this.visible = false;
+		this.listeners = new ArrayList<ActionListener>();
 		
 		this.initialize();
 	}
@@ -55,7 +60,8 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		if(this.buttonState == BlokusMessageBoxButtonState.VALID)
 		{
 			BlokusButton buttonValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
-			buttonValid.setActionCommand(BlokusMessageBoxResult.VALID.getTitle());
+			buttonValid.setActionCommand(BlokusMessageBoxResult.VALID.getActionCommand());
+			buttonValid.setPosition(new Vector2(2 * Window.WIDTH / 3, (int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonValid.getSize().getHeight() * 2)));
 			buttonValid.addListener(this);
 			this.buttons.add(buttonValid); // Bouton VALIDER
 			
@@ -63,41 +69,63 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		else if(this.buttonState == BlokusMessageBoxButtonState.VALID_OR_CANCEL)
 		{
 			BlokusButton buttonValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
-			buttonValid.setActionCommand(BlokusMessageBoxResult.VALID.getTitle());
+			buttonValid.setActionCommand(BlokusMessageBoxResult.VALID.getActionCommand());
+			buttonValid.setPosition(new Vector2((int) ((2 * Window.WIDTH / 3) - buttonValid.getSize().getWidth() - DEFAULT_MARGIN_X),
+					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonValid.getSize().getHeight() * 2)));
 			buttonValid.addListener(this);
 			this.buttons.add(buttonValid); // Bouton VALIDER
 			
 			BlokusButton buttonCancel = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
-			buttonCancel.setActionCommand(BlokusMessageBoxResult.CANCEL.getTitle());
+			buttonCancel.setActionCommand(BlokusMessageBoxResult.CANCEL.getActionCommand());
+			buttonCancel.setPosition(new Vector2(2 * Window.WIDTH / 3,
+					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonCancel.getSize().getHeight() * 2)));
 			buttonCancel.addListener(this);
 			this.buttons.add(buttonCancel); // Bouton ANNULER
 		}
 		else if(this.buttonState == BlokusMessageBoxButtonState.YES_OR_NO)
 		{
 			BlokusButton buttonYes = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
-			buttonYes.setActionCommand(BlokusMessageBoxResult.YES.getTitle());
+			buttonYes.setActionCommand(BlokusMessageBoxResult.YES.getActionCommand());
+			buttonYes.setPosition(new Vector2((int) ((2 * Window.WIDTH / 3) - buttonYes.getSize().getWidth() - DEFAULT_MARGIN_X),
+					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonYes.getSize().getHeight() * 2)));
 			buttonYes.addListener(this);
 			this.buttons.add(buttonYes); // Bouton OUI
 			
 			BlokusButton buttonNo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
-			buttonNo.setActionCommand(BlokusMessageBoxResult.NO.getTitle());
+			buttonNo.setActionCommand(BlokusMessageBoxResult.NO.getActionCommand());
+			buttonNo.setPosition(new Vector2(2 * Window.WIDTH / 3,
+					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonNo.getSize().getHeight() * 2)));
 			buttonNo.addListener(this);
 			this.buttons.add(buttonNo); // Bouton ANNULER
 		}
 	}
 	
-	// TODO : Tester
-	private Semaphore semaphore = new Semaphore(0);
+	public void addListener(ActionListener listener)
+	{
+		this.listeners.add(listener);
+	}
 	
-	public BlokusMessageBoxResult show() throws InterruptedException
+	public void removeListener(ActionListener listener)
+	{
+		this.listeners.remove(listener);
+	}
+	
+	private void raiseActionEvent(ActionEvent e)
+	{
+		for(ActionListener listener : this.listeners)
+			listener.actionPerformed(e);
+	}
+	
+	public void show(Page parent)
 	{
 		this.visible = true;
-		
-		// TODO : Tester
-		semaphore.drainPermits();
-	    semaphore.acquire();
-	    
-	    return this.result;
+		parent.setEnabled(false);
+	}
+	
+	public void close(Page parent)
+	{
+		this.visible = false;
+		parent.setEnabled(true);
 	}
 
 	@Override
@@ -105,14 +133,36 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		if(this.visible)
 		{
 			// TODO : CODE HERE
+			for(BlokusButton button : this.buttons)
+				button.update(elapsedTime);
 		}
 	}
-
 	@Override
 	public void draw(Graphics2D g) {
 		if(this.visible)
 		{
-			// TODO : CODE HERE
+			Graphics2D g2d = (Graphics2D)g.create();
+			
+			g2d.setPaint(Color.GRAY);
+			g2d.drawRect(this.position.getX() - 1, this.position.getY() - 1, this.size.width + 1, this.size.height + 1);
+			g2d.setPaint(Color.WHITE);
+			g2d.fillRect(this.position.getX(), this.position.getY(), this.size.width, this.size.height);
+			
+			g2d.setFont(this.font);
+			g2d.setPaint(Color.BLACK);
+			
+			int i = 0;
+			for(String line : this.getMessage().split("\n"))
+			{
+				g2d.drawString(line, 
+						(int)(DEFAULT_POSITION.getX() + (DEFAULT_SIZE.getWidth() / 2) - (this.font.getStringBounds(this.getMessage(), g2d.getFontRenderContext()).getWidth() / 2)),
+						(int)(DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() / 2) + i++ * g2d.getFontMetrics(this.font).getHeight());
+			}
+			
+			for(BlokusButton button : this.buttons)
+				button.draw(g);
+			
+			g2d.dispose();
 		}
 	}
 	
@@ -161,25 +211,11 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	{
 		if(e.getActionCommand() != null)
 		{
-			if(e.getActionCommand() == BlokusMessageBoxResult.VALID.getTitle())
-			{
-				// TODO : Tester
-				if (semaphore.availablePermits() == 0)
-			        semaphore.release();
-				// TODO : CODE HERE
-			}
-			else if(e.getActionCommand() == BlokusMessageBoxResult.CANCEL.getTitle())
-			{
-				// TODO : CODE HERE
-			}
-			else if(e.getActionCommand() == BlokusMessageBoxResult.YES.getTitle())
-			{
-				// TODO : CODE HERE
-			}
-			else if(e.getActionCommand() == BlokusMessageBoxResult.NO.getTitle())
-			{
-				// TODO : CODE HERE
-			}
+			this.raiseActionEvent(new ActionEvent(this, 0, e.getActionCommand()));
 		}
+	}
+
+	public boolean isShown() {
+		return this.visible;
 	}
 }

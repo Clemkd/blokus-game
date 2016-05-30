@@ -8,6 +8,9 @@ import entities.Game;
 import entities.Tile;
 
 public class Move implements Serializable {
+
+	private static final long serialVersionUID = 711684268057009670L;
+
 	public static final Move	EMPTY	= new Move(0);
 
 	private final Vector2		position;

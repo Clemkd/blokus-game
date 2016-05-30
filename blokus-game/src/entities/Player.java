@@ -7,6 +7,8 @@ import java.util.List;
 import utilities.Move;
 
 public abstract class Player implements Serializable{
+	
+	private static final long serialVersionUID = -3317692716907647042L;
 	/**
 	 * Les couleurs du joueur
 	 */

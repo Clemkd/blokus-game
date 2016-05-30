@@ -7,15 +7,15 @@ public enum BlokusMessageBoxResult
 	NO("NO"),
 	CANCEL("CANCEL");
 	
-	private String title;
+	private String actionCommand;
 	
-	BlokusMessageBoxResult(String title)
+	BlokusMessageBoxResult(String actionCommand)
 	{
-		this.title = title;
+		this.actionCommand = actionCommand;
 	}
 	
-	public String getTitle()
+	public String getActionCommand()
 	{
-		return this.title;
+		return this.actionCommand;
 	}
 }

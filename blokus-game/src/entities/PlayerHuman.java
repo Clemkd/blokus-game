@@ -6,6 +6,8 @@ import utilities.Move;
 
 public class PlayerHuman extends Player {
 
+	private static final long serialVersionUID = 1783049661851925535L;
+
 	public PlayerHuman(String name, List<CellColor> colors) {
 		super(name, colors);
 	}

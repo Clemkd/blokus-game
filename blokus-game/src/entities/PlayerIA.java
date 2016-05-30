@@ -20,6 +20,8 @@ import utilities.Move;
 
 public class PlayerIA extends Player {
 
+	private static final long serialVersionUID = -4411683191893021855L;
+	
 	private static final int MAX_DEPTH = 4;
 	protected Random	rand;
 
