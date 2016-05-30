@@ -147,16 +147,29 @@ public class Game implements Serializable
 	public void undoMove()
 	{
 		this.board = undoRedoManager.undo(this.board);
+		
 		if(currentTurn%2==1)
 		{
-			System.out.println("Undo du joueur 1");
+			if(!(this.players.get(0) instanceof PlayerHuman))
+			{
+				this.players.set(1, this.undoRedoManagerPlayer.get(1).undo(this.players.get(1)));
+				this.board = undoRedoManager.undo(this.board);
+				currentTurn--;
+			}
 			this.players.set(0, this.undoRedoManagerPlayer.get(0).undo(this.players.get(0)));
 		}
 		else
 		{
-			System.out.println("Undo du joueur 2");
+			if(!(this.players.get(1) instanceof PlayerHuman))
+			{
+				this.players.set(0, this.undoRedoManagerPlayer.get(0).undo(this.players.get(0)));
+				this.board = undoRedoManager.undo(this.board);
+				currentTurn--;
+			}
 			this.players.set(1, this.undoRedoManagerPlayer.get(1).undo(this.players.get(1)));
 		}
+		
+		
 		this.currentTurn--;
 		
 	}
@@ -164,13 +177,25 @@ public class Game implements Serializable
 	public void redoMove()
 	{
 		this.board = undoRedoManager.redo(this.board);
-		if(currentTurn%2==1)
+		if(currentTurn%2==0)
 		{
-			this.players.set(0, this.undoRedoManagerPlayer.get(0).redo(this.getCurrentPlayer()));
+			if(!(this.players.get(0) instanceof PlayerHuman))
+			{
+				this.players.set(1, this.undoRedoManagerPlayer.get(1).redo(this.players.get(1)));
+				this.board = undoRedoManager.redo(this.board);
+				currentTurn++;
+			}
+			this.players.set(0, this.undoRedoManagerPlayer.get(0).redo(this.players.get(0)));
 		}
 		else
 		{
-			this.players.set(1, this.undoRedoManagerPlayer.get(1).redo(this.getCurrentPlayer()));
+			if(!(this.players.get(1) instanceof PlayerHuman))
+			{
+				this.players.set(0, this.undoRedoManagerPlayer.get(0).redo(this.players.get(0)));
+				this.board = undoRedoManager.redo(this.board);
+				currentTurn++;
+			}
+			this.players.set(1, this.undoRedoManagerPlayer.get(1).redo(this.players.get(1)));
 		}
 		this.currentTurn++;
 	}
