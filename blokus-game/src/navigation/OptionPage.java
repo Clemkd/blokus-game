@@ -1,11 +1,15 @@
 package navigation;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
@@ -22,6 +26,10 @@ public class OptionPage extends Page implements ActionListener{
 	private BlokusButton buttonRules;
 	private BlokusButton buttonToValid;
 	private BlokusButton buttonToCancel;
+	
+	private BlokusButton buttonHelp1;
+	private BlokusButton buttonHelp2;
+	private BlokusButton buttonHelp3;
 	
 	private BlokusCheckBox checkBoxGeneral1;
 	private BlokusCheckBox checkBoxAutoSave;
@@ -40,7 +48,11 @@ public class OptionPage extends Page implements ActionListener{
 	private BlokusLabel titleEnd;
 	private BlokusLabel titleAdvices;
 	
-	private BlokusText textRunning;
+	private BlokusText textRunning1;
+	private BlokusText textRunning2;
+	private BlokusText textRunning3;
+	private BlokusText textRunning4;
+	
 	private BlokusText textEnd;
 	private BlokusText textAdvices;
 	
@@ -97,9 +109,15 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleEnd.update(elapsedTime);
 		this.titleAdvices.update(elapsedTime);
 		this.buttonToCancel.update(elapsedTime);
-		this.textRunning.update(elapsedTime);
+		this.textRunning1.update(elapsedTime);
+		this.textRunning2.update(elapsedTime);
+		this.textRunning3.update(elapsedTime);
+		this.textRunning4.update(elapsedTime);
 		this.textEnd.update(elapsedTime);
 		this.textAdvices.update(elapsedTime);
+		this.buttonHelp1.update(elapsedTime);
+		this.buttonHelp2.update(elapsedTime);
+		this.buttonHelp3.update(elapsedTime);
 		
 	}
 
@@ -140,9 +158,17 @@ public class OptionPage extends Page implements ActionListener{
 			this.titleEnd.draw(g2d);
 			this.titleAdvices.draw(g2d);
 			
-			this.textRunning.draw(g2d);
+			this.textRunning1.draw(g2d);
+			this.textRunning2.draw(g2d);
+			this.textRunning3.draw(g2d);
+			this.textRunning4.draw(g2d);
+			
 			this.textEnd.draw(g2d);
 			this.textAdvices.draw(g2d);
+			
+			this.buttonHelp1.draw(g2d);
+			this.buttonHelp2.draw(g2d);
+			this.buttonHelp3.draw(g2d);
 		}
 		
 		this.buttonToCancel.draw(g2d);
@@ -179,6 +205,17 @@ public class OptionPage extends Page implements ActionListener{
 
 	@Override
 	public void loadContents() {
+		this.buttonHelp1 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
+		this.buttonHelp1.setPosition(new Vector2(350, 250));
+		this.buttonHelp1.addListener(this);
+		
+		this.buttonHelp2 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
+		this.buttonHelp2.setPosition(new Vector2(350, 300));
+		this.buttonHelp2.addListener(this);
+		
+		this.buttonHelp3 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
+		this.buttonHelp3.setPosition(new Vector2(350, 350));
+		this.buttonHelp3.addListener(this);
 		
 		
 		this.buttonGeneral = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"general.png"));
@@ -236,23 +273,49 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleRunning = new BlokusLabel("DÉROULEMENT", customFontTitle);
 		this.titleRunning.setPosition(new Vector2(POS_X_TITLE, 163));
 		
-
-		this.textRunning = new BlokusText("L’ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert." 
-				+ "1) Au premier tour, chaque joueur place chacun son tour la première pièce de son choix sur le plateau de telle sorte que celle-ci recouvre une case d’angle du plateau."
-				+ "2) Pour les tours suivants, chaque nouvelle pièce posée doit toucher une pièce de la même couleur par un ou plusieurs coins et jamais par les cotés."
-				+ "3) Les pièces du jeu peuvent être disposées dans n’importe quel sens sur le plateau. Une pièce posée sur le plateau reste en place jusqu’à la fin de la partie.", customFontText, 770);
-		this.textRunning.setPosition(new Vector2(POS_X_TITLE, 207));
+		this.textRunning1 = new BlokusText("L’ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert.", customFontText);
+		this.textRunning1.setPosition(new Vector2(POS_X_TITLE, 207));
+		
+		String s1 = new StringBuilder()
+		           .append("1) Au premier tour, chaque joueur place chacun son tour la première pièce de son choix sur le\n")
+		           .append("plateau de telle sorte que celle-ci recouvre une case d’angle du plateau.")
+		           .toString();
+		this.textRunning2 = new BlokusText(s1, customFontText);
+		this.textRunning2.setPosition(new Vector2(POS_X_TITLE, 237));
+		
+		String s2 = new StringBuilder()
+		           .append("2) Pour les tours suivants, chaque nouvelle pièce posée doit toucher une pièce de la même couleur\n")
+		           .append("par un ou plusieurs coins et jamais par les cotés.")
+		           .toString();
+		this.textRunning3 = new BlokusText(s2, customFontText);
+		this.textRunning3.setPosition(new Vector2(POS_X_TITLE, 287));
+		
+		String s3 = new StringBuilder()
+		           .append("3) Les pièces du jeu peuvent être disposées dans n’importe quel sens sur le plateau. Une pièce posée\n")
+		           .append("sur le plateau reste en place jusqu’à la fin de la partie.")
+		           .toString();
+		this.textRunning4 = new BlokusText(s3, customFontText);
+		this.textRunning4.setPosition(new Vector2(POS_X_TITLE, 337));
 		
 		this.titleEnd = new BlokusLabel("FIN", customFontTitle);
 		this.titleEnd.setPosition(new Vector2(POS_X_TITLE, 393));
 		
-		this.textEnd = new BlokusText("• Lorsqu’un joueur est bloqué et ne peut plus placer de pièce, il est obligé de passer son tour.", customFontText, 770);
+
+		String s4 = new StringBuilder()
+		           .append("• Lorsqu’un joueur est bloqué et ne peut plus placer de pièce, il est obligé de passer son tour.\n")
+		           .append("• Lorsque tous les joueurs sont bloqués, le GAGNANT est celui qui a POSé LE PLUS DE pièces.")
+		           .toString();
+		this.textEnd = new BlokusText(s4, customFontText);
 		this.textEnd.setPosition(new Vector2(POS_X_TITLE, 437));
 		
 		this.titleAdvices = new BlokusLabel("CONSEILS", customFontTitle);
 		this.titleAdvices.setPosition(new Vector2(POS_X_TITLE, 506));
 		
-		this.textAdvices = new BlokusText("• cherchez à progresser vers le centre du plateau, de manière à occuper un maximum de place.", customFontText, 770);
+		String s5 = new StringBuilder()
+		           .append("• cherchez à progresser vers le centre du plateau, de manière à occuper un maximum de place.\n")
+		           .append("• Essayez de placer vos grosses pièces sur le plateau en début de la partie.")
+		           .toString();
+		this.textAdvices = new BlokusText(s5, customFontText);
 		this.textAdvices.setPosition(new Vector2(POS_X_TITLE, 550));
 
 	}

@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
+import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 
 import utilities.Vector2;
@@ -16,10 +18,8 @@ public class BlokusText implements DrawableInterface {
 	private Vector2 position;
 	private Dimension size;
 	private Font font;
-	private int width;
 	
-	public BlokusText(String text, Font font, int width) {
-		this.width = width;
+	public BlokusText(String text, Font font) {
 		this.setText(text);
 		this.position = new Vector2();
 		this.font = font;
@@ -27,22 +27,18 @@ public class BlokusText implements DrawableInterface {
 	
 	}
 
+	
+	private void drawString(Graphics2D g, String text, int x, int y) {
+	      for (String line : text.split("\n"))
+	          g.drawString(line, x, y += g.getFontMetrics().getHeight());
+	}
+	
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-
 		g2d.setFont(this.font);
 		g2d.setColor(Color.WHITE);
-		
-		LineBreakMeasurer linebreaker = new LineBreakMeasurer(new AttributedString(text).getIterator(), g2d.getFontRenderContext());
-		 float y = 0.0f;
-		 while (linebreaker.getPosition() < text.length()) {
-		    TextLayout tl = linebreaker.nextLayout(width);
-		    y += tl.getAscent();
-		    tl.draw(g2d, this.position.getX(), this.position.getY()+y);
-		    y += tl.getDescent() + tl.getLeading();
-		 }
-		 
+	    drawString(g2d, this.text,  this.position.getX()+5, this.position.getY());
 		g2d.dispose();
 	}
 
