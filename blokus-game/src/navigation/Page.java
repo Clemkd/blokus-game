@@ -29,4 +29,11 @@ public abstract class Page implements DrawableInterface{
 	 * Méthode de déchargement du contenu de l'état de jeu
 	 */
 	public abstract void unloadContents();
+	
+	protected boolean enabled;
+	
+	public void setEnabled(boolean state)
+	{
+		this.enabled = state;
+	}
 }

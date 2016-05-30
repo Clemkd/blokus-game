@@ -60,8 +60,14 @@ public class BlokusButton implements DrawableInterface
 	 */
 	private Dimension size;
 	
+	/**
+	 * ActionCommand du bouton
+	 */
+	private String actionCommand;
+	
 	public BlokusButton(String file)
 	{
+		this.actionCommand = null;
 		this.mouseHover = false;
 		this.wasClicked = false;
 		this.position = new Vector2();
@@ -81,6 +87,7 @@ public class BlokusButton implements DrawableInterface
 	
 	public BlokusButton(URL file)
 	{
+		this.actionCommand = null;
 		this.mouseHover = false;
 		this.wasClicked = false;
 		this.position = new Vector2();
@@ -145,6 +152,24 @@ public class BlokusButton implements DrawableInterface
 	}
 	
 	/**
+	 * Obtient l'actionCommand du bouton
+	 * @return L'actionCommand du bouton
+	 */
+	public String getActionCommand()
+	{
+		return actionCommand;
+	}
+
+	/**
+	 * Définit l'actionCommand du bouton
+	 * @param actionCommand L'actionCommand du bouton
+	 */
+	public void setActionCommand(String actionCommand)
+	{
+		this.actionCommand = actionCommand;
+	}
+
+	/**
 	 * Determine si la position est située sur le bouton
 	 * @param position La position à tester
 	 * @return Vrai si la position donnée est disposée sur le bouton, Faux dans le cas contraire
@@ -188,7 +213,7 @@ public class BlokusButton implements DrawableInterface
 			{
 				if(this.wasClicked) {
 					if(Mouse.isReleased()) {
-						this.raiseClickEvent(new ActionEvent(this, 0, null));
+						this.raiseClickEvent(new ActionEvent(this, 0, this.actionCommand));
 						this.wasClicked = false;
 					}
 				}
