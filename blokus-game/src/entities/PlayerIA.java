@@ -36,8 +36,15 @@ public class PlayerIA extends Player {
 	@Override
 	public void play(Game game, CellColor c) {
 		this.playing = true;
-		this.chosenMove = this.alphaBeta(game, MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
-		this.playing = false;
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				chosenMove = alphaBeta(game, MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				playing = false;
+			}
+		});
+		t.start();
 	}
 	
 	private Move alphaBeta(Game node, int depth, boolean maximizingPlayer, int alpha, int beta) {

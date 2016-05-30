@@ -107,15 +107,7 @@ public class Move {
 	public static Move generateRandomValidMove(Game game) {
 		Random rand = new Random();
 
-		// La liste des placements possibles avec les tiles correspondants
-		ArrayList<Move> validMovesWithTiles = possibleMoves(game);
-
-		if (validMovesWithTiles.size() > 0) {
-			int index = rand.nextInt(validMovesWithTiles.size());
-			return validMovesWithTiles.get(index);
-		}
-
-		return Move.EMPTY;
+		return generateRandomValidMove(game, rand);
 	}
 
 	public static ArrayList<Move> possibleMoves(Game game) {
@@ -149,5 +141,17 @@ public class Move {
 		}
 
 		return validMovesWithTiles;
+	}
+
+	public static Move generateRandomValidMove(Game game, Random rand) {
+		// La liste des placements possibles avec les tiles correspondants
+		ArrayList<Move> validMovesWithTiles = possibleMoves(game);
+
+		if (validMovesWithTiles.size() > 0) {
+			int index = rand.nextInt(validMovesWithTiles.size());
+			return validMovesWithTiles.get(index);
+		}
+
+		return Move.EMPTY;
 	}
 }

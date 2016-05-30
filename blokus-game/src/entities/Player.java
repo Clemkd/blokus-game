@@ -98,6 +98,13 @@ public abstract class Player {
 	 * @return Coup choisi
 	 */
 	public Move getMove() {
+		if(this.chosenMove!=null) {
+			if(this.chosenMove.getTile()!=null && this.chosenMove.getTile().getId()==Tile.SINGLE_CELL_ID)
+				this.singleCellLast = true;
+			else
+				this.singleCellLast = false;
+			this.removeTileFromInventory(this.chosenMove.getTile());
+		}
 		Move m = this.chosenMove;
 
 		this.chosenMove = null;
@@ -126,11 +133,7 @@ public abstract class Player {
 		this.tiles = tiles;
 	}
 
-	public Move getChosenMove() {
-		if(chosenMove.getTile().getId()==Tile.SINGLE_CELL_ID)
-			this.singleCellLast = true;
-		else
-			this.singleCellLast = false;
+	private Move getChosenMove() {
 		return chosenMove;
 	}
 
