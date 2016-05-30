@@ -326,11 +326,19 @@ public class GamePage extends Page implements ActionListener {
 			else if (e.getSource().equals(this.buttonUndo)) {
 				if (this.game.canUndo()) {
 					this.game.undoMove();
+					this.panelJoueur1 = new PlayerPanel(this.game.getPlayers().get(0));
+					this.panelJoueur1.setPosition(new Vector2(32, 32));
+					this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
+					this.panelJoueur2.setPosition(new Vector2(980, 32));
 				}
 			}
 			else if (e.getSource().equals(this.buttonRedo)) {
 				if (this.game.canRedo()) {
 					this.game.redoMove();
+					this.panelJoueur1 = new PlayerPanel(this.game.getPlayers().get(0));
+					this.panelJoueur1.setPosition(new Vector2(32, 32));
+					this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
+					this.panelJoueur2.setPosition(new Vector2(980, 32));
 				}
 			}
 			else if (e.getSource().equals(this.buttonSave)) {
