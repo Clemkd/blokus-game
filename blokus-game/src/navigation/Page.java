@@ -56,9 +56,9 @@ public abstract class Page implements DrawableInterface, ActionListener {
 		}
 		else
 		{
-			if(MESSAGEBOX != null && MESSAGEBOX.isShown())
+			if(this.getMessageBox() != null && this.getMessageBox().isShown())
 			{
-				MESSAGEBOX.update(elapsedTime);
+				this.getMessageBox().update(elapsedTime);
 			}
 		}
 	}
@@ -72,9 +72,9 @@ public abstract class Page implements DrawableInterface, ActionListener {
 			g.setPaint(new Color(0, 0, 0, 120));
 			g.fillRect(0, 0, Window.WIDTH, Window.HEIGHT);
 			
-			if(MESSAGEBOX != null && MESSAGEBOX.isShown())
+			if(this.getMessageBox() != null && this.getMessageBox().isShown())
 			{
-				MESSAGEBOX.draw(g);
+				this.getMessageBox().draw(g);
 			}
 		}
 	}
@@ -84,13 +84,13 @@ public abstract class Page implements DrawableInterface, ActionListener {
 		this.enabled = state;
 	}
 	
-	protected void setMessageBox(BlokusMessageBox msgbox)
+	public void setMessageBox(BlokusMessageBox msgbox)
 	{
 		MESSAGEBOX = msgbox;
 		MESSAGEBOX.addListener(this);
 	}
 	
-	protected BlokusMessageBox getMessageBox()
+	public BlokusMessageBox getMessageBox()
 	{
 		return MESSAGEBOX;
 	}

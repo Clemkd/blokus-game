@@ -119,12 +119,15 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	public void show(Page parent)
 	{
 		this.visible = true;
+		this.addListener(parent);
+		parent.setMessageBox(this);
 		parent.setEnabled(false);
 	}
 	
 	public void close(Page parent)
 	{
 		this.visible = false;
+		this.removeListener(parent);
 		parent.setEnabled(true);
 	}
 

@@ -357,8 +357,8 @@ public class GamePage extends Page implements ActionListener {
 				// jFileChooser.showSaveDialog(jFileChooser);
 			}
 			else if (e.getSource().equals(this.buttonExit)) {
-				this.setMessageBox(new BlokusMessageBox("Êtes-vous sûr de vouloir quitter ?", this.font, BlokusMessageBoxButtonState.YES_OR_NO));
-				this.getMessageBox().show(this);
+				BlokusMessageBox msgbox = new BlokusMessageBox("Êtes-vous sûr de vouloir quitter ?", this.font, BlokusMessageBoxButtonState.YES_OR_NO);
+				msgbox.show(this);
 			}
 		}
 		else if(e.getSource() instanceof BlokusMessageBox)
@@ -368,6 +368,7 @@ public class GamePage extends Page implements ActionListener {
 				Navigation.NavigateTo(Navigation.homePage);
 			}
 			
+			// Fermeture de la message box
 			if(this.getMessageBox() != null)
 			{
 				this.getMessageBox().close(this);
