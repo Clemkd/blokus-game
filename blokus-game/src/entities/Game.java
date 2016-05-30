@@ -1,11 +1,6 @@
 package entities;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.XMLEncoder;
-import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,8 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import utilities.Move;
 import utilities.OutOfBoundsException;
@@ -23,6 +16,10 @@ import utilities.Vector2;
 
 public class Game implements Serializable
 {
+	/**
+	 * Default Serialisated ID
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Plateau de jeu courant
 	 */
@@ -40,9 +37,12 @@ public class Game implements Serializable
 	 * annulations et répétitions de coups
 	 */
 	private UndoRedoManager<Board> undoRedoManager;
+	
+	private ArrayList<UndoRedoManager<Player>> undoRedoManagerPlayer;
 
 	private ArrayList<CellColor> playingColors;
 	private boolean testedMove;
+	
 
 	public Game()
 	{	
@@ -61,6 +61,11 @@ public class Game implements Serializable
 		this.players.add(new PlayerRandom("J2", colorsP2));
 
 		this.undoRedoManager = new UndoRedoManager<Board>();
+		UndoRedoManager<Player> p1 = new UndoRedoManager<Player>();
+		UndoRedoManager<Player> p2 = new UndoRedoManager<Player>();
+		this.undoRedoManagerPlayer = new ArrayList<UndoRedoManager<Player>>();
+		this.undoRedoManagerPlayer.add(p1);
+		this.undoRedoManagerPlayer.add(p2);
 
 		this.playingColors = new ArrayList<CellColor>();
 		this.playingColors.add(CellColor.BLUE);
@@ -76,6 +81,11 @@ public class Game implements Serializable
 
 		this.players = new ArrayList<Player>();
 		this.undoRedoManager = new UndoRedoManager<Board>();
+		UndoRedoManager<Player> p1 = new UndoRedoManager<Player>();
+		UndoRedoManager<Player> p2 = new UndoRedoManager<Player>();
+		this.undoRedoManagerPlayer = new ArrayList<UndoRedoManager<Player>>();
+		this.undoRedoManagerPlayer.add(p1);
+		this.undoRedoManagerPlayer.add(p2);
 		this.playingColors = new ArrayList<CellColor>();
 
 		this.players.add(g.players.get(0).copy());
@@ -137,12 +147,31 @@ public class Game implements Serializable
 	public void undoMove()
 	{
 		this.board = undoRedoManager.undo(this.board);
+		if(currentTurn%2==1)
+		{
+			System.out.println("Undo du joueur 1");
+			this.players.set(0, this.undoRedoManagerPlayer.get(0).undo(this.players.get(0)));
+		}
+		else
+		{
+			System.out.println("Undo du joueur 2");
+			this.players.set(1, this.undoRedoManagerPlayer.get(1).undo(this.players.get(1)));
+		}
 		this.currentTurn--;
+		
 	}
 
 	public void redoMove()
 	{
 		this.board = undoRedoManager.redo(this.board);
+		if(currentTurn%2==1)
+		{
+			this.players.set(0, this.undoRedoManagerPlayer.get(0).redo(this.getCurrentPlayer()));
+		}
+		else
+		{
+			this.players.set(1, this.undoRedoManagerPlayer.get(1).redo(this.getCurrentPlayer()));
+		}
 		this.currentTurn++;
 	}
 
@@ -252,7 +281,7 @@ public class Game implements Serializable
 	}
 
 	/**
-	 * Sauvegarde la partie dans un fichier TODO: do it
+	 * Sauvegarde la partie dans un fichier TODO: do it, just DO IT
 	 */
 	public void save(){
 		FileOutputStream fileSave;
@@ -300,6 +329,18 @@ public class Game implements Serializable
 	public void doMove(Move m)
 	{
 		this.undoRedoManager.add(this.board.copy());
+		if(currentTurn%2==0)
+		{
+			Player p1 = this.getCurrentPlayer().copy();
+			p1.addTileToInventory(m.getTile());
+			this.undoRedoManagerPlayer.get(0).add(p1);
+		}
+		else
+		{
+			Player p2 = this.getCurrentPlayer().copy();
+			p2.addTileToInventory(m.getTile());
+			this.undoRedoManagerPlayer.get(1).add(p2);
+		}
 
 		try
 		{
@@ -312,21 +353,6 @@ public class Game implements Serializable
 			e.printStackTrace();
 			System.exit(0);
 		}
-	}
-
-	/**
-	 * Renvoi un objet Game représentant l'objet courant auquel on a appliqué un
-	 * mouvement qui ne doit pas être pris en compte dans l'historique de la
-	 * partie
-	 * 
-	 * @param m
-	 *            Coup à jouer
-	 * @return Nouvel état de partie
-	 */
-	public Game simulateMove(Move m)
-	{
-		// TODO
-		return null;
 	}
 
 	/**

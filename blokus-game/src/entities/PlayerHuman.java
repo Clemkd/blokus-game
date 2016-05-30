@@ -33,4 +33,11 @@ public class PlayerHuman extends Player {
 	public Player copy() {
 		return new PlayerHuman(this);
 	}
+
+	@Override
+	public String toString() {
+		return "PlayerHuman [colors=" + colors + ", name=" + name + ", tiles=" + tiles.toString() + "]";
+	}
+	
+	
 }

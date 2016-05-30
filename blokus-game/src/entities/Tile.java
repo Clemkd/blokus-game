@@ -443,7 +443,18 @@ public class Tile implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Tile [couleur=" + couleur + "]";
+		String string ="";
+		for (int i = 0; i < Tile.WIDTH; ++i) {
+			string = string+'{';
+	        for (int j = 0; j < Tile.HEIGHT; ++j) {
+	        	string = string+Tile.getListOfNeutralTile(this.couleur).get(this.id).getMatrix()[i][j];
+	            if(j+1!=Tile.WIDTH)
+	            	string = string+", ";
+	        }
+	        string = string+"}\n";
+	    }
+		string = string+'\n';
+		return string;
 	}
 
 	public List<Vector2> getExtremities() {
