@@ -30,20 +30,19 @@ public class BlokusText implements DrawableInterface {
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
+
+		g2d.setFont(this.font);
+		g2d.setColor(Color.WHITE);
 		
-		LineBreakMeasurer linebreaker = new LineBreakMeasurer(new AttributedString(text).getIterator(), g.getFontRenderContext());
+		LineBreakMeasurer linebreaker = new LineBreakMeasurer(new AttributedString(text).getIterator(), g2d.getFontRenderContext());
 		 float y = 0.0f;
 		 while (linebreaker.getPosition() < text.length()) {
 		    TextLayout tl = linebreaker.nextLayout(width);
-
 		    y += tl.getAscent();
-		    tl.draw(g, 0, y);
+		    tl.draw(g2d, this.position.getX(), this.position.getY()+y);
 		    y += tl.getDescent() + tl.getLeading();
 		 }
 		 
-		g2d.setFont(this.font);
-		g2d.setColor(Color.WHITE);
-		g2d.drawString(this.text, this.position.getX()+5, this.position.getY()+25);
 		g2d.dispose();
 	}
 

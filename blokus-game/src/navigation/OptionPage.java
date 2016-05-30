@@ -236,7 +236,11 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleRunning = new BlokusLabel("DÉROULEMENT", customFontTitle);
 		this.titleRunning.setPosition(new Vector2(POS_X_TITLE, 163));
 		
-		this.textRunning = new BlokusText("L’ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert. ", customFontText, 770);
+
+		this.textRunning = new BlokusText("L’ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert." 
+				+ "1) Au premier tour, chaque joueur place chacun son tour la première pièce de son choix sur le plateau de telle sorte que celle-ci recouvre une case d’angle du plateau."
+				+ "2) Pour les tours suivants, chaque nouvelle pièce posée doit toucher une pièce de la même couleur par un ou plusieurs coins et jamais par les cotés."
+				+ "3) Les pièces du jeu peuvent être disposées dans n’importe quel sens sur le plateau. Une pièce posée sur le plateau reste en place jusqu’à la fin de la partie.", customFontText, 770);
 		this.textRunning.setPosition(new Vector2(POS_X_TITLE, 207));
 		
 		this.titleEnd = new BlokusLabel("FIN", customFontTitle);
