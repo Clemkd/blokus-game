@@ -95,6 +95,7 @@ public class PlayerIA extends Player {
 		 * - Fonction d'évaluation de minimax à améliorer
 		 * - Phases de jeu: début, milieu, fin
 		 * - Ameliorer fonction coups possibles, moins de mises à jour, sauvegarde de ce qui existe
+		 * Compter blocs restants à l'ennemi ?
 		 */
 		res -= this.distanceToCenter(node);
 		

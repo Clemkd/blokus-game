@@ -1,15 +1,11 @@
 package navigation;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
@@ -266,33 +262,33 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleMouse = new BlokusLabel("SOURIS", customFontTitle);
 		this.titleMouse.setPosition(new Vector2(POS_X_TITLE, 163));
 		
-		this.titleGoal = new BlokusLabel("BUT du jeu : Pour chaque joueur, placer ses 21 piËces sur le plateau", customFontTitle);
+		this.titleGoal = new BlokusLabel("BUT du jeu : Pour chaque joueur, placer ses 21 pi√®ces sur le plateau", customFontTitle);
 		this.titleGoal.setPosition(new Vector2(POS_X_TITLE, 102));
 		
 		
-		this.titleRunning = new BlokusLabel("D…ROULEMENT", customFontTitle);
+		this.titleRunning = new BlokusLabel("D√â¬ê¬ê¬ê¬ê¬êROULEMENT", customFontTitle);
 		this.titleRunning.setPosition(new Vector2(POS_X_TITLE, 163));
 		
-		this.textRunning1 = new BlokusText("Líordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert.", customFontText);
+		this.textRunning1 = new BlokusText("L'ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert.", customFontText);
 		this.textRunning1.setPosition(new Vector2(POS_X_TITLE, 207));
 		
 		String s1 = new StringBuilder()
-		           .append("1) Au premier tour, chaque joueur place chacun son tour la premiËre piËce de son choix sur le\n")
-		           .append("plateau de telle sorte que celle-ci recouvre une case díangle du plateau.")
+		           .append("1) Au premier tour, chaque joueur place chacun son tour la premi√®re pi√®ce de son choix sur le\n")
+		           .append("plateau de telle sorte que celle-ci recouvre une case d'angle du plateau.")
 		           .toString();
 		this.textRunning2 = new BlokusText(s1, customFontText);
 		this.textRunning2.setPosition(new Vector2(POS_X_TITLE, 237));
 		
 		String s2 = new StringBuilder()
-		           .append("2) Pour les tours suivants, chaque nouvelle piËce posÈe doit toucher une piËce de la mÍme couleur\n")
-		           .append("par un ou plusieurs coins et jamais par les cotÈs.")
+		           .append("2) Pour les tours suivants, chaque nouvelle pi√®ce pos√©e doit toucher une pi√®ce de la m√™me couleur\n")
+		           .append("par un ou plusieurs coins et jamais par les cot√©s.")
 		           .toString();
 		this.textRunning3 = new BlokusText(s2, customFontText);
 		this.textRunning3.setPosition(new Vector2(POS_X_TITLE, 287));
 		
 		String s3 = new StringBuilder()
-		           .append("3) Les piËces du jeu peuvent Ítre disposÈes dans níimporte quel sens sur le plateau. Une piËce posÈe\n")
-		           .append("sur le plateau reste en place jusquí‡ la fin de la partie.")
+		           .append("3) Les pi√®ces du jeu peuvent √™tre dispos√©es dans n'importe quel sens sur le plateau. Une pi√®ce pos√©e\n")
+		           .append("sur le plateau reste en place jusqu'√† la fin de la partie.")
 		           .toString();
 		this.textRunning4 = new BlokusText(s3, customFontText);
 		this.textRunning4.setPosition(new Vector2(POS_X_TITLE, 337));
@@ -302,8 +298,8 @@ public class OptionPage extends Page implements ActionListener{
 		
 
 		String s4 = new StringBuilder()
-		           .append("ï Lorsquíun joueur est bloquÈ et ne peut plus placer de piËce, il est obligÈ de passer son tour.\n")
-		           .append("ï Lorsque tous les joueurs sont bloquÈs, le GAGNANT est celui qui a POSÈ LE PLUS DE piËces.")
+		           .append("- Lorsqu'un joueur est bloqu√© et ne peut plus placer de pi√®ce, il est oblig√© de passer son tour.\n")
+		           .append("- Lorsque tous les joueurs sont bloqu√©s, le GAGNANT est celui qui a POS√â LE PLUS DE pi√®ces.")
 		           .toString();
 		this.textEnd = new BlokusText(s4, customFontText);
 		this.textEnd.setPosition(new Vector2(POS_X_TITLE, 437));
@@ -312,8 +308,8 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleAdvices.setPosition(new Vector2(POS_X_TITLE, 506));
 		
 		String s5 = new StringBuilder()
-		           .append("ï cherchez ‡ progresser vers le centre du plateau, de maniËre ‡ occuper un maximum de place.\n")
-		           .append("ï Essayez de placer vos grosses piËces sur le plateau en dÈbut de la partie.")
+		           .append("- cherchez √† progresser vers le centre du plateau, de mani√®re √† occuper un maximum de place.\n")
+		           .append("- Essayez de placer vos grosses pi√®ces sur le plateau en d√©but de la partie.")
 		           .toString();
 		this.textAdvices = new BlokusText(s5, customFontText);
 		this.textAdvices.setPosition(new Vector2(POS_X_TITLE, 550));
