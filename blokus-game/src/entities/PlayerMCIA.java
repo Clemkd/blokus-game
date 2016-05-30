@@ -30,7 +30,7 @@ public class PlayerMCIA extends Player implements ActionListener
 	{
 		this.playing = true;
 		this.game = g;
-		this.timer = new Timer(5000 + rand.nextInt(400), this);
+		this.timer = new Timer(800 + rand.nextInt(400), this);
 		timer.start();
 	}
 
@@ -67,7 +67,7 @@ public class PlayerMCIA extends Player implements ActionListener
 			while(!moves.isEmpty())
 			{
 				m = moves.pop();
-				g.revertMove(m);
+				g.undoMove();
 			}
 			
 			if(m == null)
