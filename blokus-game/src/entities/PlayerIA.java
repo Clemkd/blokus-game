@@ -41,29 +41,31 @@ public class PlayerIA extends Player {
 
 		if (maximizingPlayer) {
 			Move bestMove = new Move(Integer.MIN_VALUE);
-			for (Move m : node.possibleMoves()) {
-				Game nextNode = node.simulateMove(m);
-				m.setValue(alphaBeta(nextNode, depth-1, false, alpha, beta).getValue());
+			for (Move m : Move.possibleMoves(node)) {
+				node.doMove(m);
+				m.setValue(alphaBeta(node, depth-1, false, alpha, beta).getValue());
 				if(m.getValue()>bestMove.getValue()) {
 					bestMove = m;
 				}
 				alpha = Math.max(alpha, m.getValue());
 				if (beta <= alpha)
 					break;
+				node.revertMove(m);
 			}
 			return bestMove;
 		}
 		else {
 			Move bestMove = new Move(Integer.MAX_VALUE);
-			for (Move m : node.possibleMoves()) {
-				Game nextNode = node.simulateMove(m);
-				m.setValue(alphaBeta(nextNode, depth-1, true, alpha, beta).getValue());
+			for (Move m : Move.possibleMoves(node)) {
+				node.doMove(m);
+				m.setValue(alphaBeta(node, depth-1, true, alpha, beta).getValue());
 				if(m.getValue()<bestMove.getValue()) {
 					bestMove = m;
 				}
 				beta = Math.min(beta, m.getValue());
 				if (beta <= alpha)
 					break;
+				node.revertMove(m);
 			}
 			return bestMove;
 		}
