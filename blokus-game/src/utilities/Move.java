@@ -7,16 +7,18 @@ import entities.Game;
 import entities.Tile;
 
 public class Move {
-	public static final Move EMPTY = new Move(0);
-	
-	private final Vector2 position;
-	private final Tile tile;
-	private int value;
-	private Vector2 tileOrigin;
-	
+	public static final Move	EMPTY	= new Move(0);
+
+	private final Vector2		position;
+	private final Tile			tile;
+	private int					value;
+	private Vector2				tileOrigin;
+
 	/**
 	 * Crée un coup nul avec la valeur indiquée
-	 * @param value Valeur du coup
+	 * 
+	 * @param value
+	 *            Valeur du coup
 	 */
 	public Move(int value) {
 		this.value = value;
@@ -24,13 +26,18 @@ public class Move {
 		this.position = null;
 		this.tileOrigin = null;
 	}
-	
+
 	/**
 	 * Crée un coup avec les valeurs indiquées
-	 * @param position Future position de la cellule d'origine du Tile sur le plateau
-	 * @param tile Tile utilisé
-	 * @param tileOrigin Position de la cellule utilisée dans le Tile
-	 * @param value	Valeur du coup
+	 * 
+	 * @param position
+	 *            Future position de la cellule d'origine du Tile sur le plateau
+	 * @param tile
+	 *            Tile utilisé
+	 * @param tileOrigin
+	 *            Position de la cellule utilisée dans le Tile
+	 * @param value
+	 *            Valeur du coup
 	 */
 	public Move(Vector2 position, Tile tile, Vector2 tileOrigin, int value) {
 		this.value = value;
@@ -38,12 +45,16 @@ public class Move {
 		this.position = position;
 		this.tileOrigin = tileOrigin;
 	}
-	
+
 	/**
 	 * Crée un coup avec les valeurs indiquées
-	 * @param position Future position de la cellule d'origine du Tile sur le plateau
-	 * @param tile Tile utilisé
-	 * @param tileOrigin Position de la cellule utilisée dans le Tile
+	 * 
+	 * @param position
+	 *            Future position de la cellule d'origine du Tile sur le plateau
+	 * @param tile
+	 *            Tile utilisé
+	 * @param tileOrigin
+	 *            Position de la cellule utilisée dans le Tile
 	 */
 	public Move(Vector2 position, Tile tile, Vector2 tileOrigin) {
 		this.value = 0;
@@ -51,33 +62,38 @@ public class Move {
 		this.position = position;
 		this.tileOrigin = tileOrigin;
 	}
-	
+
 	/**
 	 * Transmet la future position de la cellule d'origine du Tile sur le plateau
+	 * 
 	 * @return Position
 	 */
 	public Vector2 getPosition() {
 		return this.position;
 	}
-	
+
 	/**
 	 * Transmet le Tile joué
+	 * 
 	 * @return Tile
 	 */
 	public Tile getTile() {
 		return this.tile;
 	}
-	
+
 	/**
 	 * Change la valeur du coup
-	 * @param value Valeur du coup
+	 * 
+	 * @param value
+	 *            Valeur du coup
 	 */
 	public void setValue(int value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * Transmet la valeur du coup
+	 * 
 	 * @return Valeur du coup
 	 */
 	public int getValue() {
@@ -87,11 +103,22 @@ public class Move {
 	public Vector2 getTileOrigin() {
 		return this.tileOrigin;
 	}
-	
-	public static Move generateRandomValidMove(Game game)
-	{
+
+	public static Move generateRandomValidMove(Game game) {
 		Random rand = new Random();
-		
+
+		// La liste des placements possibles avec les tiles correspondants
+		ArrayList<Move> validMovesWithTiles = possibleMoves(game);
+
+		if (validMovesWithTiles.size() > 0) {
+			int index = rand.nextInt(validMovesWithTiles.size());
+			return validMovesWithTiles.get(index);
+		}
+
+		return Move.EMPTY;
+	}
+
+	public static ArrayList<Move> possibleMoves(Game game) {
 		// La liste des placements possibles avec les tiles correspondants
 		ArrayList<Move> validMovesWithTiles = new ArrayList<Move>();
 
@@ -121,11 +148,6 @@ public class Move {
 			}
 		}
 
-		if (validMovesWithTiles.size() > 0) {
-			int index = rand.nextInt(validMovesWithTiles.size());
-			return validMovesWithTiles.get(index);
-		}
-		
-		return Move.EMPTY;
+		return validMovesWithTiles;
 	}
 }

@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import utilities.Move;
 import utilities.OutOfBoundsException;
 import utilities.UndoRedoManager;
@@ -235,25 +237,17 @@ public class Game
 	 * Sauvegarde la partie dans un fichier TODO: do it
 	 */
 	public void save(){
-		final PlayerHuman currentPLayer = new PlayerHuman();
-		currentPLayer.setName("joueur");
-		currentPLayer.setColors(playingColors);
-		XMLEncoder encoder = null;
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
 		
-		try {
-			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream("sauvegarde.xml")));
-			encoder.writeObject(currentPLayer);
-			encoder.flush();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally{
-			if(encoder != null)
-				encoder.close();
+		Player playerToSave = getCurrentPlayer();
+		List<Tile> list = this.players.get(0).getTileInventory();
+		for(int i=0; i<list.size(); i++){
+			System.out.println(list.get(i).toString());
 		}
-		
-		
-	
+		CellColor colorToSave = getCurrentColor();
+		//String json = gson.toJson(list);
+		//System.out.println(json);
 	}
 	
 	public void load(){
@@ -264,7 +258,7 @@ public class Game
 	/**
 	 * Fonction appellée quand un coup valide doit être traité/appliqué par Game
 	 * 
-	 * @param m
+	 * @param 
 	 *            Coup joué
 	 */
 	public void doMove(Move m)
