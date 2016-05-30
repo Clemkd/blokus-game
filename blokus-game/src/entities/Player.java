@@ -32,7 +32,29 @@ public abstract class Player {
 	}
 
 	public Player() {
+		this.playing = false;
+		this.chosenMove = null;
+		this.colors = new ArrayList<CellColor>();
+		this.name = "Erreur";
+		this.singleCellLast = false;
+		this.tiles = new ArrayList<Tile>();
+	}
 
+	public Player(Player p) {
+		this.name = p.name;
+		this.playing = p.isPlaying();
+		this.chosenMove = p.getChosenMove();
+		this.singleCellLast = p.lastTileWasSingleCell();
+		this.colors = new ArrayList<CellColor>();
+		this.tiles = new ArrayList<Tile>();
+		
+		for(CellColor c : p.getColors()) {
+			this.colors.add(c);
+		}
+		
+		for(Tile t : p.getTileInventory()) {
+			this.tiles.add(t);
+		}
 	}
 
 	/**
@@ -179,4 +201,6 @@ public abstract class Player {
 	public boolean lastTileWasSingleCell() {
 		return this.singleCellLast;
 	}
+	
+	public abstract Player copy();
 }

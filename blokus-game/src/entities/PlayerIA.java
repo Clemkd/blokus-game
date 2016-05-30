@@ -28,6 +28,11 @@ public class PlayerIA extends Player {
 		this.rand = new Random();
 	}
 
+	public PlayerIA(PlayerIA p) {
+		super(p);
+		this.rand = new Random();
+	}
+
 	@Override
 	public void play(Game game, CellColor c) {
 		this.playing = true;
@@ -92,5 +97,10 @@ public class PlayerIA extends Player {
 	private int distanceToCenter(Game node) {
 		//TODOOOO, TODO, TODO, TODOOOOO, TODOOO, TODOOOO...
 		return 0;
+	}
+
+	@Override
+	public Player copy() {
+		return new PlayerIA(this);
 	}
 }

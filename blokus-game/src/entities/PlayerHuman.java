@@ -12,7 +12,11 @@ public class PlayerHuman extends Player {
 	
 	public PlayerHuman(){
 		super();
-	};
+	}
+
+	public PlayerHuman(PlayerHuman p) {
+		super(p);
+	}
 
 	@Override
 	public void play(Game game, CellColor c) {
@@ -23,5 +27,10 @@ public class PlayerHuman extends Player {
 	public void setChosenMove(Move m) {
 		super.setChosenMove(m);
 		this.playing = false;
+	}
+
+	@Override
+	public Player copy() {
+		return new PlayerHuman(this);
 	}
 }

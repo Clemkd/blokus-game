@@ -25,6 +25,13 @@ public class PlayerMCIA extends Player implements ActionListener
 		this.game = null;
 	}
 
+	public PlayerMCIA(PlayerMCIA p) {
+		super((Player) p);
+		this.rand = new Random();
+		this.timer = null;
+		this.game = null;
+	}
+
 	@Override
 	public void play(Game g, CellColor c)
 	{
@@ -84,5 +91,10 @@ public class PlayerMCIA extends Player implements ActionListener
 		}
 		
 		return bestMove;
+	}
+
+	@Override
+	public Player copy() {
+		return new PlayerMCIA(this);
 	}
 }

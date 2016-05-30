@@ -22,6 +22,13 @@ public class PlayerRandom extends Player implements ActionListener {
 		this.game = null;
 	}
 
+	public PlayerRandom(PlayerRandom p) {
+		super(p);
+		this.rand = new Random();
+		this.timer = null;
+		this.game = null;
+	}
+
 	@Override
 	public void play(Game g, CellColor c) {
 		this.playing = true;
@@ -41,4 +48,8 @@ public class PlayerRandom extends Player implements ActionListener {
 		this.playing = false;
 	}
 
+	@Override
+	public Player copy() {
+		return new PlayerRandom(this);
+	}
 }
