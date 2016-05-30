@@ -18,7 +18,6 @@ import utilities.Vector2;
 
 public class Game
 {
-	private static final int EVENT_TURN_ENDED = 5;
 	/**
 	 * Plateau de jeu courant
 	 */
@@ -36,10 +35,7 @@ public class Game
 	 * annulations et répétitions de coups
 	 */
 	private UndoRedoManager<Board> undoRedoManager;
-	/**
-	 * Liste des ActionListeners de cette partie
-	 */
-	private ArrayList<ActionListener> listeners;
+
 	private ArrayList<CellColor> playingColors;
 	
 	private Gson gson;
@@ -64,13 +60,33 @@ public class Game
 
 		this.undoRedoManager = new UndoRedoManager<Board>();
 
-		this.listeners = new ArrayList<ActionListener>();
-
 		this.playingColors = new ArrayList<CellColor>();
 		this.playingColors.add(CellColor.BLUE);
 		this.playingColors.add(CellColor.YELLOW);
 		this.playingColors.add(CellColor.RED);
 		this.playingColors.add(CellColor.GREEN);
+	}
+	
+	public Game(Game g)
+	{
+		this.gson = new Gson();
+		this.testedMove = false;
+
+		this.players = new ArrayList<Player>();
+		this.undoRedoManager = new UndoRedoManager<Board>();
+		this.playingColors = new ArrayList<CellColor>();
+		
+		this.addPlayer(g.players.get(0).copy());
+		this.addPlayer(g.players.get(1).copy());
+		this.board = g.board.copy();
+		for(CellColor c : g.getPlayingColors()) {
+			this.playingColors.add(c);
+		}
+		this.currentTurn = g.currentTurn;
+	}
+
+	private List<CellColor> getPlayingColors() {
+		return this.playingColors;
 	}
 
 	public Game(Player player1, Player player2) {
@@ -269,7 +285,6 @@ public class Game
 		{
 			this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
 			this.currentTurn++;
-			this.raiseEvent(new ActionEvent(this, EVENT_TURN_ENDED, null));
 		}
 		catch (Exception e)
 		{
@@ -277,55 +292,6 @@ public class Game
 			e.printStackTrace();
 			System.exit(0);
 		}
-	}
-
-	/**
-	 * Ajoute un listener à la classe de jeu
-	 * 
-	 * @param al
-	 *            Le listener à ajouter
-	 */
-	public void addListener(ActionListener al)
-	{
-		this.listeners.add(al);
-	}
-
-	/**
-	 * Supprime un listener de la classe de jeu
-	 * 
-	 * @param al
-	 *            Le listener à supprimer
-	 */
-	public void removeListener(ActionListener al)
-	{
-		this.listeners.remove(al);
-	}
-
-	/**
-	 * Lance l'évènement sur tous les listeners de la classe
-	 * 
-	 * @param e
-	 *            Les informtations de l'évènement lancé
-	 */
-	public void raiseEvent(ActionEvent e)
-	{
-		for (ActionListener al : this.listeners)
-		{
-			al.actionPerformed(e);
-		}
-	}
-
-	/**
-	 * Renvoi la liste de tout les coups possibles pour le joueur courant en
-	 * tenant compte du plateau et de son inventaire de pièces.
-	 * 
-	 * @return Liste des coups possibles
-	 */
-	public List<Move> possibleMoves()
-	{
-		ArrayList<Move> res = new ArrayList<Move>();
-
-		return res;
 	}
 
 	/**
@@ -412,5 +378,9 @@ public class Game
 		{
 			this.playingColors.add(this.getCurrentColor());
 		}
+	}
+	
+	public Game copy() {
+		return new Game(this);
 	}
 }
