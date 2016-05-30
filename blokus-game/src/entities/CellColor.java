@@ -28,7 +28,9 @@ public enum CellColor implements Serializable {
 	/**
 	 * Cellule de couleur jaune avec le chemin d'accès vers l'image correspondante
 	 */
-	YELLOW("/cells/yellowcell.png",new Vector2(Board.WIDTH-1,0));
+	YELLOW("/cells/yellowcell.png",new Vector2(Board.WIDTH-1,0)),
+	
+	GREY("",new Vector2(Board.WIDTH-1,0));
 	
 	/**
 	 * attribut représentant le chemin d'accès vers l'image correspondate au type de celulle

@@ -2,15 +2,22 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 
+import entities.CellColor;
 import entities.Player;
 import entities.Tile;
+import navigation.OptionPage;
 import navigation.Page;
+import utilities.BufferedHelper;
+import utilities.CSSColors;
 import utilities.Vector2;
 
 /**
@@ -19,12 +26,17 @@ import utilities.Vector2;
  */
 public class PlayerPanel implements DrawableInterface{
 	
+	private static final int OFFSET_NAME_Y = 40;
+	private static final int OFFSET_NAME_X = 60;
 	// p2 995
 	private final static int OFFSET_X_TILE_PANEL = 20;
 	private final static int OFFSET_Y_TILE_PANEL = 68;
 	
 	private final static int DEFAULT_WIDTH = 266;
 	private final static int DEFAULT_HEIGHT = 632;
+	
+	private final static int HEADER_PANEL_WIDTH = 267;
+	private final static int HEADER_PANEL_HEIGHT = 49;
 	
 	/**
 	 * Etat du panel joueur
@@ -41,7 +53,7 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	private TilePanel tilePanel2;
 	
-	private BufferedImage headerPanelImage;
+	//private BufferedImage headerPanelImage;
 
 	private Player player;
 	
@@ -49,12 +61,16 @@ public class PlayerPanel implements DrawableInterface{
 
 	private Dimension size;
 	
+	private CellColor headerColor;
+	
+	
 	/**
 	 * Constructeur de PlayerPanel
 	 * @param t1 le premier panel du joueur
 	 * @param t2 le deuxième panel du joueur
 	 */
 	public PlayerPanel(Player p) {
+		this.headerColor = CellColor.GREY;
 		this.player = p;
 		this.state = false;
 		this.size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -62,15 +78,15 @@ public class PlayerPanel implements DrawableInterface{
 		this.tilePanel2 = new TilePanel();
 		this.setPosition(new Vector2());
 		
-		try 
-		{
-			this.headerPanelImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "fondgris.png"));
-		} 
-		catch (IOException e) 
-		{
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
+//		try 
+//		{
+//			this.headerPanelImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "fondgris.png"));
+//		} 
+//		catch (IOException e) 
+//		{
+//			System.err.println(e.getMessage());
+//			e.printStackTrace();
+//		}
 		
 		this.refreshTiles();
 	}
@@ -110,6 +126,13 @@ public class PlayerPanel implements DrawableInterface{
 	{
 		this.tilePanel1.setEnabled(statePanel1);
 		this.tilePanel2.setEnabled(statePanel2);
+		if(statePanel1){
+			this.headerColor = this.player.getColors().get(0);
+		}else if(statePanel2){
+			this.headerColor = this.player.getColors().get(1);
+		}else{
+			this.headerColor = CellColor.GREY;
+		}
 	}
 	
 	/**
@@ -149,11 +172,39 @@ public class PlayerPanel implements DrawableInterface{
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-		g2d.drawImage(this.headerPanelImage, this.position.getX(), this.position.getY(), null);
+//		g2d.drawImage(this.headerPanelImage, this.position.getX(), this.position.getY(), null);
+		switch(this.headerColor){
+			case RED:
+				g2d.setColor(CSSColors.DARKRED.color());
+				break;
+			case BLUE:
+				g2d.setColor(CSSColors.DARKBLUE.color());
+				break;
+			case GREEN:
+				g2d.setColor(CSSColors.DARKGREEN.color());
+				break;
+			case YELLOW:
+				g2d.setColor(CSSColors.DARKGOLDENROD.color());
+				break;
+			default:
+				g2d.setColor(new Color(128,128,128));
+				break;
+
+		}
+		
+		g2d.fillRect(this.position.getX(), this.position.getY(), HEADER_PANEL_WIDTH, HEADER_PANEL_HEIGHT);
 		g2d.setColor(Color.WHITE);
-		
-		g2d.fillRect(this.position.getX(), this.position.getY() + this.headerPanelImage.getHeight(), (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
-		
+		Font font = null;
+		try {
+			font = BufferedHelper.getFontFromFile(new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 30f);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		g2d.setFont(font);
+
+		g2d.drawString(this.player.getName(), this.position.getX() + OFFSET_NAME_X, this.position.getY() + OFFSET_NAME_Y);
+		g2d.fillRect(this.position.getX(), this.position.getY() + HEADER_PANEL_HEIGHT, (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
 		this.tilePanel1.draw(g2d);
 		this.tilePanel2.draw(g2d);
 		
