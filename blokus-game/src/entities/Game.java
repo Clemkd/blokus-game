@@ -4,8 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
@@ -37,7 +41,7 @@ public class Game
 	private UndoRedoManager<Board> undoRedoManager;
 
 	private ArrayList<CellColor> playingColors;
-	
+
 	private Gson gson;
 	private boolean testedMove;
 
@@ -66,7 +70,7 @@ public class Game
 		this.playingColors.add(CellColor.RED);
 		this.playingColors.add(CellColor.GREEN);
 	}
-	
+
 	public Game(Game g)
 	{
 		this.gson = new Gson();
@@ -75,9 +79,9 @@ public class Game
 		this.players = new ArrayList<Player>();
 		this.undoRedoManager = new UndoRedoManager<Board>();
 		this.playingColors = new ArrayList<CellColor>();
-		
-		this.addPlayer(g.players.get(0).copy());
-		this.addPlayer(g.players.get(1).copy());
+
+		this.players.add(g.players.get(0).copy());
+		this.players.add(g.players.get(1).copy());
 		this.board = g.board.copy();
 		for(CellColor c : g.getPlayingColors()) {
 			this.playingColors.add(c);
@@ -253,22 +257,40 @@ public class Game
 	 * Sauvegarde la partie dans un fichier TODO: do it
 	 */
 	public void save(){
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		
-		Player playerToSave = getCurrentPlayer();
-		List<Tile> list = this.players.get(0).getTileInventory();
-		for(int i=0; i<list.size(); i++){
-			System.out.println(list.get(i).toString());
+		FileOutputStream fileSave;
+		try {
+			fileSave = new FileOutputStream("save.txt");
+			ObjectOutputStream out = new ObjectOutputStream(fileSave);
+			out.writeObject(this);
+			out.close();
+			fileSave.close();
+			System.out.println("sérialisation de game okay");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		CellColor colorToSave = getCurrentColor();
-		//String json = gson.toJson(list);
-		//System.out.println(json);
+
 	}
-	
-	public void load(){
+
+	public static Game load(){
+		Game gameToLoad = null;
+		FileInputStream fileToLoad;
+		try {
+			fileToLoad = new FileInputStream("save.txt");
+			ObjectInputStream in = new ObjectInputStream(fileToLoad);
+			gameToLoad = (Game) in.readObject();
+			in.close();
+			fileToLoad.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(ClassNotFoundException c){
+			c.printStackTrace();
+		}
+
 		System.out.println("load");
-		
+		return gameToLoad;
+
 	}
 
 	/**
@@ -320,7 +342,7 @@ public class Game
 	{
 		int score = 0;
 		Vector2 v = new Vector2();
-		
+
 		for(int i=0; i<Board.HEIGHT; i++) {
 			for(int j=0; j<Board.WIDTH; j++) {
 				v.setX(i);
@@ -343,7 +365,7 @@ public class Game
 			}
 		}
 
-		
+
 		return score;
 	}
 
@@ -366,20 +388,20 @@ public class Game
 	{
 		// Revert du move sur le plateau
 		this.getBoard().revertMove(m);
-		
+
 		// Revert des tiles du joueur
 		if(!this.getCurrentPlayer().getColors().contains(m.getTile().getColor()))
 			throw new InternalError("Essai d'ajout d'un tile incompatible dans l'inventaire du joueur courant");
-		
+
 		this.getCurrentPlayer().getTileInventory().add(m.getTile());
-		
+
 		// Revert des joueurs en jeu (si besoin)
 		if(!this.playingColors.contains(this.getCurrentColor()))
 		{
 			this.playingColors.add(this.getCurrentColor());
 		}
 	}
-	
+
 	public Game copy() {
 		return new Game(this);
 	}
