@@ -236,19 +236,19 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleRunning = new BlokusLabel("DÉROULEMENT", customFontTitle);
 		this.titleRunning.setPosition(new Vector2(POS_X_TITLE, 163));
 		
-		this.textRunning = new BlokusText("L’ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert. ", customFontText);
+		this.textRunning = new BlokusText("L’ordre dans lequel on joue est le suivant: bleu, jaune, rouge, vert. ", customFontText, 770);
 		this.textRunning.setPosition(new Vector2(POS_X_TITLE, 207));
 		
 		this.titleEnd = new BlokusLabel("FIN", customFontTitle);
 		this.titleEnd.setPosition(new Vector2(POS_X_TITLE, 393));
 		
-		this.textEnd = new BlokusText("• Lorsqu’un joueur est bloqué et ne peut plus placer de pièce, il est obligé de passer son tour.", customFontText);
+		this.textEnd = new BlokusText("• Lorsqu’un joueur est bloqué et ne peut plus placer de pièce, il est obligé de passer son tour.", customFontText, 770);
 		this.textEnd.setPosition(new Vector2(POS_X_TITLE, 437));
 		
 		this.titleAdvices = new BlokusLabel("CONSEILS", customFontTitle);
 		this.titleAdvices.setPosition(new Vector2(POS_X_TITLE, 506));
 		
-		this.textAdvices = new BlokusText("• cherchez à progresser vers le centre du plateau, de manière à occuper un maximum de place.", customFontText);
+		this.textAdvices = new BlokusText("• cherchez à progresser vers le centre du plateau, de manière à occuper un maximum de place.", customFontText, 770);
 		this.textAdvices.setPosition(new Vector2(POS_X_TITLE, 550));
 
 	}
