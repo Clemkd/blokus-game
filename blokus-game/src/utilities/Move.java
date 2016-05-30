@@ -105,9 +105,7 @@ public class Move {
 	}
 
 	public static Move generateRandomValidMove(Game game) {
-		Random rand = new Random();
-
-		return generateRandomValidMove(game, rand);
+		return generateRandomValidMove(game, new Random());
 	}
 
 	public static ArrayList<Move> possibleMoves(Game game) {

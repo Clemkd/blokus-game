@@ -12,6 +12,7 @@ public class PlayerRandom extends Player {
 
 	public PlayerRandom(String name, List<CellColor> colors) {
 		super(name, colors);
+		this.rand = new Random();
 		this.game = null;
 	}
 
