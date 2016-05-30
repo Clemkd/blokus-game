@@ -117,7 +117,9 @@ public class HomePage extends Page implements ActionListener {
 				Navigation.NavigateTo(Navigation.gamePage);
 			}
 			else if (e.getSource().equals(this.buttonLoad)) {
+
 				((GamePage) Navigation.gamePage).setGame(Game.load());
+				Navigation.NavigateTo(Navigation.gamePage);
 				//JFileChooser jFileChooser = new JFileChooser();
 				//jFileChooser.showOpenDialog(jFileChooser);
 			}

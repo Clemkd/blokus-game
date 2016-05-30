@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
@@ -20,7 +21,7 @@ import utilities.OutOfBoundsException;
 import utilities.UndoRedoManager;
 import utilities.Vector2;
 
-public class Game
+public class Game implements Serializable
 {
 	/**
 	 * Plateau de jeu courant
@@ -41,13 +42,10 @@ public class Game
 	private UndoRedoManager<Board> undoRedoManager;
 
 	private ArrayList<CellColor> playingColors;
-
-	private Gson gson;
 	private boolean testedMove;
 
 	public Game()
 	{	
-		this.gson = new Gson();
 		this.currentTurn = 0;
 		this.testedMove = false;
 		this.board = new Board();
@@ -73,7 +71,7 @@ public class Game
 
 	public Game(Game g)
 	{
-		this.gson = new Gson();
+		
 		this.testedMove = false;
 
 		this.players = new ArrayList<Player>();

@@ -1,11 +1,12 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import utilities.Move;
 
-public abstract class Player {
+public abstract class Player implements Serializable{
 	/**
 	 * Les couleurs du joueur
 	 */

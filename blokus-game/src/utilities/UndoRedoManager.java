@@ -1,9 +1,10 @@
 package utilities;
 
+import java.io.Serializable;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-public class UndoRedoManager<T> {
+public class UndoRedoManager<T> implements Serializable {
 	/**
 	 * Le stack de "annuler"
 	 */

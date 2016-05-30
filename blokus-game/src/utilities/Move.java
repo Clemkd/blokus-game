@@ -1,12 +1,13 @@
 package utilities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 import entities.Game;
 import entities.Tile;
 
-public class Move {
+public class Move implements Serializable {
 	public static final Move	EMPTY	= new Move(0);
 
 	private final Vector2		position;

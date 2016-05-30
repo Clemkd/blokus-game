@@ -2,12 +2,13 @@ package entities;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 import utilities.Vector2;
 
-public enum CellColor {
+public enum CellColor implements Serializable {
 	
 	/**
 	 * Cellule de couleur bleu avec le chemin d'accès vers l'image correspondante

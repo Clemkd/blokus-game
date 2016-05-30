@@ -1,11 +1,12 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import utilities.Vector2;
 
-public class Tile {
+public class Tile implements Serializable{
 	/**
 	 * Le nombre maximal de tiles
 	 */

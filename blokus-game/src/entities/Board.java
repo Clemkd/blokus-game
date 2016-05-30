@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import utilities.CellPositions;
@@ -8,7 +9,7 @@ import utilities.Move;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 
-public class Board {
+public class Board implements Serializable{
 	/**
 	 * Le nombre de positions relatives (soit coins, soit adjacentes) d'une position
 	 */

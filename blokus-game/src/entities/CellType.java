@@ -1,6 +1,8 @@
 package entities;
 
-public enum CellType {
+import java.io.Serializable;
+
+public enum CellType implements Serializable {
 	
 	BLANK(0),
 	BODY(1),

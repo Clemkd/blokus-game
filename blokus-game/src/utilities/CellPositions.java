@@ -1,6 +1,8 @@
 package utilities;
 
-public enum CellPositions {
+import java.io.Serializable;
+
+public enum CellPositions implements Serializable{
 	UP			(new Vector2(0, -1)),
 	DOWN		(new Vector2(0, 1)),
 	RIGHT		(new Vector2(1, 0)),
