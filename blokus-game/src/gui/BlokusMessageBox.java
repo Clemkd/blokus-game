@@ -22,6 +22,10 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	private final static Vector2 DEFAULT_POSITION = new Vector2(0, (int)((Window.HEIGHT / 2) - (DEFAULT_SIZE.getHeight() / 2)));
 	
 	private final static int DEFAULT_MARGIN_X = 10;
+
+	private static final int DEFAULT_STROKE = 1;
+	
+	private static final Color DEFAULT_STROKE_COLOR = Color.GRAY;
 	
 	private BlokusMessageBoxButtonState buttonState;
 	
@@ -39,8 +43,14 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	
 	private List<ActionListener> listeners;
 	
+	private int stroke;
+	
+	private Color strokeColor;
+	
 	public BlokusMessageBox(String message, Font font, BlokusMessageBoxButtonState state)
 	{
+		this.stroke = DEFAULT_STROKE;
+		this.setStrokeColor(DEFAULT_STROKE_COLOR);
 		this.position = DEFAULT_POSITION;
 		this.size = DEFAULT_SIZE;
 		this.message = message;
@@ -146,8 +156,8 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		{
 			Graphics2D g2d = (Graphics2D)g.create();
 			
-			g2d.setPaint(Color.GRAY);
-			g2d.drawRect(this.position.getX() - 1, this.position.getY() - 1, this.size.width + 1, this.size.height + 1);
+			g2d.setPaint(Color.ORANGE);
+			g2d.fillRect(this.position.getX() - this.stroke, this.position.getY() - this.stroke, this.size.width + this.stroke * 2, this.size.height + this.stroke * 2);
 			g2d.setPaint(Color.WHITE);
 			g2d.fillRect(this.position.getX(), this.position.getY(), this.size.width, this.size.height);
 			
@@ -220,5 +230,21 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 
 	public boolean isShown() {
 		return this.visible;
+	}
+
+	public int getStroke() {
+		return stroke;
+	}
+
+	public void setStroke(int stroke) {
+		this.stroke = stroke;
+	}
+
+	public Color getStrokeColor() {
+		return strokeColor;
+	}
+
+	public void setStrokeColor(Color strokeColor) {
+		this.strokeColor = strokeColor;
 	}
 }
