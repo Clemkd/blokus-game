@@ -32,7 +32,11 @@ public class BlokusImageBox implements DrawableInterface {
 
 	@Override
 	public void draw(Graphics2D g) {
-		// TODO Auto-generated method stub
+		Graphics2D g2d = (Graphics2D) g.create();
+
+		g2d.setPaint(Color.white);
+		g2d.fillRect(0, 0, 500	, 500);
+		g2d.setPaint(Color.black);	
 		
 	}
 	

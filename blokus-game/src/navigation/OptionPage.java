@@ -9,6 +9,7 @@ import java.io.File;
 
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
+import gui.BlokusImageBox;
 import gui.BlokusLabel;
 import gui.BlokusText;
 import utilities.Vector2;
@@ -187,20 +188,23 @@ public class OptionPage extends Page implements ActionListener{
 				this.onGeneral = false;
 				this.onRules = true;
 				this.onControl = false;
-			}else if(e.getSource().equals(this.buttonToValid))
+			}else if(e.getSource().equals(this.buttonToValid)){
 				Navigation.NavigateTo(Navigation.previous);
-			} else if(e.getSource().equals(this.buttonToCancel)) {
-				/**
-				 * 
-				 *  TODO : Doit revenir a l'etat precedent des parametres
-				 * 
-				 */
+			} else if(e.getSource().equals(this.buttonHelp1)) {
+				BlokusImageBox imageBox = new BlokusImageBox(null, Color.white);
+			}else if(e.getSource().equals(this.buttonHelp2)) {
+				BlokusImageBox imageBox = new BlokusImageBox(null, Color.white);
+			}else if(e.getSource().equals(this.buttonHelp3)) {
+				BlokusImageBox imageBox = new BlokusImageBox(null, Color.white);
+
 			}
+		}
 	}
 	
 
 	@Override
 	public void loadContents() {
+		
 		this.buttonHelp1 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
 		this.buttonHelp1.setPosition(new Vector2(350, 250));
 		this.buttonHelp1.addListener(this);
@@ -212,7 +216,6 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonHelp3 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
 		this.buttonHelp3.setPosition(new Vector2(350, 350));
 		this.buttonHelp3.addListener(this);
-		
 		
 		this.buttonGeneral = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"general.png"));
 		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS,314));
