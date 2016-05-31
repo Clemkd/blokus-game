@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.Color;
-
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -152,6 +152,7 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		if(this.visible)
 		{
 			// TODO : CODE HERE
+			GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 			for(BlokusButton button : this.buttons)
 				button.update(elapsedTime);
 		}

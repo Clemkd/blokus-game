@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -121,6 +122,7 @@ public class BlokusCheckBox implements DrawableInterface {
 	public void update(float elapsedTime) {
 		
 		if(this.isInBounds(Mouse.getPosition()) && this.isEnabled){
+			GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 			if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased()){
 				Mouse.consumeLastMouseButton();
 				this.swapChecked();
@@ -137,7 +139,7 @@ public class BlokusCheckBox implements DrawableInterface {
 		g2d.drawImage(this.isChecked ?this.checked: this.noChecked, this.position.getX(), this.position.getY(), (int) this.size.getWidth(), (int) this.size.getHeight(), null);
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(this.font);
-		g2d.drawString(this.text, (int) (this.position.getX()+this.size.getWidth()+10), (int) (this.position.getY()+this.size.getHeight()));
+		g2d.drawString(this.text, (int) (this.position.getX()+this.size.getWidth()+10), (int) (this.position.getY()+this.size.getHeight()-4));
 		g2d.dispose();
 		
 	}

@@ -122,7 +122,6 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 		this.approxFPS = Math.round(1000 / elapsedTime);
 		Navigation.getPage().update(elapsedTime);
 		if (this.getCursor() != newCursor) {
-			System.out.println("Changement de curseur !");
 			this.setCursor(newCursor);
 		}
 		this.repaint();
