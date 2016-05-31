@@ -65,3 +65,39 @@ Audit de code :
   - GUI : Implémenter la sauvegarde et le chargement des partie pour tester les IA plus facilement.
   - IA : Eviter des new, et faire des stacks/listes d'objets qui vont être modifiés.
   - Matrices des tiles dans des fichiers.
+  
+12ème jour : 27 mai 2016
+Amphi de soutenance :
+A rendre le 3/6/16 : Code sources + binaire fonctionnels (doit marcher sur les machine de l’UFR) F208
+A rendre le jour de la soutenance : Dossier IA et dossier IHM (description)
+
+1 h de soutenance : 30min présentation + 30min de questions (2 vidéo projecteur LCD 016/9 et 4/3)
+support : jeu et dossier de validation
+Pour avoir une bonne note : il faut aider les examinateurs a bien nous noter :
+-	Présenter l’ensemble du travail
+-	Montrer sa logique et cohérence
+-	Justifier les choix
+-	Mettre en avant les points forts
+-	Utiliser au mieux les ressources (ok)
+Répartition du temps :
+3 parties équivalentes + intro conclusion
+En minute les parties : 3 8 8 8 3
+Exploiter tous les membres du groupe 
+Ne pas présenter une liste de fonctionnalité  Présenter plus en détail les points forts
+Crée un fil conducteur et démarrer et terminer par les points forts
+Toujours simplifier et éviter de faire bouger la démo en même temps que l’orateur.
+Si on n’argumente pas, il faut savoir répondre aux questions
+Répetition : trouver le bon equilibre
+
+13ème jour : 30 mai 2016
+Fix des problèmes du drag&drop.
+Possibilité de tourner(rotation + symétrie horizontale) des pièces.
+Détection du partie terminée (plus de pièces n'est jouable).
+Une partie est jouable (2 joueurs, 1 joueur contre une IA et 2 IA).
+Possibilité de sauvegarder et charger une partie.
+Fix du undo/redo.
+Ajout d'une messageBox pour afficher des information importante comme le retour à l'acceuil.
+
+14ème jour : 31 mai 2016
+Création de fichier de configuration pour les options.
+Fix du bouton (qui etait une checkBox) de la musique de fond.
