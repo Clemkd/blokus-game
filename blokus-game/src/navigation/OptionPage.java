@@ -5,14 +5,20 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import gui.BlokusButton;
 import gui.BlokusCheckBox;
 import gui.BlokusImageBox;
 import gui.BlokusLabel;
+import gui.BlokusMessageBox;
 import gui.BlokusText;
 import utilities.Vector2;
+import utilities.BlokusMessageBoxButtonState;
 import utilities.BufferedHelper;
 import utilities.OptionConfiguration;
 
@@ -61,6 +67,8 @@ public class OptionPage extends Page implements ActionListener{
 	private Font customFontCheckbox;
 	private Font customFontTitle;
 	private Font customFontText;
+	
+	private BufferedImage imageHelp1, imageHelp2, imageHelp3;
 	
 	private static final int POS_X_BOUTONS = 72;
 	
@@ -201,12 +209,20 @@ public class OptionPage extends Page implements ActionListener{
 			}else if(e.getSource().equals(this.buttonToCancel)){
 				Navigation.NavigateTo(Navigation.previous);
 			} else if(e.getSource().equals(this.buttonHelp1)) {
-				BlokusImageBox imageBox = new BlokusImageBox(null, Color.white);
+				BlokusImageBox imageBox = new BlokusImageBox(imageHelp1, BlokusMessageBoxButtonState.VALID);
+				imageBox.setStrokeColor(Color.ORANGE);
+				imageBox.setStroke(3);
+				imageBox.show(this);
 			}else if(e.getSource().equals(this.buttonHelp2)) {
-				BlokusImageBox imageBox = new BlokusImageBox(null, Color.white);
+				BlokusImageBox imageBox = new BlokusImageBox(imageHelp2, BlokusMessageBoxButtonState.VALID);
+				imageBox.setStrokeColor(Color.ORANGE);
+				imageBox.setStroke(3);
+				imageBox.show(this);
 			}else if(e.getSource().equals(this.buttonHelp3)) {
-				BlokusImageBox imageBox = new BlokusImageBox(null, Color.white);
-
+				BlokusImageBox imageBox = new BlokusImageBox(imageHelp3, BlokusMessageBoxButtonState.VALID);
+				imageBox.setStrokeColor(Color.ORANGE);
+				imageBox.setStroke(3);
+				imageBox.show(this);
 			}
 		}
 	}
@@ -214,6 +230,18 @@ public class OptionPage extends Page implements ActionListener{
 
 	@Override
 	public void loadContents() {
+		
+		try {
+			this.imageHelp1 = ImageIO.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp1.png"));
+			this.imageHelp2 = ImageIO.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp2.png"));
+			this.imageHelp3 = ImageIO.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp3.png"));
+		}
+		catch (IOException e) {
+			this.imageHelp1 = null;
+			this.imageHelp2 = null;
+			this.imageHelp3 = null;
+			e.printStackTrace();
+		}
 		
 		this.buttonHelp1 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
 		this.buttonHelp1.setPosition(new Vector2(350, 250));
