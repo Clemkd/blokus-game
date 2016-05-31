@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
 
 import navigation.Page;
 import utilities.Vector2;
@@ -35,6 +37,10 @@ public class BlokusCheckBox implements DrawableInterface {
 	
 	private Font font;
 	
+	private FontMetrics fontMetrics;
+	
+	private int textSize;
+	
 	private BlokusCheckBox(boolean enabled, boolean checked){
 		this.isChecked = checked;
 		this.isEnabled = enabled;
@@ -43,6 +49,9 @@ public class BlokusCheckBox implements DrawableInterface {
 		this.position = new Vector2();
 		this.size = new Dimension(20, 20);
 		this.listeners = new ArrayList<ActionListener>();
+		this.fontMetrics = new FontMetrics(this.font) {};
+		this.textSize = SwingUtilities.computeStringWidth(this.fontMetrics, this.text);
+		
 	}
 	
 	public BlokusCheckBox(boolean enabled, boolean checked, String text, Font font) {
@@ -58,6 +67,9 @@ public class BlokusCheckBox implements DrawableInterface {
 			e.printStackTrace();
 			System.exit(0);
 		}
+		this.fontMetrics = new FontMetrics(this.font) {
+		};
+		this.textSize = SwingUtilities.computeStringWidth(this.fontMetrics, text);
 	}
 	
 	public BlokusCheckBox(boolean enabled, boolean checked, BufferedImage checkedImage, BufferedImage uncheckedImage) {
@@ -101,7 +113,7 @@ public class BlokusCheckBox implements DrawableInterface {
 	public boolean isInBounds(Vector2 p)
 	{
 		return p.getX() >= this.position.getX() &&
-				p.getX() < this.getSize().getWidth() + this.position.getX() &&
+				p.getX() < this.getSize().getWidth() + this.position.getX() + this.textSize &&
 				p.getY() >= this.position.getY() &&
 				p.getY() < this.getSize().getHeight() + this.position.getY();
 	}
@@ -128,6 +140,7 @@ public class BlokusCheckBox implements DrawableInterface {
 		g2d.setFont(this.font);
 		g2d.drawString(this.text, (int) (this.position.getX()+this.size.getWidth()+10), (int) (this.position.getY()+this.size.getHeight()));
 		g2d.dispose();
+		System.out.println(this.textSize);
 		
 	}
 	
