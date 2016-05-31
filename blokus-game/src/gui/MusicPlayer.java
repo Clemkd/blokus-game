@@ -59,9 +59,10 @@ public class MusicPlayer {
 
 	/**
 	 * Change le volume de sortie de la musique
-	 * @param modifier Nouveau modificateur de volume, une valeur négative réduira ce dernier d'autant de décibels.
+	 * @param gain Nouveau volume, entre 0.0f et 1.0f
 	 */
-	public void setVolume(float modifier) {
-		this.gainControl.setValue(modifier);
+	public void setVolume(float gain) {
+		float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+		gainControl.setValue(dB);
 	}
 }

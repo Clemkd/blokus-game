@@ -50,12 +50,11 @@ public class Window implements Runnable , ActionListener
 	@Override
 	public void run() {
 		musicPlayer.playSound();
-		musicPlayer.setVolume(-20.0f);
+		musicPlayer.setVolume(0.3f);
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);
 		this.startTime = System.nanoTime();
 		this.timer.start();
-		
 	}
 	
 	public static MusicPlayer getMusicPlayer() {
