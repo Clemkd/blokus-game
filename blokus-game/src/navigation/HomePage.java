@@ -152,11 +152,6 @@ public class HomePage extends Page implements ActionListener
 				if(!(Game.load() == null)){
 				((GamePage) Navigation.gamePage).setGame(Game.load());
 				Navigation.NavigateTo(Navigation.gamePage);
-				// JFileChooser jFileChooser = new JFileChooser();
-				// jFileChooser.showOpenDialog(jFileChooser);
-				}else{
-					BlokusMessageBox blokusMessageBox = new BlokusMessageBox("Aucune partie sauvegardée", BufferedHelper.getDefaultFont(20f), BlokusMessageBoxButtonState.VALID);
-					blokusMessageBox.show(this);
 				}
 			} else if (e.getSource().equals(this.buttonTutorial))
 			{

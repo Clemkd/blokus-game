@@ -2,6 +2,7 @@ package entities;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import utilities.Move;
 import utilities.OutOfBoundsException;
@@ -341,178 +344,181 @@ public class Game implements Serializable
 	 * Sauvegarde la partie dans un fichier TODO: do it, just DO IT
 	 */
 	public void save(){
-		FileOutputStream fileSave;
-		try {
-			fileSave = new FileOutputStream("save.txt");
-			ObjectOutputStream out = new ObjectOutputStream(fileSave);
-			out.writeObject(this);
-			out.close();
-			fileSave.close();
-			System.out.println("sérialisation de game okay");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		JFileChooser jFileChooser = new JFileChooser();
+		int choice = jFileChooser.showSaveDialog(jFileChooser);
+		if(choice == JFileChooser.APPROVE_OPTION){
+			String path = jFileChooser.getSelectedFile().getAbsolutePath();
+			try {
+				FileOutputStream fileSave = new FileOutputStream(path);
+				ObjectOutputStream out = new ObjectOutputStream(fileSave);
+				out.writeObject(this);
+				out.close();
+				fileSave.close();
+				System.out.println("sérialisation de game okay");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
 
 	public static Game load(){
 		Game gameToLoad = null;
-		File file = new File("save.txt");
-		if(file.exists()){
-			FileInputStream fileToLoad;
+		JFileChooser jfChooser = new JFileChooser();
+		int choice = jfChooser.showOpenDialog(jfChooser);
+		if(choice == JFileChooser.APPROVE_OPTION){
+			String path = jfChooser.getSelectedFile().getAbsolutePath();
 			try {
-				fileToLoad = new FileInputStream("save.txt");
+				FileInputStream fileToLoad = new FileInputStream(path);
 				ObjectInputStream in = new ObjectInputStream(fileToLoad);
 				gameToLoad = (Game) in.readObject();
 				in.close();
 				fileToLoad.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch(ClassNotFoundException c){
+			}catch(ClassNotFoundException c){
 				c.printStackTrace();
 			}
 		}
-			System.out.println("load");
-			return gameToLoad;
+		return gameToLoad;
 
-		}
+	}
 
-		/**
-		 * Fonction appellée quand un coup valide doit être traité/appliqué par Game
-		 * 
-		 * @param 
-		 *            Coup joué
-		 */
-		public void doMove(Move m)
+	/**
+	 * Fonction appellée quand un coup valide doit être traité/appliqué par Game
+	 * 
+	 * @param 
+	 *            Coup joué
+	 */
+	public void doMove(Move m)
+	{
+		if (m.getTile() != null)
 		{
-			if (m.getTile() != null)
+			this.undoRedoManager.add(this.board.copy());
+			ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
+			colorsCopy.addAll(this.playingColors);
+			this.undoRedoManagerColors.add(colorsCopy);
+			if(currentTurn%2==0)
 			{
-				this.undoRedoManager.add(this.board.copy());
-				ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
-				colorsCopy.addAll(this.playingColors);
-				this.undoRedoManagerColors.add(colorsCopy);
-				if(currentTurn%2==0)
-				{
-					Player p1 = this.getCurrentPlayer().copy();
-					p1.addTileToInventory(m.getTile());
-					this.undoRedoManagerPlayer.get(0).add(p1);
-				}
-				else
-				{
-					Player p2 = this.getCurrentPlayer().copy();
-					p2.addTileToInventory(m.getTile());
-					this.undoRedoManagerPlayer.get(1).add(p2);
-				}
+				Player p1 = this.getCurrentPlayer().copy();
+				p1.addTileToInventory(m.getTile());
+				this.undoRedoManagerPlayer.get(0).add(p1);
+			}
+			else
+			{
+				Player p2 = this.getCurrentPlayer().copy();
+				p2.addTileToInventory(m.getTile());
+				this.undoRedoManagerPlayer.get(1).add(p2);
+			}
 
-				try
-				{
-					this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
+			try
+			{
+				this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
+			}
+			catch (Exception e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+				System.exit(0);
+			}
+		}
+		else
+		{
+			this.playingColors.remove(this.getCurrentColor());
+
+			this.undoRedoManager.add(this.board.copy());
+			ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
+			colorsCopy.addAll(this.playingColors);
+			this.undoRedoManagerColors.add(colorsCopy);
+			if(currentTurn%2==0)
+			{
+				Player p1 = this.getCurrentPlayer().copy();
+				this.undoRedoManagerPlayer.get(0).add(p1);
+			}
+			else
+			{
+				Player p2 = this.getCurrentPlayer().copy();
+				this.undoRedoManagerPlayer.get(1).add(p2);
+			}
+		}
+		this.currentTurn++;
+		this.testedMove = false;
+	}
+
+	/**
+	 * Renvoi le score du joueur fourni en paramètre dans l'état actuel du jeu
+	 * 
+	 * @param player
+	 *            Joueur
+	 * @return Score du joueur
+	 */
+	public int getScore(Player player)
+	{
+		int score = 0;
+		Vector2 v = new Vector2();
+
+		for(int i=0; i<Board.HEIGHT; i++) {
+			for(int j=0; j<Board.WIDTH; j++) {
+				v.setX(i);
+				v.setY(j);
+				try {
+					if(player.getColors().contains(this.board.getCell(v))) {
+						score++;
+					}
 				}
-				catch (Exception e)
-				{
-					System.err.println(e.getMessage());
+				catch (OutOfBoundsException e) {
 					e.printStackTrace();
 					System.exit(0);
 				}
 			}
-			else
-			{
-				this.playingColors.remove(this.getCurrentColor());
-
-				this.undoRedoManager.add(this.board.copy());
-				ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
-				colorsCopy.addAll(this.playingColors);
-				this.undoRedoManagerColors.add(colorsCopy);
-				if(currentTurn%2==0)
-				{
-					Player p1 = this.getCurrentPlayer().copy();
-					this.undoRedoManagerPlayer.get(0).add(p1);
-				}
-				else
-				{
-					Player p2 = this.getCurrentPlayer().copy();
-					this.undoRedoManagerPlayer.get(1).add(p2);
-				}
+		}
+		if(player.getTileInventory().isEmpty()) {
+			score += 15;
+			if(player.lastTileWasSingleCell()) {
+				score += 5;
 			}
-			this.currentTurn++;
-			this.testedMove = false;
 		}
 
-		/**
-		 * Renvoi le score du joueur fourni en paramètre dans l'état actuel du jeu
-		 * 
-		 * @param player
-		 *            Joueur
-		 * @return Score du joueur
-		 */
-		public int getScore(Player player)
+
+		return score;
+	}
+
+	/**
+	 * Obtient le joueur gagnant
+	 * @return Le joueur gagnant
+	 */
+	public Player getWinner()
+	{
+		Player res = null;
+
+		if(this.isTerminated())
 		{
-			int score = 0;
-			Vector2 v = new Vector2();
+			int score1 = this.getScore(this.getPlayers().get(0));
+			int score2 = this.getScore(this.getPlayers().get(1));
 
-			for(int i=0; i<Board.HEIGHT; i++) {
-				for(int j=0; j<Board.WIDTH; j++) {
-					v.setX(i);
-					v.setY(j);
-					try {
-						if(player.getColors().contains(this.board.getCell(v))) {
-							score++;
-						}
-					}
-					catch (OutOfBoundsException e) {
-						e.printStackTrace();
-						System.exit(0);
-					}
-				}
-			}
-			if(player.getTileInventory().isEmpty()) {
-				score += 15;
-				if(player.lastTileWasSingleCell()) {
-					score += 5;
-				}
-			}
-
-
-			return score;
+			res =  score1 > score2 ?  this.getPlayers().get(0) : this.getPlayers().get(1);
 		}
+		System.out.println(res);
+		return res;
+	}
 
-		/**
-		 * Obtient le joueur gagnant
-		 * @return Le joueur gagnant
-		 */
-		public Player getWinner()
-		{
-			Player res = null;
+	/**
+	 * Obtient la liste des joueurs du jeu
+	 * 
+	 * @return La liste des joueurs du jeu
+	 */
+	public ArrayList<Player> getPlayers()
+	{
+		return this.players;
+	}
 
-			if(this.isTerminated())
-			{
-				int score1 = this.getScore(this.getPlayers().get(0));
-				int score2 = this.getScore(this.getPlayers().get(1));
-
-				res =  score1 > score2 ?  this.getPlayers().get(0) : this.getPlayers().get(1);
-			}
-			System.out.println(res);
-			return res;
-		}
-
-		/**
-		 * Obtient la liste des joueurs du jeu
-		 * 
-		 * @return La liste des joueurs du jeu
-		 */
-		public ArrayList<Player> getPlayers()
-		{
-			return this.players;
-		}
-
-		// TODO : SUPPRIMER
-		/**
-		 * Annule le tour de jeu effectué
-		 * @param m Les données du tour de jeu
-		 */
-		/*public void revertMove(Move m)
+	// TODO : SUPPRIMER
+	/**
+	 * Annule le tour de jeu effectué
+	 * @param m Les données du tour de jeu
+	 */
+	/*public void revertMove(Move m)
 	{
 		// Revert du move sur le plateau
 		this.getBoard().revertMove(m);
@@ -530,7 +536,7 @@ public class Game implements Serializable
 		}
 	}*/
 
-		public Game copy() {
-			return new Game(this);
-		}
+	public Game copy() {
+		return new Game(this);
 	}
+}
