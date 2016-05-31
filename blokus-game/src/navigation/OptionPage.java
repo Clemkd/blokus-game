@@ -17,6 +17,7 @@ import gui.BlokusImageBox;
 import gui.BlokusLabel;
 import gui.BlokusMessageBox;
 import gui.BlokusText;
+import gui.Window;
 import program.Program;
 import utilities.Vector2;
 import utilities.BlokusMessageBoxButtonState;
@@ -207,8 +208,12 @@ public class OptionPage extends Page implements ActionListener{
 				this.option.setPlaySong(this.checkBoxActivateAudio.isChecked());
 				this.option.setVolume(0.5f); //TODO Slider ? Champ texte de valeur ?
 				this.option.saveConfiguration();
+				if(this.checkBoxActivateAudio.isChecked() && !Window.getMusicPlayer().isRunning())
+					Window.getMusicPlayer().playContinuously();
+				else if(!this.checkBoxActivateAudio.isChecked() && Window.getMusicPlayer().isRunning())
+					Window.getMusicPlayer().stopSound();
 				Navigation.NavigateTo(Navigation.previous);
-			}else if(e.getSource().equals(this.buttonToCancel)) {
+			} else if(e.getSource().equals(this.buttonToCancel)) {
 				Navigation.NavigateTo(Navigation.previous);
 			} else if(e.getSource().equals(this.buttonHelp1)) {
 				BlokusImageBox imageBox = new BlokusImageBox(imageHelp1, BlokusMessageBoxButtonState.VALID);
