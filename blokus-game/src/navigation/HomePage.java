@@ -13,8 +13,12 @@ import entities.CellColor;
 import entities.Game;
 import entities.PlayerHuman;
 import gui.BlokusButton;
+import gui.BlokusMessageBox;
 import gui.Window;
 import program.Program;
+import utilities.BlokusMessageBoxButtonState;
+import utilities.BlokusMessageBoxResult;
+import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener
@@ -138,15 +142,19 @@ public class HomePage extends Page implements ActionListener
 				colorsP2.add(CellColor.GREEN);
 
 				((GamePage) Navigation.gamePage).setGame(
-						new Game(new PlayerHuman("Joueur 1", colorsP1), new PlayerHuman("Joueur 2", colorsP2)));
+						new Game(new PlayerHuman("Joueur 1", colorsP1), new PlayerHuman("Joueur 2 bis", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
 			} else if (e.getSource().equals(this.buttonLoad))
 			{
-
+				if(!(Game.load() == null)){
 				((GamePage) Navigation.gamePage).setGame(Game.load());
 				Navigation.NavigateTo(Navigation.gamePage);
 				// JFileChooser jFileChooser = new JFileChooser();
 				// jFileChooser.showOpenDialog(jFileChooser);
+				}else{
+					BlokusMessageBox blokusMessageBox = new BlokusMessageBox("Aucune partie sauvegardée", BufferedHelper.getDefaultFont(20f), BlokusMessageBoxButtonState.VALID);
+					blokusMessageBox.show(this);
+				}
 			} else if (e.getSource().equals(this.buttonTutorial))
 			{
 				Navigation.NavigateTo(Navigation.tutorialPage);
@@ -158,7 +166,11 @@ public class HomePage extends Page implements ActionListener
 			{
 				System.exit(0);
 			}
-		} 
+		} else if(e.getSource() instanceof BlokusMessageBox){
+			if(e.getActionCommand() == BlokusMessageBoxResult.VALID.getActionCommand()){
+				this.getMessageBox().close(this);
+			}
+		}
 		//TODO: Ne marche pas, e = null quand on envoie l'evenement -> Exception
 //		else if (e.getSource() instanceof BlokusCheckBox)
 //		{
