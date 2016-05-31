@@ -358,7 +358,7 @@ public class GamePage extends Page implements ActionListener {
 				// jFileChooser.showSaveDialog(jFileChooser);
 			}
 			else if (e.getSource().equals(this.buttonExit)) {
-				BlokusMessageBox msgbox = new BlokusMessageBox("Êtes-vous sûr de vouloir quitter ?", this.font, BlokusMessageBoxButtonState.YES_OR_NO);
+				BlokusMessageBox msgbox = new BlokusMessageBox("Êtes-vous sûr de vouloir retourner à l'accueil ?", this.font, BlokusMessageBoxButtonState.YES_OR_NO);
 				msgbox.setStrokeColor(Color.ORANGE);
 				msgbox.setStroke(3);
 				msgbox.show(this);
@@ -392,10 +392,11 @@ public class GamePage extends Page implements ActionListener {
 		if (!flagLoad) {
 			
 			try {
-				this.font = BufferedHelper.getFontFromFile(new File(GamePage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 20f);
+				this.font = BufferedHelper.getDefaultFont(20f);
 				this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "logo.png"));
 			}
-			catch (IOException | URISyntaxException e) {
+			catch (IOException e) {
+				System.err.println(e.getMessage());
 				e.printStackTrace();
 			}
 			this.selectedTile = null;

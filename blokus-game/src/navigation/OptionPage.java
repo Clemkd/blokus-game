@@ -87,9 +87,9 @@ public class OptionPage extends Page implements ActionListener{
 		this.onGeneral = true;
 		this.onRules = false;
 		try {
-			this.customFontCheckbox = BufferedHelper.getFontFromFile(new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 16f);
-			this.customFontTitle = BufferedHelper.getFontFromFile(new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 20f);
-			this.customFontText = BufferedHelper.getFontFromFile(new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 14f);
+			this.customFontCheckbox = BufferedHelper.getDefaultFont(16f);
+			this.customFontTitle = BufferedHelper.getDefaultFont(20f);
+			this.customFontText = BufferedHelper.getDefaultFont(14f);
 		}
 		catch (Exception e) {
 			// TODO Auto-generated catch block

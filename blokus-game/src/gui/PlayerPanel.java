@@ -191,12 +191,7 @@ public class PlayerPanel implements DrawableInterface{
 		g2d.fillRect(this.position.getX(), this.position.getY(), HEADER_PANEL_WIDTH, HEADER_PANEL_HEIGHT);
 		g2d.setColor(Color.WHITE);
 		Font font = null;
-		try {
-			font = BufferedHelper.getFontFromFile(new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS+"LEMONMILK.ttf").toURI()), 30f);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		font = BufferedHelper.getDefaultFont(30f);
 		g2d.setFont(font);
 
 		g2d.drawString(this.player.getName(), this.position.getX() + OFFSET_NAME_X, this.position.getY() + OFFSET_NAME_Y);

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -48,6 +49,8 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 		super.paintComponent(g);
 		Graphics2D batch = (Graphics2D) g;
 		this.clear(batch);
+
+		batch.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
 		Navigation.getPage().draw(batch);

@@ -11,9 +11,15 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+
+import navigation.OptionPage;
+import navigation.Page;
 
 public class BufferedHelper 
 {
+	private static final String DEFAULT_FONT_NAME = "LEMONMILK.ttf";
+	
 	/**
 	 * Obtient les configurations de la librairie de dessin
 	 * @return Les configurations
@@ -35,12 +41,32 @@ public class BufferedHelper
 			customFont = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(fontSize);
 	        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	        //register the font
-	        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
+	        ge.registerFont(customFont);
 	        
 		} 
 		catch (FontFormatException | IOException e) 
 		{
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return customFont;
+    }
+    
+    public static Font getDefaultFont(float fontSize)
+    {
+    	Font customFont = null;
+		try 
+		{
+			File file = new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS + DEFAULT_FONT_NAME).toURI());
+			customFont = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(fontSize);
+	        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	        //register the font
+	        ge.registerFont(customFont);
+	        
+		} 
+		catch (FontFormatException | IOException | URISyntaxException e) 
+		{
+			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
         return customFont;
