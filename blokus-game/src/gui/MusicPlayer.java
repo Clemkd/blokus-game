@@ -26,7 +26,6 @@ public class MusicPlayer {
 			this.clip = AudioSystem.getClip();
 			this.clip.open(audioIn);
 			this.gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-			this.gainControl.setValue(-10.0f);
 		}
 		catch (LineUnavailableException | IOException e) {
 			// TODO Auto-generated catch block
@@ -39,11 +38,28 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * Demarre la musique
+	 * Joue la musique en boucle
 	 */
-	public void playSound() {
+	public void playContinuously() {
 		if (this.clip != null) {
 			this.clip.loop(Clip.LOOP_CONTINUOUSLY);
+			this.clip.start();
+		}
+	}
+	
+	/**
+	 * Joue la musique(par défaut en boucle)
+	 */
+	public void playSound() {
+		this.playContinuously();
+	}
+	
+	/**
+	 * Joue la musique une fois
+	 */
+	public void playOnce() {
+		if (this.clip != null) {
+			this.clip.loop(0);
 			this.clip.start();
 		}
 	}
@@ -55,6 +71,14 @@ public class MusicPlayer {
 		if (this.clip != null) {
 			this.clip.stop();
 		}
+	}
+	
+	/**
+	 * Permet de connaitre l'état du player(en marche, à l'arrêt)
+	 * @return true si une musique est actuellement jouée, false sinon
+	 */
+	public boolean isRunning() {
+		return (this.clip!=null && this.clip.isRunning());
 	}
 
 	/**
