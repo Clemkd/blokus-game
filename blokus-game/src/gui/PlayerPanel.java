@@ -4,14 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.io.File;
-import java.net.URISyntaxException;
 
 import entities.CellColor;
 import entities.Player;
 import entities.Tile;
-import navigation.OptionPage;
-import navigation.Page;
 import utilities.BufferedHelper;
 import utilities.CSSColors;
 import utilities.Vector2;

@@ -16,7 +16,6 @@ public class MusicPlayer {
 
 	/**
 	 * Initialise la gestion de la musique avec le fichier fourni
-	 * @param path Chemin du fichier son(format wav exigé)
 	 */
 	public MusicPlayer(String path) {
 		this.soundPath = path;
@@ -33,6 +32,38 @@ public class MusicPlayer {
 		}
 		catch (UnsupportedAudioFileException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public MusicPlayer() {
+		this.soundPath = null;
+		this.clip = null;
+		this.gainControl = null;
+	}
+	
+	/**
+	 * Change la musique courante
+	 * @param musicName Nom du fichier(sans extension) de la nouvelle musique
+	 */
+	public void changeMusic(String musicName) {
+		this.soundPath = "/music/"+musicName+".wav";
+		if(this.clip!=null) {
+			this.clip.stop();
+			this.clip.close();
+			this.clip = null;
+		}
+		
+		try {
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(getClass().getResource(soundPath));
+			this.clip = AudioSystem.getClip();
+			this.clip.open(audioIn);
+			this.gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
+		}
+		catch (LineUnavailableException | IOException e) {
+			e.printStackTrace();
+		}
+		catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}
 	}

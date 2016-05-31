@@ -20,7 +20,7 @@ public class Window implements Runnable , ActionListener
 
 	private long startTime;
 
-	private static MusicPlayer musicPlayer = new MusicPlayer("/backgroundMusic.wav");
+	private static MusicPlayer musicPlayer = new MusicPlayer();
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 800;
@@ -49,8 +49,6 @@ public class Window implements Runnable , ActionListener
 
 	@Override
 	public void run() {
-		musicPlayer.playSound();
-		musicPlayer.setVolume(0.3f);
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);
 		this.startTime = System.nanoTime();

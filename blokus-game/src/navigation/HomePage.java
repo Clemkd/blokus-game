@@ -1,6 +1,5 @@
 package navigation;
 
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +13,6 @@ import entities.CellColor;
 import entities.Game;
 import entities.PlayerHuman;
 import gui.BlokusButton;
-import gui.BlokusCheckBox;
 import gui.Window;
 import utilities.Vector2;
 
@@ -234,14 +232,8 @@ public class HomePage extends Page implements ActionListener
 		this.buttonExit = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "exit.png"));
 		this.buttonExit.setPosition(new Vector2(POS_X, 662));
 		this.buttonExit.addListener(this);
-
 	}
 
 	@Override
-	public void unloadContents()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
+	public void unloadContents() {}
 }
