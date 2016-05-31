@@ -286,14 +286,7 @@ public class Game implements Serializable
 					}
 					else
 					{
-						if (m.getTile() != null)
-						{
-							this.doMove(m);
-						}
-						else
-						{
-							this.playingColors.remove(this.getCurrentColor());
-						}
+						this.doMove(m);
 					}
 				}
 			}
@@ -372,34 +365,59 @@ public class Game implements Serializable
 	 */
 	public void doMove(Move m)
 	{
-		this.undoRedoManager.add(this.board.copy());
-		ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
-		colorsCopy.addAll(this.playingColors);
-		this.undoRedoManagerColors.add(colorsCopy);
-		if(currentTurn%2==0)
+		if (m.getTile() != null)
 		{
-			Player p1 = this.getCurrentPlayer().copy();
-			p1.addTileToInventory(m.getTile());
-			this.undoRedoManagerPlayer.get(0).add(p1);
+			this.undoRedoManager.add(this.board.copy());
+			ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
+			colorsCopy.addAll(this.playingColors);
+			this.undoRedoManagerColors.add(colorsCopy);
+			if(currentTurn%2==0)
+			{
+				Player p1 = this.getCurrentPlayer().copy();
+				p1.addTileToInventory(m.getTile());
+				this.undoRedoManagerPlayer.get(0).add(p1);
+			}
+			else
+			{
+				Player p2 = this.getCurrentPlayer().copy();
+				p2.addTileToInventory(m.getTile());
+				this.undoRedoManagerPlayer.get(1).add(p2);
+			}
+
+			try
+			{
+				this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
+				this.testedMove = false;
+				this.currentTurn++;
+			}
+			catch (Exception e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+				System.exit(0);
+			}
 		}
 		else
 		{
-			Player p2 = this.getCurrentPlayer().copy();
-			p2.addTileToInventory(m.getTile());
-			this.undoRedoManagerPlayer.get(1).add(p2);
-		}
-
-		try
-		{
-			this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
-			this.testedMove = false;
+			this.playingColors.remove(this.getCurrentColor());
+			
+			this.undoRedoManager.add(this.board.copy());
+			ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
+			colorsCopy.addAll(this.playingColors);
+			this.undoRedoManagerColors.add(colorsCopy);
+			if(currentTurn%2==0)
+			{
+				Player p1 = this.getCurrentPlayer().copy();
+				this.undoRedoManagerPlayer.get(0).add(p1);
+			}
+			else
+			{
+				Player p2 = this.getCurrentPlayer().copy();
+				this.undoRedoManagerPlayer.get(1).add(p2);
+			}
+			
 			this.currentTurn++;
-		}
-		catch (Exception e)
-		{
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-			System.exit(0);
+			this.testedMove = false;
 		}
 	}
 	
