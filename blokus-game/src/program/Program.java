@@ -6,7 +6,7 @@ import utilities.OptionConfiguration;
 
 public class Program 
 {
-	OptionConfiguration optionConfiguration = OptionConfiguration.loadOption();
+	public static OptionConfiguration optionConfiguration = OptionConfiguration.loadOption();
 	
 	public static void main(String[] args) {
 		Window window = new Window("Blokus");

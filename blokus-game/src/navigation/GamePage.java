@@ -22,6 +22,7 @@ import gui.BlokusTile;
 import gui.Mouse;
 import gui.PlayerPanel;
 import gui.Window;
+import program.Program;
 import utilities.BlokusMessageBoxButtonState;
 import utilities.BlokusMessageBoxResult;
 import utilities.BufferedHelper;
@@ -436,6 +437,12 @@ public class GamePage extends Page implements ActionListener {
 
 			this.blokusBoard = new BlokusBoard(this.game.getBoard());
 			this.blokusBoard.setPosition(new Vector2(Window.WIDTH / 2 - (int) this.blokusBoard.getSize().getWidth() / 2, 212));
+			
+			Window.getMusicPlayer().changeMusic("Basewalk");
+			if(Program.optionConfiguration.isPlaySong()) {
+				Window.getMusicPlayer().playContinuously();
+				Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolume());
+			}
 			
 			this.flagLoad = true;
 		}

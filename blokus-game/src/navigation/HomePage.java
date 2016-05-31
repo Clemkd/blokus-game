@@ -14,6 +14,7 @@ import entities.Game;
 import entities.PlayerHuman;
 import gui.BlokusButton;
 import gui.Window;
+import program.Program;
 import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener
@@ -232,6 +233,12 @@ public class HomePage extends Page implements ActionListener
 		this.buttonExit = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "exit.png"));
 		this.buttonExit.setPosition(new Vector2(POS_X, 662));
 		this.buttonExit.addListener(this);
+		
+		Window.getMusicPlayer().changeMusic("DX Heaven");
+		if(Program.optionConfiguration.isPlaySong()) {
+			Window.getMusicPlayer().playContinuously();
+			Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolume());
+		}
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class OptionConfiguration implements Serializable {
 		this.autoSave = true;
 		this.daltonienMode = false;
 		this.help = false;
-		Window.getMusicPlayer().setVolume(0);
+		this.volume = 1.0f;
 	}
 	
 	public boolean isPlaySong() {
