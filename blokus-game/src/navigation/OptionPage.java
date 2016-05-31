@@ -14,6 +14,7 @@ import gui.BlokusLabel;
 import gui.BlokusText;
 import utilities.Vector2;
 import utilities.BufferedHelper;
+import utilities.OptionConfiguration;
 
 public class OptionPage extends Page implements ActionListener{
 	
@@ -70,8 +71,10 @@ public class OptionPage extends Page implements ActionListener{
 	
 	private static final int POS_X_TITLE = 371;
 	
+	private OptionConfiguration option;
 	public OptionPage() {
 		super();
+		this.option = OptionConfiguration.loadOption();
 		this.onControl = false;
 		this.onGeneral = true;
 		this.onRules = false;
@@ -189,6 +192,13 @@ public class OptionPage extends Page implements ActionListener{
 				this.onRules = true;
 				this.onControl = false;
 			}else if(e.getSource().equals(this.buttonToValid)){
+				this.option.setHelp(this.checkBoxGeneral1.isChecked());
+				this.option.setAutoSave(this.checkBoxAutoSave.isChecked());
+				this.option.setDaltonienMode(this.checkBoxDaltonienMode.isChecked());
+				this.option.setPlaySong(this.checkBoxActivateAudio.isChecked());
+				this.option.saveConfiguration();
+				Navigation.NavigateTo(Navigation.previous);
+			}else if(e.getSource().equals(this.buttonToCancel)){
 				Navigation.NavigateTo(Navigation.previous);
 			} else if(e.getSource().equals(this.buttonHelp1)) {
 				BlokusImageBox imageBox = new BlokusImageBox(null, Color.white);
@@ -240,22 +250,22 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleGame = new BlokusLabel("JEU", customFontTitle);
 		this.titleGame.setPosition(new Vector2(POS_X_TITLE, 102));
 		
-		this.checkBoxGeneral1 = new BlokusCheckBox(true, false, "METTRE EN SURBRILLANCE LES COUPS POSSIBLES", this.customFontCheckbox);
+		this.checkBoxGeneral1 = new BlokusCheckBox(true, this.option.isHelp(), "METTRE EN SURBRILLANCE LES COUPS POSSIBLES", this.customFontCheckbox);
 		this.checkBoxGeneral1.setPosition(new Vector2(POS_X_CHECKBOX, 150));
 		
-		this.checkBoxAutoSave = new BlokusCheckBox(true, false, "SAUVEGARDE AUTOMATIQUE", this.customFontCheckbox);
+		this.checkBoxAutoSave = new BlokusCheckBox(true, this.option.isAutoSave(), "SAUVEGARDE AUTOMATIQUE", this.customFontCheckbox);
 		this.checkBoxAutoSave.setPosition(new Vector2(POS_X_CHECKBOX, 180));
 		
 		this.titleAudio = new BlokusLabel("AUDIO", customFontTitle);
 		this.titleAudio.setPosition(new Vector2(POS_X_TITLE, 252));
 		
-		this.checkBoxActivateAudio = new BlokusCheckBox(true, false, "MUSIQUE DE FOND", this.customFontCheckbox);
+		this.checkBoxActivateAudio = new BlokusCheckBox(true, this.option.isPlaySong(), "MUSIQUE DE FOND", this.customFontCheckbox);
 		this.checkBoxActivateAudio.setPosition(new Vector2(POS_X_CHECKBOX, 300));
 		
 		this.titleVideo= new BlokusLabel("VIDEO", customFontTitle);
 		this.titleVideo.setPosition(new Vector2(POS_X_TITLE, 402));
 		
-		this.checkBoxDaltonienMode = new BlokusCheckBox(true, false, "MODE DALTONIEN", this.customFontCheckbox);
+		this.checkBoxDaltonienMode = new BlokusCheckBox(true, this.option.isDaltonienMode(), "MODE DALTONIEN", this.customFontCheckbox);
 		this.checkBoxDaltonienMode.setPosition(new Vector2(POS_X_CHECKBOX, 450));
 		
 		
