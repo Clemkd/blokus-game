@@ -200,8 +200,8 @@ public class PlayerPanel implements DrawableInterface{
 		g2d.setColor(Color.WHITE);
 		g2d.setFont(this.font);
 		
-		int posx = (int) (HEADER_PANEL_WIDTH - this.textSize.getWidth());
-		g2d.drawString(this.player.getName(),this.position.getX()+ posx - OFFSET_NAME_X, this.position.getY() + OFFSET_NAME_Y);
+		int posx = (int) ((HEADER_PANEL_WIDTH - this.textSize.getWidth())/2);
+		g2d.drawString(this.player.getName(),this.position.getX()+ posx, this.position.getY() + OFFSET_NAME_Y);
 		g2d.fillRect(this.position.getX(), this.position.getY() + HEADER_PANEL_HEIGHT, (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
 		this.tilePanel1.draw(g2d);
 		this.tilePanel2.draw(g2d);
