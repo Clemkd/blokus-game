@@ -117,6 +117,9 @@ public class GamePage extends Page implements ActionListener {
 		this.blokusBoard.setBoard(this.game.getBoard());
 		this.blokusBoard.showValidMoves(this.inDragAndDrop, this.game.getCurrentColor());
 		this.blokusBoard.update(elapsedTime);
+		
+		this.buttonRedo.setEnabled(this.game.canRedo());
+		this.buttonUndo.setEnabled(this.game.canUndo());
 
 		if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
 			if (this.panelJoueur1.getAssociatedPlayer() instanceof PlayerHuman) {
@@ -200,7 +203,7 @@ public class GamePage extends Page implements ActionListener {
 					if (this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, position)) {
 						((PlayerHuman) this.game.getCurrentPlayer())
 								.setChosenMove(new Move(position, this.selectedTile.getTile(), tileOrigin));
-						this.selectedTile = null;
+						this.selectedTile = null;	
 						this.inDragAndDrop = false;
 					}
 				}
@@ -341,6 +344,9 @@ public class GamePage extends Page implements ActionListener {
 					this.panelJoueur1.setPosition(new Vector2(32, 32));
 					this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
 					this.panelJoueur2.setPosition(new Vector2(980, 32));
+					
+					this.buttonRedo.setEnabled(this.game.canRedo());
+					this.buttonUndo.setEnabled(this.game.canUndo());
 				}
 			}
 			else if (e.getSource().equals(this.buttonRedo)) {
@@ -350,6 +356,9 @@ public class GamePage extends Page implements ActionListener {
 					this.panelJoueur1.setPosition(new Vector2(32, 32));
 					this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
 					this.panelJoueur2.setPosition(new Vector2(980, 32));
+					
+					this.buttonRedo.setEnabled(this.game.canRedo());
+					this.buttonUndo.setEnabled(this.game.canUndo());
 				}
 			}
 			else if (e.getSource().equals(this.buttonSave)) {
