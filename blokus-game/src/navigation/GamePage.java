@@ -1,5 +1,6 @@
 package navigation;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,6 @@ import gui.BlokusTile;
 import gui.Mouse;
 import gui.PlayerPanel;
 import gui.Window;
-import javafx.scene.paint.Color;
 import utilities.BlokusMessageBoxButtonState;
 import utilities.BlokusMessageBoxResult;
 import utilities.BufferedHelper;
@@ -359,7 +359,7 @@ public class GamePage extends Page implements ActionListener {
 			}
 			else if (e.getSource().equals(this.buttonExit)) {
 				BlokusMessageBox msgbox = new BlokusMessageBox("Êtes-vous sûr de vouloir quitter ?", this.font, BlokusMessageBoxButtonState.YES_OR_NO);
-				msgbox.setStrokeColor(java.awt.Color.ORANGE);
+				msgbox.setStrokeColor(Color.ORANGE);
 				msgbox.setStroke(3);
 				msgbox.show(this);
 			}
