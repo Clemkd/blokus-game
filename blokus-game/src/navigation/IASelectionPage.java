@@ -1,5 +1,6 @@
 package navigation;
 
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import entities.PlayerHuman;
 import entities.PlayerMCIA;
 import entities.PlayerRandom;
 import gui.BlokusButton;
+import gui.GraphicsPanel;
 import utilities.Vector2;
 
 public class IASelectionPage extends Page implements ActionListener{
@@ -62,11 +64,11 @@ public class IASelectionPage extends Page implements ActionListener{
 	
 	@Override
 	public void updatePage(float elapsedTime) {
+		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 		this.buttonIAEasy.update(elapsedTime);
 		this.buttonIAMedium.update(elapsedTime);
 		this.buttonIAHard.update(elapsedTime);
 		this.buttonReturn.update(elapsedTime);
-		
 	}
 
 	@Override

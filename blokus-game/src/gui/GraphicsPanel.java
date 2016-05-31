@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,13 +20,15 @@ import navigation.Navigation;
 import utilities.Vector2;
 
 public class GraphicsPanel extends JComponent implements MouseMotionListener, MouseListener, MouseWheelListener {
-	private static final long	serialVersionUID	= 1L;
-	private static final boolean DEBUG = false;
-	
-	private Image				background;
-	private long				framesRendered;
-	private double				timeElapsed;
-	private int					approxFPS;
+	private static final long		serialVersionUID	= 1L;
+	private static final boolean	DEBUG				= false;
+
+	public static Cursor			newCursor			= Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+
+	private Image					background;
+	private long					framesRendered;
+	private double					timeElapsed;
+	private int						approxFPS;
 
 	public GraphicsPanel() {
 		super();
@@ -49,15 +52,14 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 		super.paintComponent(g);
 		Graphics2D batch = (Graphics2D) g;
 		this.clear(batch);
-
 		batch.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
 		Navigation.getPage().draw(batch);
-		
+
 		this.framesRendered++;
-		if(DEBUG) {
-			batch.setColor(new Color(240,240,240,190));
+		if (DEBUG) {
+			batch.setColor(new Color(240, 240, 240, 190));
 			batch.fillRect(0, 0, 140, 65);
 			batch.setColor(Color.BLACK);
 			batch.drawString(String.valueOf(this.framesRendered), 5, 15);
@@ -117,8 +119,12 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 
 	public void update(float elapsedTime) {
 		this.timeElapsed += elapsedTime / 1000f;
-		this.approxFPS = Math.round(1000/elapsedTime);
+		this.approxFPS = Math.round(1000 / elapsedTime);
 		Navigation.getPage().update(elapsedTime);
+		if (this.getCursor() != newCursor) {
+			System.out.println("Changement de curseur !");
+			this.setCursor(newCursor);
+		}
 		this.repaint();
 	}
 }

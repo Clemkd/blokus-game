@@ -1,5 +1,6 @@
 package navigation;
 
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import gui.BlokusButton;
+import gui.GraphicsPanel;
 import gui.Window;
 import utilities.Vector2;
 
@@ -19,6 +21,7 @@ public class TutorialPage extends Page implements ActionListener{
 	
 	@Override
 	public void updatePage(float elapsedTime) {
+		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 		this.buttonReturn.update(elapsedTime);
 	
 	}

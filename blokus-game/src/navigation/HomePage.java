@@ -1,5 +1,6 @@
 package navigation;
 
+import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import entities.Game;
 import entities.PlayerHuman;
 import gui.BlokusButton;
 import gui.BlokusMessageBox;
+import gui.GraphicsPanel;
 import gui.Window;
 import program.Program;
 import utilities.BlokusMessageBoxButtonState;
@@ -78,6 +80,7 @@ public class HomePage extends Page implements ActionListener
 	@Override
 	public void updatePage(float elapsedTime)
 	{
+		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 		this.buttonMusic.update(elapsedTime);
 		this.buttonOnePLayer.update(elapsedTime);
 		this.buttonTwoPlayer.update(elapsedTime);

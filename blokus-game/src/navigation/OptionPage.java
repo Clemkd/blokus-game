@@ -1,6 +1,7 @@
 package navigation;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import gui.BlokusImageBox;
 import gui.BlokusLabel;
 import gui.BlokusMessageBox;
 import gui.BlokusText;
+import gui.GraphicsPanel;
 import gui.Window;
 import program.Program;
 import utilities.Vector2;
@@ -101,6 +103,7 @@ public class OptionPage extends Page implements ActionListener{
 	}
 	@Override
 	public void updatePage(float elapsedTime) {
+		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 		this.buttonControl.update(elapsedTime);
 		this.buttonGeneral.update(elapsedTime);
 		this.buttonRules.update(elapsedTime);
