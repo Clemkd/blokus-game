@@ -79,7 +79,6 @@ public class Game implements Serializable
 
 	public Game(Game g)
 	{
-		
 		this.testedMove = false;
 
 		this.players = new ArrayList<Player>();
@@ -94,6 +93,11 @@ public class Game implements Serializable
 		this.players.add(g.players.get(0).copy());
 		this.players.add(g.players.get(1).copy());
 		this.board = g.board.copy();
+		
+		this.undoRedoManagerColors = new UndoRedoManager<ArrayList<CellColor>>();
+		ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
+		colorsCopy.addAll(g.playingColors);
+		this.playingColors = colorsCopy;
 		for(CellColor c : g.getPlayingColors()) {
 			this.playingColors.add(c);
 		}
@@ -174,7 +178,22 @@ public class Game implements Serializable
 		
 		
 		this.currentTurn--;
+	}
+	
+	public void undoSingleMove()
+	{
+		this.board = undoRedoManager.undo(this.board);
+		this.playingColors = undoRedoManagerColors.undo(this.playingColors);
+		if(currentTurn%2==1)
+		{
+			this.players.set(0, this.undoRedoManagerPlayer.get(0).undo(this.players.get(0)));
+		}
+		else
+		{
+			this.players.set(1, this.undoRedoManagerPlayer.get(1).undo(this.players.get(1)));
+		}
 		
+		this.currentTurn--;
 	}
 
 	public void redoMove()
@@ -387,8 +406,6 @@ public class Game implements Serializable
 			try
 			{
 				this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
-				this.testedMove = false;
-				this.currentTurn++;
 			}
 			catch (Exception e)
 			{
@@ -415,20 +432,9 @@ public class Game implements Serializable
 				Player p2 = this.getCurrentPlayer().copy();
 				this.undoRedoManagerPlayer.get(1).add(p2);
 			}
-			
-			this.currentTurn++;
-			this.testedMove = false;
 		}
-	}
-	
-	/**
-	 * Passe le tour de la couleur actuelle et la retire du jeu
-	 */
-	public void surrendCurrentColor()
-	{
-		this.getPlayingColors().remove(this.getCurrentColor());
 		this.currentTurn++;
-		// TODO : Sauvegarder la suppression dans l'historique
+		this.testedMove = false;
 	}
 
 	/**
@@ -479,10 +485,12 @@ public class Game implements Serializable
 		
 		if(this.isTerminated())
 		{
-			res = this.getScore(this.getPlayers().get(0)) > this.getScore(this.getPlayers().get(1)) ?
-					this.getPlayers().get(0) : this.getPlayers().get(1);
+			int score1 = this.getScore(this.getPlayers().get(0));
+			int score2 = this.getScore(this.getPlayers().get(1));
+			
+			res =  score1 > score2 ?  this.getPlayers().get(0) : this.getPlayers().get(1);
 		}
-		
+		System.out.println(res);
 		return res;
 	}
 	

@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
 import entities.CellColor;
 import entities.Player;
@@ -55,6 +58,9 @@ public class PlayerPanel implements DrawableInterface{
 	
 	private CellColor headerColor;
 	
+	private Rectangle2D textSize;
+	
+	private Font font;
 	
 	/**
 	 * Constructeur de PlayerPanel
@@ -70,6 +76,9 @@ public class PlayerPanel implements DrawableInterface{
 		this.tilePanel2 = new TilePanel();
 		this.setPosition(new Vector2());
 		
+		this.font = null;
+		this.font = BufferedHelper.getDefaultFont(30f);
+		
 //		try 
 //		{
 //			this.headerPanelImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "fondgris.png"));
@@ -81,6 +90,9 @@ public class PlayerPanel implements DrawableInterface{
 //		}
 		
 		this.refreshTiles();
+		AffineTransform affinetransform = new AffineTransform();     
+		FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
+		this.textSize = this.font.getStringBounds(this.player.getName(), frc);
 	}
 	
 	/**
@@ -186,11 +198,10 @@ public class PlayerPanel implements DrawableInterface{
 		
 		g2d.fillRect(this.position.getX(), this.position.getY(), HEADER_PANEL_WIDTH, HEADER_PANEL_HEIGHT);
 		g2d.setColor(Color.WHITE);
-		Font font = null;
-		font = BufferedHelper.getDefaultFont(30f);
-		g2d.setFont(font);
-
-		g2d.drawString(this.player.getName(), this.position.getX() + OFFSET_NAME_X, this.position.getY() + OFFSET_NAME_Y);
+		g2d.setFont(this.font);
+		
+		int posx = (int) (HEADER_PANEL_WIDTH - this.textSize.getWidth()/2);
+		g2d.drawString(this.player.getName(),this.position.getX()+ posx + OFFSET_NAME_X, this.position.getY() + OFFSET_NAME_Y);
 		g2d.fillRect(this.position.getX(), this.position.getY() + HEADER_PANEL_HEIGHT, (int)this.getSize().getWidth(), (int)this.getSize().getHeight());
 		this.tilePanel1.draw(g2d);
 		this.tilePanel2.draw(g2d);
