@@ -43,8 +43,7 @@ public class Game implements Serializable
 	private ArrayList<CellColor> playingColors;
 	private boolean testedMove;
 	
-	private Move oldMove;
-	
+	private UndoRedoManager<ArrayList<CellColor>> undoRedoManagerColors;
 
 	public Game()
 	{	
@@ -68,6 +67,8 @@ public class Game implements Serializable
 		this.undoRedoManagerPlayer = new ArrayList<UndoRedoManager<Player>>();
 		this.undoRedoManagerPlayer.add(p1);
 		this.undoRedoManagerPlayer.add(p2);
+		
+		this.undoRedoManagerColors = new UndoRedoManager<ArrayList<CellColor>>();
 
 		this.playingColors = new ArrayList<CellColor>();
 		this.playingColors.add(CellColor.BLUE);
@@ -149,7 +150,7 @@ public class Game implements Serializable
 	public void undoMove()
 	{
 		this.board = undoRedoManager.undo(this.board);
-		
+		this.playingColors = undoRedoManagerColors.undo(this.playingColors);
 		if(currentTurn%2==1)
 		{
 			if(!(this.players.get(0) instanceof PlayerHuman))
@@ -179,6 +180,7 @@ public class Game implements Serializable
 	public void redoMove()
 	{
 		this.board = undoRedoManager.redo(this.board);
+		this.playingColors = undoRedoManagerColors.redo(this.playingColors);
 		if(currentTurn%2==0)
 		{
 			if(!(this.players.get(0) instanceof PlayerHuman))
@@ -297,6 +299,21 @@ public class Game implements Serializable
 			}
 			else
 			{
+				this.undoRedoManager.add(this.board.copy());
+				ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
+				colorsCopy.addAll(this.playingColors);
+				this.undoRedoManagerColors.add(colorsCopy);
+				if(currentTurn%2==0)
+				{
+					Player p1 = this.getCurrentPlayer().copy();
+					this.undoRedoManagerPlayer.get(0).add(p1);
+				}
+				else
+				{
+					Player p2 = this.getCurrentPlayer().copy();
+					this.undoRedoManagerPlayer.get(1).add(p2);
+				}
+				
 				this.currentTurn++;
 				this.testedMove = false;
 			}
@@ -356,6 +373,9 @@ public class Game implements Serializable
 	public void doMove(Move m)
 	{
 		this.undoRedoManager.add(this.board.copy());
+		ArrayList<CellColor> colorsCopy = new ArrayList<CellColor>();
+		colorsCopy.addAll(this.playingColors);
+		this.undoRedoManagerColors.add(colorsCopy);
 		if(currentTurn%2==0)
 		{
 			Player p1 = this.getCurrentPlayer().copy();
@@ -372,6 +392,7 @@ public class Game implements Serializable
 		try
 		{
 			this.board.addTile(m.getTile(), m.getTileOrigin(), m.getPosition());
+			this.testedMove = false;
 			this.currentTurn++;
 		}
 		catch (Exception e)
