@@ -43,6 +43,8 @@ public class Game implements Serializable
 	private ArrayList<CellColor> playingColors;
 	private boolean testedMove;
 	
+	private Move oldMove;
+	
 
 	public Game()
 	{	
@@ -379,6 +381,16 @@ public class Game implements Serializable
 			System.exit(0);
 		}
 	}
+	
+	/**
+	 * Passe le tour de la couleur actuelle et la retire du jeu
+	 */
+	public void surrendCurrentColor()
+	{
+		this.getPlayingColors().remove(this.getCurrentColor());
+		this.currentTurn++;
+		// TODO : Sauvegarder la suppression dans l'historique
+	}
 
 	/**
 	 * Renvoi le score du joueur fourni en paramètre dans l'état actuel du jeu
@@ -417,7 +429,24 @@ public class Game implements Serializable
 
 		return score;
 	}
-
+	
+	/**
+	 * Obtient le joueur gagnant
+	 * @return Le joueur gagnant
+	 */
+	public Player getWinner()
+	{
+		Player res = null;
+		
+		if(this.isTerminated())
+		{
+			res = this.getScore(this.getPlayers().get(0)) > this.getScore(this.getPlayers().get(1)) ?
+					this.getPlayers().get(0) : this.getPlayers().get(1);
+		}
+		
+		return res;
+	}
+	
 	/**
 	 * Obtient la liste des joueurs du jeu
 	 * 
@@ -428,12 +457,12 @@ public class Game implements Serializable
 		return this.players;
 	}
 
-	// TODO : A Verifier
+	// TODO : SUPPRIMER
 	/**
 	 * Annule le tour de jeu effectué
 	 * @param m Les données du tour de jeu
 	 */
-	public void revertMove(Move m)
+	/*public void revertMove(Move m)
 	{
 		// Revert du move sur le plateau
 		this.getBoard().revertMove(m);
@@ -449,7 +478,7 @@ public class Game implements Serializable
 		{
 			this.playingColors.add(this.getCurrentColor());
 		}
-	}
+	}*/
 
 	public Game copy() {
 		return new Game(this);

@@ -64,7 +64,7 @@ public class PlayerIA extends Player {
 				alpha = Math.max(alpha, m.getValue());
 				if (beta <= alpha)
 					break;
-				node.revertMove(m);
+				node.undoMove();
 			}
 			return bestMove;
 		}
@@ -79,7 +79,7 @@ public class PlayerIA extends Player {
 				beta = Math.min(beta, m.getValue());
 				if (beta <= alpha)
 					break;
-				node.revertMove(m);
+				node.undoMove();
 			}
 			return bestMove;
 		}

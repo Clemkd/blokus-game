@@ -87,6 +87,11 @@ public class Board implements Serializable{
 	 */
 	public void addTile(Tile tile, Vector2 tileOrigin, Vector2 position) throws InvalidMoveException
 	{
+		if(tile == null)
+		{
+			System.err.println("Tuile nulle donnée en argument");
+			System.exit(1);
+		}
 		if(!this.getFreePositions(tile.getColor()).contains(position))
 		{			
 			throw new InvalidMoveException("Tentative d'ajout d'une tuile sur une zone interdite");

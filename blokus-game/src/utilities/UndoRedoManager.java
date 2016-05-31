@@ -79,5 +79,13 @@ public class UndoRedoManager<T> implements Serializable {
 		this.undoStack.push(obj);
 		this.redoStack.clear();
 	}
-
+	
+	/**
+	 * Lecture de l'élément en haut de la pile de l'historique
+	 * @return Le dernier élément ajouté dans l'historique
+	 */
+	public T peekUndo()
+	{
+		return this.undoStack.peek();
+	}
 }
