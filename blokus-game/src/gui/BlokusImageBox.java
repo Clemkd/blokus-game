@@ -128,7 +128,7 @@ public class BlokusImageBox implements DrawableInterface, ActionListener {
 			
 			g2d.setPaint(Color.BLACK);
 			
-		//	g2d.drawImage(image, null, , );
+			g2d.drawImage(image, null, 454, 295);
 			
 			for(BlokusButton button : this.buttons)
 				button.draw(g);
