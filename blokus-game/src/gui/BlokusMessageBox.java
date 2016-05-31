@@ -13,6 +13,7 @@ import java.util.List;
 import navigation.Page;
 import utilities.BlokusMessageBoxButtonState;
 import utilities.BlokusMessageBoxResult;
+import utilities.CSSColors;
 import utilities.Vector2;
 
 public class BlokusMessageBox implements DrawableInterface, ActionListener {
@@ -26,6 +27,8 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	private static final int DEFAULT_STROKE = 1;
 	
 	private static final Color DEFAULT_STROKE_COLOR = Color.GRAY;
+	
+	private static final Color DEFAULT_BACK_COLOR = Color.WHITE;
 	
 	private BlokusMessageBoxButtonState buttonState;
 	
@@ -47,10 +50,13 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	
 	private Color strokeColor;
 	
+	private Color backColor;
+	
 	public BlokusMessageBox(String message, Font font, BlokusMessageBoxButtonState state)
 	{
 		this.stroke = DEFAULT_STROKE;
 		this.setStrokeColor(DEFAULT_STROKE_COLOR);
+		this.setBackColor(DEFAULT_BACK_COLOR);
 		this.position = DEFAULT_POSITION;
 		this.size = DEFAULT_SIZE;
 		this.message = message;
@@ -156,9 +162,9 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		{
 			Graphics2D g2d = (Graphics2D)g.create();
 			
-			g2d.setPaint(Color.ORANGE);
+			g2d.setPaint(this.strokeColor);
 			g2d.fillRect(this.position.getX() - this.stroke, this.position.getY() - this.stroke, this.size.width + this.stroke * 2, this.size.height + this.stroke * 2);
-			g2d.setPaint(Color.WHITE);
+			g2d.setPaint(this.backColor);
 			g2d.fillRect(this.position.getX(), this.position.getY(), this.size.width, this.size.height);
 			
 			g2d.setFont(this.font);
@@ -246,5 +252,13 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 
 	public void setStrokeColor(Color strokeColor) {
 		this.strokeColor = strokeColor;
+	}
+
+	public Color getBackColor() {
+		return backColor;
+	}
+
+	public void setBackColor(Color backColor) {
+		this.backColor = backColor;
 	}
 }

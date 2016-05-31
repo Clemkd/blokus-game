@@ -359,6 +359,7 @@ public class GamePage extends Page implements ActionListener {
 			}
 			else if (e.getSource().equals(this.buttonExit)) {
 				BlokusMessageBox msgbox = new BlokusMessageBox("Êtes-vous sûr de vouloir retourner à l'accueil ?", this.font, BlokusMessageBoxButtonState.YES_OR_NO);
+				msgbox.setBackColor(Color.WHITE);
 				msgbox.setStrokeColor(Color.ORANGE);
 				msgbox.setStroke(3);
 				msgbox.show(this);
