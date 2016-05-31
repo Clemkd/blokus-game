@@ -69,7 +69,7 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		
 		if(this.buttonState == BlokusMessageBoxButtonState.VALID)
 		{
-			BlokusButton buttonValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
+			BlokusButton buttonValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "validbox.png"));
 			buttonValid.setActionCommand(BlokusMessageBoxResult.VALID.getActionCommand());
 			buttonValid.setPosition(new Vector2(2 * Window.WIDTH / 3, (int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonValid.getSize().getHeight() * 2)));
 			buttonValid.addListener(this);
@@ -78,14 +78,14 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		}
 		else if(this.buttonState == BlokusMessageBoxButtonState.VALID_OR_CANCEL)
 		{
-			BlokusButton buttonValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
+			BlokusButton buttonValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "validbox.png"));
 			buttonValid.setActionCommand(BlokusMessageBoxResult.VALID.getActionCommand());
 			buttonValid.setPosition(new Vector2((int) ((2 * Window.WIDTH / 3) - buttonValid.getSize().getWidth() - DEFAULT_MARGIN_X),
 					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonValid.getSize().getHeight() * 2)));
 			buttonValid.addListener(this);
 			this.buttons.add(buttonValid); // Bouton VALIDER
 			
-			BlokusButton buttonCancel = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
+			BlokusButton buttonCancel = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "cancelbox.png"));
 			buttonCancel.setActionCommand(BlokusMessageBoxResult.CANCEL.getActionCommand());
 			buttonCancel.setPosition(new Vector2(2 * Window.WIDTH / 3,
 					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonCancel.getSize().getHeight() * 2)));
@@ -94,19 +94,19 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		}
 		else if(this.buttonState == BlokusMessageBoxButtonState.YES_OR_NO)
 		{
-			BlokusButton buttonYes = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
+			BlokusButton buttonYes = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "yesbox.png"));
 			buttonYes.setActionCommand(BlokusMessageBoxResult.YES.getActionCommand());
 			buttonYes.setPosition(new Vector2((int) ((2 * Window.WIDTH / 3) - buttonYes.getSize().getWidth() - DEFAULT_MARGIN_X),
 					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonYes.getSize().getHeight() * 2)));
 			buttonYes.addListener(this);
 			this.buttons.add(buttonYes); // Bouton OUI
 			
-			BlokusButton buttonNo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "optionsig.png"));
+			BlokusButton buttonNo = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "nobox.png"));
 			buttonNo.setActionCommand(BlokusMessageBoxResult.NO.getActionCommand());
 			buttonNo.setPosition(new Vector2(2 * Window.WIDTH / 3,
 					(int) (DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() - buttonNo.getSize().getHeight() * 2)));
 			buttonNo.addListener(this);
-			this.buttons.add(buttonNo); // Bouton ANNULER
+			this.buttons.add(buttonNo); // Bouton NON
 		}
 	}
 	
