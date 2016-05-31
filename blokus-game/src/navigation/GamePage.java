@@ -26,6 +26,7 @@ import program.Program;
 import utilities.BlokusMessageBoxButtonState;
 import utilities.BlokusMessageBoxResult;
 import utilities.BufferedHelper;
+import utilities.CSSColors;
 import utilities.Move;
 import utilities.Vector2;
 
@@ -92,6 +93,8 @@ public class GamePage extends Page implements ActionListener {
 	private Vector2				selectedTileHeldCell;
 	
 	private Font font;
+	
+	private boolean gameTerminated;
 
 	/**
 	 * Constructeur
@@ -133,6 +136,18 @@ public class GamePage extends Page implements ActionListener {
 
 		this.updatePlayerPanels(elapsedTime);
 		this.updateMouse(elapsedTime);
+		
+		if(this.game.isTerminated() && !this.gameTerminated)
+		{
+			int scoreP1 = this.game.getScore(this.game.getPlayers().get(0));
+			int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
+
+			BlokusMessageBox msgbox = new BlokusMessageBox("   Partie terminée\n\nScore joueur 1 : "+scoreP1+"\nScore joueur 2 : "+scoreP2, this.font, BlokusMessageBoxButtonState.VALID);
+			msgbox.setBackColor(Color.WHITE);
+			msgbox.setStrokeColor(CSSColors.DARKGREEN.color());
+			msgbox.setStroke(3);
+			msgbox.show(this);
+		}
 	}
 	
 	@Override
@@ -378,6 +393,9 @@ public class GamePage extends Page implements ActionListener {
 			if(e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand())
 			{
 				Navigation.NavigateTo(Navigation.homePage);
+			}else if (e.getActionCommand() == BlokusMessageBoxResult.VALID.getActionCommand())
+			{
+				this.gameTerminated = true;
 			}
 			
 			// Fermeture de la message box
@@ -443,7 +461,7 @@ public class GamePage extends Page implements ActionListener {
 				Window.getMusicPlayer().playContinuously();
 				Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolume());
 			}
-			
+			this.gameTerminated = false;
 			this.flagLoad = true;
 		}
 	}
