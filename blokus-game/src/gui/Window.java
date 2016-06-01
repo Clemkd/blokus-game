@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -51,6 +53,19 @@ public class Window implements Runnable , ActionListener
 	public void run() {
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);
+		this.frame.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				Keyboard.setLastKeyTyped(e.getKeyCode());
+				System.out.println(Keyboard.getLastKeyTyped());
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {}
+		});
 		this.startTime = System.nanoTime();
 		this.timer.start();
 	}
