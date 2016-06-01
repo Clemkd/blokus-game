@@ -101,3 +101,13 @@ Ajout d'une messageBox pour afficher des information importante comme le retour 
 14ème jour : 31 mai 2016
 Création de fichier de configuration pour les options.
 Fix du bouton (qui etait une checkBox) de la musique de fond.
+Implémentation d'une IA en utilisant l'algorithme de Monte-Carlo.
+Changement des curseur lorsque le curseur passe sur un objet cliquable.
+Fin de partie annoncée par une message box.
+Sauvegarde et chargement par une selection de fichier.
+Fix IHM.
+
+15ème jour : 1 juin 2016
+Redimensionnement de la fenêtre.
+Gestion du volume.
+Début de l'écriture du dossier de validation IHM.
