@@ -14,6 +14,7 @@ import entities.CellColor;
 import entities.Game;
 import entities.PlayerHuman;
 import gui.BlokusButton;
+import gui.BlokusCheckBox;
 import gui.BlokusMessageBox;
 import gui.GraphicsPanel;
 import gui.Window;
@@ -21,69 +22,66 @@ import program.Program;
 import utilities.BlokusMessageBoxResult;
 import utilities.Vector2;
 
-public class HomePage extends Page implements ActionListener
-{
+public class HomePage extends Page implements ActionListener {
 
-	private static final int POS_X = 488;
+	private static final int	POS_X	= 488;
 
 	//	private BlokusCheckBox buttonMusic;
 
 	/**
 	 * Bouton représentant l'activation de la musique
 	 */
-	private BlokusButton buttonMusic;
+	private BlokusCheckBox		buttonMusic;
 
 	/**
 	 * Flag d'activation de la musique
 	 */
-	private boolean musicIsOn;
+	private boolean				musicIsOn;
 
 	/**
 	 * Bouton représentant le choix de 1 joueur
 	 */
-	private BlokusButton buttonOnePLayer;
+	private BlokusButton		buttonOnePLayer;
 
 	/**
 	 * Bouton représentant le choix de 2 joueurs
 	 */
-	private BlokusButton buttonTwoPlayer;
+	private BlokusButton		buttonTwoPlayer;
 
 	/**
 	 * Bouton représentant le choix de charger une partie
 	 */
-	private BlokusButton buttonLoad;
+	private BlokusButton		buttonLoad;
 
 	/**
 	 * Bouton représentant le choix du tutoriel
 	 */
-	private BlokusButton buttonTutorial;
+	private BlokusButton		buttonTutorial;
 
 	/**
 	 * Bouton représentant le choix des options du jeu
 	 */
-	private BlokusButton buttonOption;
+	private BlokusButton		buttonOption;
 
 	/**
 	 * Bouton représentant le choix de quitter le jeu
 	 */
-	private BlokusButton buttonExit;
+	private BlokusButton		buttonExit;
 
 	/**
 	 * Image représentant le logo du jeu
 	 */
-	private BufferedImage titre;
+	private BufferedImage		titre;
 
 	/**
 	 * Constructeur
 	 */
-	public HomePage()
-	{
+	public HomePage() {
 		super();
 	}
 
 	@Override
-	public void updatePage(float elapsedTime)
-	{
+	public void updatePage(float elapsedTime) {
 		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 		this.buttonMusic.update(elapsedTime);
 		this.buttonOnePLayer.update(elapsedTime);
@@ -96,8 +94,7 @@ public class HomePage extends Page implements ActionListener
 	}
 
 	@Override
-	public void drawPage(Graphics2D g)
-	{
+	public void drawPage(Graphics2D g) {
 		Graphics2D batch = (Graphics2D) g.create();
 		batch.drawImage(this.titre, 500, 51, null);
 		this.buttonMusic.draw(batch);
@@ -112,35 +109,12 @@ public class HomePage extends Page implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		if (e.getSource() instanceof BlokusButton)
-		{
-			if (e.getSource().equals(this.buttonMusic))
-			{
-				//TODO: revoir peut etre en utilisant mieux la BlokusCheckBox
-				if(this.musicIsOn)
-				{
-					Window.getMusicPlayer().stopSound();
-					this.buttonMusic = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicoff.png"));
-					this.buttonMusic.setPosition(new Vector2(1140, 80));
-					this.buttonMusic.addListener(this);
-					this.musicIsOn = false;
-				}
-				else
-				{
-					Window.getMusicPlayer().playSound();
-					this.buttonMusic = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicon.png"));
-					this.buttonMusic.setPosition(new Vector2(1140, 80));
-					this.buttonMusic.addListener(this);
-					this.musicIsOn = true;
-				}
-			}
-			else if (e.getSource().equals(this.buttonOnePLayer))
-			{
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() instanceof BlokusButton) {
+			if (e.getSource().equals(this.buttonOnePLayer)) {
 				Navigation.NavigateTo(Navigation.iaPage);
-			} else if (e.getSource().equals(this.buttonTwoPlayer))
-			{
+			}
+			else if (e.getSource().equals(this.buttonTwoPlayer)) {
 				ArrayList<CellColor> colorsP1 = new ArrayList<CellColor>();
 				colorsP1.add(CellColor.BLUE);
 				colorsP1.add(CellColor.RED);
@@ -151,48 +125,50 @@ public class HomePage extends Page implements ActionListener
 				((GamePage) Navigation.gamePage).setGame(
 						new Game(new PlayerHuman("Joueur 1", colorsP1), new PlayerHuman("Joueur 2 bis", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
-			} else if (e.getSource().equals(this.buttonLoad))
-			{
+			}
+			else if (e.getSource().equals(this.buttonLoad)) {
 				Game game = Game.load();
-				if(game != null){
+				if (game != null) {
 					((GamePage) Navigation.gamePage).setGame(game);
 					Navigation.NavigateTo(Navigation.gamePage);
 				}
-			} else if (e.getSource().equals(this.buttonTutorial))
-			{
+			}
+			else if (e.getSource().equals(this.buttonTutorial)) {
 				Navigation.NavigateTo(Navigation.tutorialPage);
-			} else if (e.getSource().equals(this.buttonOption))
-			{
+			}
+			else if (e.getSource().equals(this.buttonOption)) {
 				Navigation.previous = this;
 				Navigation.NavigateTo(Navigation.optionPage);
-			} else if (e.getSource().equals(this.buttonExit))
-			{
+			}
+			else if (e.getSource().equals(this.buttonExit)) {
 				System.exit(0);
 			}
-		} else if(e.getSource() instanceof BlokusMessageBox){
-			if(e.getActionCommand() == BlokusMessageBoxResult.VALID.getActionCommand()){
+		}
+		else if (e.getSource() instanceof BlokusMessageBox) {
+			if (e.getActionCommand() == BlokusMessageBoxResult.VALID.getActionCommand()) {
 				this.getMessageBox().close(this);
 			}
 		}
-		//TODO: Ne marche pas, e = null quand on envoie l'evenement -> Exception
-		//		else if (e.getSource() instanceof BlokusCheckBox)
-		//		{
-		//			if (e.getSource().equals(this.buttonMusic))
-		//			{
-		//				System.out.println("ddddd");
-		//				// Window.getMusicPlayer().stopSound();
-		//			}
-		//		}
+		else if (e.getSource() instanceof BlokusCheckBox) {
+			if (e.getSource().equals(this.buttonMusic)) {
+				if (this.buttonMusic.isChecked()) {
+					Program.optionConfiguration.setPlaySong(true);
+					Window.getMusicPlayer().playContinuously();
+				}
+				else {
+					Program.optionConfiguration.setPlaySong(false);
+					Window.getMusicPlayer().stopSound();
+				}
+			}
+		}
 	}
 
 	@Override
-	public void loadContents()
-	{
-		try
-		{
+	public void loadContents() {
+		try {
 			this.titre = ImageIO.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "logo.png"));
-		} catch (IOException e)
-		{
+		}
+		catch (IOException e) {
 			this.titre = null;
 			e.printStackTrace();
 		}
@@ -219,11 +195,21 @@ public class HomePage extends Page implements ActionListener
 		//		this.buttonMusic.setSize(new Dimension(checked.getWidth(), checked.getHeight()));
 		//		this.buttonMusic.addListener(this);
 
-		this.buttonMusic = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicon.png"));
-		this.buttonMusic.setPosition(new Vector2(1140, 80));
-		this.buttonMusic.addListener(this);
+		this.musicIsOn = Program.optionConfiguration.isPlaySong();
 
-		this.musicIsOn = true;
+		try {
+			BufferedImage checked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicon.png"));
+			BufferedImage noChecked = ImageIO
+					.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicoff.png"));
+			this.buttonMusic = new BlokusCheckBox(true, this.musicIsOn, checked, noChecked);
+			this.buttonMusic.setPosition(new Vector2(1140, 80));
+			this.buttonMusic.addListener(this);
+		}
+		catch (IOException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(0);
+		}
 
 		this.buttonOnePLayer = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "oneplayer.png"));
 		this.buttonOnePLayer.setPosition(new Vector2(POS_X, 213));
@@ -250,7 +236,7 @@ public class HomePage extends Page implements ActionListener
 		this.buttonExit.addListener(this);
 
 		Window.getMusicPlayer().changeMusic("DX Heaven");
-		if(Program.optionConfiguration.isPlaySong()) {
+		if (Program.optionConfiguration.isPlaySong()) {
 			Window.getMusicPlayer().playContinuously();
 			Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolume());
 		}
