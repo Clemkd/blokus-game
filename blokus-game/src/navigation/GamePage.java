@@ -99,6 +99,8 @@ public class GamePage extends Page implements ActionListener {
 	 * La partie
 	 */
 	private Game				game;
+	
+	private Game				sameGame;
 
 	/**
 	 * Flag du chargement d'une partie
@@ -168,10 +170,18 @@ public class GamePage extends Page implements ActionListener {
 		if (this.game.isTerminated() && !this.gameTerminated) {
 			int scoreP1 = this.game.getScore(this.game.getPlayers().get(0));
 			int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
-
+			String vict = "";
+			if(scoreP1 > scoreP2)
+			{
+				vict ="Le "+this.game.getPlayers().get(0).getName()+" à gagné";
+			}
+			else
+			{
+				vict ="Le "+this.game.getPlayers().get(1).getName()+" à gagné";
+			}
 			BlokusMessageBox msgbox = new BlokusMessageBox(null,
-					"   Partie terminée\n\nScore joueur 1 : " + scoreP1 + "\nScore joueur 2 : " + scoreP2, this.font,
-					BlokusMessageBoxButtonState.VALID);
+					vict+"\n"+"Score : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
+					BlokusMessageBoxButtonState.YES_OR_NO);
 			msgbox.setBackColor(Color.WHITE);
 			msgbox.setStrokeColor(CSSColors.DARKGREEN.color());
 			msgbox.setStroke(3);
@@ -440,7 +450,16 @@ public class GamePage extends Page implements ActionListener {
 		}
 		else if (e.getSource() instanceof BlokusMessageBox) {
 			if (e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand()) {
-				Navigation.NavigateTo(Navigation.homePage);
+				if(!this.game.isTerminated())
+				{
+					Navigation.NavigateTo(Navigation.homePage);
+				}
+				else
+				{
+					this.setGame(this.sameGame);
+					Navigation.NavigateTo(Navigation.gamePage);
+					
+				}
 			}
 			else if (e.getActionCommand() == BlokusMessageBoxResult.VALID.getActionCommand()) {
 				this.gameTerminated = true;
@@ -449,6 +468,12 @@ public class GamePage extends Page implements ActionListener {
 			// Fermeture de la message box
 			if (this.getMessageBox() != null) {
 				this.getMessageBox().close(this);
+			}
+			if (e.getActionCommand() == BlokusMessageBoxResult.NO.getActionCommand()) {
+				if(this.game.isTerminated())
+				{
+					Navigation.NavigateTo(Navigation.homePage);
+				}
 			}
 		}
 	}
@@ -460,6 +485,7 @@ public class GamePage extends Page implements ActionListener {
 	 */
 	public void setGame(Game g) {
 		this.game = g;
+		this.sameGame = g.copy();
 		this.inDragAndDrop = false;
 		this.selectedTile = null;
 		this.selectedTileHeldCell = null;
