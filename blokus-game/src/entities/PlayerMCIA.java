@@ -3,32 +3,25 @@ package entities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.Random;
-import java.util.Stack;
-
 import javax.swing.Timer;
-
+import utilities.MCNode;
 import utilities.Move;
 
 public class PlayerMCIA extends Player implements ActionListener {
 	private static final long serialVersionUID = -8387538910197440018L;
 
-	private static final int DEFAULT_WIDTH_SIZE = 3;
-	private static final int DEFAULT_SAMPLE_SIZE = 2;
-	private Random rand;
+	private static final int DEFAULT_SAMPLE_SIZE = 100;
 	private Timer timer;
 	private Game game;
 
 	public PlayerMCIA(String name, List<CellColor> colors) {
 		super(name, colors);
-		this.rand = new Random();
 		this.timer = null;
 		this.game = null;
 	}
 
 	public PlayerMCIA(PlayerMCIA p) {
 		super((Player) p);
-		this.rand = new Random();
 		this.timer = null;
 		this.game = null;
 	}
@@ -37,7 +30,7 @@ public class PlayerMCIA extends Player implements ActionListener {
 	public void play(Game g, CellColor c) {
 		this.playing = true;
 		this.game = g;
-		this.timer = new Timer(800 + rand.nextInt(400), this);
+		this.timer = new Timer(0, this);
 		timer.start();
 	}
 
@@ -45,53 +38,54 @@ public class PlayerMCIA extends Player implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		this.timer.stop();
 
-		// TODO : Usage de la copie de this.game
-		this.chosenMove = this.monteCarlo(this.game.copy(), DEFAULT_SAMPLE_SIZE);
-
+		this.chosenMove = this.monteCarlo(game, DEFAULT_SAMPLE_SIZE);
+		
 		this.game = null;
 		this.playing = false;
 	}
 
-	private Move monteCarlo(Game game, int sampleSize) 
-	{
-		MCResult res = expansion(game, Move.EMPTY, sampleSize);
-		return res.getMove();
-	}
-	
-	private MCResult expansion(Game game, Move precMove, int j) {
-		MCResult res = new MCResult(precMove);
-		
-		if (game.isTerminated()) {
-			if(game.getWinner().equals(this))
-				res.setValue(1);
-			else
-				res.setValue(0);
-			return res;
-		}
-		if (j == 0) {
-			boolean b = simulateGameRandomly(game);
-			res.setValue(b ? 1 : 0);
-			return res;
-		}
-		
-		for (int i = 0; i < DEFAULT_WIDTH_SIZE; i++) {
-			Move mv = Move.generateRandomValidMove(game);
-			res.setMove(mv);
-			game.doMove(mv);
-			
-			MCResult mc = expansion(game, precMove, j - 1);
-			
-			double r = mc.getValue();
-			res.setValue(r + res.getValue());
-			game.undoSingleMove();
-		}
-
-		return res;
-	}
-
-	
 	/**
-	 * Simule un jeu depuis une configuration donnée
+	 * Algorithme Monte Carlo (Arbre de recherche)
+	 * @param game La configuration
+	 * @param itermax Le nombre d'itérations
+	 * @param uctk La valeur 
+	 * @return
+	 */
+	private Move monteCarlo(Game game, int itermax) {
+		MCNode rootNode = new MCNode(null, null, game);
+
+		for (int i = 0; i < itermax; i++) {
+			MCNode node = rootNode;
+			Game gameCopy = game.copy();
+
+			// SELECTION
+			while (!node.isLeaf()) {
+				node = node.selectChild();
+				gameCopy.doMove(node.getMove());
+			}
+
+			// EXPAND
+			Move move = Move.generateRandomValidMove(gameCopy);
+			gameCopy.doMove(move);
+			MCNode nodeL = new MCNode(node, move, gameCopy);
+			node = node.addChild(nodeL);
+
+			// SIMULATION
+			boolean gameResult = this.simulateGameRandomlyWhithoutRevert(gameCopy);
+			
+			// BACKPROPAGATE
+			while (node != null) {
+				node.update(gameResult);
+				node = node.getParent();
+			}
+		}
+
+		return rootNode.getMostVisitedMove();
+	}
+
+	/**
+	 * Simule un jeu depuis une configuration donnée et remet le plateau à la
+	 * configuration donnée
 	 * 
 	 * @param game
 	 *            La configuration
@@ -100,23 +94,46 @@ public class PlayerMCIA extends Player implements ActionListener {
 	 * @return True si le joueur de référence à gagné le jeu, False dans le cas
 	 *         contraire
 	 */
-	private boolean simulateGameRandomly(Game game) {
+	@SuppressWarnings("unused")
+	@Deprecated
+	private boolean simulateGameRandomlyAndRevert(Game game) {
 		int count = 0;
 		while (!game.isTerminated()) {
 			count++;
 			Move mv = Move.generateRandomValidMove(game);
 			game.doMove(mv);
 		}
-		
+
 		boolean resultGame = game.getWinner().equals(this);
-		
+
 		// Revert de la partie
 		while (count > 0) {
 			count--;
 			game.undoSingleMove();
 		}
 
-		System.out.println(resultGame);
+		return resultGame;
+	}
+
+	/**
+	 * Simule un jeu depuis une configuration donnée sans remise en état du
+	 * plateau
+	 * 
+	 * @param game
+	 *            La configuration
+	 * @param refPlayer
+	 *            Le joueur de référence
+	 * @return True si le joueur de référence à gagné le jeu, False dans le cas
+	 *         contraire
+	 */
+	private boolean simulateGameRandomlyWhithoutRevert(Game game) {
+		while (!game.isTerminated()) {
+			Move mv = Move.generateRandomValidMove(game);
+			game.doMove(mv);
+		}
+
+		boolean resultGame = game.getWinner().equals(this);
+
 		return resultGame;
 	}
 
