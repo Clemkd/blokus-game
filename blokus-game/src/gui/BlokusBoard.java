@@ -17,7 +17,14 @@ import utilities.Vector2;
 
 public class BlokusBoard implements DrawableInterface
 {
+	/**
+	 * Constante de l'offset de l'abscisse
+	 */
 	public static final int OFFSET_X = 15;
+	
+	/**
+	 * Constante de l'offset de l'ordonnée
+	 */
 	public static final int OFFSET_Y = 15;
 	
 	/**

@@ -9,11 +9,32 @@ import utilities.Vector2;
 
 public class BlokusLabel implements DrawableInterface {
 	
+	/**
+	 * Le texte
+	 */
 	private String text;
+	
+	/**
+	 * La position
+	 */
 	private Vector2 position;
+	
+	/**
+	 * La taille 
+	 */
 	private Dimension size;
+	
+	/**
+	 * La police de caractère
+	 */
 	private Font font;
 	
+	/**
+	 * Constructeur d'un BlokusLabel
+	 * 
+	 * @param text le texte
+	 * @param font le police de caractère
+	 */
 	public BlokusLabel(String text, Font font) {
 		this.setText(text);
 		this.position = new Vector2();
@@ -38,26 +59,56 @@ public class BlokusLabel implements DrawableInterface {
 		g2d.dispose();
 	}
 
+	/**
+	 * Obtient la position du BlokusLabel
+	 * 
+	 * @return la position
+	 */
 	public Vector2 getPosition() {
 		return position;
 	}
 
+	/**
+	 * Setter de la position du label
+	 * 
+	 * @param position la position
+	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
 
+	/**
+	 * Getter du texte
+	 * 
+	 * @return le texte
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * Setter du texte
+	 * 
+	 * @param text le texte
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	/**
+	 * Getter de la taille 
+	 * 
+	 * @return la taille
+	 */
 	public Dimension getSize() {
 		return size;
 	}
 
+	/**
+	 * Setter de la taille
+	 * 
+	 * @param size la taille
+	 */
 	public void setSize(Dimension size) {
 		this.size = size;
 	}
