@@ -90,6 +90,7 @@ public class OptionPage extends Page implements ActionListener {
 	private BlokusWaitPress		keyRotateCounterClockwiseButton;
 	private BlokusWaitPress		keySymetryClockwiseButton;
 	private BlokusWaitPress		keySymetryCounterClockwiseButton;
+	private BlokusButton defaultControlsButton;
 
 	public OptionPage() {
 		super();
@@ -157,12 +158,14 @@ public class OptionPage extends Page implements ActionListener {
 		this.keySymetryClockwiseButton.setEnabled(this.onControl);
 		this.keySymetryCounterClockwiseButton.setEnabled(this.onControl);
 		this.keyReturnButton.setEnabled(this.onControl);
+		this.defaultControlsButton.setEnabled(this.onControl);
 		
 		this.keyRotateClockwiseButton.update(elapsedTime);
 		this.keyRotateCounterClockwiseButton.update(elapsedTime);
 		this.keySymetryClockwiseButton.update(elapsedTime);
 		this.keySymetryCounterClockwiseButton.update(elapsedTime);
 		this.keyReturnButton.update(elapsedTime);
+		this.defaultControlsButton.update(elapsedTime);
 		// FIN PAGE CONTROLE
 	}
 
@@ -199,6 +202,8 @@ public class OptionPage extends Page implements ActionListener {
 			this.keySymetryClockwiseButton.draw(g2d);
 			this.keySymetryCounterClockwiseButton.draw(g2d);
 			this.keyReturnButton.draw(g2d);
+			
+			this.defaultControlsButton.draw(g2d);
 		}
 		else if (this.onRules) {
 			g2d.setColor(new Color(233, 188, 0));
@@ -262,6 +267,7 @@ public class OptionPage extends Page implements ActionListener {
 				Navigation.NavigateTo(Navigation.previous);
 			}
 			else if (e.getSource().equals(this.buttonToCancel)) {
+				Window.getMusicPlayer().setVolume(this.option.getVolume());
 				Navigation.NavigateTo(Navigation.previous);
 			}
 			else if (e.getSource().equals(this.buttonHelp1)) {
@@ -285,6 +291,13 @@ public class OptionPage extends Page implements ActionListener {
 				imageBox.setStroke(3);
 				imageBox.show(this);
 			}
+			else if(e.getSource().equals(this.defaultControlsButton)) {
+				this.keyRotateClockwiseButton.setKeyCode(39);
+				this.keyRotateCounterClockwiseButton.setKeyCode(37);
+				this.keySymetryClockwiseButton.setKeyCode(38);
+				this.keySymetryCounterClockwiseButton.setKeyCode(40);
+				this.keyReturnButton.setKeyCode(27);
+			}
 		}
 		else if (e.getSource() instanceof BlokusMessageBox) {
 			if (e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand()) {
@@ -298,7 +311,6 @@ public class OptionPage extends Page implements ActionListener {
 		}
 		else if (e.getSource() instanceof BlokusNumericUpDown) {
 			if (e.getSource().equals(this.upDownVolume)) {
-				this.option.setVolume(this.upDownVolume.getValue());
 				Window.getMusicPlayer().setVolume(this.upDownVolume.getValue());
 			}
 		}
@@ -464,9 +476,9 @@ public class OptionPage extends Page implements ActionListener {
 				this.customFontCheckbox);
 		this.keyReturnButton.setPosition(new Vector2(POS_X_CHECKBOX, 350));
 		
-		//this.defaultControlsButton = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "defaut.png");
-		//this.defaultControlsButton.setPosition(new Vector2(POS_X_CHECKBOX, 420));
-		//this.defaultControlsButton.addListener(this);
+		this.defaultControlsButton = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "restaurercontroles.png"));
+		this.defaultControlsButton.setPosition(new Vector2(POS_X_CHECKBOX, 400));
+		this.defaultControlsButton.addListener(this);
 		// FIN PAGE CONTROLES
 	}
 
