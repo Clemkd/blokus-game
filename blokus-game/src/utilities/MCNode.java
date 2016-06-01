@@ -81,10 +81,18 @@ public class MCNode {
 		this.childs = childs;
 	}
 
+	/**
+	 * Determine si le noeud est une feuille
+	 * @return True si le noeud est une feuille, False dans le cas contraire
+	 */
 	public boolean isLeaf() {
 		return this.childs.size() == 0;
 	}
 
+	/**
+	 * Selection et retourne le meilleur noeud fils selon l'heuristiue d'exploration (UCT avec UCB1)
+	 * @return Le meilleur sous-noeud
+	 */
 	public MCNode selectChild() {
 		this.getChilds().sort(new Comparator<MCNode>() {
 
@@ -106,11 +114,20 @@ public class MCNode {
 				(MCNode.UCTK * Math.sqrt(2 * Math.log(this.getVisitsCount()) / this.getVisitsCount()));
 	}
 
-	public MCNode addChild(MCNode nodeL) {
-		this.childs.add(nodeL);
-		return nodeL;
+	/**
+	 * Ajoute un nouveau noeud fils
+	 * @param node Le noeud à ajouter 
+	 * @return Le noeud ajouté
+	 */
+	public MCNode addChild(MCNode node) {
+		this.childs.add(node);
+		return node;
 	}
 
+	/**
+	 * Met à jour le node avec le résultat de partie spécifié
+	 * @param gameResult Le résultat de la partie référente au node
+	 */
 	public void update(boolean gameResult) {
 		this.visitsCount++;
 		if(gameResult)
@@ -119,8 +136,13 @@ public class MCNode {
 		}
 	}
 
+	/**
+	 * Retroune le placement le plus visité et possédant le plus de parties gagnées (notion de visite par MCNode)
+	 * @return Le meilleur placement selon l'UCT
+	 */
 	public Move getMostVisitedMove() 
 	{
+		// Tri sur le nombre de visites du noeud
 		this.getChilds().sort(new Comparator<MCNode>() {
 			@Override
 			public int compare(MCNode node1, MCNode node2) {
@@ -128,14 +150,18 @@ public class MCNode {
 			}
 		});
 		
+		// Le noeud le plus visité
 		MCNode firstMostVisited = this.getChilds().get(0);
 		
+		// Afin d'éviter de prendre le premier noeud le plus visité,
+		// si il existe un noeud possédant un grand nombre de parties gagnées et un grand nombre de visite
 		if(firstMostVisited.getVisitsCount() > (this.getVisitsCount() / this.getChilds().size()) + 1)
 		{
 			return firstMostVisited.getMove();
 		}
 		else
 		{
+			// Tri sur le nombre de parties gagnées
 			this.getChilds().sort(new Comparator<MCNode>() {
 				@Override
 				public int compare(MCNode node1, MCNode node2) {
