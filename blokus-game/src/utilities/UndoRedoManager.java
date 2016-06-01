@@ -18,6 +18,9 @@ public class UndoRedoManager<T> implements Serializable {
 	 */
 	private Stack<T>	redoStack;
 
+	/**
+	 * Constructeur d'un UndoRedoManager
+	 */
 	public UndoRedoManager() {
 		this.undoStack = new Stack<T>();
 		this.redoStack = new Stack<T>();
