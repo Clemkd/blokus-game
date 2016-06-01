@@ -111,7 +111,6 @@ public class BlokusTile implements DrawableInterface {
 	 * @return vrai si la position est dans la pièce, faux sinon
 	 */
 	public boolean isInBounds(Vector2 v) {
-		// TODO : ?
 		if (!this.isEnabled())
 			return false;
 
@@ -187,6 +186,11 @@ public class BlokusTile implements DrawableInterface {
 		return this.enabled;
 	}
 
+	/**
+	 * Setter du tile
+	 * 
+	 * @param newTile le tile
+	 */
 	public void setTile(Tile newTile) {
 		this.tile = newTile;
 	}

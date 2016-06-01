@@ -48,18 +48,34 @@ public class PlayerPanel implements DrawableInterface{
 	 */
 	private TilePanel tilePanel2;
 	
-	//private BufferedImage headerPanelImage;
-
+	/**
+	 * Le joueur
+	 */
 	private Player player;
 	
+	/**
+	 * La postion du panel
+	 */
 	private Vector2 position;
 
+	/**
+	 * La dimension du panel
+	 */
 	private Dimension size;
 	
+	/**
+	 * La couleur du header
+	 */
 	private CellColor headerColor;
 	
+	/**
+	 * Permet de gérer la taille du texte
+	 */
 	private Rectangle2D textSize;
 	
+	/**
+	 * La police de caractère
+	 */
 	private Font font;
 	
 	/**
