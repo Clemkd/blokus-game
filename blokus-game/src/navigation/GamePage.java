@@ -248,10 +248,12 @@ public class GamePage extends Page implements ActionListener {
 
 		if (this.inDragAndDrop) // Si on est toujours en drag&drop après le traitement des clics
 		{
+			this.selectedTile.setEnabled(true);
 			// Gestion du déplacement de la pièce avec le curseur
 			if (this.blokusBoard.isInBounds(mPos)) // La souris survole le plateau
 			{
 				GraphicsPanel.newCursor = Program.NOT_ALLOWED_CURSOR;
+				this.selectedTile.setEnabled(false);
 				int innerX = (mPos.getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X))
 						% CellColor.CELL_HEIGHT;
 				int innerY = (mPos.getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y))
@@ -288,6 +290,7 @@ public class GamePage extends Page implements ActionListener {
 				if (tileOrigin != null) {
 					if (this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, position)) {
 						GraphicsPanel.newCursor = Program.POINTING_HAND_CURSOR;
+						this.selectedTile.setEnabled(true);
 						if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT) // Bouton souris gauche enfoncé
 						{
 							((PlayerHuman) this.game.getCurrentPlayer())
