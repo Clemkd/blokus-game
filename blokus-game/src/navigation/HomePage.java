@@ -119,7 +119,7 @@ public class HomePage extends Page implements ActionListener
 				{
 					Window.getMusicPlayer().stopSound();
 					this.buttonMusic = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicoff.png"));
-					this.buttonMusic.setPosition(new Vector2(1190, 50));
+					this.buttonMusic.setPosition(new Vector2(1140, 80));
 					this.buttonMusic.addListener(this);
 					this.musicIsOn = false;
 				}
@@ -127,7 +127,7 @@ public class HomePage extends Page implements ActionListener
 				{
 					Window.getMusicPlayer().playSound();
 					this.buttonMusic = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicon.png"));
-					this.buttonMusic.setPosition(new Vector2(1190, 50));
+					this.buttonMusic.setPosition(new Vector2(1140, 80));
 					this.buttonMusic.addListener(this);
 					this.musicIsOn = true;
 				}
@@ -216,7 +216,7 @@ public class HomePage extends Page implements ActionListener
 		//		this.buttonMusic.addListener(this);
 
 		this.buttonMusic = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicon.png"));
-		this.buttonMusic.setPosition(new Vector2(1190, 50));
+		this.buttonMusic.setPosition(new Vector2(1140, 80));
 		this.buttonMusic.addListener(this);
 
 		this.musicIsOn = true;
