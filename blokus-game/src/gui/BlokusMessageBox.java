@@ -186,7 +186,7 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 			}
 			
 			if(this.getImage() != null){
-				g2d.drawImage(this.getImage(), 389, 264, 450, 280, null);
+				g2d.drawImage(this.getImage(), 389, 264, this.getImage().getWidth(), this.getImage().getHeight(), null);
 			}
 			
 			for(BlokusButton button : this.buttons)
