@@ -53,7 +53,7 @@ public class Vector2 implements Serializable {
 	 * @param v2 un autre vecteur
 	 * @return un vecteur
 	 */
-	public Vector2 plus(Vector2 v, Vector2 v2)
+	public static Vector2 plus(Vector2 v, Vector2 v2)
 	{
 		return new Vector2(v2.getX()+v.getX(), v2.getY()+v.getY());
 	}

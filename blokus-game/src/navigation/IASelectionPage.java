@@ -139,7 +139,7 @@ public class IASelectionPage extends Page implements ActionListener{
 		this.buttonIAHard.addListener(this);
 		
 		this.buttonReturn = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"accueil.png"));
-		this.buttonReturn.setPosition(new Vector2(32, 725));
+		this.buttonReturn.setPosition(new Vector2(32, 700));
 		this.buttonReturn.addListener(this);
 		
 	}
