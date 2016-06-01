@@ -54,7 +54,7 @@ public class OptionConfiguration implements Serializable {
 		this.autoSave = true;
 		this.daltonienMode = false;
 		this.help = false;
-		this.volume = 1.0f;
+		this.volume = 0.5f;
 
 		this.keyRotateClockwise = 39;
 		this.keyRotateCounterClockwise = 37;
