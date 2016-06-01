@@ -236,7 +236,7 @@ public class BlokusCheckBox implements DrawableInterface {
 	 */
 	public void swapChecked(){
 		this.isChecked = !isChecked;
-		this.raiseClickEvent(null);
+		this.raiseClickEvent(new ActionEvent(this, 0, null));
 	}
 	
 	/**
