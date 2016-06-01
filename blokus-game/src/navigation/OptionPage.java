@@ -80,7 +80,7 @@ public class OptionPage extends Page implements ActionListener {
 	private static final int	POS_X_PANEL		= 341;
 	private static final int	POS_Y_PANEL		= 72;
 	private static final int	PANEL_WIDTH		= 867;
-	private static final int	PANEL_HEIGHT	= 656;
+	private static final int	PANEL_HEIGHT	= 626;
 
 	private static final int	POS_X_TITLE		= 371;
 
@@ -359,24 +359,24 @@ public class OptionPage extends Page implements ActionListener {
 		this.buttonHelp3.addListener(this);
 
 		this.buttonGeneral = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "general.png"));
-		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS, 314));
+		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS, 305));
 		this.buttonGeneral.addListener(this);
 
 		this.buttonRules = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "regles.png"));
-		this.buttonRules.setPosition(new Vector2(POS_X_BOUTONS, 374));
+		this.buttonRules.setPosition(new Vector2(POS_X_BOUTONS, 365));
 		this.buttonRules.addListener(this);
 
 		this.buttonControl = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "controles.png"));
-		this.buttonControl.setPosition(new Vector2(POS_X_BOUTONS, 433));
+		this.buttonControl.setPosition(new Vector2(POS_X_BOUTONS, 424));
 		this.buttonControl.addListener(this);
 
 		this.buttonToValid = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "valider.png"));
-		this.buttonToValid.setPosition(new Vector2(1035, 653));
+		this.buttonToValid.setPosition(new Vector2(1035, 623));
 		this.buttonToValid.addListener(this);
 
 		this.buttonToCancel = new BlokusButton(
 				getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "annuleroptions.png"));
-		this.buttonToCancel.setPosition(new Vector2(371, 653));
+		this.buttonToCancel.setPosition(new Vector2(371, 623));
 		this.buttonToCancel.addListener(this);
 
 		this.titleGame = new BlokusLabel("JEU", customFontTitle);
