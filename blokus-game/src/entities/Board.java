@@ -46,28 +46,6 @@ public class Board implements Serializable{
 	}
 	
 	/**
-	 * Annule le tour de jeu auprès du plateau
-	 * @param m Le tour de jeu à annuler
-	 */
-	public void revertMove(Move m)
-	{
-		for(int offsetX = 0; offsetX < Tile.WIDTH; offsetX++)
-		{
-			for(int offsetY = 0; offsetY < Tile.HEIGHT; offsetY++)
-			{	
-				if(m.getTile().getCellType(offsetX, offsetY) != CellType.BLANK)
-				{
-					Vector2 currentGridPosition = new Vector2(
-							m.getPosition().getX() - m.getTileOrigin().getY() + offsetY,
-							m.getPosition().getY() - m.getTileOrigin().getX() + offsetX);
-					
-					this.setCell(currentGridPosition, null);
-				}
-			}
-		}
-	}
-	
-	/**
 	 * Obtient la cellule dans la grille du plateau à la position spécifiée
 	 * @param position La position de la cellule à obtenir
 	 * @return La cellule

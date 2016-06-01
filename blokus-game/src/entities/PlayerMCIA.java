@@ -1,47 +1,64 @@
 package entities;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Timer;
+import java.util.Random;
+
 import utilities.MCNode;
 import utilities.Move;
 
-public class PlayerMCIA extends Player implements ActionListener {
+public class PlayerMCIA extends Player{
 	private static final long serialVersionUID = -8387538910197440018L;
 
-	private static final int DEFAULT_SAMPLE_SIZE = 100;
-	private Timer timer;
+	private static final int DEFAULT_SAMPLE_SIZE = 200;
 	private Game game;
+	private Random rand;
+	private int piecePlace;
 
-	public PlayerMCIA(String name, List<CellColor> colors) {
+	public PlayerMCIA(String name, List<CellColor> colors) 
+	{
 		super(name, colors);
-		this.timer = null;
 		this.game = null;
+		this.rand = new Random();
+		this.piecePlace = 0;
 	}
 
 	public PlayerMCIA(PlayerMCIA p) {
-		super((Player) p);
-		this.timer = null;
+		super(p);
 		this.game = null;
+		this.rand = new Random();
+		this.piecePlace = 0;
 	}
 
 	@Override
 	public void play(Game g, CellColor c) {
 		this.playing = true;
-		this.game = g;
-		this.timer = new Timer(0, this);
-		timer.start();
-	}
+		this.game = g.copy();
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		this.timer.stop();
+		new Thread(new Runnable()
+		{
 
-		this.chosenMove = this.monteCarlo(game, DEFAULT_SAMPLE_SIZE);
+			@Override
+			public void run() 
+			{
+				if(piecePlace < 16)
+				{
+					ArrayList<Move> moves = Move.possibleMovesWithHeurisitic(game, 5);
+					chosenMove = moves.isEmpty() ? Move.EMPTY : moves.get(rand.nextInt(moves.size()));
+					piecePlace++;
+				}
+				else
+				{
+					System.err.println("MONTECARLO");
+					chosenMove = monteCarlo(game, DEFAULT_SAMPLE_SIZE);
+				}
+				
+				game = null;
+				playing = false;
+			}
+	
+		}).start();
 		
-		this.game = null;
-		this.playing = false;
 	}
 
 	/**

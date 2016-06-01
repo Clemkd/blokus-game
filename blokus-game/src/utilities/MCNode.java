@@ -7,7 +7,7 @@ import entities.Game;
 import entities.Player;
 
 public class MCNode {
-	private final static float UCTK = 1.44f;
+	private final static float UCTK = 0.7f;
 	
 	private Move move;
 	private MCNode parent;

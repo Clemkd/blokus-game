@@ -2,8 +2,11 @@ package utilities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 
+import entities.Board;
 import entities.Game;
 import entities.Tile;
 
@@ -110,6 +113,79 @@ public class Move implements Serializable {
 
 	public static Move generateRandomValidMove(Game game) {
 		return generateRandomValidMove(game, new Random());
+	}
+	
+	private static double euclideanDistance(Vector2 v1, Vector2 v2)
+	{
+		return Math.sqrt(Math.pow(v1.getX() - v1.getY(), 2) + Math.pow(v2.getX() - v2.getY(), 2));
+	}
+	
+	public static ArrayList<Move> possibleMovesWithHeurisitic(Game game, int max){
+		final Vector2 center = new Vector2(Board.WIDTH / 2, Board.HEIGHT / 2);
+		ArrayList<Move> listMove = new ArrayList<Move>();
+		
+		// Les placements actuels possibles
+		ArrayList<Vector2> validMoves = game.getBoard().getFreePositions(game.getCurrentColor());
+		
+		List<Tile> listTile = game.getCurrentPlayer().getTileInventory();
+		listTile.sort(new Comparator<Tile>() {
+
+			@Override
+			public int compare(Tile tile1, Tile tile2) {
+				return Integer.compare(tile2.getCellCount(), tile1.getCellCount());
+			}
+		});
+		
+		//Pour toutes les tuiles de l'inventaire
+		int i=0;
+		while(i < listTile.size() && listMove.size()<max)
+		{	
+			if(listTile.get(i).getColor() == game.getCurrentColor())
+			{
+				//pour toutes les rotations et tous les flips possibles
+				for(Tile t: listTile.get(i).getTilesListOfRotationsAndFlips())
+				{
+					//Si la tile est possible à placer
+					for (Vector2 tileOrigin : t.getExtremities()) {
+						for(Vector2 position: validMoves){
+							if (game.getBoard().isValidMove(t, tileOrigin, position)) {
+								listMove.add(new Move(position, t, tileOrigin));
+							}
+						}
+					}
+				}
+			}
+			i++;
+		}
+		
+		ArrayList<Move> movesResult = new ArrayList<Move>();
+		double minEuclideanDistance = Double.POSITIVE_INFINITY;
+		for(Move m : listMove)
+		{
+			for(Vector2 v : m.getTile().getExtremities())
+			{
+				/*position.setX(cell.getX() + (e.getY() - this.selectedTileHeldCell.getY()) - fc.getY());
+				position.setY(cell.getY() + (e.getX() - this.selectedTileHeldCell.getX()) - fc.getX());*/
+				
+				
+				Vector2 temp = new Vector2(m.getTileOrigin().getX() - v.getX(), m.getTileOrigin().getY() - v.getY());
+				double res = euclideanDistance(temp.plus(m.position), center);
+				if(res == minEuclideanDistance)
+				{
+					movesResult.add(m);
+					minEuclideanDistance = res;
+				}
+				else if(res < minEuclideanDistance)
+				{
+					movesResult.clear();
+					System.out.println(res);
+					movesResult.add(m);
+					minEuclideanDistance = res;
+				}
+			}
+		}
+		
+		return movesResult;
 	}
 
 	public static ArrayList<Move> possibleMoves(Game game) {
