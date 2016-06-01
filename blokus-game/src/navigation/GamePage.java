@@ -121,7 +121,8 @@ public class GamePage extends Page implements ActionListener {
 		this.buttonExit.update(elapsedTime);
 		this.game.update();
 		this.blokusBoard.setBoard(this.game.getBoard());
-		this.blokusBoard.showValidMoves(this.inDragAndDrop, this.game.getCurrentColor());
+		
+		this.blokusBoard.showValidMoves(this.inDragAndDrop && Program.optionConfiguration.isHelp(), this.game.getCurrentColor());
 		this.blokusBoard.update(elapsedTime);
 
 		this.buttonRedo.setEnabled(this.game.canRedo());
