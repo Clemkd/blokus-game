@@ -222,27 +222,27 @@ public class HomePage extends Page implements ActionListener
 		this.musicIsOn = true;
 
 		this.buttonOnePLayer = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "oneplayer.png"));
-		this.buttonOnePLayer.setPosition(new Vector2(POS_X, 233));
+		this.buttonOnePLayer.setPosition(new Vector2(POS_X, 213));
 		this.buttonOnePLayer.addListener(this);
 
 		this.buttonTwoPlayer = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "twoplayers.png"));
-		this.buttonTwoPlayer.setPosition(new Vector2(POS_X, 318));
+		this.buttonTwoPlayer.setPosition(new Vector2(POS_X, 298));
 		this.buttonTwoPlayer.addListener(this);
 
 		this.buttonLoad = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "load.png"));
-		this.buttonLoad.setPosition(new Vector2(POS_X, 406));
+		this.buttonLoad.setPosition(new Vector2(POS_X, 386));
 		this.buttonLoad.addListener(this);
 
 		this.buttonTutorial = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "tutorial.png"));
-		this.buttonTutorial.setPosition(new Vector2(POS_X, 492));
+		this.buttonTutorial.setPosition(new Vector2(POS_X, 472));
 		this.buttonTutorial.addListener(this);
 
 		this.buttonOption = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "options.png"));
-		this.buttonOption.setPosition(new Vector2(POS_X, 577));
+		this.buttonOption.setPosition(new Vector2(POS_X, 557));
 		this.buttonOption.addListener(this);
 
 		this.buttonExit = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "exit.png"));
-		this.buttonExit.setPosition(new Vector2(POS_X, 662));
+		this.buttonExit.setPosition(new Vector2(POS_X, 642));
 		this.buttonExit.addListener(this);
 
 		Window.getMusicPlayer().changeMusic("DX Heaven");
