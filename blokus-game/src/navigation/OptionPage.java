@@ -19,6 +19,7 @@ import gui.BlokusLabel;
 import gui.BlokusMessageBox;
 import gui.BlokusNumericUpDown;
 import gui.BlokusText;
+import gui.BlokusWaitPress;
 import gui.GraphicsPanel;
 import gui.Window;
 import program.Program;
@@ -41,7 +42,7 @@ public class OptionPage extends Page implements ActionListener{
 	private BlokusButton buttonHelp2;
 	private BlokusButton buttonHelp3;
 	
-	private BlokusCheckBox checkBoxGeneral1;
+	private BlokusCheckBox checkBoxDisplayPossibleMoves;
 	private BlokusCheckBox checkBoxAutoSave;
 	private BlokusCheckBox checkBoxActivateAudio;
 	private BlokusCheckBox checkBoxDaltonienMode;
@@ -87,6 +88,7 @@ public class OptionPage extends Page implements ActionListener{
 	private static final int POS_X_TITLE = 371;
 	
 	private OptionConfiguration option;
+	private BlokusWaitPress keyReturnButton;
 	public OptionPage() {
 		super();
 		this.option = Program.optionConfiguration;
@@ -107,11 +109,24 @@ public class OptionPage extends Page implements ActionListener{
 	@Override
 	public void updatePage(float elapsedTime) {
 		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+		
+		this.buttonHelp1.setEnabled(this.onRules);
+		this.buttonHelp2.setEnabled(this.onRules);
+		this.buttonHelp3.setEnabled(this.onRules);
+		
+		this.checkBoxActivateAudio.setEnabled(this.onGeneral);
+		this.checkBoxAutoSave.setEnabled(this.onGeneral);
+		this.checkBoxDaltonienMode.setEnabled(this.onGeneral);
+		this.checkBoxDisplayPossibleMoves.setEnabled(this.onGeneral);
+		this.upDownVolume.setEnabled(this.onGeneral);
+		
+		this.keyReturnButton.setEnabled(this.onControl);
+		
 		this.buttonControl.update(elapsedTime);
 		this.buttonGeneral.update(elapsedTime);
 		this.buttonRules.update(elapsedTime);
 		this.buttonToValid.update(elapsedTime);
-		this.checkBoxGeneral1.update(elapsedTime);
+		this.checkBoxDisplayPossibleMoves.update(elapsedTime);
 		this.checkBoxAutoSave.update(elapsedTime);
 		this.titleGame.update(elapsedTime);
 		this.titleAudio.update(elapsedTime);
@@ -135,7 +150,7 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonHelp2.update(elapsedTime);
 		this.buttonHelp3.update(elapsedTime);
 		this.upDownVolume.update(elapsedTime);
-		
+		this.keyReturnButton.update(elapsedTime);
 	}
 
 	@Override
@@ -145,13 +160,12 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonGeneral.draw(g2d);
 		this.buttonRules.draw(g2d);
 		
-		
 		if(this.onGeneral){
 			g2d.setColor(new Color(0, 93, 188));
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
 			
 			this.titleGame.draw(g2d);
-			this.checkBoxGeneral1.draw(g2d);
+			this.checkBoxDisplayPossibleMoves.draw(g2d);
 			this.checkBoxAutoSave.draw(g2d);
 			
 			this.titleAudio.draw(g2d);
@@ -164,6 +178,8 @@ public class OptionPage extends Page implements ActionListener{
 		}else if(this.onControl){
 			g2d.setColor(new Color(0, 141,44));
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
+			
+			this.keyReturnButton.draw(g2d);
 			
 			this.titleKeyboard.draw(g2d);
 			this.titleMouse.draw(g2d);
@@ -210,7 +226,7 @@ public class OptionPage extends Page implements ActionListener{
 				this.onRules = true;
 				this.onControl = false;
 			}else if(e.getSource().equals(this.buttonToValid)){
-				this.option.setHelp(this.checkBoxGeneral1.isChecked());
+				this.option.setHelp(this.checkBoxDisplayPossibleMoves.isChecked());
 				this.option.setAutoSave(this.checkBoxAutoSave.isChecked());
 				this.option.setDaltonienMode(this.checkBoxDaltonienMode.isChecked());
 				this.option.setPlaySong(this.checkBoxActivateAudio.isChecked());
@@ -305,8 +321,8 @@ public class OptionPage extends Page implements ActionListener{
 		this.titleGame = new BlokusLabel("JEU", customFontTitle);
 		this.titleGame.setPosition(new Vector2(POS_X_TITLE, 102));
 		
-		this.checkBoxGeneral1 = new BlokusCheckBox(true, this.option.isHelp(), "METTRE EN SURBRILLANCE LES COUPS POSSIBLES", this.customFontCheckbox);
-		this.checkBoxGeneral1.setPosition(new Vector2(POS_X_CHECKBOX, 150));
+		this.checkBoxDisplayPossibleMoves = new BlokusCheckBox(true, this.option.isHelp(), "METTRE EN SURBRILLANCE LES COUPS POSSIBLES", this.customFontCheckbox);
+		this.checkBoxDisplayPossibleMoves.setPosition(new Vector2(POS_X_CHECKBOX, 150));
 		
 		this.checkBoxAutoSave = new BlokusCheckBox(true, this.option.isAutoSave(), "SAUVEGARDE AUTOMATIQUE", this.customFontCheckbox);
 		this.checkBoxAutoSave.setPosition(new Vector2(POS_X_CHECKBOX, 180));
@@ -383,13 +399,13 @@ public class OptionPage extends Page implements ActionListener{
 		
 		this.upDownVolume = new BlokusNumericUpDown("volume", this.customFontCheckbox);
 		this.upDownVolume.setPosition(new Vector2(POS_X_CHECKBOX, 600));
-
+		
+		this.keyReturnButton = new BlokusWaitPress(this.onControl, this.option.getKeyReturn(), "Touche retour", this.customFontCheckbox);
+		this.keyReturnButton.setPosition(new Vector2(POS_X_CHECKBOX, 150));
 	}
 
 	@Override
 	public void unloadContents() {
 		// TODO Auto-generated method stub
-		
 	}
-
 }
