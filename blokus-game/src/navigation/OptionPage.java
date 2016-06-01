@@ -17,6 +17,7 @@ import gui.BlokusCheckBox;
 import gui.BlokusImageBox;
 import gui.BlokusLabel;
 import gui.BlokusMessageBox;
+import gui.BlokusNumericUpDown;
 import gui.BlokusText;
 import gui.GraphicsPanel;
 import gui.Window;
@@ -65,6 +66,7 @@ public class OptionPage extends Page implements ActionListener{
 	private BlokusText textEnd;
 	private BlokusText textAdvices;
 	
+	private BlokusNumericUpDown upDownVolume;
 	private boolean onControl;
 	private boolean onRules;
 	private boolean onGeneral;
@@ -132,6 +134,7 @@ public class OptionPage extends Page implements ActionListener{
 		this.buttonHelp1.update(elapsedTime);
 		this.buttonHelp2.update(elapsedTime);
 		this.buttonHelp3.update(elapsedTime);
+		this.upDownVolume.update(elapsedTime);
 		
 	}
 
@@ -153,6 +156,7 @@ public class OptionPage extends Page implements ActionListener{
 			
 			this.titleAudio.draw(g2d);
 			this.checkBoxActivateAudio.draw(g2d);
+			this.upDownVolume.draw(g2d);
 			
 			this.titleVideo.draw(g2d);
 			this.checkBoxDaltonienMode.draw(g2d);
@@ -376,6 +380,9 @@ public class OptionPage extends Page implements ActionListener{
 		           .toString();
 		this.textAdvices = new BlokusText(s5, customFontText);
 		this.textAdvices.setPosition(new Vector2(POS_X_TITLE, 550));
+		
+		this.upDownVolume = new BlokusNumericUpDown("volume", this.customFontCheckbox);
+		this.upDownVolume.setPosition(new Vector2(POS_X_CHECKBOX, 600));
 
 	}
 
