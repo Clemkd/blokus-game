@@ -9,14 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import navigation.Page;
-import program.Program;
+import java.util.ArrayList;import navigation.Page;
 import utilities.Vector2;
 
 public class BlokusNumericUpDown implements DrawableInterface{
@@ -38,6 +31,8 @@ public class BlokusNumericUpDown implements DrawableInterface{
 	private Font font;
 	
 	private Rectangle2D textSize;
+	
+	private boolean isEnabled;
 	
 	public BlokusNumericUpDown(String text, Font font) {
 		this.text = text;
@@ -90,6 +85,15 @@ public class BlokusNumericUpDown implements DrawableInterface{
 	
 	public void setSize(Dimension size) {
 		this.size = size;
+	}
+	
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 	
 	public boolean isInBoundsUp(Vector2 p)
