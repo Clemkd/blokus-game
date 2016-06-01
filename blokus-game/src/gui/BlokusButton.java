@@ -66,6 +66,11 @@ public class BlokusButton implements DrawableInterface
 	 */
 	private String actionCommand;
 	
+	/**
+	 * Constructeur d'un BlokusButton
+	 * 
+	 * @param file le chemin vers l'image
+	 */
 	public BlokusButton(String file)
 	{
 		this.actionCommand = null;
@@ -86,6 +91,11 @@ public class BlokusButton implements DrawableInterface
 		}
 	}
 	
+	/**
+	 * Constructeur d'un BlokusButton
+	 * 
+	 * @param file le chemin vers l'image
+	 */
 	public BlokusButton(URL file)
 	{
 		this.actionCommand = null;

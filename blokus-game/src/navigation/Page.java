@@ -25,10 +25,19 @@ public abstract class Page implements DrawableInterface, ActionListener {
 	 */
 	public static final String PATH_RESOURCES_FONTS = "/fonts/";
 	
+	/**
+	 * La message box
+	 */
 	protected static BlokusMessageBox MESSAGEBOX = null;
 	
+	/**
+	 * Si il est activé ou non
+	 */
 	protected boolean enabled;
 	
+	/**
+	 * Constructeur de la page
+	 */
 	public Page()
 	{
 		this.enabled = true;
@@ -44,8 +53,16 @@ public abstract class Page implements DrawableInterface, ActionListener {
 	 */
 	public abstract void unloadContents();
 	
+	/**
+	 * Procédure abstraite qui rafraichit les données
+	 * @param elapsedTime
+	 */
 	public abstract void updatePage(float elapsedTime);
 	
+	/**
+	 * Procédure abstraite qui dessine l'objet
+	 * @param g
+	 */
 	public abstract void drawPage(Graphics2D g);
 	
 	public final void update(float elapsedTime)
@@ -79,17 +96,32 @@ public abstract class Page implements DrawableInterface, ActionListener {
 		}
 	}
 	
+	/**
+	 * Setter de l'état de la page
+	 * 
+	 * @param state état
+	 */
 	public void setEnabled(boolean state)
 	{
 		this.enabled = state;
 	}
 	
+	/**
+	 * Setter de le message box
+	 * 
+	 * @param msgbox le message box
+	 */
 	public void setMessageBox(BlokusMessageBox msgbox)
 	{
 		MESSAGEBOX = msgbox;
 		MESSAGEBOX.addListener(this);
 	}
 	
+	/**
+	 * Getter du message box
+	 * 
+	 * @return le message box
+	 */
 	public BlokusMessageBox getMessageBox()
 	{
 		return MESSAGEBOX;

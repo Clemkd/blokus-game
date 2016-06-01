@@ -23,13 +23,34 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 	private static final long		serialVersionUID	= 1L;
 	private static final boolean	DEBUG				= false;
 
+	/**
+	 * Prend le curseur prédéfini
+	 */
 	public static Cursor			newCursor			= Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 
+	/**
+	 * L'image de fond
+	 */
 	private Image					background;
+	
+	/**
+	 * Le nombre de frame
+	 */
 	private long					framesRendered;
+	
+	/**
+	 * Temps passé en milliseconde
+	 */
 	private double					timeElapsed;
+	
+	/**
+	 * La moyenne FPS
+	 */
 	private int						approxFPS;
 
+	/**
+	 * Constructeur de GraphicsPanel
+	 */
 	public GraphicsPanel() {
 		super();
 		this.addMouseListener(this);
@@ -117,6 +138,11 @@ public class GraphicsPanel extends JComponent implements MouseMotionListener, Mo
 		Mouse.setLastScrollClicks(e.getWheelRotation());
 	}
 
+	/**
+	 * Procédure d'update
+	 * 
+	 * @param elapsedTime
+	 */
 	public void update(float elapsedTime) {
 		this.timeElapsed += elapsedTime / 1000f;
 		this.approxFPS = Math.round(1000 / elapsedTime);

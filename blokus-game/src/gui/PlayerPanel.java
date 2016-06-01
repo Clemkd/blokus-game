@@ -22,7 +22,7 @@ import utilities.Vector2;
 public class PlayerPanel implements DrawableInterface{
 	
 	private static final int OFFSET_NAME_Y = 40;
-	private static final int OFFSET_NAME_X = 60;
+	//private static final int OFFSET_NAME_X = 60;
 	// p2 995
 	private final static int OFFSET_X_TILE_PANEL = 20;
 	private final static int OFFSET_Y_TILE_PANEL = 68;
