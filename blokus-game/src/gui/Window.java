@@ -55,6 +55,11 @@ public class Window implements Runnable , ActionListener
 		this.timer.start();
 	}
 	
+	/**
+	 * Fonction static qui permet de recuperer le MusicPlayer
+	 * 
+	 * @return le MusicPlayer
+	 */
 	public static MusicPlayer getMusicPlayer() {
 		return musicPlayer;
 	}

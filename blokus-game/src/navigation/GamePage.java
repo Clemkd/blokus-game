@@ -169,7 +169,7 @@ public class GamePage extends Page implements ActionListener {
 			int scoreP1 = this.game.getScore(this.game.getPlayers().get(0));
 			int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
 
-			BlokusMessageBox msgbox = new BlokusMessageBox(
+			BlokusMessageBox msgbox = new BlokusMessageBox(null,
 					"   Partie terminée\n\nScore joueur 1 : " + scoreP1 + "\nScore joueur 2 : " + scoreP2, this.font,
 					BlokusMessageBoxButtonState.VALID);
 			msgbox.setBackColor(Color.WHITE);
@@ -427,7 +427,7 @@ public class GamePage extends Page implements ActionListener {
 				// jFileChooser.showSaveDialog(jFileChooser);
 			}
 			else if (e.getSource().equals(this.buttonExit)) {
-				BlokusMessageBox msgbox = new BlokusMessageBox("Êtes-vous sûr de vouloir retourner à l'accueil ?",
+				BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?",
 						this.font, BlokusMessageBoxButtonState.YES_OR_NO);
 				msgbox.setBackColor(Color.WHITE);
 				msgbox.setStrokeColor(Color.ORANGE);

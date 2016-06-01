@@ -42,11 +42,24 @@ public class Game implements Serializable
 	 */
 	private UndoRedoManager<Board> undoRedoManager;
 
+	/**
+	 * Prise en charge de la sauvegarde de l'état des joueurs pour les annulations et répétitions
+	 */
 	private ArrayList<UndoRedoManager<Player>> undoRedoManagerPlayer;
 
+	/**
+	 * La liste des couleurs jouée
+	 */
 	private ArrayList<CellColor> playingColors;
+	
+	/**
+	 * Flag d'un mouvement jouée
+	 */
 	private boolean testedMove;
 
+	/**
+	 * Prise en charge de la sauvegarde de la liste pour les annulations et répétitions
+	 */
 	private UndoRedoManager<ArrayList<CellColor>> undoRedoManagerColors;
 
 	public Game()
@@ -108,6 +121,11 @@ public class Game implements Serializable
 		this.currentTurn = g.currentTurn;
 	}
 
+	/**
+	 * Getter des couleurs
+	 * 
+	 * @return une liste des couleurs du jeu
+	 */
 	private List<CellColor> getPlayingColors() {
 		return this.playingColors;
 	}
@@ -152,9 +170,9 @@ public class Game implements Serializable
 		return this.currentTurn;
 	}
 
-	// TODO: Implémenter le undoRedoManager différemment car besoin sauvegarder
-	// état des joueurs
-	// aussi(pieces restantes, etc)
+	/**
+	 * Annule un mouvement
+	 */
 	public void undoMove()
 	{
 		this.board = undoRedoManager.undo(this.board);
@@ -184,6 +202,9 @@ public class Game implements Serializable
 		this.currentTurn--;
 	}
 
+	/**
+	 * Annule un seul mouvement (ne pas utiliser dans une partie normale)
+	 */
 	public void undoSingleMove()
 	{
 		this.board = undoRedoManager.undo(this.board);
@@ -200,6 +221,9 @@ public class Game implements Serializable
 		this.currentTurn--;
 	}
 
+	/**
+	 * Refait un mouvement annulé
+	 */
 	public void redoMove()
 	{
 		this.board = undoRedoManager.redo(this.board);
@@ -341,7 +365,7 @@ public class Game implements Serializable
 	}
 
 	/**
-	 * Sauvegarde la partie dans un fichier TODO: do it, just DO IT
+	 * Sauvegarde la partie dans un fichier
 	 */
 	public void save(){
 		JFileChooser jFileChooser = new JFileChooser();
@@ -363,6 +387,11 @@ public class Game implements Serializable
 
 	}
 
+	/**
+	 * Méthode de chargement d'une partie
+	 * 
+	 * @return la partie chargée
+	 */
 	public static Game load(){
 		Game gameToLoad = null;
 		JFileChooser jfChooser = new JFileChooser();
@@ -536,6 +565,11 @@ public class Game implements Serializable
 		}
 	}*/
 
+	/**
+	 * Méthode de copie de Game
+	 * 
+	 * @return une copie de Game
+	 */
 	public Game copy() {
 		return new Game(this);
 	}
