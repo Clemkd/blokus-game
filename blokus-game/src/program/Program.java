@@ -24,7 +24,7 @@ public class Program
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		try {
-			BufferedImage cursorNotAllowedImage = ImageIO.read(Program.class.getClass().getResource("/cursors/not_allowed.png"));
+			BufferedImage cursorNotAllowedImage = ImageIO.read(Program.class.getClass().getResource("/cursors/not_allowed2.png"));
 			NOT_ALLOWED_CURSOR = tk.createCustomCursor(cursorNotAllowedImage, new Point(7,7), "Not Allowed");
 			
 			BufferedImage cursorGrabImage = ImageIO.read(Program.class.getClass().getResource("/cursors/grab.png"));
