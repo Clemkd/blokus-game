@@ -37,7 +37,7 @@ public class GamePage extends Page implements ActionListener {
 	/**
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
-	private static final int	BUTTONS_Y_POSITION	= 725;
+	private static final int	BUTTONS_Y_POSITION	= 700; // 725
 
 	private boolean				inDragAndDrop;
 
@@ -366,9 +366,9 @@ public class GamePage extends Page implements ActionListener {
 				if (this.game.canUndo()) {
 					this.game.undoMove();
 					this.panelJoueur1 = new PlayerPanel(this.game.getPlayers().get(0));
-					this.panelJoueur1.setPosition(new Vector2(32, 32));
+					this.panelJoueur1.setPosition(new Vector2(32, 10));
 					this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
-					this.panelJoueur2.setPosition(new Vector2(980, 32));
+					this.panelJoueur2.setPosition(new Vector2(980, 10));
 
 					this.buttonRedo.setEnabled(this.game.canRedo());
 					this.buttonUndo.setEnabled(this.game.canUndo());
@@ -378,9 +378,9 @@ public class GamePage extends Page implements ActionListener {
 				if (this.game.canRedo()) {
 					this.game.redoMove();
 					this.panelJoueur1 = new PlayerPanel(this.game.getPlayers().get(0));
-					this.panelJoueur1.setPosition(new Vector2(32, 32));
+					this.panelJoueur1.setPosition(new Vector2(32, 10));
 					this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
-					this.panelJoueur2.setPosition(new Vector2(980, 32));
+					this.panelJoueur2.setPosition(new Vector2(980, 10));
 
 					this.buttonRedo.setEnabled(this.game.canRedo());
 					this.buttonUndo.setEnabled(this.game.canUndo());
@@ -458,9 +458,9 @@ public class GamePage extends Page implements ActionListener {
 			this.buttonExit.addListener(this);
 
 			this.panelJoueur1 = new PlayerPanel(this.game.getPlayers().get(0));
-			this.panelJoueur1.setPosition(new Vector2(32, 32));
+			this.panelJoueur1.setPosition(new Vector2(32, 10));
 			this.panelJoueur2 = new PlayerPanel(this.game.getPlayers().get(1));
-			this.panelJoueur2.setPosition(new Vector2(980, 32));
+			this.panelJoueur2.setPosition(new Vector2(980, 10));
 
 			this.blokusBoard = new BlokusBoard(this.game.getBoard());
 			this.blokusBoard

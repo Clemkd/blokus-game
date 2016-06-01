@@ -23,7 +23,7 @@ public class Window implements Runnable , ActionListener
 	private static MusicPlayer musicPlayer = new MusicPlayer();
 	
 	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 800;
+	public static final int HEIGHT = 778;
 
 	public Window(String name) {
 		this.frame = new JFrame();
