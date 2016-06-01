@@ -307,9 +307,11 @@ public class Game implements Serializable
 
 	/**
 	 * Appelé à chaque itération de jeu
+	 * @return 
 	 */
-	public void update()
+	public boolean update()
 	{
+		int turn = this.currentTurn;
 		if (!this.isTerminated())
 		{
 			if(!this.testedMove) {
@@ -360,6 +362,9 @@ public class Game implements Serializable
 		{
 			System.out.println("Partie terminée !");
 		}
+		if (turn!=this.currentTurn)
+			return true;
+		return false;
 	}
 
 	/**

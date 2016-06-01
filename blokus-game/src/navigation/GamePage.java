@@ -14,7 +14,12 @@ import javax.imageio.ImageIO;
 
 import entities.CellColor;
 import entities.Game;
+import entities.Player;
 import entities.PlayerHuman;
+import entities.PlayerIA;
+import entities.PlayerMCIA;
+import entities.PlayerMedium;
+import entities.PlayerRandom;
 import entities.Tile;
 import gui.BlokusBoard;
 import gui.BlokusButton;
@@ -101,8 +106,6 @@ public class GamePage extends Page implements ActionListener {
 	 * La partie
 	 */
 	private Game				game;
-	
-	private Game				sameGame;
 
 	/**
 	 * Flag du chargement d'une partie
@@ -148,7 +151,13 @@ public class GamePage extends Page implements ActionListener {
 		this.buttonRedo.update(elapsedTime);
 		this.buttonSave.update(elapsedTime);
 		this.buttonExit.update(elapsedTime);
-		this.game.update();
+		if(this.game.update()) {
+			if(Program.optionConfiguration.isPlaySFX()) {
+				this.soundPlayer.changeMusic("effect01");
+				this.soundPlayer.setVolume(Program.optionConfiguration.getVolumeSFX());
+				this.soundPlayer.playOnce();
+			}
+		}
 		this.blokusBoard.setBoard(this.game.getBoard());
 
 		this.blokusBoard.showValidMoves(this.inDragAndDrop && Program.optionConfiguration.isHelp(),
@@ -172,7 +181,7 @@ public class GamePage extends Page implements ActionListener {
 		this.updatePlayerPanels(elapsedTime);
 		this.updateMouse(elapsedTime);
 
-		if (this.game.isTerminated() && !this.gameTerminated) {
+		if (this.game.isTerminated()) {
 			int scoreP1 = this.game.getScore(this.game.getPlayers().get(0));
 			int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
 			String vict = "";
@@ -325,11 +334,6 @@ public class GamePage extends Page implements ActionListener {
 							this.selectedTile = null;
 							this.inDragAndDrop = false;
 							Mouse.consumeLastMouseButton();
-							if(Program.optionConfiguration.isPlaySFX()) {
-								this.soundPlayer.changeMusic("effect01");
-								this.soundPlayer.setVolume(Program.optionConfiguration.getVolumeSFX());
-								this.soundPlayer.playOnce();
-							}
 						}
 					}
 				}
@@ -481,13 +485,50 @@ public class GamePage extends Page implements ActionListener {
 				}
 				else
 				{
-					this.setGame(this.sameGame);
-					Navigation.NavigateTo(Navigation.gamePage);
+					Player p1, p2;
+					if(this.game.getPlayers().get(0) instanceof PlayerHuman) {
+						p1 = new PlayerHuman(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					}
+					else if(this.game.getPlayers().get(0) instanceof PlayerRandom) {
+						p1 = new PlayerRandom(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					}
+					else if(this.game.getPlayers().get(0) instanceof PlayerMCIA) {
+						p1 = new PlayerMCIA(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					}
+					else if(this.game.getPlayers().get(0) instanceof PlayerMedium) {
+						p1 = new PlayerMedium(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					}
+					else if(this.game.getPlayers().get(0) instanceof PlayerIA) {
+						p1 = new PlayerIA(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					}
+					else {
+						System.err.println("Erreur recréation joueur 1");
+						p1 = new PlayerHuman(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					}
 					
+					if(this.game.getPlayers().get(1) instanceof PlayerHuman) {
+						p2 = new PlayerHuman(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					}
+					else if(this.game.getPlayers().get(1) instanceof PlayerRandom) {
+						p2 = new PlayerRandom(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					}
+					else if(this.game.getPlayers().get(1) instanceof PlayerMCIA) {
+						p2 = new PlayerMCIA(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					}
+					else if(this.game.getPlayers().get(1) instanceof PlayerMedium) {
+						p2 = new PlayerMedium(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					}
+					else if(this.game.getPlayers().get(1) instanceof PlayerIA) {
+						p2 = new PlayerIA(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					}
+					else {
+						System.err.println("Erreur recréation joueur 2");
+						p2 = new PlayerHuman(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					}
+					
+					this.setGame(new Game(p1, p2));
+					Navigation.NavigateTo(Navigation.gamePage);
 				}
-			}
-			else if (e.getActionCommand() == BlokusMessageBoxResult.VALID.getActionCommand()) {
-				this.gameTerminated = true;
 			}
 
 			// Fermeture de la message box
@@ -522,7 +563,6 @@ public class GamePage extends Page implements ActionListener {
 	 */
 	public void setGame(Game g) {
 		this.game = g;
-		this.sameGame = g.copy();
 		this.inDragAndDrop = false;
 		this.selectedTile = null;
 		this.selectedTileHeldCell = null;
@@ -577,7 +617,6 @@ public class GamePage extends Page implements ActionListener {
 				Window.getMusicPlayer().playContinuously();
 				Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolumeMusic());
 			}
-			this.gameTerminated = false;
 			this.flagLoad = true;
 		}
 	}
