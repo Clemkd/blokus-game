@@ -11,6 +11,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 import navigation.OptionPage;
@@ -61,14 +62,14 @@ public class BufferedHelper
     	Font customFont = null;
 		try 
 		{
-			File file = new File(OptionPage.class.getClass().getResource(Page.PATH_RESOURCES_FONTS + DEFAULT_FONT_NAME).toURI());
+			InputStream file = OptionPage.class.getClass().getResourceAsStream(Page.PATH_RESOURCES_FONTS + DEFAULT_FONT_NAME);
 			customFont = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(fontSize);
 	        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	        //register the font
 	        ge.registerFont(customFont);
 	        
 		} 
-		catch (FontFormatException | IOException | URISyntaxException e) 
+		catch (FontFormatException | IOException e) 
 		{
 			System.err.println(e.getMessage());
 			e.printStackTrace();
