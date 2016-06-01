@@ -45,6 +45,18 @@ public class Vector2 implements Serializable {
 	{
 		return new Vector2(this.x+v.getX(), this.y+v.getY());
 	}
+	
+	/**
+	 * Fonction d'addition de 2 vecteur
+	 * 
+	 * @param v un vecteur
+	 * @param v2 un autre vecteur
+	 * @return un vecteur
+	 */
+	public Vector2 plus(Vector2 v, Vector2 v2)
+	{
+		return new Vector2(v2.getX()+v.getX(), v2.getY()+v.getY());
+	}
 
 	@Override
 	public int hashCode() {
