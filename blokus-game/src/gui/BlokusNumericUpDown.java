@@ -10,9 +10,10 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;import navigation.Page;
+import program.Program;
 import utilities.Vector2;
 
-public class BlokusNumericUpDown implements DrawableInterface{
+public class BlokusNumericUpDown implements DrawableInterface, ActionListener{
 	
 	private String text;
 	
@@ -58,12 +59,13 @@ public class BlokusNumericUpDown implements DrawableInterface{
 	@Override
 	public void draw(Graphics2D g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-		this.up.draw(g2d);
-		this.down.draw(g2d);
 		g2d.setFont(this.font);
 		g2d.setColor(Color.WHITE);
-		g2d.drawString(this.text, this.positionText.getX(), this.position.getY());
-		System.out.println(this.positionText);
+		g2d.drawString(this.text, this.positionText.getX(), this.positionText.getY()+17);
+		System.out.println("position" + this.position);
+		this.up.draw(g2d);
+		this.down.draw(g2d);
+		System.out.println("position texte" + this.positionText);
 		g2d.dispose();
 	}
 	
@@ -75,7 +77,6 @@ public class BlokusNumericUpDown implements DrawableInterface{
 		this.down.setPosition(position);
 		this.positionText.setX((int) (this.down.getSize().getWidth()+this.down.getPosition().getX()));
 		this.positionText.setY(position.getY());
-		System.out.println(this.positionText);
 		this.up.setPosition(new Vector2((int) (this.positionText.getX()+this.textSize.getWidth()), position.getY()));
 	}
 	
@@ -121,6 +122,19 @@ public class BlokusNumericUpDown implements DrawableInterface{
 		for(ActionListener listener : this.listeners)
 		{
 			listener.actionPerformed(e);
+		}
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() instanceof BlokusButton){
+			if(e.getSource().equals(this.down)){
+				Float volume = Program.optionConfiguration.getVolume();
+				
+			}else if(e.getSource().equals(this.up)){
+				
+			}
 		}
 	}
 }
