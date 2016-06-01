@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,13 +53,16 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	
 	private Color backColor;
 	
-	public BlokusMessageBox(String message, Font font, BlokusMessageBoxButtonState state)
+	private BufferedImage image;
+	
+	public BlokusMessageBox(BufferedImage image, String message, Font font, BlokusMessageBoxButtonState state)
 	{
 		this.stroke = DEFAULT_STROKE;
 		this.setStrokeColor(DEFAULT_STROKE_COLOR);
 		this.setBackColor(DEFAULT_BACK_COLOR);
 		this.position = DEFAULT_POSITION;
 		this.size = DEFAULT_SIZE;
+		this.image = image;
 		this.message = message;
 		this.font = font;
 		this.buttonState = state;
@@ -171,12 +175,18 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 			g2d.setFont(this.font);
 			g2d.setPaint(Color.BLACK);
 			
-			int i = 0;
-			for(String line : this.getMessage().split("\n"))
-			{
-				g2d.drawString(line, 
-						(int)(DEFAULT_POSITION.getX() + (DEFAULT_SIZE.getWidth() / 2) - (this.font.getStringBounds(this.getMessage(), g2d.getFontRenderContext()).getWidth() / 2)),
-						(int)(DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() / 2) + i++ * g2d.getFontMetrics(this.font).getHeight());
+			if(this.getMessage() != null){
+				int i = 0;
+				for(String line : this.getMessage().split("\n"))
+				{
+					g2d.drawString(line, 
+							(int)(DEFAULT_POSITION.getX() + (DEFAULT_SIZE.getWidth() / 2) - (this.font.getStringBounds(this.getMessage(), g2d.getFontRenderContext()).getWidth() / 2)),
+							(int)(DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() / 2) + i++ * g2d.getFontMetrics(this.font).getHeight());
+				}
+			}
+			
+			if(this.getImage() != null){
+				g2d.drawImage(this.getImage(), 389, 264, 450, 280, null);
 			}
 			
 			for(BlokusButton button : this.buttons)
@@ -206,6 +216,16 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 		this.message = message;
 	}
 
+	public BufferedImage getImage()
+	{
+		return image;
+	}
+
+	public void setImage(BufferedImage image)
+	{
+		this.image = image;
+	}
+	
 	public Vector2 getPosition()
 	{
 		return position;

@@ -23,6 +23,7 @@ import gui.Window;
 import program.Program;
 import utilities.Vector2;
 import utilities.BlokusMessageBoxButtonState;
+import utilities.BlokusMessageBoxResult;
 import utilities.BufferedHelper;
 import utilities.OptionConfiguration;
 
@@ -219,20 +220,32 @@ public class OptionPage extends Page implements ActionListener{
 			} else if(e.getSource().equals(this.buttonToCancel)) {
 				Navigation.NavigateTo(Navigation.previous);
 			} else if(e.getSource().equals(this.buttonHelp1)) {
-				BlokusImageBox imageBox = new BlokusImageBox(imageHelp1, BlokusMessageBoxButtonState.VALID);
+				BlokusMessageBox imageBox = new BlokusMessageBox(imageHelp1, null, null, BlokusMessageBoxButtonState.VALID);
 				imageBox.setStrokeColor(Color.ORANGE);
 				imageBox.setStroke(3);
 				imageBox.show(this);
 			}else if(e.getSource().equals(this.buttonHelp2)) {
-				BlokusImageBox imageBox = new BlokusImageBox(imageHelp2, BlokusMessageBoxButtonState.VALID);
+				BlokusMessageBox imageBox = new BlokusMessageBox(imageHelp2, null, null, BlokusMessageBoxButtonState.VALID);
 				imageBox.setStrokeColor(Color.ORANGE);
 				imageBox.setStroke(3);
 				imageBox.show(this);
 			}else if(e.getSource().equals(this.buttonHelp3)) {
-				BlokusImageBox imageBox = new BlokusImageBox(imageHelp3, BlokusMessageBoxButtonState.VALID);
+				BlokusMessageBox imageBox = new BlokusMessageBox(imageHelp3, null, null, BlokusMessageBoxButtonState.VALID);
 				imageBox.setStrokeColor(Color.ORANGE);
 				imageBox.setStroke(3);
 				imageBox.show(this);
+			}
+		} else if(e.getSource() instanceof BlokusMessageBox)
+		{
+			if(e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand())
+			{
+				Navigation.NavigateTo(Navigation.homePage);
+			}
+			
+			// Fermeture de la message box
+			if(this.getMessageBox() != null)
+			{
+				this.getMessageBox().close(this);
 			}
 		}
 	}
