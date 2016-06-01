@@ -31,6 +31,12 @@ public class BlokusTile implements DrawableInterface {
 	 */
 	private BufferedImage	caseMaskImage;
 
+	/**
+	 * Constructeur d'un BlokusTile
+	 * 
+	 * @param tile la pièce
+	 * @param position la position
+	 */
 	public BlokusTile(Tile tile, Vector2 position) {
 		this.position = position;
 		this.tile = tile;
@@ -39,6 +45,10 @@ public class BlokusTile implements DrawableInterface {
 				0.75f);
 	}
 
+	/**
+	 * Constructeur d'un BlokusTile
+	 * @param tile la pièce
+	 */
 	public BlokusTile(Tile tile) {
 		this(tile, new Vector2());
 	}

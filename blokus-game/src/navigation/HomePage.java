@@ -18,9 +18,7 @@ import gui.BlokusMessageBox;
 import gui.GraphicsPanel;
 import gui.Window;
 import program.Program;
-import utilities.BlokusMessageBoxButtonState;
 import utilities.BlokusMessageBoxResult;
-import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class HomePage extends Page implements ActionListener
@@ -30,8 +28,14 @@ public class HomePage extends Page implements ActionListener
 
 	//	private BlokusCheckBox buttonMusic;
 
+	/**
+	 * Bouton représentant l'activation de la musique
+	 */
 	private BlokusButton buttonMusic;
 
+	/**
+	 * Flag d'activation de la musique
+	 */
 	private boolean musicIsOn;
 
 	/**

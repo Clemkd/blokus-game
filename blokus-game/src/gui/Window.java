@@ -15,18 +15,39 @@ public class Window implements Runnable , ActionListener
 {
 	private static final int UPDATE_DELAY = 15;
 	
+	/**
+	 * La fenêtre
+	 */
 	private JFrame frame;
+	
+	/**
+	 * Le dessin
+	 */
 	private GraphicsPanel gameGraphics;
 
+	/**
+	 * Le timer
+	 */
 	private Timer timer;
 
+	/**
+	 * 
+	 */
 	private long startTime;
 
+	/**
+	 * Le musicPlayer
+	 */
 	private static MusicPlayer musicPlayer = new MusicPlayer();
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 778;
 
+	/**
+	 * Constructeur d'une Window
+	 * 
+	 * @param name le nom de la fenêtre
+	 */
 	public Window(String name) {
 		this.frame = new JFrame();
 		this.frame.setName(name);

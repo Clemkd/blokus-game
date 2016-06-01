@@ -52,6 +52,11 @@ public class BufferedHelper
         return customFont;
     }
     
+    /**
+     * Méthode static qui permet de récuperer la police de caractère par défaut
+     * @param fontSize la taille de la police
+     * @return la police de caractère
+     */
     public static Font getDefaultFont(float fontSize)
     {
     	Font customFont = null;
