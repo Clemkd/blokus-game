@@ -267,6 +267,10 @@ public class OptionPage extends Page implements ActionListener {
 				Navigation.NavigateTo(Navigation.previous);
 			}
 			else if (e.getSource().equals(this.buttonToCancel)) {
+				if (this.option.isPlaySong())
+					Window.getMusicPlayer().playContinuously();
+				else
+					Window.getMusicPlayer().stopSound();
 				Window.getMusicPlayer().setVolume(this.option.getVolume());
 				Navigation.NavigateTo(Navigation.previous);
 			}
@@ -320,6 +324,7 @@ public class OptionPage extends Page implements ActionListener {
 					Window.getMusicPlayer().playContinuously();
 				else if (!this.checkBoxActivateAudio.isChecked() && Window.getMusicPlayer().isRunning())
 					Window.getMusicPlayer().stopSound();
+				Window.getMusicPlayer().setVolume(this.upDownVolume.getValue());
 			}
 		}
 	}

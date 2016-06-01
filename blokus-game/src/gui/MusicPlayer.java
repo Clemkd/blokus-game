@@ -54,7 +54,7 @@ public class MusicPlayer {
 	 * Joue la musique en boucle
 	 */
 	public void playContinuously() {
-		if (this.clip != null) {
+		if (this.clip != null && !this.clip.isRunning()) {
 			this.clip.loop(Clip.LOOP_CONTINUOUSLY);
 			this.clip.start();
 		}
@@ -71,7 +71,7 @@ public class MusicPlayer {
 	 * Joue la musique une fois
 	 */
 	public void playOnce() {
-		if (this.clip != null) {
+		if (this.clip != null && !this.clip.isRunning()) {
 			this.clip.loop(0);
 			this.clip.start();
 		}
