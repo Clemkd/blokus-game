@@ -22,7 +22,7 @@ public class BlokusWaitPress implements DrawableInterface {
 	private boolean waiting;
 	private int keyCode;
 	
-	private BlokusWaitPress(boolean enabled, int defaultKeyCode, String text, Font font){
+	public BlokusWaitPress(boolean enabled, int defaultKeyCode, String text, Font font){
 		this.isEnabled = enabled;
 		this.position = new Vector2();
 		this.size = new Dimension(32, 32);
