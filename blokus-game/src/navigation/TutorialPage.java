@@ -37,7 +37,6 @@ public class TutorialPage extends Page implements ActionListener{
 		try {
 			this.tutorialImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES+"tutoriel.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.buttonReturn = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS+"back.png"));
@@ -47,7 +46,6 @@ public class TutorialPage extends Page implements ActionListener{
 
 	@Override
 	public void unloadContents() {
-		// TODO Auto-generated method stub
 		
 	}
 	

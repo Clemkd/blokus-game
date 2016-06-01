@@ -244,7 +244,6 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 	public void update(float elapsedTime) {
 		if(this.visible)
 		{
-			// TODO : CODE HERE
 			GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 			for(BlokusButton button : this.buttons)
 				button.update(elapsedTime);

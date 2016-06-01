@@ -378,7 +378,6 @@ public class Game implements Serializable
 				fileSave.close();
 				System.out.println("sérialisation de game okay");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -539,29 +538,6 @@ public class Game implements Serializable
 	{
 		return this.players;
 	}
-
-	// TODO : SUPPRIMER
-	/**
-	 * Annule le tour de jeu effectué
-	 * @param m Les données du tour de jeu
-	 */
-	/*public void revertMove(Move m)
-	{
-		// Revert du move sur le plateau
-		this.getBoard().revertMove(m);
-
-		// Revert des tiles du joueur
-		if(!this.getCurrentPlayer().getColors().contains(m.getTile().getColor()))
-			throw new InternalError("Essai d'ajout d'un tile incompatible dans l'inventaire du joueur courant");
-
-		this.getCurrentPlayer().getTileInventory().add(m.getTile());
-
-		// Revert des joueurs en jeu (si besoin)
-		if(!this.playingColors.contains(this.getCurrentColor()))
-		{
-			this.playingColors.add(this.getCurrentColor());
-		}
-	}*/
 
 	/**
 	 * Méthode de copie de Game

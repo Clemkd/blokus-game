@@ -44,7 +44,6 @@ public class BlokusLabel implements DrawableInterface {
 
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -211,7 +211,6 @@ public class OptionConfiguration implements Serializable {
 				config.close();
 			}
 			catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			catch (ClassNotFoundException c) {
@@ -236,7 +235,6 @@ public class OptionConfiguration implements Serializable {
 			fileOption.close();
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
