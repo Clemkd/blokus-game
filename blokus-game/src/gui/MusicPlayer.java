@@ -80,12 +80,11 @@ public class MusicPlayer {
 				@Override
 				public void update(LineEvent e) {
 					if (e.getType() == LineEvent.Type.STOP) {
-						clip.stop();
-						clip.close();
-						clip = null;
+						e.getLine().close();
 					}
 				}
 			});
+			this.clip = null;
 		}
 	}
 

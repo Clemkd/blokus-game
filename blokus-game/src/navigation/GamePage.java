@@ -325,11 +325,11 @@ public class GamePage extends Page implements ActionListener {
 							this.selectedTile = null;
 							this.inDragAndDrop = false;
 							Mouse.consumeLastMouseButton();
-							//if(Program.optionConfiguration.isPlaySFX()) {
+							if(Program.optionConfiguration.isPlaySFX()) {
 								this.soundPlayer.changeMusic("effect01");
-								this.soundPlayer.setVolume(Program.optionConfiguration.getVolume());
+								this.soundPlayer.setVolume(Program.optionConfiguration.getVolumeSFX());
 								this.soundPlayer.playOnce();
-							//}
+							}
 						}
 					}
 				}
@@ -573,9 +573,9 @@ public class GamePage extends Page implements ActionListener {
 					.setPosition(new Vector2(Window.WIDTH / 2 - (int) this.blokusBoard.getSize().getWidth() / 2, 212));
 
 			Window.getMusicPlayer().changeMusic("Basewalk");
-			if (Program.optionConfiguration.isPlaySong()) {
+			if (Program.optionConfiguration.isPlayMusic()) {
 				Window.getMusicPlayer().playContinuously();
-				Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolume());
+				Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolumeMusic());
 			}
 			this.gameTerminated = false;
 			this.flagLoad = true;

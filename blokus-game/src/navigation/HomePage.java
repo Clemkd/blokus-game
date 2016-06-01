@@ -152,11 +152,11 @@ public class HomePage extends Page implements ActionListener {
 		else if (e.getSource() instanceof BlokusCheckBox) {
 			if (e.getSource().equals(this.buttonMusic)) {
 				if (this.buttonMusic.isChecked()) {
-					Program.optionConfiguration.setPlaySong(true);
+					Program.optionConfiguration.setPlayMusic(true);
 					Window.getMusicPlayer().playContinuously();
 				}
 				else {
-					Program.optionConfiguration.setPlaySong(false);
+					Program.optionConfiguration.setPlayMusic(false);
 					Window.getMusicPlayer().stopSound();
 				}
 			}
@@ -195,7 +195,7 @@ public class HomePage extends Page implements ActionListener {
 		//		this.buttonMusic.setSize(new Dimension(checked.getWidth(), checked.getHeight()));
 		//		this.buttonMusic.addListener(this);
 
-		this.musicIsOn = Program.optionConfiguration.isPlaySong();
+		this.musicIsOn = Program.optionConfiguration.isPlayMusic();
 
 		try {
 			BufferedImage checked = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "musicon.png"));
@@ -236,9 +236,9 @@ public class HomePage extends Page implements ActionListener {
 		this.buttonExit.addListener(this);
 
 		Window.getMusicPlayer().changeMusic("DX Heaven");
-		if (Program.optionConfiguration.isPlaySong()) {
+		if (Program.optionConfiguration.isPlayMusic()) {
 			Window.getMusicPlayer().playContinuously();
-			Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolume());
+			Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolumeMusic());
 		}
 	}
 

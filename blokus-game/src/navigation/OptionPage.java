@@ -19,6 +19,7 @@ import gui.BlokusNumericUpDown;
 import gui.BlokusText;
 import gui.BlokusWaitPress;
 import gui.GraphicsPanel;
+import gui.MusicPlayer;
 import gui.Window;
 import program.Program;
 import utilities.Vector2;
@@ -42,7 +43,8 @@ public class OptionPage extends Page implements ActionListener {
 
 	private BlokusCheckBox		checkBoxDisplayPossibleMoves;
 	private BlokusCheckBox		checkBoxAutoSave;
-	private BlokusCheckBox		checkBoxActivateAudio;
+	private BlokusCheckBox		checkBoxActivateMusic;
+	private BlokusCheckBox		checkBoxActivateSFX;
 	private BlokusCheckBox		checkBoxDaltonienMode;
 
 	private BlokusLabel			titleGame;
@@ -64,7 +66,8 @@ public class OptionPage extends Page implements ActionListener {
 	private BlokusText			textEnd;
 	private BlokusText			textAdvices;
 
-	private BlokusNumericUpDown	upDownVolume;
+	private BlokusNumericUpDown	upDownVolumeMusic;
+	private BlokusNumericUpDown	upDownVolumeSFX;
 	private boolean				onControl;
 	private boolean				onRules;
 	private boolean				onGeneral;
@@ -92,12 +95,15 @@ public class OptionPage extends Page implements ActionListener {
 	private BlokusWaitPress		keySymetryCounterClockwiseButton;
 	private BlokusButton defaultControlsButton;
 
+	private MusicPlayer soundPlayer;
+	
 	public OptionPage() {
 		super();
 		this.option = Program.optionConfiguration;
 		this.onControl = false;
 		this.onGeneral = true;
 		this.onRules = false;
+		this.soundPlayer = new MusicPlayer();
 		try {
 			this.customFontCheckbox = BufferedHelper.getDefaultFont(16f);
 			this.customFontTitle = BufferedHelper.getDefaultFont(20f);
@@ -116,11 +122,12 @@ public class OptionPage extends Page implements ActionListener {
 		this.buttonHelp2.setEnabled(this.onRules);
 		this.buttonHelp3.setEnabled(this.onRules);
 
-		this.checkBoxActivateAudio.setEnabled(this.onGeneral);
+		this.checkBoxActivateMusic.setEnabled(this.onGeneral);
 		this.checkBoxAutoSave.setEnabled(this.onGeneral);
-		this.checkBoxDaltonienMode.setEnabled(this.onGeneral);
 		this.checkBoxDisplayPossibleMoves.setEnabled(this.onGeneral);
-		this.upDownVolume.setEnabled(this.onGeneral);
+		this.upDownVolumeMusic.setEnabled(this.onGeneral);
+		this.checkBoxActivateSFX.setEnabled(this.onGeneral);
+		this.upDownVolumeSFX.setEnabled(this.onGeneral);
 
 		this.buttonControl.update(elapsedTime);
 		this.buttonGeneral.update(elapsedTime);
@@ -130,9 +137,7 @@ public class OptionPage extends Page implements ActionListener {
 		this.checkBoxAutoSave.update(elapsedTime);
 		this.titleGame.update(elapsedTime);
 		this.titleAudio.update(elapsedTime);
-		this.checkBoxActivateAudio.update(elapsedTime);
-		this.titleVideo.update(elapsedTime);
-		this.checkBoxDaltonienMode.update(elapsedTime);
+		this.checkBoxActivateMusic.update(elapsedTime);
 		
 		this.titleGoal.update(elapsedTime);
 		this.titleRunning.update(elapsedTime);
@@ -148,7 +153,9 @@ public class OptionPage extends Page implements ActionListener {
 		this.buttonHelp1.update(elapsedTime);
 		this.buttonHelp2.update(elapsedTime);
 		this.buttonHelp3.update(elapsedTime);
-		this.upDownVolume.update(elapsedTime);
+		this.upDownVolumeMusic.update(elapsedTime);
+		this.checkBoxActivateSFX.update(elapsedTime);
+		this.upDownVolumeSFX.update(elapsedTime);
 		
 		// DEBUT PAGE CONTROLE
 		this.titleKeyboard.update(elapsedTime);
@@ -185,11 +192,10 @@ public class OptionPage extends Page implements ActionListener {
 			this.checkBoxAutoSave.draw(g2d);
 
 			this.titleAudio.draw(g2d);
-			this.checkBoxActivateAudio.draw(g2d);
-			this.upDownVolume.draw(g2d);
-
-			this.titleVideo.draw(g2d);
-			this.checkBoxDaltonienMode.draw(g2d);
+			this.checkBoxActivateMusic.draw(g2d);
+			this.upDownVolumeMusic.draw(g2d);
+			this.checkBoxActivateSFX.draw(g2d);
+			this.upDownVolumeSFX.draw(g2d);
 		}
 		else if (this.onControl) {
 			g2d.setColor(new Color(0, 141, 44));
@@ -253,9 +259,10 @@ public class OptionPage extends Page implements ActionListener {
 			else if (e.getSource().equals(this.buttonToValid)) {
 				this.option.setHelp(this.checkBoxDisplayPossibleMoves.isChecked());
 				this.option.setAutoSave(this.checkBoxAutoSave.isChecked());
-				this.option.setDaltonienMode(this.checkBoxDaltonienMode.isChecked());
-				this.option.setPlaySong(this.checkBoxActivateAudio.isChecked());
-				this.option.setVolume(this.upDownVolume.getValue());
+				this.option.setPlayMusic(this.checkBoxActivateMusic.isChecked());
+				this.option.setPlaySFX(this.checkBoxActivateSFX.isChecked());
+				this.option.setVolumeSFX(this.upDownVolumeSFX.getValue());
+				this.option.setVolumeMusic(this.upDownVolumeMusic.getValue());
 				
 				this.option.setKeyRotateClockwise(this.keyRotateClockwiseButton.getKeyCode());
 				this.option.setKeyRotateCounterClockwise(this.keyRotateCounterClockwiseButton.getKeyCode());
@@ -267,11 +274,11 @@ public class OptionPage extends Page implements ActionListener {
 				Navigation.NavigateTo(Navigation.previous);
 			}
 			else if (e.getSource().equals(this.buttonToCancel)) {
-				if (this.option.isPlaySong())
+				if (this.option.isPlayMusic())
 					Window.getMusicPlayer().playContinuously();
 				else
 					Window.getMusicPlayer().stopSound();
-				Window.getMusicPlayer().setVolume(this.option.getVolume());
+				Window.getMusicPlayer().setVolume(this.option.getVolumeMusic());
 				Navigation.NavigateTo(Navigation.previous);
 			}
 			else if (e.getSource().equals(this.buttonHelp1)) {
@@ -314,17 +321,22 @@ public class OptionPage extends Page implements ActionListener {
 			}
 		}
 		else if (e.getSource() instanceof BlokusNumericUpDown) {
-			if (e.getSource().equals(this.upDownVolume)) {
-				Window.getMusicPlayer().setVolume(this.upDownVolume.getValue());
+			if (e.getSource().equals(this.upDownVolumeMusic)) {
+				Window.getMusicPlayer().setVolume(this.upDownVolumeMusic.getValue());
+			}
+			else if (e.getSource().equals(this.upDownVolumeSFX)) {
+				this.soundPlayer.changeMusic("effect01");
+				this.soundPlayer.setVolume(this.upDownVolumeSFX.getValue());
+				this.soundPlayer.playOnce();
 			}
 		}
 		else if (e.getSource() instanceof BlokusCheckBox) {
-			if (e.getSource().equals(this.checkBoxActivateAudio)) {
-				if (this.checkBoxActivateAudio.isChecked() && !Window.getMusicPlayer().isRunning())
+			if (e.getSource().equals(this.checkBoxActivateMusic)) {
+				if (this.checkBoxActivateMusic.isChecked() && !Window.getMusicPlayer().isRunning())
 					Window.getMusicPlayer().playContinuously();
-				else if (!this.checkBoxActivateAudio.isChecked() && Window.getMusicPlayer().isRunning())
+				else if (!this.checkBoxActivateMusic.isChecked() && Window.getMusicPlayer().isRunning())
 					Window.getMusicPlayer().stopSound();
-				Window.getMusicPlayer().setVolume(this.upDownVolume.getValue());
+				Window.getMusicPlayer().setVolume(this.upDownVolumeMusic.getValue());
 			}
 		}
 	}
@@ -393,17 +405,10 @@ public class OptionPage extends Page implements ActionListener {
 		this.titleAudio = new BlokusLabel("AUDIO", customFontTitle);
 		this.titleAudio.setPosition(new Vector2(POS_X_TITLE, 252));
 
-		this.checkBoxActivateAudio = new BlokusCheckBox(true, this.option.isPlaySong(), "MUSIQUE DE FOND",
+		this.checkBoxActivateMusic = new BlokusCheckBox(true, this.option.isPlayMusic(), "MUSIQUE DE FOND",
 				this.customFontCheckbox);
-		this.checkBoxActivateAudio.setPosition(new Vector2(POS_X_CHECKBOX, 300));
-		this.checkBoxActivateAudio.addListener(this);
-
-		this.titleVideo = new BlokusLabel("VIDEO", customFontTitle);
-		this.titleVideo.setPosition(new Vector2(POS_X_TITLE, 402));
-
-		this.checkBoxDaltonienMode = new BlokusCheckBox(true, this.option.isDaltonienMode(), "MODE DALTONIEN",
-				this.customFontCheckbox);
-		this.checkBoxDaltonienMode.setPosition(new Vector2(POS_X_CHECKBOX, 450));
+		this.checkBoxActivateMusic.setPosition(new Vector2(POS_X_CHECKBOX, 300));
+		this.checkBoxActivateMusic.addListener(this);
 
 		this.titleGoal = new BlokusLabel("BUT du jeu : Pour chaque joueur, placer ses 21 pièces sur le plateau",
 				customFontTitle);
@@ -453,9 +458,18 @@ public class OptionPage extends Page implements ActionListener {
 		this.textAdvices = new BlokusText(s5, customFontText);
 		this.textAdvices.setPosition(new Vector2(POS_X_TITLE, 550));
 
-		this.upDownVolume = new BlokusNumericUpDown(" volume ", this.option.getVolume(), 0.05f, 0.0f, 1.0f, this.customFontCheckbox);
-		this.upDownVolume.setPosition(new Vector2(POS_X_CHECKBOX, 330));
-		this.upDownVolume.addListener(this);
+		this.upDownVolumeMusic = new BlokusNumericUpDown("Volume Musique", this.option.getVolumeMusic(), 0.05f, 0.0f, 1.0f, this.customFontCheckbox);
+		this.upDownVolumeMusic.setPosition(new Vector2(POS_X_CHECKBOX, 330));
+		this.upDownVolumeMusic.addListener(this);
+		
+		this.checkBoxActivateSFX = new BlokusCheckBox(true, this.option.isPlaySFX(), "EFFETS SONORES",
+				this.customFontCheckbox);
+		this.checkBoxActivateSFX.setPosition(new Vector2(POS_X_CHECKBOX, 360));
+		this.checkBoxActivateSFX.addListener(this);
+		
+		this.upDownVolumeSFX = new BlokusNumericUpDown("Volume SFX", this.option.getVolumeSFX(), 0.05f, 0.0f, 1.0f, this.customFontCheckbox);
+		this.upDownVolumeSFX.setPosition(new Vector2(POS_X_CHECKBOX, 390));
+		this.upDownVolumeSFX.addListener(this);
 
 		// DEBUT PAGE CONTROLES
 		this.titleKeyboard = new BlokusLabel("CLAVIER", customFontTitle);

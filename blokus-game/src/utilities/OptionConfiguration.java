@@ -33,11 +33,6 @@ public class OptionConfiguration implements Serializable {
 	private boolean				autoSave;
 
 	/**
-	 * Flag du mode daltonien
-	 */
-	private boolean				daltonienMode;
-
-	/**
 	 * keyCode des touches utilisées par le jeu
 	 */
 	private int					keyRotateClockwise;
@@ -48,16 +43,18 @@ public class OptionConfiguration implements Serializable {
 
 	private float volumeSFX;
 
+	private boolean playSFX;
+
 	/**
 	 * Constructeur
 	 */
 	public OptionConfiguration() {
 		this.playMusic = true;
+		this.playSFX = true;
 		this.autoSave = true;
-		this.daltonienMode = false;
 		this.help = false;
 		this.volumeMusic = 0.5f;
-		this.volumeSFX = 0.6f;
+		this.volumeSFX = 0.4f;
 
 		this.keyRotateClockwise = 39;
 		this.keyRotateCounterClockwise = 37;
@@ -71,8 +68,8 @@ public class OptionConfiguration implements Serializable {
 	 * 
 	 * @return le flag du son
 	 */
-	public boolean isPlaySong() {
-		return playMusic;
+	public boolean isPlayMusic() {
+		return this.playMusic;
 	}
 
 	/**
@@ -81,7 +78,7 @@ public class OptionConfiguration implements Serializable {
 	 * @return le flag de l'aide
 	 */
 	public boolean isHelp() {
-		return help;
+		return this.help;
 	}
 
 	/**
@@ -89,8 +86,8 @@ public class OptionConfiguration implements Serializable {
 	 * 
 	 * @return le volume
 	 */
-	public float getVolume() {
-		return volumeMusic;
+	public float getVolumeMusic() {
+		return this.volumeMusic;
 	}
 
 	/**
@@ -99,16 +96,7 @@ public class OptionConfiguration implements Serializable {
 	 * @return le flag de la sauvegarde automatique
 	 */
 	public boolean isAutoSave() {
-		return autoSave;
-	}
-
-	/**
-	 * Getter du flag du mode daltonien
-	 * 
-	 * @return le flag du mode daltonien
-	 */
-	public boolean isDaltonienMode() {
-		return daltonienMode;
+		return this.autoSave;
 	}
 
 	/**
@@ -126,7 +114,7 @@ public class OptionConfiguration implements Serializable {
 	 * @param volume
 	 *            le volume
 	 */
-	public void setVolume(float volume) {
+	public void setVolumeMusic(float volume) {
 		this.volumeMusic = volume;
 	}
 
@@ -140,20 +128,11 @@ public class OptionConfiguration implements Serializable {
 	}
 
 	/**
-	 * Setter du flag du mode daltonien
-	 * 
-	 * @param daltonienMode
-	 */
-	public void setDaltonienMode(boolean daltonienMode) {
-		this.daltonienMode = daltonienMode;
-	}
-
-	/**
 	 * Setter du flag de l'état de la musique de fond
 	 * 
 	 * @param playSong
 	 */
-	public void setPlaySong(boolean playSong) {
+	public void setPlayMusic(boolean playSong) {
 		this.playMusic = playSong;
 	}
 	
@@ -240,5 +219,21 @@ public class OptionConfiguration implements Serializable {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean isPlaySFX() {
+		return this.playSFX;
+	}
+	
+	public void setPlaySFX(boolean b) {
+		this.playSFX = b;
+	}
+	
+	public float getVolumeSFX() {
+		return this.volumeSFX;
+	}
+	
+	public void setVolumeSFX(float v) {
+		this.volumeSFX = v;
 	}
 }
