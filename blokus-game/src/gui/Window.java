@@ -81,7 +81,6 @@ public class Window implements Runnable , ActionListener
 			@Override
 			public void keyReleased(KeyEvent e) {
 				Keyboard.setLastKeyTyped(e.getKeyCode());
-				System.out.println(Keyboard.getLastKeyTyped());
 			}
 
 			@Override

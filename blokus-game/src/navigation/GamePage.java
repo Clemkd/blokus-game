@@ -21,6 +21,7 @@ import gui.BlokusButton;
 import gui.BlokusMessageBox;
 import gui.BlokusTile;
 import gui.GraphicsPanel;
+import gui.Keyboard;
 import gui.Mouse;
 import gui.PlayerPanel;
 import gui.Window;
@@ -218,20 +219,30 @@ public class GamePage extends Page implements ActionListener {
 	private void processDragAndDrop(float elapsedTime) {
 		Vector2 mPos = Mouse.getPosition();
 
+		if(Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyReturn()) {
+			this.game.getCurrentPlayer().addTileToInventory(this.selectedTile.getTile());
+
+			this.selectedTile = null;
+			this.inDragAndDrop = false;
+			Keyboard.consumeLastKeyTyped();
+			Mouse.consumeLastScroll();
+			Mouse.consumeLastMouseButton();
+		}
+		
 		// Gestion de la rotation de la pièce
-		if (Mouse.getLastScrollClicks() != 0) 
+		if (Mouse.getLastScrollClicks() != 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateClockwise() || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateCounterClockwise()) 
 		{
 			Vector2 fc = this.selectedTile.getTile().getFirstCase();
 			Vector2 fc2;
 			Vector2 v = new Vector2();
-			if (Mouse.getLastScrollClicks() > 0) {
+			if (Mouse.getLastScrollClicks() > 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateClockwise() ) {
 				this.selectedTile.setTile(this.selectedTile.getTile().rotateClockwise());
 				fc2 = this.selectedTile.getTile().getFirstCase();
 				v.setX((Tile.WIDTH - (this.selectedTileHeldCell.getY() + fc.getY()) - 1) - fc2.getX());
 				v.setY(this.selectedTileHeldCell.getX() + fc.getX() - fc2.getY());
 				this.selectedTileHeldCell = v;
 			}
-			else if (Mouse.getLastScrollClicks() < 0) {
+			else if (Mouse.getLastScrollClicks() < 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateCounterClockwise() ) {
 				this.selectedTile.setTile(this.selectedTile.getTile().rotateCounterClockwise());
 				fc2 = this.selectedTile.getTile().getFirstCase();
 				v.setX(this.selectedTileHeldCell.getY() + fc.getY() - fc2.getX());
@@ -239,9 +250,10 @@ public class GamePage extends Page implements ActionListener {
 				this.selectedTileHeldCell = v;
 			}
 
+			Keyboard.consumeLastKeyTyped();
 			Mouse.consumeLastScroll();
 		}
-		else if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.RIGHT) // Bouton droit enfoncé, gestion de la symétrie
+		else if ((!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.RIGHT) || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeySymetryClockwise() || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeySymetryCounterClockwise() ) // Bouton droit enfoncé, gestion de la symétrie
 		{
 			Vector2 fc = this.selectedTile.getTile().getFirstCase();
 			Vector2 fc2;
@@ -254,6 +266,7 @@ public class GamePage extends Page implements ActionListener {
 			this.selectedTileHeldCell = v;
 
 			Mouse.consumeLastMouseButton();
+			Keyboard.consumeLastKeyTyped();
 		}
 
 		if (this.inDragAndDrop) // Si on est toujours en drag&drop après le traitement des clics
@@ -359,11 +372,19 @@ public class GamePage extends Page implements ActionListener {
 				this.selectedTileHeldCell = this.selectedTile.getCellOffset(mPos);
 				this.inDragAndDrop = true;
 				Mouse.consumeLastMouseButton();
+				Keyboard.consumeLastKeyTyped();
 				Mouse.consumeLastScroll();
 			}
 		}
-		else { // Aucun Tile survolé
-			
+		
+		if(Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyReturn()) {
+			Keyboard.consumeLastKeyTyped();
+			Mouse.consumeLastScroll();
+			Mouse.consumeLastMouseButton();
+			quitConfirm();
+			Keyboard.consumeLastKeyTyped();
+			Mouse.consumeLastScroll();
+			Mouse.consumeLastMouseButton();
 		}
 	}
 	
@@ -440,12 +461,7 @@ public class GamePage extends Page implements ActionListener {
 				// jFileChooser.showSaveDialog(jFileChooser);
 			}
 			else if (e.getSource().equals(this.buttonExit)) {
-				BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?",
-						this.font, BlokusMessageBoxButtonState.YES_OR_NO);
-				msgbox.setBackColor(Color.WHITE);
-				msgbox.setStrokeColor(Color.ORANGE);
-				msgbox.setStroke(3);
-				msgbox.show(this);
+				quitConfirm();
 			}
 		}
 		else if (e.getSource() instanceof BlokusMessageBox) {
@@ -476,6 +492,18 @@ public class GamePage extends Page implements ActionListener {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 
+	 */
+	private void quitConfirm() {
+		BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?",
+				this.font, BlokusMessageBoxButtonState.YES_OR_NO);
+		msgbox.setBackColor(Color.WHITE);
+		msgbox.setStrokeColor(Color.ORANGE);
+		msgbox.setStroke(3);
+		msgbox.show(this);
 	}
 
 	/**
