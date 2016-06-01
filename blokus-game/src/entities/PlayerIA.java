@@ -22,7 +22,7 @@ public class PlayerIA extends Player {
 
 	private static final long serialVersionUID = -4411683191893021855L;
 	
-	private static final int MAX_DEPTH = 4;
+	private static final int MAX_DEPTH = 5;
 	protected Random	rand;
 
 	public PlayerIA(String name, List<CellColor> colors) {
@@ -42,53 +42,68 @@ public class PlayerIA extends Player {
 			
 			@Override
 			public void run() {
-				chosenMove = alphaBeta(game, MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				chosenMove = alphaBeta(game.copy(), MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				System.out.println("CHOSEN MOVE: " + chosenMove.getValue());
 				playing = false;
 			}
 		});
 		t.start();
 	}
 	
+	int k = 0;
+	int l =0;
 	private Move alphaBeta(Game node, int depth, boolean maximizingPlayer, int alpha, int beta) {
-	    if (depth == 0 || node.isTerminated())
+	    if (depth == 0 || node.isTerminated()) {
 	        return new Move(this.evaluate(node));
-
+	    }
+	    
 		if (maximizingPlayer) {
 			Move bestMove = new Move(Integer.MIN_VALUE);
-			for (Move m : Move.possibleMoves(node)) {
+			for (Move m : Move.possibleMovesWithHeurisitic(node, 12)) {
 				node.doMove(m);
-				m.setValue(alphaBeta(node, depth-1, false, alpha, beta).getValue());
+				m.setValue(this.alphaBeta(node, depth-1, false, alpha, beta).getValue());
 				if(m.getValue()>bestMove.getValue()) {
 					bestMove = m;
 				}
+				node.undoSingleMove();
+				
 				alpha = Math.max(alpha, m.getValue());
 				if (beta <= alpha)
 					break;
-				node.undoMove();
 			}
 			return bestMove;
 		}
 		else {
 			Move bestMove = new Move(Integer.MAX_VALUE);
-			for (Move m : Move.possibleMoves(node)) {
+			for (Move m : Move.possibleMovesWithHeurisitic(node, 12)) {
 				node.doMove(m);
 				m.setValue(alphaBeta(node, depth-1, true, alpha, beta).getValue());
 				if(m.getValue()<bestMove.getValue()) {
 					bestMove = m;
 				}
+				node.undoSingleMove();
+				
 				beta = Math.min(beta, m.getValue());
 				if (beta <= alpha)
 					break;
-				node.undoMove();
 			}
 			return bestMove;
 		}
 	}
 
 	private int evaluate(Game node) {
-		int res = node.getScore(this); // Score qu'on peut esperer obtenir si la partie se terminait maintenant
+		int res = 2*node.getScore(node.getCurrentPlayer()); 
+		
+		if(node.getTurn()>20)
+			res -= node.getCurrentPlayer().getTileInventory().size()*10;
+		
+		for(Tile t : node.getCurrentPlayer().getTileInventory()) {
+			if(t.getColor()==node.getCurrentColor())
+				res -= t.getCellCount()*t.getCellCount();
+		}
+		
 		/* TODO
-		 * Critères suppélmentaires 
+		 * Critères
 		 * - Passer à travers 
 		 * - Bloquer adversaire 
 		 * - Surface disponible 
@@ -99,14 +114,8 @@ public class PlayerIA extends Player {
 		 * - Ameliorer fonction coups possibles, moins de mises à jour, sauvegarde de ce qui existe
 		 * Compter blocs restants à l'ennemi ?
 		 */
-		res -= this.distanceToCenter(node);
 		
 		return res;
-	}
-
-	private int distanceToCenter(Game node) {
-		//TODOOOO, TODO, TODO, TODOOOOO, TODOOO, TODOOOO...
-		return 0;
 	}
 
 	@Override
