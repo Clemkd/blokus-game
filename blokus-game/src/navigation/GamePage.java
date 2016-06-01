@@ -39,6 +39,9 @@ public class GamePage extends Page implements ActionListener {
 	 */
 	private static final int	BUTTONS_Y_POSITION	= 700; // 725
 
+	/**
+	 *  Flag du Drag&Drop
+	 */
 	private boolean				inDragAndDrop;
 
 	/**
@@ -86,16 +89,35 @@ public class GamePage extends Page implements ActionListener {
 	 */
 	private PlayerPanel			panelJoueur2;
 
+
+	/**
+	 * Le plateau du jeu
+	 */
 	private BlokusBoard			blokusBoard;
 
+	/**
+	 * La partie
+	 */
 	private Game				game;
 
+	/**
+	 * Flag du chargement d'une partie
+	 */
 	private boolean				flagLoad;
 
+	/**
+	 * La position de la case de la pièce selectionnée
+	 */
 	private Vector2				selectedTileHeldCell;
 
+	/**
+	 * La police de caractère
+	 */
 	private Font				font;
 
+	/**
+	 * Flag de fin de partie
+	 */
 	private boolean				gameTerminated;
 
 	/**
@@ -331,7 +353,12 @@ public class GamePage extends Page implements ActionListener {
 			
 		}
 	}
-
+	
+	/**
+	 * Gestion de la souris en dehors du mode drag&drop
+	 * 
+	 * @param elapsedTime
+	 */
 	private void updateMouse(float elapsedTime) {
 		if (this.inDragAndDrop) {
 			this.processDragAndDrop(elapsedTime);
@@ -341,6 +368,11 @@ public class GamePage extends Page implements ActionListener {
 		}
 	}
 
+	/**
+	 * Gestion des panels joueurs
+	 * 
+	 * @param elapsedTime
+	 */
 	private void updatePlayerPanels(float elapsedTime) {
 		this.panelJoueur1.update(elapsedTime);
 		this.panelJoueur2.update(elapsedTime);
@@ -418,6 +450,11 @@ public class GamePage extends Page implements ActionListener {
 		}
 	}
 
+	/**
+	 * Setter de game
+	 * 
+	 * @param g la partie
+	 */
 	public void setGame(Game g) {
 		this.game = g;
 		this.inDragAndDrop = false;
