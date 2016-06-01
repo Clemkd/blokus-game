@@ -43,6 +43,11 @@ public class Tile implements Serializable{
 	 * identifiant de la tuile
 	 */
 	private int id;
+	
+	/**
+	 * Nombre de celle dans la Tile
+	 */
+	private int cellCount;
 
 	/**
 	 * Emplacement dans la matrice de la premiere case de la piece
@@ -61,10 +66,11 @@ public class Tile implements Serializable{
 	 * @param couleur
 	 *            le type de cellule de la Tile (couleur de la cellule)
 	 */
-	public Tile(CellType[][] matrix, CellColor couleur, int id) {
+	public Tile(CellType[][] matrix, CellColor couleur, int id, int countCell) {
 		this.matrix = matrix;
 		this.couleur = couleur;
 		this.id = id;
+		this.cellCount = countCell;
 		this.tilesRotationsAndFlipsList = new ArrayList<Tile>();
 	}
 
@@ -79,6 +85,10 @@ public class Tile implements Serializable{
 
 	public int getId() {
 		return id;
+	}
+	
+	public int getCellCount() {
+		return cellCount;
 	}
 
 	/**
@@ -112,7 +122,7 @@ public class Tile implements Serializable{
 			}
 		}
 
-		return new Tile(temp, this.getColor(), this.id);
+		return new Tile(temp, this.getColor(), this.id, this.getCellCount());
 	}
 
 	/**
@@ -127,7 +137,7 @@ public class Tile implements Serializable{
 			}
 		}
 
-		return new Tile(temp, this.getColor(), this.id);
+		return new Tile(temp, this.getColor(), this.id, this.getCellCount());
 	}
 
 	/**
@@ -140,7 +150,7 @@ public class Tile implements Serializable{
 			for (int y = 0; y < HEIGHT; y++)
 				temp[WIDTH - x - 1][y] = matrix[x][y];
 
-		return new Tile(temp, this.getColor(), this.id);
+		return new Tile(temp, this.getColor(), this.id, this.getCellCount());
 	}
 
 	/**
@@ -224,96 +234,96 @@ public class Tile implements Serializable{
 
 		// *
 		CellType[][] matrix21 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix21, cellColor, SINGLE_CELL_ID));
+		listTile.add(new Tile(matrix21, cellColor, SINGLE_CELL_ID, 1));
 
 		// *
 		// *
 		CellType[][] matrix20 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix20, cellColor, 1));
+		listTile.add(new Tile(matrix20, cellColor, 1, 2));
 
 		// *
 		// *
 		// *
 		CellType[][] matrix18 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
-
-		listTile.add(new Tile(matrix18, cellColor, 2));
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+		
+		listTile.add(new Tile(matrix18, cellColor, 2, 3));
 
 		// * *
 		// *
 		CellType[][] matrix19 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix19, cellColor, 3));
+		listTile.add(new Tile(matrix19, cellColor, 3, 3));
 
 		// *
 		// *
 		// *
 		// *
 		CellType[][] matrix13 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix13, cellColor, 4));
+		listTile.add(new Tile(matrix13, cellColor, 4, 4));
 
 		// * * *
 		// *
 		CellType[][] matrix17 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix17, cellColor, 5));
+		listTile.add(new Tile(matrix17, cellColor, 5, 4));
 
 		// *
 		// * *
 		// *
 		CellType[][] matrix16 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix16, cellColor, 6));
+		listTile.add(new Tile(matrix16, cellColor, 6, 4));
 
 		// * *
 		// * *
 		CellType[][] matrix15 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix15, cellColor, 7));
+		listTile.add(new Tile(matrix15, cellColor, 7, 4));
 
-		// * *
-		// * *
+		//   * *
+		// * * 
 		CellType[][] matrix14 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix14, cellColor, 8));
+		listTile.add(new Tile(matrix14, cellColor, 8, 4));
 
 		// *
 		// *
@@ -321,133 +331,133 @@ public class Tile implements Serializable{
 		// *
 		// *
 		CellType[][] matrix = { { CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK } };
+								{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+								{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+								{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+								{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix, cellColor, 9));
+		listTile.add(new Tile(matrix, cellColor, 9, 5));
 
 		// * *
 		// *
 		// *
 		// *
 		CellType[][] matrix2 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix2, cellColor, 10));
+		listTile.add(new Tile(matrix2, cellColor, 10, 5));
 
 		// * *
-		// * * *
+		//   * * *
 		CellType[][] matrix3 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix3, cellColor, 11));
+		listTile.add(new Tile(matrix3, cellColor, 11, 5));
 
 		// * *
 		// * *
 		// *
 		CellType[][] matrix8 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix8, cellColor, 12));
+		listTile.add(new Tile(matrix8, cellColor, 12, 5));
 
 		// * * *
-		// * *
+		// *   *
 		CellType[][] matrix7 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix7, cellColor, 13));
+		listTile.add(new Tile(matrix7, cellColor, 13, 5));
 
-		// *
+		//     *
 		// * * * *
 		CellType[][] matrix4 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.EXTREMITY, CellType.BODY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.EXTREMITY, CellType.BODY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix4, cellColor, 14));
+		listTile.add(new Tile(matrix4, cellColor, 14, 5));
 
+		// *
 		// * * *
 		// *
-		// *
 		CellType[][] matrix10 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+								{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
+								{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
+								{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+								{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix10, cellColor, 15));
+		listTile.add(new Tile(matrix10, cellColor, 15, 5));
 
 		// *
 		// *
 		// * * *
 		CellType[][] matrix11 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK }
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK }
 
 		};
 
-		listTile.add(new Tile(matrix11, cellColor, 16));
+		listTile.add(new Tile(matrix11, cellColor, 16, 5));
 
 		// * *
-		// * *
-		// *
+		//   * *
+		//     *
 		CellType[][] matrix9 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK },
-				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
+									{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK },
+									{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix9, cellColor, 17));
+		listTile.add(new Tile(matrix9, cellColor, 17, 5));
 
 		// * *
-		// *
-		// * *
+		//   *
+		//   * *
 		CellType[][] matrix12 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.BODY, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.EXTREMITY, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix12, cellColor, 18));
+		listTile.add(new Tile(matrix12, cellColor, 18, 5));
 
-		// *
+		//     *
 		// * * *
-		// *
+		//   *
 		CellType[][] matrix5 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK },
 				{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix5, cellColor, 19));
+		listTile.add(new Tile(matrix5, cellColor, 19, 5));
 
-		// *
+		//   *
 		// * * *
-		// *
+		//   *
 		CellType[][] matrix6 = { { CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.EXTREMITY, CellType.BODY, CellType.EXTREMITY, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.EXTREMITY, CellType.BLANK, CellType.BLANK },
 				{ CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK, CellType.BLANK } };
 
-		listTile.add(new Tile(matrix6, cellColor, 20));
+		listTile.add(new Tile(matrix6, cellColor, 20, 5));
 
 		return listTile;
 	}
