@@ -8,6 +8,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 
 public class MusicPlayer {
 	private String			musicName;
@@ -27,7 +29,7 @@ public class MusicPlayer {
 	 *            Nom du fichier(sans extension) de la nouvelle musique
 	 */
 	public void changeMusic(String newMusicName) {
-		if (!this.musicName.equals(newMusicName)) {
+		if (this.clip==null || !this.musicName.equals(newMusicName)) {
 			this.musicName = newMusicName;
 			if (this.clip != null) {
 				this.clip.stop();
@@ -71,9 +73,19 @@ public class MusicPlayer {
 	 * Joue la musique une fois
 	 */
 	public void playOnce() {
-		if (this.clip != null && !this.clip.isRunning()) {
-			this.clip.loop(0);
+		if (this.clip != null) {
 			this.clip.start();
+			this.clip.addLineListener(new LineListener() {
+				
+				@Override
+				public void update(LineEvent e) {
+					if (e.getType() == LineEvent.Type.STOP) {
+						clip.stop();
+						clip.close();
+						clip = null;
+					}
+				}
+			});
 		}
 	}
 

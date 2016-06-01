@@ -15,7 +15,7 @@ public class OptionConfiguration implements Serializable {
 	/**
 	 * Flag de l'état de la musique de fond
 	 */
-	private boolean				playSong;
+	private boolean				playMusic;
 
 	/**
 	 * Flag de l'activation de l'aide
@@ -25,7 +25,7 @@ public class OptionConfiguration implements Serializable {
 	/**
 	 * Volume de la musique de fond
 	 */
-	private float				volume;
+	private float				volumeMusic;
 
 	/**
 	 * Flag de la sauvegarde automatique
@@ -46,15 +46,18 @@ public class OptionConfiguration implements Serializable {
 	private int					keySymetryCounterClockwise;
 	private int					keyReturn;
 
+	private float volumeSFX;
+
 	/**
 	 * Constructeur
 	 */
 	public OptionConfiguration() {
-		this.playSong = true;
+		this.playMusic = true;
 		this.autoSave = true;
 		this.daltonienMode = false;
 		this.help = false;
-		this.volume = 0.5f;
+		this.volumeMusic = 0.5f;
+		this.volumeSFX = 0.6f;
 
 		this.keyRotateClockwise = 39;
 		this.keyRotateCounterClockwise = 37;
@@ -69,7 +72,7 @@ public class OptionConfiguration implements Serializable {
 	 * @return le flag du son
 	 */
 	public boolean isPlaySong() {
-		return playSong;
+		return playMusic;
 	}
 
 	/**
@@ -87,7 +90,7 @@ public class OptionConfiguration implements Serializable {
 	 * @return le volume
 	 */
 	public float getVolume() {
-		return volume;
+		return volumeMusic;
 	}
 
 	/**
@@ -124,7 +127,7 @@ public class OptionConfiguration implements Serializable {
 	 *            le volume
 	 */
 	public void setVolume(float volume) {
-		this.volume = volume;
+		this.volumeMusic = volume;
 	}
 
 	/**
@@ -151,7 +154,7 @@ public class OptionConfiguration implements Serializable {
 	 * @param playSong
 	 */
 	public void setPlaySong(boolean playSong) {
-		this.playSong = playSong;
+		this.playMusic = playSong;
 	}
 	
 	public int getKeyRotateClockwise() {

@@ -23,6 +23,7 @@ import gui.BlokusTile;
 import gui.GraphicsPanel;
 import gui.Keyboard;
 import gui.Mouse;
+import gui.MusicPlayer;
 import gui.PlayerPanel;
 import gui.Window;
 import program.Program;
@@ -122,6 +123,8 @@ public class GamePage extends Page implements ActionListener {
 	 * Flag de fin de partie
 	 */
 	private boolean				gameTerminated;
+	
+	private MusicPlayer soundPlayer;
 
 	/**
 	 * Constructeur
@@ -133,6 +136,7 @@ public class GamePage extends Page implements ActionListener {
 		this.selectedTile = null;
 		this.selectedTileHeldCell = null;
 		this.flagLoad = false;
+		this.soundPlayer = new MusicPlayer();
 	}
 
 	@Override
@@ -238,15 +242,15 @@ public class GamePage extends Page implements ActionListener {
 			if (Mouse.getLastScrollClicks() > 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateClockwise() ) {
 				this.selectedTile.setTile(this.selectedTile.getTile().rotateClockwise());
 				fc2 = this.selectedTile.getTile().getFirstCase();
-				v.setX((Tile.WIDTH - (this.selectedTileHeldCell.getY() + fc.getY()) - 1) - fc2.getX());
-				v.setY(this.selectedTileHeldCell.getX() + fc.getX() - fc2.getY());
+				v.setX(this.selectedTileHeldCell.getY() + fc.getY() - fc2.getX());
+				v.setY((Tile.WIDTH - (this.selectedTileHeldCell.getX() + fc.getX()) - 1) - fc2.getY());
 				this.selectedTileHeldCell = v;
 			}
 			else if (Mouse.getLastScrollClicks() < 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateCounterClockwise() ) {
 				this.selectedTile.setTile(this.selectedTile.getTile().rotateCounterClockwise());
 				fc2 = this.selectedTile.getTile().getFirstCase();
-				v.setX(this.selectedTileHeldCell.getY() + fc.getY() - fc2.getX());
-				v.setY((Tile.WIDTH - (this.selectedTileHeldCell.getX() + fc.getX()) - 1) - fc2.getY());
+				v.setX((Tile.WIDTH - (this.selectedTileHeldCell.getY() + fc.getY()) - 1) - fc2.getX());
+				v.setY(this.selectedTileHeldCell.getX() + fc.getX() - fc2.getY());
 				this.selectedTileHeldCell = v;
 			}
 
@@ -321,6 +325,11 @@ public class GamePage extends Page implements ActionListener {
 							this.selectedTile = null;
 							this.inDragAndDrop = false;
 							Mouse.consumeLastMouseButton();
+							//if(Program.optionConfiguration.isPlaySFX()) {
+								this.soundPlayer.changeMusic("effect01");
+								this.soundPlayer.setVolume(Program.optionConfiguration.getVolume());
+								this.soundPlayer.playOnce();
+							//}
 						}
 					}
 				}
