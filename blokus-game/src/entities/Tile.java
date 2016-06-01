@@ -118,7 +118,7 @@ public class Tile implements Serializable{
 
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
-				temp[WIDTH - y - 1][x] = this.matrix[x][y];
+				temp[y][WIDTH - x - 1] = matrix[x][y];
 			}
 		}
 
@@ -133,7 +133,7 @@ public class Tile implements Serializable{
 
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
-				temp[y][WIDTH - x - 1] = matrix[x][y];
+				temp[WIDTH - y - 1][x] = this.matrix[x][y];
 			}
 		}
 
