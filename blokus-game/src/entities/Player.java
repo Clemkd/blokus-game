@@ -13,16 +13,38 @@ public abstract class Player implements Serializable{
 	 * Les couleurs du joueur
 	 */
 	protected List<CellColor>	colors;
+	
+	/**
+	 * Le nom du joueur
+	 */
 	protected String			name;
 
 	/**
 	 * Les tuiles du joueur
 	 */
 	protected List<Tile>		tiles;
+	
+	/**
+	 * Etat du joueur si il joue
+	 */
 	protected boolean			playing;
+	
+	/**
+	 * Le mouvement choisi
+	 */
 	protected Move				chosenMove;
+	
+	/**
+	 * Si le dernier est la piece à 1 case
+	 */
 	private boolean				singleCellLast;
 
+	/**
+	 * Constructeur de Player
+	 * 
+	 * @param name le nom 
+	 * @param colors les couleurs
+	 */
 	public Player(String name, List<CellColor> colors) {
 		this.playing = false;
 		this.chosenMove = null;
@@ -34,6 +56,9 @@ public abstract class Player implements Serializable{
 			this.tiles.addAll(Tile.getListOfNeutralTile(c));
 	}
 
+	/**
+	 * Constructeur de player
+	 */
 	public Player() {
 		this.playing = false;
 		this.chosenMove = null;
@@ -43,6 +68,11 @@ public abstract class Player implements Serializable{
 		this.tiles = new ArrayList<Tile>();
 	}
 
+	/**
+	 * Constructeur de player
+	 * 
+	 * @param p un joueur
+	 */
 	public Player(Player p) {
 		this.name = p.name;
 		this.playing = p.isPlaying();
@@ -124,30 +154,65 @@ public abstract class Player implements Serializable{
 		return this.name;
 	}
 
+	/**
+	 * Setter du nom du joueur
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Obtient la liste des pièces
+	 * 
+	 * @return la liste des pièces
+	 */
 	public List<Tile> getTiles() {
 		return tiles;
 	}
 
+	/**
+	 * Setter des pièces 
+	 * 
+	 * @param tiles les pièces
+	 */
 	public void setTiles(List<Tile> tiles) {
 		this.tiles = tiles;
 	}
 
+	/**
+	 * Getter du mouvement choisi
+	 * 
+	 * @return le mouvement
+	 */
 	private Move getChosenMove() {
 		return chosenMove;
 	}
 
+	/**
+	 * Setter du mouvement choisi
+	 * 
+	 * @param chosenMove le mouvement
+	 */
 	public void setChosenMove(Move chosenMove) {
 		this.chosenMove = chosenMove;
 	}
 
+	/**
+	 * Setter des couleur du joueur
+	 * 
+	 * @param colors les couleurs
+	 */
 	public void setColors(List<CellColor> colors) {
 		this.colors = colors;
 	}
 
+	/**
+	 * Setter de l'etat du joueur
+	 * 
+	 * @param playing il joue ou pas ?
+	 */
 	public void setPlaying(boolean playing) {
 		this.playing = playing;
 	}
@@ -204,6 +269,11 @@ public abstract class Player implements Serializable{
 		return false;
 	}
 
+	/**
+	 * Détecte si le dernier est la piéce de taille 1
+	 * 
+	 * @return true si vrai, false sinon
+	 */
 	public boolean lastTileWasSingleCell() {
 		return this.singleCellLast;
 	}
@@ -235,5 +305,10 @@ public abstract class Player implements Serializable{
 		return true;
 	}
 
+	/**
+	 * Méthode abstraite qui copie le joueur
+	 * 
+	 * @return le joueur copié
+	 */
 	public abstract Player copy();
 }

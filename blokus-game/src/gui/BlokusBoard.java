@@ -60,6 +60,11 @@ public class BlokusBoard implements DrawableInterface
 	 */
 	private ArrayList<Vector2> validsMoves; 
 	
+	/**
+	 * Constructeur du BlokusBoard
+	 * 
+	 * @param board le plateau
+	 */
 	public BlokusBoard(Board board)
 	{
 		this.position = new Vector2();

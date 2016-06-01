@@ -9,15 +9,33 @@ public class PlayerRandom extends Player {
 
 	private static final long serialVersionUID = -8981196791159515517L;
 	
+	/**
+	 * Le random
+	 */
 	private Random rand;
+	
+	/**
+	 * La partie
+	 */
 	private Game game;
 
+	/**
+	 * Constructeur d'un joueur random
+	 * 
+	 * @param name le nom
+	 * @param colors les couleurs
+	 */
 	public PlayerRandom(String name, List<CellColor> colors) {
 		super(name, colors);
 		this.rand = new Random();
 		this.game = null;
 	}
 
+	/**
+	 * Constructeur d'un joueur random
+	 * 
+	 * @param p un joueur
+	 */
 	public PlayerRandom(PlayerRandom p) {
 		super(p);
 		this.rand = new Random();

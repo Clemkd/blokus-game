@@ -21,26 +21,62 @@ import utilities.Vector2;
 
 public class BlokusCheckBox implements DrawableInterface {
 	
+	/**
+	 * Etat d'activation de la case à cocher
+	 */
 	private boolean isEnabled;
 	
+	/**
+	 * Etat de la case à cocher
+	 */
 	private boolean isChecked;
 	
+	/**
+	 * Image de l'état coché
+	 */
 	private BufferedImage checked;
 	
+	/**
+	 * Image de l'état décoché
+	 */
 	private BufferedImage noChecked;
 	
+	/**
+	 * Le texte associé à la case à cocher
+	 */
 	private String text;
 	
+	/**
+	 * La position de la case à cocher
+	 */
 	private Vector2 position;
 	
+	/**
+	 * La taille de la case à cocher
+	 */
 	private Dimension size;
 	
+	/**
+	 * La liste des listener
+	 */
 	private ArrayList<ActionListener> listeners;
 	
+	/**
+	 * La police de caractère
+	 */
 	private Font font;
 	
+	/**
+	 * La taille du texte
+	 */
 	private Rectangle2D textSize;
 	
+	/**
+	 * Constructeur de la case à cocher
+	 * 
+	 * @param enabled si la case doit être activée
+	 * @param checked si la case est coché
+	 */
 	private BlokusCheckBox(boolean enabled, boolean checked){
 		this.isChecked = checked;
 		this.isEnabled = enabled;
@@ -51,6 +87,14 @@ public class BlokusCheckBox implements DrawableInterface {
 		this.listeners = new ArrayList<ActionListener>();
 	}
 	
+	/**
+	 * Constructeur de la case à cocher
+	 * 
+	 * @param enabled si la case doit être activée
+	 * @param checked si la case est coché
+	 * @param text le texte associé
+	 * @param font la police de caractère
+	 */
 	public BlokusCheckBox(boolean enabled, boolean checked, String text, Font font) {
 
 		this(enabled, checked);
@@ -78,38 +122,84 @@ public class BlokusCheckBox implements DrawableInterface {
 		this.noChecked = uncheckedImage;
 	}
 	
+	/**
+	 * Getter de l'état de l'activation de la case à cocher
+	 * 
+	 * @return l'etat de la case à cocher
+	 */
 	public boolean isEnabled() {
 		return isEnabled;
 	}
 	
+	/**
+	 * Setter de l'état de l'activation de la case à cocher
+	 * 
+	 * @param isEnabled l'etat de la case à cocher
+	 */
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
 	}
 	
+	/**
+	 * Getter de l'état de la coche de la case à cocher
+	 * 
+	 * @return l'état de la coche de la case à cocher
+	 */
 	public boolean isChecked() {
 		return isChecked;
 	}
 	
+	/**
+	 * Setter de l'état de la coche de la case à cocher
+	 * 
+	 * @param isChecked l'état de la coche de la case à cocher
+	 */
 	public void setChecked(boolean isChecked) {
 		this.isChecked = isChecked;
 	}
 	
+	/**
+	 * Getter de la position
+	 * 
+	 * @return la position
+	 */
 	public Vector2 getPosition() {
 		return position;
 	}
 	
+	/**
+	 * Setter de la position
+	 * 
+	 * @param position la position
+	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
 	
+	/**
+	 * Getter de la taille
+	 * 
+	 * @return la taille
+	 */
 	public Dimension getSize() {
 		return size;
 	}
 	
+	/**
+	 * Setter de la taille
+	 * 
+	 * @param size la taille
+	 */
 	public void setSize(Dimension size) {
 		this.size = size;
 	}
 	
+	/**
+	 * Méthode qui permet de détecter si le clic est sur la case ou sur le texte
+	 * 
+	 * @param p la position de la souris
+	 * @return true si oui, false sinon
+	 */
 	public boolean isInBounds(Vector2 p)
 	{
 		return 	p.getX() >= this.position.getX() &&
@@ -120,7 +210,6 @@ public class BlokusCheckBox implements DrawableInterface {
 	
 	@Override
 	public void update(float elapsedTime) {
-		
 		if(this.isInBounds(Mouse.getPosition()) && this.isEnabled){
 			GraphicsPanel.newCursor = Program.POINTING_HAND_CURSOR;
 			if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased()){
@@ -133,8 +222,6 @@ public class BlokusCheckBox implements DrawableInterface {
 
 	@Override
 	public void draw(Graphics2D g) {
-		
-		
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.drawImage(this.isChecked ?this.checked: this.noChecked, this.position.getX(), this.position.getY(), (int) this.size.getWidth(), (int) this.size.getHeight(), null);
 		g2d.setColor(Color.WHITE);
@@ -144,11 +231,19 @@ public class BlokusCheckBox implements DrawableInterface {
 		
 	}
 	
+	/**
+	 * Change l'état de coche de la case à cocher
+	 */
 	public void swapChecked(){
 		this.isChecked = !isChecked;
 		this.raiseClickEvent(null);
 	}
 	
+	/**
+	 * Ajoute un listener à la liste des listener
+	 * 
+	 * @param listener le listener
+	 */
 	public void addListener(ActionListener listener){
 		this.listeners.add(listener);
 	}

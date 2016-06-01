@@ -8,14 +8,28 @@ public class PlayerHuman extends Player {
 
 	private static final long serialVersionUID = 1783049661851925535L;
 
+	/**
+	 * Constructeur d'un joueur humain
+	 * 
+	 * @param name le nom 
+	 * @param colors les couleurs
+	 */
 	public PlayerHuman(String name, List<CellColor> colors) {
 		super(name, colors);
 	}
 	
+	/**
+	 * Constructeur d'un joueur humain
+	 */
 	public PlayerHuman(){
 		super();
 	}
 
+	/**
+	 * Constructeur d'un joueur humain
+	 * 
+	 * @param p le joueur
+	 */
 	public PlayerHuman(PlayerHuman p) {
 		super(p);
 	}

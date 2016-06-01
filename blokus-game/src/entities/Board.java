@@ -164,6 +164,12 @@ public class Board implements Serializable{
 		return true;
 	}
 	
+	/**
+	 * Méthode qui affiche sur la console la matrice de la pièce
+	 * 
+	 * @param matrix la matrice
+	 * @param n la taille de la matrice
+	 */
 	public void displayMatrix(CellType[][] matrix, int n) {
 		for (int i = 0; i < n; ++i) {
 			System.out.print('{');

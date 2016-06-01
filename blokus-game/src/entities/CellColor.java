@@ -42,14 +42,26 @@ public enum CellColor implements Serializable {
 	 */
 	private BufferedImage image;
 	
+	/**
+	 * La position de début
+	 */
 	private Vector2 startPosition;
 	
+	/**
+	 * Constante de la largeur d'une cellule
+	 */
 	public final static int CELL_WIDTH = 20;
+	
+	/**
+	 * Constante de la hauteur d'une cellule
+	 */
 	public final static int CELL_HEIGHT = 20;
 	
 	/**
 	 * Constructeur de CellColor
+	 * 
 	 * @param path le chemin d'accès vers une image
+	 * @param startPos la position de début
 	 */
 	private CellColor(String path, Vector2 startPos){
 		this.path = path;
@@ -88,6 +100,11 @@ public enum CellColor implements Serializable {
 		return this.getPath() == c.getPath();
 	}
 
+	/**
+	 * Getter de la positon de début
+	 * 
+	 * @return la positon de début
+	 */
 	public Vector2 getStartPosition() {
 		return this.startPosition;
 	}

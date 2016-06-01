@@ -22,6 +22,10 @@ public class Tile implements Serializable{
 	 * Constante pour la matrice de la matrice d'une Tile
 	 */
 	public static final int WIDTH = 5;
+	
+	/**
+	 * Constant pour l'id de la pièce 1 case
+	 */
 	public static final int SINGLE_CELL_ID = 0;
 
 	/**
@@ -188,6 +192,11 @@ public class Tile implements Serializable{
 		return width;
 	}
 
+	/**
+	 * Méthode retournant la liste des rotation et des symétrie pour une pièce
+	 * 
+	 * @return la liste des rotation et des symétrie pour une pièce
+	 */
 	public ArrayList<Tile> getTilesListOfRotationsAndFlips() {
 		if (this.tilesRotationsAndFlipsList.isEmpty()) {
 			Tile t = this;
@@ -459,6 +468,11 @@ public class Tile implements Serializable{
 		return string;
 	}
 
+	/**
+	 * Méthode retournant la liste des extrémité d'une pièce
+	 * 
+	 * @return la liste des extrémité d'une pièce
+	 */
 	public List<Vector2> getExtremities() {
 		ArrayList<Vector2> res = new ArrayList<Vector2>();
 
