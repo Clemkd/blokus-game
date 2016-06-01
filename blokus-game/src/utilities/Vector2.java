@@ -16,14 +16,34 @@ public class Vector2 implements Serializable {
 	 */
 	private int y;
 
+	/**
+	 * Constructeur de Vecteur2
+	 */
 	public Vector2() {
 		this.x = 0;
 		this.y = 0;
 	}
 	
+	/**
+	 * Constructeur de Vecteur2
+	 * 
+	 * @param x abscisse
+	 * @param y ordonnée
+	 */
 	public Vector2(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	/**
+	 * Fonction d'addition de 2 vecteur
+	 * 
+	 * @param v un vecteur
+	 * @return un vecteur
+	 */
+	public Vector2 plus(Vector2 v)
+	{
+		return new Vector2(this.x+v.getX(), this.y+v.getY());
 	}
 
 	@Override
