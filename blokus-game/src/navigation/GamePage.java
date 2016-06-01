@@ -113,7 +113,7 @@ public class GamePage extends Page implements ActionListener {
 	@Override
 	public void updatePage(float elapsedTime) {
 		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
-		
+
 		this.buttonOption.update(elapsedTime);
 		this.buttonUndo.update(elapsedTime);
 		this.buttonRedo.update(elapsedTime);
@@ -121,8 +121,9 @@ public class GamePage extends Page implements ActionListener {
 		this.buttonExit.update(elapsedTime);
 		this.game.update();
 		this.blokusBoard.setBoard(this.game.getBoard());
-		
-		this.blokusBoard.showValidMoves(this.inDragAndDrop && Program.optionConfiguration.isHelp(), this.game.getCurrentColor());
+
+		this.blokusBoard.showValidMoves(this.inDragAndDrop && Program.optionConfiguration.isHelp(),
+				this.game.getCurrentColor());
 		this.blokusBoard.update(elapsedTime);
 
 		this.buttonRedo.setEnabled(this.game.canRedo());
@@ -185,53 +186,8 @@ public class GamePage extends Page implements ActionListener {
 	private void processDragAndDrop(float elapsedTime) {
 		Vector2 mPos = Mouse.getPosition();
 
-		// Gestion des clics
-		if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT) // Bouton souris gauche enfoncé
-		{
-			if (!this.blokusBoard.isInBounds(mPos)) // Clic en dehors du plateau, on remet la pièce dans le PlayerPanel
-			{
-				this.game.getCurrentPlayer().addTileToInventory(this.selectedTile.getTile());
-
-				this.selectedTile = null;
-				this.inDragAndDrop = false;
-			}
-			else // Clic dans le plateau, on tente de poser la pièce
-			{
-				int cellX = (mPos.getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X))
-						/ CellColor.CELL_HEIGHT;
-				int cellY = (mPos.getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y))
-						/ CellColor.CELL_HEIGHT;
-				Vector2 cell = new Vector2(cellX, cellY);
-				Vector2 fc = this.selectedTile.getTile().getFirstCase();
-
-				List<Vector2> validDropCells = this.blokusBoard.getBoard()
-						.getFreePositions(this.selectedTile.getTile().getColor());
-				List<Vector2> extremities = this.selectedTile.getTile().getExtremities();
-				Vector2 tileOrigin = null;
-				Vector2 position = new Vector2();
-
-				for (Vector2 e : extremities) {
-					position.setX(cell.getX() + (e.getY() - this.selectedTileHeldCell.getY()) - fc.getY());
-					position.setY(cell.getY() + (e.getX() - this.selectedTileHeldCell.getX()) - fc.getX());
-					if (validDropCells.contains(position)) {
-						tileOrigin = e;
-						break;
-					}
-				}
-
-				if (tileOrigin != null) {
-					if (this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, position)) {
-						((PlayerHuman) this.game.getCurrentPlayer())
-								.setChosenMove(new Move(position, this.selectedTile.getTile(), tileOrigin));
-						this.selectedTile = null;
-						this.inDragAndDrop = false;
-					}
-				}
-			}
-
-			Mouse.consumeLastMouseButton();
-		}
-		else if (Mouse.getLastScrollClicks() != 0) // Gestion de la rotation de la pièce
+		// Gestion de la rotation de la pièce
+		if (Mouse.getLastScrollClicks() != 0) 
 		{
 			Vector2 fc = this.selectedTile.getTile().getFirstCase();
 			Vector2 fc2;
@@ -273,7 +229,7 @@ public class GamePage extends Page implements ActionListener {
 			// Gestion du déplacement de la pièce avec le curseur
 			if (this.blokusBoard.isInBounds(mPos)) // La souris survole le plateau
 			{
-				GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+				GraphicsPanel.newCursor = Program.NOT_ALLOWED_CURSOR;
 				int innerX = (mPos.getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X))
 						% CellColor.CELL_HEIGHT;
 				int innerY = (mPos.getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y))
@@ -283,17 +239,64 @@ public class GamePage extends Page implements ActionListener {
 						.setX(mPos.getX() - (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getY()) - innerX);
 				this.selectedTile.getPosition()
 						.setY(mPos.getY() - (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getX()) - innerY);
+
+				// Tests pour determiner si on peut ou non poser la pièce ici
+				int cellX = (mPos.getX() - (this.blokusBoard.getPosition().getX() + BlokusBoard.OFFSET_X))
+						/ CellColor.CELL_HEIGHT;
+				int cellY = (mPos.getY() - (this.blokusBoard.getPosition().getY() + BlokusBoard.OFFSET_Y))
+						/ CellColor.CELL_HEIGHT;
+				Vector2 cell = new Vector2(cellX, cellY);
+				Vector2 fc = this.selectedTile.getTile().getFirstCase();
+
+				List<Vector2> validDropCells = this.blokusBoard.getBoard()
+						.getFreePositions(this.selectedTile.getTile().getColor()); //TODO Sauvegarder cette liste une fois par entrée dans le mode D&D ?
+				List<Vector2> extremities = this.selectedTile.getTile().getExtremities(); //TODO Idem
+				Vector2 tileOrigin = null;
+				Vector2 position = new Vector2();
+
+				for (Vector2 e : extremities) {
+					position.setX(cell.getX() + (e.getY() - this.selectedTileHeldCell.getY()) - fc.getY());
+					position.setY(cell.getY() + (e.getX() - this.selectedTileHeldCell.getX()) - fc.getX());
+					if (validDropCells.contains(position)) {
+						tileOrigin = e;
+						break;
+					}
+				}
+
+				if (tileOrigin != null) {
+					if (this.blokusBoard.getBoard().isValidMove(this.selectedTile.getTile(), tileOrigin, position)) {
+						GraphicsPanel.newCursor = Program.POINTING_HAND_CURSOR;
+						if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT) // Bouton souris gauche enfoncé
+						{
+							((PlayerHuman) this.game.getCurrentPlayer())
+									.setChosenMove(new Move(position, this.selectedTile.getTile(), tileOrigin));
+							this.selectedTile = null;
+							this.inDragAndDrop = false;
+							Mouse.consumeLastMouseButton();
+						}
+					}
+				}
 			}
 			else // La souris survole autre chose
 			{
-				GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR);
+				GraphicsPanel.newCursor = Program.GRABBED_CURSOR;
 				this.selectedTile.getPosition().setX(mPos.getX()
 						- (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getY()) - CellColor.CELL_HEIGHT / 2);
 				this.selectedTile.getPosition().setY(mPos.getY()
 						- (CellColor.CELL_HEIGHT * this.selectedTileHeldCell.getX()) - CellColor.CELL_HEIGHT / 2);
-			}
 
-			this.selectedTile.update(elapsedTime);
+				if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT) // Bouton souris gauche enfoncé
+				{
+					this.game.getCurrentPlayer().addTileToInventory(this.selectedTile.getTile());
+
+					this.selectedTile = null;
+					this.inDragAndDrop = false;
+					Mouse.consumeLastMouseButton();
+				}
+			}
+			
+			if(this.selectedTile!=null)
+				this.selectedTile.update(elapsedTime);
 		}
 	}
 
@@ -314,14 +317,14 @@ public class GamePage extends Page implements ActionListener {
 		}
 
 		if (this.selectedTile != null) { // Tile survolé
-			GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+			GraphicsPanel.newCursor = Program.GRAB_CURSOR;
 			if (!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.LEFT) // Bouton souris gauche enfoncé
 			{
 				this.game.getCurrentPlayer().removeTileFromInventory(this.selectedTile.getTile());
 				this.selectedTileHeldCell = this.selectedTile.getCellOffset(mPos);
 				this.inDragAndDrop = true;
-				GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 				Mouse.consumeLastMouseButton();
+				Mouse.consumeLastScroll();
 			}
 		}
 		else { // Aucun Tile survolé

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import navigation.Page;
+import program.Program;
 import utilities.Vector2;
 
 public class BlokusCheckBox implements DrawableInterface {
@@ -122,7 +123,7 @@ public class BlokusCheckBox implements DrawableInterface {
 	public void update(float elapsedTime) {
 		
 		if(this.isInBounds(Mouse.getPosition()) && this.isEnabled){
-			GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+			GraphicsPanel.newCursor = Program.POINTING_HAND_CURSOR;
 			if(Mouse.getLastMouseButton() == Mouse.LEFT && !Mouse.isReleased()){
 				Mouse.consumeLastMouseButton();
 				this.swapChecked();

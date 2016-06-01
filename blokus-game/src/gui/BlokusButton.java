@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import program.Program;
 import utilities.BufferedHelper;
 import utilities.Vector2;
 
@@ -210,7 +211,7 @@ public class BlokusButton implements DrawableInterface
 		if(this.isInBounds(Mouse.getPosition()) && this.isEnabled)
 		{
 			this.mouseHover = true;
-			GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+			GraphicsPanel.newCursor = Program.POINTING_HAND_CURSOR;
 			if(Mouse.getLastMouseButton() == Mouse.LEFT)
 			{
 				if(this.wasClicked) {
