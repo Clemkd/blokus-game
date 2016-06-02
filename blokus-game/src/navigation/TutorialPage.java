@@ -87,7 +87,7 @@ public class TutorialPage extends Page implements ActionListener{
 		{
 			this.interfaceImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "interfaceimage.png"));
 			//this.controlsImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "controlsimage.png"));
-			//this.rulesImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "rulesimage.png"));
+			this.rulesImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "reglesimage.png"));
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
@@ -181,7 +181,7 @@ public class TutorialPage extends Page implements ActionListener{
 			this.buttonRulesRight.draw(g2d);
 		}
 		else if (this.onRules) {
-			//g2d.drawImage(this.rulesImage, POS_X_PANEL, POS_Y_PANEL, null);
+			g2d.drawImage(this.rulesImage, POS_X_PANEL, POS_Y_PANEL, null);
 			this.buttonControlsLeft.draw(g2d);
 			this.buttonHomeRight.draw(g2d);
 		}
