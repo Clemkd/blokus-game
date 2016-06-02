@@ -161,7 +161,6 @@ public class GamePage extends Page implements ActionListener {
 		this.selectedTileHeldCell = null;
 		this.flagLoad = false;
 		this.soundPlayer = new MusicPlayer();
-		this.messageBoxIsClosed = true;
 	}
 
 	@Override
@@ -204,25 +203,25 @@ public class GamePage extends Page implements ActionListener {
 		this.updateMouse(elapsedTime);
 
 		if (this.game.isTerminated()) {
-			int scoreP1 = this.game.getScore(this.game.getPlayers().get(0));
-			int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
-			String vict = "";
-			if(scoreP1 > scoreP2)
-			{
-				vict =this.game.getPlayers().get(0).getName()+" à gagné";
-			}
-			else
-			{
-				vict =this.game.getPlayers().get(1).getName()+" à gagné";
-			}
-			BlokusMessageBox msgbox = new BlokusMessageBox(null,
-					vict+"\nScore : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
-					BlokusMessageBoxButtonState.YES_OR_NO);
-			msgbox.setBackColor(Color.WHITE);
-			msgbox.setStrokeColor(CSSColors.DARKGREEN.color());
-			msgbox.setStroke(3);
 			if(this.messageBoxIsClosed)
 			{
+				int scoreP1 = this.game.getScore(this.game.getPlayers().get(0));
+				int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
+				String vict = "";
+				if(scoreP1 > scoreP2)
+				{
+					vict =this.game.getPlayers().get(0).getName()+" à gagné";
+				}
+				else
+				{
+					vict =this.game.getPlayers().get(1).getName()+" à gagné";
+				}
+				BlokusMessageBox msgbox = new BlokusMessageBox(null,
+						vict+"\nScore : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
+						BlokusMessageBoxButtonState.YES_OR_NO);
+				msgbox.setBackColor(Color.WHITE);
+				msgbox.setStrokeColor(CSSColors.DARKGREEN.color());
+				msgbox.setStroke(3);
 				msgbox.show(this);
 			}
 		}
@@ -522,7 +521,8 @@ public class GamePage extends Page implements ActionListener {
 		}
 		else if (e.getSource() instanceof BlokusMessageBox) {
 			if (e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand()) {
-				if(!this.game.isTerminated())
+				System.out.println(this.game.isTerminated());
+				if(!this.game.isTerminated() || !this.messageBoxIsClosed)
 				{
 					Navigation.NavigateTo(Navigation.homePage);
 				}
@@ -579,7 +579,7 @@ public class GamePage extends Page implements ActionListener {
 				this.getMessageBox().close(this);
 			}
 			if (e.getActionCommand() == BlokusMessageBoxResult.NO.getActionCommand()) {
-				if(this.game.isTerminated())
+				if(this.game.isTerminated() && this.messageBoxIsClosed)
 				{
 					this.messageBoxIsClosed = false;
 				}
@@ -662,6 +662,7 @@ public class GamePage extends Page implements ActionListener {
 				Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolumeMusic());
 			}
 			this.flagLoad = true;
+			this.messageBoxIsClosed = true;
 			
 			this.elapsedTimeSaved = 0;
 			this.showTickAnimation = 0;
