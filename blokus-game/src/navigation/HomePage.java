@@ -90,7 +90,10 @@ public class HomePage extends Page implements ActionListener {
 		this.buttonTutorial.update(elapsedTime);
 		this.buttonOption.update(elapsedTime);
 		this.buttonExit.update(elapsedTime);
-
+		
+		if(Program.optionConfiguration.isFirstLaunch()) {
+			Navigation.NavigateTo(Navigation.tutorialPage);
+		}
 	}
 
 	@Override

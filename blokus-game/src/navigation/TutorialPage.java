@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 import gui.BlokusButton;
 import gui.GraphicsPanel;
-
+import program.Program;
 import utilities.Vector2;
 
 public class TutorialPage extends Page implements ActionListener{
@@ -92,7 +92,10 @@ public class TutorialPage extends Page implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		
+		if(Program.optionConfiguration.isFirstLaunch()) {
+			Program.optionConfiguration.setFirstLaunch(false);
+			Program.optionConfiguration.saveConfiguration();
+		}
 	}
 
 	@Override

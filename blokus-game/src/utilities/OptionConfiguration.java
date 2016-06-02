@@ -45,6 +45,8 @@ public class OptionConfiguration implements Serializable {
 
 	private boolean playSFX;
 
+	private boolean firstLaunch;
+
 	/**
 	 * Constructeur
 	 */
@@ -53,8 +55,9 @@ public class OptionConfiguration implements Serializable {
 		this.playSFX = true;
 		this.autoSave = true;
 		this.help = false;
-		this.volumeMusic = 0.5f;
-		this.volumeSFX = 0.4f;
+		this.volumeMusic = 0.45f;
+		this.volumeSFX = 0.65f;
+		this.firstLaunch = true;
 
 		this.keyRotateClockwise = 39;
 		this.keyRotateCounterClockwise = 37;
@@ -63,6 +66,14 @@ public class OptionConfiguration implements Serializable {
 		this.keyReturn = 27;
 	}
 
+	public boolean isFirstLaunch() {
+		return this.firstLaunch;
+	}
+	
+	public void setFirstLaunch(boolean b) {
+		this.firstLaunch = b;
+	}
+	
 	/**
 	 * Getter du flag son
 	 * 
@@ -183,10 +194,10 @@ public class OptionConfiguration implements Serializable {
 	 */
 	public static OptionConfiguration loadOption() {
 		OptionConfiguration option = null;
-		File fileConfig = new File("config.txt");
+		File fileConfig = new File("blokus.config");
 		if (fileConfig.exists()) {
 			try {
-				FileInputStream config = new FileInputStream("config.txt");
+				FileInputStream config = new FileInputStream("blokus.config");
 				ObjectInputStream in = new ObjectInputStream(config);
 				option = (OptionConfiguration) in.readObject();
 				in.close();
@@ -201,6 +212,7 @@ public class OptionConfiguration implements Serializable {
 		}
 		else {
 			option = new OptionConfiguration();
+			option.saveConfiguration();
 		}
 		return option;
 	}
@@ -210,7 +222,7 @@ public class OptionConfiguration implements Serializable {
 	 */
 	public void saveConfiguration() {
 		try {
-			FileOutputStream fileOption = new FileOutputStream("config.txt");
+			FileOutputStream fileOption = new FileOutputStream("blokus.config");
 			ObjectOutputStream out = new ObjectOutputStream(fileOption);
 			out.writeObject(this);
 			out.close();

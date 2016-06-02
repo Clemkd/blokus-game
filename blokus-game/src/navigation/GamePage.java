@@ -174,7 +174,7 @@ public class GamePage extends Page implements ActionListener {
 		this.buttonExit.update(elapsedTime);
 		if(this.game.update()) {
 			if(Program.optionConfiguration.isPlaySFX()) {
-				this.soundPlayer.changeMusic("effect01");
+				this.soundPlayer.changeMusic("effect04");
 				this.soundPlayer.setVolume(Program.optionConfiguration.getVolumeSFX());
 				this.soundPlayer.playOnce();
 			}

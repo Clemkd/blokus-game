@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import utilities.Move;
 import utilities.OutOfBoundsException;
@@ -376,16 +377,20 @@ public class Game implements Serializable
 	 */
 	public void save(){
 		JFileChooser jFileChooser = new JFileChooser();
+		jFileChooser.setFileFilter(new FileNameExtensionFilter("Fichier de sauvegarde Blokus", "blokus"));
+		jFileChooser.setAcceptAllFileFilterUsed(false);
 		int choice = jFileChooser.showSaveDialog(jFileChooser);
 		if(choice == JFileChooser.APPROVE_OPTION){
 			String path = jFileChooser.getSelectedFile().getAbsolutePath();
+			if (!path.endsWith(".blokus")) {
+				path = path.concat(".blokus");
+			}
 			try {
 				FileOutputStream fileSave = new FileOutputStream(path);
 				ObjectOutputStream out = new ObjectOutputStream(fileSave);
 				out.writeObject(this);
 				out.close();
 				fileSave.close();
-				System.out.println("sérialisation de game okay");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -401,6 +406,8 @@ public class Game implements Serializable
 	public static Game load(){
 		Game gameToLoad = null;
 		JFileChooser jfChooser = new JFileChooser();
+		jfChooser.setFileFilter(new FileNameExtensionFilter("Fichier de sauvegarde Blokus", "blokus"));
+		jfChooser.setAcceptAllFileFilterUsed(false);
 		int choice = jfChooser.showOpenDialog(jfChooser);
 		if(choice == JFileChooser.APPROVE_OPTION){
 			String path = jfChooser.getSelectedFile().getAbsolutePath();
@@ -417,7 +424,6 @@ public class Game implements Serializable
 			}
 		}
 		return gameToLoad;
-
 	}
 
 	/**

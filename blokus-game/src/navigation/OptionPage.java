@@ -118,32 +118,41 @@ public class OptionPage extends Page implements ActionListener {
 	public void updatePage(float elapsedTime) {
 		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 
-		this.buttonHelp1.setEnabled(this.onRules);
-		this.buttonHelp2.setEnabled(this.onRules);
-		this.buttonHelp3.setEnabled(this.onRules);
-
-		this.checkBoxActivateMusic.setEnabled(this.onGeneral);
-		this.checkBoxAutoSave.setEnabled(this.onGeneral);
-		this.checkBoxDisplayPossibleMoves.setEnabled(this.onGeneral);
-		this.upDownVolumeMusic.setEnabled(this.onGeneral);
-		this.checkBoxActivateSFX.setEnabled(this.onGeneral);
-		this.upDownVolumeSFX.setEnabled(this.onGeneral);
-
+		// DEBUT PARTIE COMMUNE
 		this.buttonControl.update(elapsedTime);
 		this.buttonGeneral.update(elapsedTime);
 		this.buttonRules.update(elapsedTime);
 		this.buttonToValid.update(elapsedTime);
-		this.checkBoxDisplayPossibleMoves.update(elapsedTime);
-		this.checkBoxAutoSave.update(elapsedTime);
+		this.buttonToCancel.update(elapsedTime);
+		// FIN PARTIE COMMUNE
+		
+		// DEBUT PAGE GENERAL
+		this.checkBoxDisplayPossibleMoves.setEnabled(this.onGeneral);
+		this.checkBoxAutoSave.setEnabled(this.onGeneral);
+		this.checkBoxActivateMusic.setEnabled(this.onGeneral);
+		this.upDownVolumeMusic.setEnabled(this.onGeneral);
+		this.checkBoxActivateSFX.setEnabled(this.onGeneral);
+		this.upDownVolumeSFX.setEnabled(this.onGeneral);
+		
 		this.titleGame.update(elapsedTime);
 		this.titleAudio.update(elapsedTime);
+		this.checkBoxDisplayPossibleMoves.update(elapsedTime);
+		this.checkBoxAutoSave.update(elapsedTime);
 		this.checkBoxActivateMusic.update(elapsedTime);
+		this.upDownVolumeMusic.update(elapsedTime);
+		this.checkBoxActivateSFX.update(elapsedTime);
+		this.upDownVolumeSFX.update(elapsedTime);
+		// FIN PAGE GENERAL
+		
+		// DEBUT PAGE REGLES
+		this.buttonHelp1.setEnabled(this.onRules);
+		this.buttonHelp2.setEnabled(this.onRules);
+		this.buttonHelp3.setEnabled(this.onRules);
 		
 		this.titleGoal.update(elapsedTime);
 		this.titleRunning.update(elapsedTime);
 		this.titleEnd.update(elapsedTime);
 		this.titleAdvices.update(elapsedTime);
-		this.buttonToCancel.update(elapsedTime);
 		this.textRunning1.update(elapsedTime);
 		this.textRunning2.update(elapsedTime);
 		this.textRunning3.update(elapsedTime);
@@ -153,13 +162,9 @@ public class OptionPage extends Page implements ActionListener {
 		this.buttonHelp1.update(elapsedTime);
 		this.buttonHelp2.update(elapsedTime);
 		this.buttonHelp3.update(elapsedTime);
-		this.upDownVolumeMusic.update(elapsedTime);
-		this.checkBoxActivateSFX.update(elapsedTime);
-		this.upDownVolumeSFX.update(elapsedTime);
+		// FIN PAGE REGLES
 		
 		// DEBUT PAGE CONTROLE
-		this.titleKeyboard.update(elapsedTime);
-		
 		this.keyRotateClockwiseButton.setEnabled(this.onControl);
 		this.keyRotateCounterClockwiseButton.setEnabled(this.onControl);
 		this.keySymetryClockwiseButton.setEnabled(this.onControl);
@@ -167,6 +172,7 @@ public class OptionPage extends Page implements ActionListener {
 		this.keyReturnButton.setEnabled(this.onControl);
 		this.defaultControlsButton.setEnabled(this.onControl);
 		
+		this.titleKeyboard.update(elapsedTime);
 		this.keyRotateClockwiseButton.update(elapsedTime);
 		this.keyRotateCounterClockwiseButton.update(elapsedTime);
 		this.keySymetryClockwiseButton.update(elapsedTime);
@@ -325,7 +331,7 @@ public class OptionPage extends Page implements ActionListener {
 				Window.getMusicPlayer().setVolume(this.upDownVolumeMusic.getValue());
 			}
 			else if (e.getSource().equals(this.upDownVolumeSFX)) {
-				this.soundPlayer.changeMusic("effect01");
+				this.soundPlayer.changeMusic("effect04");
 				this.soundPlayer.setVolume(this.upDownVolumeSFX.getValue());
 				this.soundPlayer.playOnce();
 			}
@@ -343,33 +349,7 @@ public class OptionPage extends Page implements ActionListener {
 
 	@Override
 	public void loadContents() {
-		try {
-			this.imageHelp1 = ImageIO
-					.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp1.png"));
-			this.imageHelp2 = ImageIO
-					.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp2.png"));
-			this.imageHelp3 = ImageIO
-					.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp3.png"));
-		}
-		catch (IOException e) {
-			this.imageHelp1 = null;
-			this.imageHelp2 = null;
-			this.imageHelp3 = null;
-			e.printStackTrace();
-		}
-
-		this.buttonHelp1 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
-		this.buttonHelp1.setPosition(new Vector2(350, 250));
-		this.buttonHelp1.addListener(this);
-
-		this.buttonHelp2 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
-		this.buttonHelp2.setPosition(new Vector2(350, 300));
-		this.buttonHelp2.addListener(this);
-
-		this.buttonHelp3 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
-		this.buttonHelp3.setPosition(new Vector2(350, 350));
-		this.buttonHelp3.addListener(this);
-
+		// DEBUT BOUTONS COMMUNS
 		this.buttonGeneral = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "general.png"));
 		this.buttonGeneral.setPosition(new Vector2(POS_X_BOUTONS, 305));
 		this.buttonGeneral.addListener(this);
@@ -390,7 +370,9 @@ public class OptionPage extends Page implements ActionListener {
 				getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "annuleroptions.png"));
 		this.buttonToCancel.setPosition(new Vector2(371, 623));
 		this.buttonToCancel.addListener(this);
-
+		// FIN BOUTONS COMMUNS
+		
+		// DEBUT PAGE GENERAL
 		this.titleGame = new BlokusLabel("JEU", customFontTitle);
 		this.titleGame.setPosition(new Vector2(POS_X_TITLE, 102));
 
@@ -409,6 +391,36 @@ public class OptionPage extends Page implements ActionListener {
 				this.customFontCheckbox);
 		this.checkBoxActivateMusic.setPosition(new Vector2(POS_X_CHECKBOX, 300));
 		this.checkBoxActivateMusic.addListener(this);
+		
+		this.upDownVolumeMusic = new BlokusNumericUpDown("Volume Musique", this.option.getVolumeMusic(), 0.05f, 0.0f, 1.0f, this.customFontCheckbox);
+		this.upDownVolumeMusic.setPosition(new Vector2(POS_X_CHECKBOX, 330));
+		this.upDownVolumeMusic.addListener(this);
+		
+		this.checkBoxActivateSFX = new BlokusCheckBox(true, this.option.isPlaySFX(), "EFFETS SONORES",
+				this.customFontCheckbox);
+		this.checkBoxActivateSFX.setPosition(new Vector2(POS_X_CHECKBOX, 360));
+		this.checkBoxActivateSFX.addListener(this);
+		
+		this.upDownVolumeSFX = new BlokusNumericUpDown("Volume SFX", this.option.getVolumeSFX(), 0.05f, 0.0f, 1.0f, this.customFontCheckbox);
+		this.upDownVolumeSFX.setPosition(new Vector2(POS_X_CHECKBOX, 390));
+		this.upDownVolumeSFX.addListener(this);
+		// FIN PAGE GENERAL
+		
+		// DEBUT PAGE REGLES
+		try {
+			this.imageHelp1 = ImageIO
+					.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp1.png"));
+			this.imageHelp2 = ImageIO
+					.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp2.png"));
+			this.imageHelp3 = ImageIO
+					.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "imagehelp3.png"));
+		}
+		catch (IOException e) {
+			this.imageHelp1 = null;
+			this.imageHelp2 = null;
+			this.imageHelp3 = null;
+			e.printStackTrace();
+		}
 
 		this.titleGoal = new BlokusLabel("BUT du jeu : Pour chaque joueur, placer ses 21 pièces sur le plateau",
 				customFontTitle);
@@ -457,19 +469,19 @@ public class OptionPage extends Page implements ActionListener {
 				.append("- Essayez de placer vos grosses pièces sur le plateau en début de la partie.").toString();
 		this.textAdvices = new BlokusText(s5, customFontText);
 		this.textAdvices.setPosition(new Vector2(POS_X_TITLE, 550));
+		
+		this.buttonHelp1 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
+		this.buttonHelp1.setPosition(new Vector2(350, 250));
+		this.buttonHelp1.addListener(this);
 
-		this.upDownVolumeMusic = new BlokusNumericUpDown("Volume Musique", this.option.getVolumeMusic(), 0.05f, 0.0f, 1.0f, this.customFontCheckbox);
-		this.upDownVolumeMusic.setPosition(new Vector2(POS_X_CHECKBOX, 330));
-		this.upDownVolumeMusic.addListener(this);
-		
-		this.checkBoxActivateSFX = new BlokusCheckBox(true, this.option.isPlaySFX(), "EFFETS SONORES",
-				this.customFontCheckbox);
-		this.checkBoxActivateSFX.setPosition(new Vector2(POS_X_CHECKBOX, 360));
-		this.checkBoxActivateSFX.addListener(this);
-		
-		this.upDownVolumeSFX = new BlokusNumericUpDown("Volume SFX", this.option.getVolumeSFX(), 0.05f, 0.0f, 1.0f, this.customFontCheckbox);
-		this.upDownVolumeSFX.setPosition(new Vector2(POS_X_CHECKBOX, 390));
-		this.upDownVolumeSFX.addListener(this);
+		this.buttonHelp2 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
+		this.buttonHelp2.setPosition(new Vector2(350, 300));
+		this.buttonHelp2.addListener(this);
+
+		this.buttonHelp3 = new BlokusButton(getClass().getResource(Page.PATH_RESOURCES_BOUTONS + "help.png"));
+		this.buttonHelp3.setPosition(new Vector2(350, 350));
+		this.buttonHelp3.addListener(this);
+		// FIN PAGE REGLES
 
 		// DEBUT PAGE CONTROLES
 		this.titleKeyboard = new BlokusLabel("CLAVIER", customFontTitle);
