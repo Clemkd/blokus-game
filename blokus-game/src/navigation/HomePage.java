@@ -126,7 +126,7 @@ public class HomePage extends Page implements ActionListener {
 				colorsP2.add(CellColor.GREEN);
 
 				((GamePage) Navigation.gamePage).setGame(
-						new Game(new PlayerHuman("Joueur 1", colorsP1), new PlayerHuman("Joueur 2 bis", colorsP2)));
+						new Game(new PlayerHuman("Joueur 1", colorsP1), new PlayerHuman("Joueur 2", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
 			}
 			else if (e.getSource().equals(this.buttonLoad)) {
