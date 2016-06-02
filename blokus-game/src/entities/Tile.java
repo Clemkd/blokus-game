@@ -216,11 +216,17 @@ public class Tile implements Serializable{
 
 			for (int i = 0; i < 3; i++) {
 				t = t.rotateClockwise();
-				this.tilesRotationsAndFlipsList.add(t);
-				this.tilesRotationsAndFlipsList.add(t.flip());
+				if(!this.tilesRotationsAndFlipsList.contains(t))
+					this.tilesRotationsAndFlipsList.add(t);
+				if(!this.tilesRotationsAndFlipsList.contains(t.flip()))
+					this.tilesRotationsAndFlipsList.add(t.flip());
 			}
 		}
 		return this.tilesRotationsAndFlipsList;
+	}
+	
+	public void setTilesListOfRotationsAndFlips(ArrayList<Tile> l) {
+		this.tilesRotationsAndFlipsList = l;
 	}
 
 	/**
