@@ -6,16 +6,10 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import gui.BlokusButton;
 import gui.GraphicsPanel;
-import gui.MusicPlayer;
-import gui.Window;
-import program.Program;
+
 import utilities.BufferedHelper;
 import utilities.Vector2;
 
@@ -137,6 +131,7 @@ public class TutorialPage extends Page implements ActionListener{
 
 	@Override
 	public void updatePage(float elapsedTime) {
+		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 		this.buttonInterfaceLeft.update(elapsedTime);
 		this.buttonRulesLeft.update(elapsedTime);
 		this.buttonControlsLeft.update(elapsedTime);
@@ -160,13 +155,15 @@ public class TutorialPage extends Page implements ActionListener{
 		else if (this.onControl) {
 			g2d.setColor(new Color(0, 141, 44));
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
-
-			
+			this.buttonInterfaceLeft.draw(g2d);
+			this.buttonRulesRight.draw(g2d);
 
 		}
 		else if (this.onRules) {
 			g2d.setColor(new Color(233, 188, 0));
 			g2d.fillRect(POS_X_PANEL, POS_Y_PANEL, PANEL_WIDTH, PANEL_HEIGHT);
+			this.buttonControlsLeft.draw(g2d);
+			this.buttonHomeRight.draw(g2d);
 
 		}
 
