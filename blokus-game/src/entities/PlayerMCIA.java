@@ -50,7 +50,6 @@ public class PlayerMCIA extends Player{
 				{
 					System.err.println("------- MONTECARLO ---------\n" + game.getCurrentPlayer().getName());
 					chosenMove = monteCarlo(game, DEFAULT_SAMPLE_SIZE + piecesPlacees * 20);
-					System.out.println("PIECE PLACEES : " + ++piecesPlacees);
 				}
 				
 				game = null;
@@ -82,16 +81,15 @@ public class PlayerMCIA extends Player{
 			// STEP 1 : SELECTION
 			MCNode selectedNode = this.selection(node, state);
 
-			
 			// STEP 2 : EXPAND
-			/*MCNode expandedNode = */this.expand(selectedNode, state);
+			MCNode expandedNode = this.expand(selectedNode, state);
 
 			rootNode.print();
 			// STEP 3 : SIMULATION
-			//boolean gameResult  = this.simulateGameRandomlyAndRevert(expandedNode.getGame());
+			boolean gameResult  = this.simulateGameRandomlyAndRevert(expandedNode.getGame());
 			
 			// STEP 4 : BACKPROPAGATE
-			//this.backpropagate(expandedNode, gameResult);
+			this.backpropagate(expandedNode, gameResult);
 		}
 		
 		return rootNode.getMostVisitedMove();
@@ -99,41 +97,23 @@ public class PlayerMCIA extends Player{
 	
 	private MCNode selection(MCNode node, Game state)
 	{
-		while (!node.isLeaf()) {
+		while (!node.isLeaf() && node.getChilds().size() > 1)
+		{
 			node = node.selectChild();
-			//state.doMove(Move.selectRandomlyPossibleMoveWithHeuristic(node, state, rand, 12));
 		}
 		
 		return node;
 	}
 	
-	private /*MCNode*/void expand(MCNode node, Game game)
+	private MCNode expand(MCNode node, Game game)
 	{
+		Move mv = Move.selectRandomlyPossibleMoveWithHeuristic(node, game, rand, 12);
+
+		game.doMove(mv);
+		MCNode fnode = new MCNode(node, mv, game);
+		node.addChild(fnode);
 		
-		for(int i = 0; i < 3; i++){
-			//**************************************************
-			Move mv = Move.selectRandomlyPossibleMoveWithHeuristic(node, game, rand, 12);
-			Game g = game.copy();
-			g.doMove(mv);
-			MCNode fNode = new MCNode(node, mv, g);
-			
-			node.addChild(fNode);
-			
-			// STEP 3 : SIMULATION
-			boolean gameResult = this.simulateGameRandomlyAndRevert(fNode.getGame());
-			
-			// STEP 4 : BACKPROPAGATE
-			this.backpropagate(fNode, gameResult);
-			//**************************************************
-		}
-		// EXPAND
-		/*Move move = Move.selectRandomlyPossibleMoveWithHeuristic(node, game, rand, 12);
-		
-		game.doMove(move);
-		MCNode nodeL = new MCNode(node, move, game);
-		node = node.addChild(nodeL);
-		
-		return node;*/
+		return node.addChild(fnode);
 	}
 	
 

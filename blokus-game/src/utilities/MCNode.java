@@ -118,17 +118,12 @@ public class MCNode {
 			childNodes.add(this.getChilds().get(i));
 			i++;
 		}
-		System.err.println("NOMBRE EQUIVALENTS : " + i);
+		
 		Random rand = new Random();
 		if(childNodes.size() < 2)
 			return node;
 
 		return childNodes.get(rand.nextInt(childNodes.size() - 1));
-	}
-
-	public double reckonValue()
-	{
-		return this.getVisitsCount() / this.getVisitsCount();
 	}
 	
 	/**

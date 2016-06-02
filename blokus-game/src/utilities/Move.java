@@ -125,11 +125,6 @@ public class Move implements Serializable, Comparable<Move> {
 	public static Move selectRandomlyPossibleMoveWithHeuristic(MCNode node, Game game, Random rand, int max) {
 		ArrayList<Move> moves = Move.possibleMovesWithHeurisitic(game, max);
 
-		// Suppression des moves déjà effectués
-		for (MCNode child : node.getChilds()) {
-			moves.remove(child.getMove());
-		}
-
 		Move move = Move.EMPTY;
 		if (moves.size() > 1)
 			move = moves.get(rand.nextInt(moves.size() - 1));
