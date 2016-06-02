@@ -54,10 +54,9 @@ public class TestsIAStats extends JFrame
         for(int i = 0; i < playersP1.length; i++)
         {
         	donnees[i][0] = playersP1[i].getName();
-        	
         	for(int j = 0; j < playersP2.length; j++)
             {
-        		donnees[i][j] = (simulateGamesAndReturnP1sVictoryCount(nbParties, playersP1[i], playersP2[j]) / (nbParties * 1.0d));
+        		donnees[i][j+1] = simulateGamesAndReturnP1sVictoryCount(nbParties, playersP1[i], playersP2[j]) + "/" + nbParties;
             }
         }
  
@@ -93,6 +92,6 @@ public class TestsIAStats extends JFrame
  
     public static void main(String[] args) 
     {
-        new TestsIAStats(10).setVisible(true);
+        new TestsIAStats(1).setVisible(true);
     }
 }
