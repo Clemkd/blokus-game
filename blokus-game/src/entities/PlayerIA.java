@@ -102,7 +102,7 @@ public class PlayerIA extends Player {
 		int endIndex = fullList.size();
 		for (int i = 0; i < fullList.size(); i++) {
 			if (fullList.get(i).getTile().getCellCount() < minTileSize) {
-				endIndex = i+5;
+				endIndex = i;
 				break;
 			}
 		}

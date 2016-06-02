@@ -260,6 +260,7 @@ public abstract class Player implements Serializable{
 			CellColor color = tile.getColor();
 			for (Tile t : Tile.getListOfNeutralTile(color)) {
 				if (t.getId() == id) {
+					t.setTilesListOfRotationsAndFlips(tile.getTilesListOfRotationsAndFlips());
 					this.tiles.add(t);
 					return true;
 				}

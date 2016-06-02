@@ -75,6 +75,15 @@ public class Tile implements Serializable{
 		this.tilesRotationsAndFlipsList = new ArrayList<Tile>();
 	}
 
+	public Tile(CellType[][] temp, CellColor color, int id2, int cellCount2,
+			ArrayList<Tile> tilesRotationsAndFlipsList2) {
+		this.matrix = temp;
+		this.couleur = color;
+		this.id = id2;
+		this.cellCount = cellCount2;
+		this.tilesRotationsAndFlipsList = tilesRotationsAndFlipsList2;
+	}
+
 	/**
 	 * Accesseur de matrix
 	 * 
@@ -123,7 +132,7 @@ public class Tile implements Serializable{
 			}
 		}
 
-		return new Tile(temp, this.getColor(), this.id, this.getCellCount());
+		return new Tile(temp, this.getColor(), this.id, this.getCellCount(), this.tilesRotationsAndFlipsList);
 	}
 
 	/**
@@ -138,7 +147,7 @@ public class Tile implements Serializable{
 			}
 		}
 
-		return new Tile(temp, this.getColor(), this.id, this.getCellCount());
+		return new Tile(temp, this.getColor(), this.id, this.getCellCount(), this.tilesRotationsAndFlipsList);
 	}
 
 	/**
@@ -151,7 +160,7 @@ public class Tile implements Serializable{
 			for (int y = 0; y < HEIGHT; y++)
 				temp[WIDTH - x - 1][y] = matrix[x][y];
 
-		return new Tile(temp, this.getColor(), this.id, this.getCellCount());
+		return new Tile(temp, this.getColor(), this.id, this.getCellCount(), this.tilesRotationsAndFlipsList);
 	}
 
 	/**
