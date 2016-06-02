@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import entities.CellColor;
 import entities.Game;
 import entities.PlayerHuman;
+import entities.PlayerIA;
 import entities.PlayerMCIA;
 import entities.PlayerRandom;
 import gui.BlokusButton;
@@ -100,7 +101,7 @@ public class IASelectionPage extends Page implements ActionListener{
 				Navigation.NavigateTo(Navigation.gamePage);
 				//TODO lancer une nouvelle partie avec une ia moyenne
 			}else if(e.getSource().equals(this.buttonIAHard)){
-				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerRandom("Random 1", colorsP1), new PlayerMCIA("Random 2", colorsP2)));
+				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerRandom("Random 1", colorsP1), new PlayerIA("Random 2", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
 				//TODO lancer une nouvelle partie avec une ia difficile
 			}else if(e.getSource().equals(this.buttonReturn)){
