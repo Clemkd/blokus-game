@@ -124,7 +124,7 @@ public class Game implements Serializable
 	 * 
 	 * @return une liste des couleurs du jeu
 	 */
-	private List<CellColor> getPlayingColors() {
+	public List<CellColor> getPlayingColors() {
 		return this.playingColors;
 	}
 
@@ -133,6 +133,10 @@ public class Game implements Serializable
 		this.players.clear();
 		this.players.add(player1);
 		this.players.add(player2);
+	}
+	
+	public void setTurn(int t) {
+		this.currentTurn = t;
 	}
 
 	/**

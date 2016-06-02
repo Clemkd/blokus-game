@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.Collections;
 import java.util.List;
 
 import utilities.Move;
@@ -21,16 +22,13 @@ public class PlayerIA extends Player {
 	private static final long	serialVersionUID	= -4411683191893021855L;
 
 	private static final int	MAX_DEPTH			= 1;
-	private int					k;
 
 	public PlayerIA(String name, List<CellColor> colors) {
 		super(name, colors);
-		k = 0;
 	}
 
 	public PlayerIA(PlayerIA p) {
 		super(p);
-		k = 0;
 	}
 
 	@Override
@@ -40,9 +38,7 @@ public class PlayerIA extends Player {
 
 			@Override
 			public void run() {
-				k = 0;
 				chosenMove = alphaBeta(game.copy(), MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
-				System.out.println("Calls: " + k);
 				System.out.println("CHOSEN MOVE: " + chosenMove.getValue());
 
 				playing = false;
@@ -52,18 +48,21 @@ public class PlayerIA extends Player {
 	}
 
 	private Move alphaBeta(Game node, int depth, boolean maximizingPlayer, int alpha, int beta) {
-		k++;
-		if (k % 500 == 0)
-			System.out.println("Calls: " + k);
 		if (depth == 0 || node.isTerminated()) {
 			return new Move(this.evaluate(node));
 		}
-		int l = 0;
 
 		if (maximizingPlayer) {
 			Move bestMove = new Move(Integer.MIN_VALUE);
-			for (Move m : possibleMovesRestricted(node, 5)) {
-				l++;
+			List<Move> moves;
+			if (node.getTurn()<32) {
+				moves = possibleMovesRestricted(node, 5);
+			} else if (node.getTurn()<56) {
+				moves = possibleMovesRestricted(node, 3);
+			}else {
+				moves = possibleMovesRestricted(node, 1);
+			}
+			for (Move m : moves) {
 				node.doMove(m);
 				m.setValue(alphaBeta(node, depth - 1, false, alpha, beta).getValue());
 				if (m.getValue() > bestMove.getValue()) {
@@ -79,8 +78,15 @@ public class PlayerIA extends Player {
 		}
 		else {
 			Move bestMove = new Move(Integer.MAX_VALUE);
-			for (Move m : possibleMovesRestricted(node, 5)) {
-				l++;
+			List<Move> moves;
+			if (node.getTurn()<32) {
+				moves = possibleMovesRestricted(node, 5);
+			} else if (node.getTurn()<56) {
+				moves = possibleMovesRestricted(node, 3);
+			}else {
+				moves = possibleMovesRestricted(node, 1);
+			}
+			for (Move m : moves) {
 				node.doMove(m);
 				m.setValue(alphaBeta(node, depth - 1, true, alpha, beta).getValue());
 				if (m.getValue() < bestMove.getValue()) {
@@ -106,19 +112,24 @@ public class PlayerIA extends Player {
 				break;
 			}
 		}
-
-		return fullList.subList(0, endIndex);
+		
+		List<Move> result = fullList.subList(0, endIndex);
+		Collections.shuffle(result);
+		return result;
 	}
 
 	private int evaluate(Game node) {
+		int backup = node.getTurn();
+		node.setTurn(backup-1);
+		while(!node.getPlayingColors().contains(node.getCurrentColor()))
+			node.setTurn(node.getTurn()-1);
+		
 		int res = 2 * node.getScore(node.getCurrentPlayer());
 
-//		if (node.getTurn() > 24)
-//			res -= node.getCurrentPlayer().getTileInventory().size() * 10;
-//		else {
-			double d = distanceToCenter(node);
-			res -= 1000 * Math.round(d);
-//		}
+		//res -= node.getCurrentPlayer().getTileInventory().size()*10;
+		
+		double d = distanceToCenter(node);
+		res -= 10 * Math.round(d);
 
 		/*for (Tile t : node.getCurrentPlayer().getTileInventory()) {
 			if (t.getColor() == node.getCurrentColor())
@@ -131,6 +142,7 @@ public class PlayerIA extends Player {
 		 * de jeu: début, milieu, fin - Ameliorer fonction coups possibles, moins de mises à jour, sauvegarde de ce qui
 		 * existe Compter blocs restants à l'ennemi ?
 		 */
+		node.setTurn(backup);
 
 		return res;
 	}

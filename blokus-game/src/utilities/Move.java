@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 import entities.Board;
+import entities.CellColor;
 import entities.Game;
 import entities.Tile;
+import gui.BlokusBoard;
 
 public class Move implements Serializable, Comparable<Move> {
 
@@ -177,13 +179,11 @@ public class Move implements Serializable, Comparable<Move> {
 		double minEuclideanDistance = Double.POSITIVE_INFINITY;
 		for (Move m : listMove) {
 			for (Vector2 v : m.getTile().getExtremities()) {
-				/*
-				 * position.setX(cell.getX() + (e.getY() - this.selectedTileHeldCell.getY()) - fc.getY());
-				 * position.setY(cell.getY() + (e.getX() - this.selectedTileHeldCell.getX()) - fc.getX());
-				 */
+				Vector2 position = new Vector2();
+				position.setX(m.getPosition().getX() + (v.getY() - m.getTileOrigin().getY()));
+				position.setY(m.getPosition().getY() + (v.getX() - m.getTileOrigin().getX()));
 
-				Vector2 temp = new Vector2(m.getTileOrigin().getX() - v.getX(), m.getTileOrigin().getY() - v.getY());
-				double res = euclideanDistance(temp.plus(m.position), center);
+				double res = euclideanDistance(position, center);
 				if (res == minEuclideanDistance) {
 					movesResult.add(m);
 					minEuclideanDistance = res;
