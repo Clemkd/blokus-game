@@ -26,6 +26,11 @@ public abstract class Page implements DrawableInterface, ActionListener {
 	public static final String PATH_RESOURCES_FONTS = "/fonts/";
 	
 	/**
+	 * Constante d'accès au dossier de resources des animation
+	 */
+	public static final String PATH_RESOURCES_ANIMATION = "/animation/";
+	
+	/**
 	 * La message box
 	 */
 	protected static BlokusMessageBox MESSAGEBOX = null;

@@ -125,7 +125,16 @@ public class GamePage extends Page implements ActionListener {
 	/**
 	 * Le player des effets sonores
 	 */
-	private MusicPlayer soundPlayer;
+	private MusicPlayer 		soundPlayer;
+	
+	private BufferedImage		loading;
+	
+	private int 				showTickAnimation;
+	
+	private float 				elapsedTimeSaved;
+	
+	private float 				elapsedTimeTotal;
+
 
 	/**
 	 * Constructeur
@@ -199,6 +208,13 @@ public class GamePage extends Page implements ActionListener {
 			msgbox.setStroke(3);
 			msgbox.show(this);
 		}
+		
+		this.elapsedTimeTotal += elapsedTime;
+		if(this.elapsedTimeTotal>this.elapsedTimeSaved+100)
+		{
+			this.showTickAnimation = (this.showTickAnimation+1)%8;
+			this.elapsedTimeSaved = this.elapsedTimeTotal;
+		}
 	}
 
 	@Override
@@ -217,6 +233,17 @@ public class GamePage extends Page implements ActionListener {
 
 		if (this.selectedTile != null) {
 			this.selectedTile.draw(g2d);
+		}
+		
+		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman))
+		{
+			if(this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(0).getName())
+			g2d.drawImage(this.loading,305, 10, 305+48, 10+48, 0+(this.showTickAnimation*48), 0, 48+(this.showTickAnimation*48),48, null);
+		}
+		if(!(this.game.getPlayers().get(1) instanceof PlayerHuman))
+		{
+			if(this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(1).getName())
+			g2d.drawImage(this.loading,925, 10, 925+48, 10+48, 0+(this.showTickAnimation*48), 0, 48+(this.showTickAnimation*48),48, null);
 		}
 
 		g2d.dispose();
@@ -574,6 +601,7 @@ public class GamePage extends Page implements ActionListener {
 			try {
 				this.font = BufferedHelper.getDefaultFont(20f);
 				this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "logo.png"));
+				this.loading = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_ANIMATION+"loading.png"));
 			}
 			catch (IOException e) {
 				System.err.println(e.getMessage());
@@ -616,6 +644,10 @@ public class GamePage extends Page implements ActionListener {
 				Window.getMusicPlayer().setVolume(Program.optionConfiguration.getVolumeMusic());
 			}
 			this.flagLoad = true;
+			
+			this.elapsedTimeSaved = 0;
+			this.showTickAnimation = 0;
+			this.elapsedTimeTotal = 0;
 		}
 	}
 
