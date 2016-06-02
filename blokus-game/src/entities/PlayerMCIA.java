@@ -10,24 +10,24 @@ import utilities.Move;
 public class PlayerMCIA extends Player{
 	private static final long serialVersionUID = -8387538910197440018L;
 
-	private static final int DEFAULT_SAMPLE_SIZE = 200;
+	private static final int DEFAULT_SAMPLE_SIZE = 2000;
 	private Game game;
 	private Random rand;
-	private int piecePlace;
+	private int piecesPlacees;
 
 	public PlayerMCIA(String name, List<CellColor> colors) 
 	{
 		super(name, colors);
 		this.game = null;
 		this.rand = new Random();
-		this.piecePlace = 0;
+		this.piecesPlacees = 0;
 	}
 
 	public PlayerMCIA(PlayerMCIA p) {
 		super(p);
 		this.game = null;
 		this.rand = new Random();
-		this.piecePlace = 0;
+		this.piecesPlacees = 0;
 	}
 
 	@Override
@@ -37,20 +37,20 @@ public class PlayerMCIA extends Player{
 
 		new Thread(new Runnable()
 		{
-
 			@Override
 			public void run() 
 			{
-				if(piecePlace < 16)
+				/*if(piecesPlacees < 16)
 				{
 					ArrayList<Move> moves = Move.possibleMovesWithHeurisitic(game, 5);
 					chosenMove = moves.isEmpty() ? Move.EMPTY : moves.get(rand.nextInt(moves.size()));
-					piecePlace++;
+					piecesPlacees++;
 				}
-				else
+				else*/
 				{
-					System.err.println("MONTECARLO");
-					chosenMove = monteCarlo(game, DEFAULT_SAMPLE_SIZE);
+					System.err.println("------- MONTECARLO ---------\n" + game.getCurrentPlayer().getName());
+					chosenMove = monteCarlo(game, DEFAULT_SAMPLE_SIZE + piecesPlacees * 20);
+					System.out.println("PIECE PLACEES : " + ++piecesPlacees);
 				}
 				
 				game = null;
@@ -68,37 +68,74 @@ public class PlayerMCIA extends Player{
 	 * @param uctk La valeur 
 	 * @return
 	 */
-	private Move monteCarlo(Game game, int itermax) {
+	private Move monteCarlo(Game game, long miliseconds) 
+	{
+		long ms = System.currentTimeMillis() + miliseconds;
+		
 		MCNode rootNode = new MCNode(null, null, game);
 
-		for (int i = 0; i < itermax; i++) {
+		while(ms > System.currentTimeMillis()) 
+		{
 			MCNode node = rootNode;
-			Game gameCopy = game.copy();
+			Game state = node.getGame().copy();
 
-			// SELECTION
-			while (!node.isLeaf()) {
-				node = node.selectChild();
-				gameCopy.doMove(node.getMove());
-			}
+			// STEP 1 : SELECTION
+			MCNode selectedNode = this.selection(node, state);
 
-			// EXPAND
-			Move move = Move.generateRandomValidMove(gameCopy);
-			gameCopy.doMove(move);
-			MCNode nodeL = new MCNode(node, move, gameCopy);
-			node = node.addChild(nodeL);
-
-			// SIMULATION
-			boolean gameResult = this.simulateGameRandomlyWhithoutRevert(gameCopy);
 			
-			// BACKPROPAGATE
-			while (node != null) {
-				node.update(gameResult);
-				node = node.getParent();
-			}
-		}
+			// STEP 2 : EXPAND
+			/*MCNode expandedNode = */this.expand(selectedNode, state);
 
+			rootNode.print();
+			// STEP 3 : SIMULATION
+			//boolean gameResult  = this.simulateGameRandomlyAndRevert(expandedNode.getGame());
+			
+			// STEP 4 : BACKPROPAGATE
+			//this.backpropagate(expandedNode, gameResult);
+		}
+		
 		return rootNode.getMostVisitedMove();
 	}
+	
+	private MCNode selection(MCNode node, Game state)
+	{
+		while (!node.isLeaf()) {
+			node = node.selectChild();
+			//state.doMove(Move.selectRandomlyPossibleMoveWithHeuristic(node, state, rand, 12));
+		}
+		
+		return node;
+	}
+	
+	private /*MCNode*/void expand(MCNode node, Game game)
+	{
+		
+		for(int i = 0; i < 3; i++){
+			//**************************************************
+			Move mv = Move.selectRandomlyPossibleMoveWithHeuristic(node, game, rand, 12);
+			Game g = game.copy();
+			g.doMove(mv);
+			MCNode fNode = new MCNode(node, mv, g);
+			
+			node.addChild(fNode);
+			
+			// STEP 3 : SIMULATION
+			boolean gameResult = this.simulateGameRandomlyAndRevert(fNode.getGame());
+			
+			// STEP 4 : BACKPROPAGATE
+			this.backpropagate(fNode, gameResult);
+			//**************************************************
+		}
+		// EXPAND
+		/*Move move = Move.selectRandomlyPossibleMoveWithHeuristic(node, game, rand, 12);
+		
+		game.doMove(move);
+		MCNode nodeL = new MCNode(node, move, game);
+		node = node.addChild(nodeL);
+		
+		return node;*/
+	}
+	
 
 	/**
 	 * Simule un jeu depuis une configuration donnée et remet le plateau à la
@@ -111,14 +148,17 @@ public class PlayerMCIA extends Player{
 	 * @return True si le joueur de référence à gagné le jeu, False dans le cas
 	 *         contraire
 	 */
-	@SuppressWarnings("unused")
-	@Deprecated
 	private boolean simulateGameRandomlyAndRevert(Game game) {
 		int count = 0;
 		while (!game.isTerminated()) {
 			count++;
-			Move mv = Move.generateRandomValidMove(game);
-			game.doMove(mv);
+			ArrayList<Move> moves = Move.possibleMovesWithHeurisitic(game, 12);
+			Move move = Move.EMPTY;
+			if(moves.size() > 1)
+				move = moves.get(this.rand.nextInt(moves.size() - 1));
+			else if(!moves.isEmpty())
+				move = moves.get(0);
+			game.doMove(move);
 		}
 
 		boolean resultGame = game.getWinner().equals(this);
@@ -152,6 +192,15 @@ public class PlayerMCIA extends Player{
 		boolean resultGame = game.getWinner().equals(this);
 
 		return resultGame;
+	}
+	
+	// BACKPROPAGATE
+	private void backpropagate(MCNode node, boolean gameResult)
+	{
+		while (node != null) {
+			node.update(gameResult);
+			node = node.getParent();
+		}
 	}
 
 	@Override

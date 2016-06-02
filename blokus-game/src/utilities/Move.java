@@ -120,6 +120,27 @@ public class Move implements Serializable {
 		return Math.sqrt(Math.pow(v1.getX() - v1.getY(), 2) + Math.pow(v2.getX() - v2.getY(), 2));
 	}
 	
+	public static Move selectRandomlyPossibleMoveWithHeuristic(MCNode node, Game game, Random rand, int max)
+	{
+		ArrayList<Move> moves = Move.possibleMovesWithHeurisitic(game, max);
+		
+		// Suppression des moves déjà effectués
+		for(MCNode child : node.getChilds())
+		{
+			moves.remove(child.getMove());
+		}
+		
+		Move move = Move.EMPTY;
+		if(moves.size() > 1)
+			move = moves.get(rand.nextInt(moves.size() - 1));
+		else if(!moves.isEmpty())
+		{
+			move = moves.get(0);
+		}
+		
+		return move;
+	}
+	
 	public static ArrayList<Move> possibleMovesWithHeurisitic(Game game, int max){
 		final Vector2 center = new Vector2(Board.WIDTH / 2, Board.HEIGHT / 2);
 		ArrayList<Move> listMove = new ArrayList<Move>();
@@ -178,7 +199,6 @@ public class Move implements Serializable {
 				else if(res < minEuclideanDistance)
 				{
 					movesResult.clear();
-					System.out.println(res);
 					movesResult.add(m);
 					minEuclideanDistance = res;
 				}

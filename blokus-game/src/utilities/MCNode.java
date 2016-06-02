@@ -3,6 +3,8 @@ package utilities;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
+
 import entities.Game;
 import entities.Player;
 
@@ -94,6 +96,11 @@ public class MCNode {
 	 * @return Le meilleur sous-noeud
 	 */
 	public MCNode selectChild() {
+		if(this.getChilds().size() == 0)
+		{
+			System.err.println("NO CHILD [MCNode]");
+			return this;
+		}
 		this.getChilds().sort(new Comparator<MCNode>() {
 
 			@Override
@@ -101,9 +108,29 @@ public class MCNode {
 				return Double.compare(node1.reckonUCT(), node2.reckonUCT());
 			}
 		});
-		return this.getChilds().get(0);
+		
+		ArrayList<MCNode> childNodes = new ArrayList<MCNode>();
+		MCNode node = this.getChilds().get(this.getChilds().size() - 1);
+		
+		int i = 0;
+		while(i < this.getChilds().size() && this.getChilds().get(i).reckonUCT() == node.reckonUCT())
+		{
+			childNodes.add(this.getChilds().get(i));
+			i++;
+		}
+		System.err.println("NOMBRE EQUIVALENTS : " + i);
+		Random rand = new Random();
+		if(childNodes.size() < 2)
+			return node;
+
+		return childNodes.get(rand.nextInt(childNodes.size() - 1));
 	}
 
+	public double reckonValue()
+	{
+		return this.getVisitsCount() / this.getVisitsCount();
+	}
+	
 	/**
 	 * Calcul avec la formule UCB1 permettant la variation du nombre d'exploration des sous-noeuds
 	 * @return Le resultat UCB1 
@@ -142,6 +169,11 @@ public class MCNode {
 	 */
 	public Move getMostVisitedMove() 
 	{
+		if(this.getChilds().size() == 0)
+		{
+			System.err.println("NO CHILD [MCNode]");
+			return this.getMove();
+		}
 		// Tri sur le nombre de visites du noeud
 		this.getChilds().sort(new Comparator<MCNode>() {
 			@Override
@@ -151,7 +183,7 @@ public class MCNode {
 		});
 		
 		// Le noeud le plus visité
-		MCNode firstMostVisited = this.getChilds().get(0);
+		MCNode firstMostVisited = this.getChilds().get(this.getChilds().size() - 1);
 		
 		// Afin d'éviter de prendre le premier noeud le plus visité,
 		// si il existe un noeud possédant un grand nombre de parties gagnées et un grand nombre de visite
@@ -169,7 +201,29 @@ public class MCNode {
 				}
 			});
 			
-			return this.getChilds().get(0).getMove();
+			return this.getChilds().get(this.getChilds().size() - 1).getMove();
 		}
 	}
+	
+	
+	// ************************************************************************************************
+	
+	public String toString()
+	{
+		return "["+this.winsCount+"/"+this.visitsCount+"] " + this.player.getName();
+	}
+	
+    public void print() {
+        print("", true);
+    }
+
+    private void print(String prefix, boolean isTail) {
+        System.out.println(prefix + (isTail ? "└── " : "├── ") + this.toString());
+        for (int i = 0; i < this.childs.size() - 1; i++) {
+            this.getChilds().get(i).print(prefix + (isTail ? "    " : "│   "), false);
+        }
+        if (this.getChilds().size() > 0) {
+            this.getChilds().get(this.getChilds().size() - 1).print(prefix + (isTail ?"    " : "│   "), true);
+        }
+    }
 }
