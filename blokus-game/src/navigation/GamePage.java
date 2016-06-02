@@ -146,6 +146,8 @@ public class GamePage extends Page implements ActionListener {
 	 * Le temps total
 	 */
 	private float 				elapsedTimeTotal;
+	
+	private boolean 			messageBoxIsClosed;
 
 
 	/**
@@ -159,6 +161,7 @@ public class GamePage extends Page implements ActionListener {
 		this.selectedTileHeldCell = null;
 		this.flagLoad = false;
 		this.soundPlayer = new MusicPlayer();
+		this.messageBoxIsClosed = true;
 	}
 
 	@Override
@@ -218,7 +221,10 @@ public class GamePage extends Page implements ActionListener {
 			msgbox.setBackColor(Color.WHITE);
 			msgbox.setStrokeColor(CSSColors.DARKGREEN.color());
 			msgbox.setStroke(3);
-			msgbox.show(this);
+			if(this.messageBoxIsClosed)
+			{
+				msgbox.show(this);
+			}
 		}
 		
 		this.elapsedTimeTotal += elapsedTime;
@@ -247,12 +253,12 @@ public class GamePage extends Page implements ActionListener {
 			this.selectedTile.draw(g2d);
 		}
 		
-		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman))
+		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman) && !(this.game.isTerminated()))
 		{
 			if(this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(0).getName())
 			g2d.drawImage(this.loading,305, 10, 305+48, 10+48, 0+(this.showTickAnimation*48), 0, 48+(this.showTickAnimation*48),48, null);
 		}
-		if(!(this.game.getPlayers().get(1) instanceof PlayerHuman))
+		if(!(this.game.getPlayers().get(1) instanceof PlayerHuman) && !(this.game.isTerminated()))
 		{
 			if(this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(1).getName())
 			g2d.drawImage(this.loading,925, 10, 925+48, 10+48, 0+(this.showTickAnimation*48), 0, 48+(this.showTickAnimation*48),48, null);
@@ -575,7 +581,7 @@ public class GamePage extends Page implements ActionListener {
 			if (e.getActionCommand() == BlokusMessageBoxResult.NO.getActionCommand()) {
 				if(this.game.isTerminated())
 				{
-					Navigation.NavigateTo(Navigation.homePage);
+					this.messageBoxIsClosed = false;
 				}
 			}
 		}

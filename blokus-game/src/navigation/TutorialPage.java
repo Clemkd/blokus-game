@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import gui.BlokusButton;
 import gui.GraphicsPanel;
 
-import utilities.BufferedHelper;
 import utilities.Vector2;
 
 public class TutorialPage extends Page implements ActionListener{
@@ -90,7 +89,6 @@ public class TutorialPage extends Page implements ActionListener{
 			this.rulesImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "reglesimage.png"));
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
