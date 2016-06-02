@@ -265,12 +265,19 @@ public class BlokusMessageBox implements DrawableInterface, ActionListener {
 			
 			if(this.getMessage() != null){
 				int i = 0;
+				int j = 0;
+				for(String line : this.getMessage().split("\n"))
+				{
+					j++;
+				}
 				for(String line : this.getMessage().split("\n"))
 				{
 					g2d.drawString(line, 
-							(int)(DEFAULT_POSITION.getX() + (DEFAULT_SIZE.getWidth() / 2) - (this.font.getStringBounds(this.getMessage(), g2d.getFontRenderContext()).getWidth() / 2)),
-							(int)(DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() / 2) + i++ * g2d.getFontMetrics(this.font).getHeight());
+							(int)(DEFAULT_POSITION.getX() + (DEFAULT_SIZE.getWidth() / 2) - (this.font.getStringBounds(line, g2d.getFontRenderContext()).getWidth() / 2)),
+							(int)(DEFAULT_POSITION.getY() + DEFAULT_SIZE.getHeight() / 2) + i * g2d.getFontMetrics(this.font).getHeight() - j/2 * g2d.getFontMetrics(this.font).getHeight());
+					i++;
 				}
+				
 			}
 			
 			if(this.getImage() != null){

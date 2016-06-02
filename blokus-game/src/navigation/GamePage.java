@@ -123,10 +123,8 @@ public class GamePage extends Page implements ActionListener {
 	private Font				font;
 
 	/**
-	 * Flag de fin de partie
+	 * Le player des effets sonores
 	 */
-	private boolean				gameTerminated;
-	
 	private MusicPlayer soundPlayer;
 
 	/**
@@ -187,14 +185,14 @@ public class GamePage extends Page implements ActionListener {
 			String vict = "";
 			if(scoreP1 > scoreP2)
 			{
-				vict ="Le "+this.game.getPlayers().get(0).getName()+" à gagné";
+				vict =this.game.getPlayers().get(0).getName()+" à gagné";
 			}
 			else
 			{
-				vict ="Le "+this.game.getPlayers().get(1).getName()+" à gagné";
+				vict =this.game.getPlayers().get(1).getName()+" à gagné";
 			}
 			BlokusMessageBox msgbox = new BlokusMessageBox(null,
-					vict+"\n"+"Score : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
+					vict+"\nScore : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
 					BlokusMessageBoxButtonState.YES_OR_NO);
 			msgbox.setBackColor(Color.WHITE);
 			msgbox.setStrokeColor(CSSColors.DARKGREEN.color());
@@ -548,7 +546,7 @@ public class GamePage extends Page implements ActionListener {
 	 * 
 	 */
 	private void quitConfirm() {
-		BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?",
+		BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?\nbande de batard",
 				this.font, BlokusMessageBoxButtonState.YES_OR_NO);
 		msgbox.setBackColor(Color.WHITE);
 		msgbox.setStrokeColor(Color.ORANGE);
