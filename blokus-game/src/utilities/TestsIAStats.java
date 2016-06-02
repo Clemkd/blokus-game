@@ -2,7 +2,10 @@ package utilities;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,8 +21,13 @@ import entities.PlayerMedium;
 import entities.PlayerRandom;
 
 public class TestsIAStats extends JFrame {
+	private int finishedGamesCount;
+	private final int gamesToSimulate;
+	
 	public TestsIAStats(int nbParties) {
 		super();
+		
+		this.finishedGamesCount = 0;
 
 		setTitle("Statistiques IAs");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +48,8 @@ public class TestsIAStats extends JFrame {
 		Player[] playersP2 = { new PlayerRandom("IA Random 2", colorsP2), new PlayerMedium("IA Medium 2", colorsP2),
 				new PlayerMCIA("IA Monte Carlo 2", colorsP2), new PlayerIA("IA Alpha Beta 2", colorsP2) };
 
+		this.gamesToSimulate = (playersP1.length*playersP2.length)*nbParties;
+		
 		for (int i = 0; i < playersP1.length; i++) {
 			donnees[i][0] = playersP1[i].getName();
 			for (int j = 0; j < playersP2.length; j++) {		
@@ -103,6 +113,9 @@ public class TestsIAStats extends JFrame {
     		{
     			game.update();
     		}
+    		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+    		Date dateobj = new Date();
+    		System.out.println("["+df.format(dateobj)+"] Partie "+(++this.finishedGamesCount)+"/"+this.gamesToSimulate);
     		if(game.getWinner().equals(p1))
     		{
     			p1Wins++;
