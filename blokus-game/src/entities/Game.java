@@ -540,7 +540,6 @@ public class Game implements Serializable
 
 			res =  score1 > score2 ?  this.getPlayers().get(0) : this.getPlayers().get(1);
 		}
-		System.out.println(res);
 		return res;
 	}
 

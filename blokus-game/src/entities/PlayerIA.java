@@ -39,7 +39,6 @@ public class PlayerIA extends Player {
 			@Override
 			public void run() {
 				chosenMove = alphaBeta(game.copy(), MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
-				System.out.println("CHOSEN MOVE: " + chosenMove.getValue());
 
 				playing = false;
 			}
@@ -126,15 +125,8 @@ public class PlayerIA extends Player {
 		
 		int res = 2 * node.getScore(node.getCurrentPlayer());
 
-		//res -= node.getCurrentPlayer().getTileInventory().size()*10;
-		
 		double d = distanceToCenter(node);
 		res -= 10 * Math.round(d);
-
-		/*for (Tile t : node.getCurrentPlayer().getTileInventory()) {
-			if (t.getColor() == node.getCurrentColor())
-				res -= t.getCellCount() * t.getCellCount();
-		}*/
 
 		/*
 		 * TODO Critères - Passer à travers - Bloquer adversaire - Surface disponible - Mieux = traverser ou bloquer ?

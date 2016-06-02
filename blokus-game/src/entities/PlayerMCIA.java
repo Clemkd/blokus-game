@@ -40,17 +40,7 @@ public class PlayerMCIA extends Player{
 			@Override
 			public void run() 
 			{
-				/*if(piecesPlacees < 16)
-				{
-					ArrayList<Move> moves = Move.possibleMovesWithHeurisitic(game, 5);
-					chosenMove = moves.isEmpty() ? Move.EMPTY : moves.get(rand.nextInt(moves.size()));
-					piecesPlacees++;
-				}
-				else*/
-				{
-					System.err.println("------- MONTECARLO ---------\n" + game.getCurrentPlayer().getName());
-					chosenMove = monteCarlo(game, DEFAULT_SAMPLE_SIZE + piecesPlacees * 20);
-				}
+				chosenMove = monteCarlo(game, DEFAULT_SAMPLE_SIZE + piecesPlacees * 20);
 				
 				game = null;
 				playing = false;
@@ -84,7 +74,6 @@ public class PlayerMCIA extends Player{
 			// STEP 2 : EXPAND
 			MCNode expandedNode = this.expand(selectedNode, state);
 
-			rootNode.print();
 			// STEP 3 : SIMULATION
 			boolean gameResult  = this.simulateGameRandomlyAndRevert(expandedNode.getGame());
 			
