@@ -15,4 +15,5 @@ hs_err_pid*
 sh.exe.stackdump
 blokus-game/save.txt
 blokus-game/config.txt
+*.blokus
 blokus-game/blokus.config
