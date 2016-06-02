@@ -116,8 +116,8 @@ public class Move implements Serializable, Comparable<Move> {
 		return generateRandomValidMove(game, new Random());
 	}
 
-	private static double euclideanDistance(Vector2 v1, Vector2 v2) {
-		return Math.sqrt(Math.pow(v1.getX() - v1.getY(), 2) + Math.pow(v2.getX() - v2.getY(), 2));
+	public static double euclideanDistance(Vector2 v1, Vector2 v2) {
+		return Math.sqrt(Math.pow(v2.getX() - v1.getX(), 2) + Math.pow(v2.getY() - v1.getY(), 2));
 	}
 
 	public static Move selectRandomlyPossibleMoveWithHeuristic(MCNode node, Game game, Random rand, int max) {
@@ -228,7 +228,7 @@ public class Move implements Serializable, Comparable<Move> {
 				}
 			}
 		}
-		//Collections.sort(validMovesWithTiles);
+		Collections.sort(validMovesWithTiles);
 		return validMovesWithTiles;
 	}
 
@@ -247,10 +247,10 @@ public class Move implements Serializable, Comparable<Move> {
 	@Override
 	public int compareTo(Move o) {
 		if (this.getTile().getCellCount() < o.getTile().getCellCount()) {
-			return -1;
+			return 1;
 		}
 		else if (this.getTile().getCellCount() > o.getTile().getCellCount()){
-			return 1;
+			return -1;
 		}
 		return 0;
 	}
