@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 import entities.Board;
-import entities.CellColor;
 import entities.Game;
 import entities.Tile;
-import gui.BlokusBoard;
 
 public class Move implements Serializable, Comparable<Move> {
 

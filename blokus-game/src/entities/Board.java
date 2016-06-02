@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import utilities.CellPositions;
 import utilities.InvalidMoveException;
-import utilities.Move;
 import utilities.OutOfBoundsException;
 import utilities.Vector2;
 

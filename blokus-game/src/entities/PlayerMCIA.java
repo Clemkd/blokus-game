@@ -152,6 +152,7 @@ public class PlayerMCIA extends Player{
 	 * @return True si le joueur de référence à gagné le jeu, False dans le cas
 	 *         contraire
 	 */
+	@SuppressWarnings("unused")
 	private boolean simulateGameRandomlyWhithoutRevert(Game game) {
 		while (!game.isTerminated()) {
 			Move mv = Move.generateRandomValidMove(game);

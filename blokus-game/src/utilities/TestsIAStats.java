@@ -1,7 +1,6 @@
 package utilities;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,13 +13,16 @@ import javax.swing.JTable;
 import entities.CellColor;
 import entities.Game;
 import entities.Player;
-import entities.PlayerHuman;
 import entities.PlayerIA;
 import entities.PlayerMCIA;
 import entities.PlayerMedium;
 import entities.PlayerRandom;
 
 public class TestsIAStats extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2263746696546941585L;
 	private int finishedGamesCount;
 	private final int gamesToSimulate;
 	

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import utilities.MCNode;
+
 import utilities.Move;
 
 public class PlayerMedium extends Player{

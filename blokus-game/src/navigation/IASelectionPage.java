@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import entities.CellColor;
 import entities.Game;
 import entities.PlayerHuman;
-import entities.PlayerIA;
 import entities.PlayerMCIA;
 import entities.PlayerMedium;
 import entities.PlayerRandom;

@@ -45,11 +45,9 @@ public class OptionPage extends Page implements ActionListener {
 	private BlokusCheckBox		checkBoxAutoSave;
 	private BlokusCheckBox		checkBoxActivateMusic;
 	private BlokusCheckBox		checkBoxActivateSFX;
-	private BlokusCheckBox		checkBoxDaltonienMode;
 
 	private BlokusLabel			titleGame;
 	private BlokusLabel			titleAudio;
-	private BlokusLabel			titleVideo;
 
 	private BlokusLabel			titleKeyboard;
 	
