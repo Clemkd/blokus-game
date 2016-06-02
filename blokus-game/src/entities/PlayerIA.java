@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.List;
-import java.util.Random;
 
 import utilities.Move;
 
@@ -22,17 +21,17 @@ public class PlayerIA extends Player {
 
 	private static final long serialVersionUID = -4411683191893021855L;
 	
-	private static final int MAX_DEPTH = 5;
-	protected Random	rand;
+	private static final int MAX_DEPTH = 2;
+	private int k;
 
 	public PlayerIA(String name, List<CellColor> colors) {
 		super(name, colors);
-		this.rand = new Random();
+		k=0;
 	}
 
 	public PlayerIA(PlayerIA p) {
 		super(p);
-		this.rand = new Random();
+		k=0;
 	}
 
 	@Override
@@ -42,24 +41,32 @@ public class PlayerIA extends Player {
 			
 			@Override
 			public void run() {
+				k = 0;
 				chosenMove = alphaBeta(game.copy(), MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+				System.out.println("Calls: " + k);
 				System.out.println("CHOSEN MOVE: " + chosenMove.getValue());
+				
 				playing = false;
 			}
 		});
 		t.start();
 	}
-	
-	int k = 0;
-	int l =0;
+
 	private Move alphaBeta(Game node, int depth, boolean maximizingPlayer, int alpha, int beta) {
-	    if (depth == 0 || node.isTerminated()) {
+	    k++;
+	    if(k%500==0)
+	    	System.out.println("Calls: " + k);
+		if (depth == 0 || node.isTerminated()) {
 	        return new Move(this.evaluate(node));
 	    }
+		int l = 0;
 	    
 		if (maximizingPlayer) {
 			Move bestMove = new Move(Integer.MIN_VALUE);
-			for (Move m : Move.possibleMovesWithHeurisitic(node, 12)) {
+			for (Move m : Move.possibleMoves(node)) {
+				l++;
+				if(l%200==0)
+					System.out.println("+Move "+l);
 				node.doMove(m);
 				m.setValue(this.alphaBeta(node, depth-1, false, alpha, beta).getValue());
 				if(m.getValue()>bestMove.getValue()) {
@@ -71,11 +78,15 @@ public class PlayerIA extends Player {
 				if (beta <= alpha)
 					break;
 			}
+			System.out.println("+Move "+l);
 			return bestMove;
 		}
 		else {
 			Move bestMove = new Move(Integer.MAX_VALUE);
-			for (Move m : Move.possibleMovesWithHeurisitic(node, 12)) {
+			for (Move m : Move.possibleMoves(node)) {
+				l++;
+				if(l%200==0)
+					System.out.println("-Move "+l);
 				node.doMove(m);
 				m.setValue(alphaBeta(node, depth-1, true, alpha, beta).getValue());
 				if(m.getValue()<bestMove.getValue()) {
@@ -87,6 +98,7 @@ public class PlayerIA extends Player {
 				if (beta <= alpha)
 					break;
 			}
+			System.out.println("-Move "+l);
 			return bestMove;
 		}
 	}
