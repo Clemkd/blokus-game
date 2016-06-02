@@ -546,7 +546,7 @@ public class GamePage extends Page implements ActionListener {
 	 * 
 	 */
 	private void quitConfirm() {
-		BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?\nbande de batard",
+		BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?",
 				this.font, BlokusMessageBoxButtonState.YES_OR_NO);
 		msgbox.setBackColor(Color.WHITE);
 		msgbox.setStrokeColor(Color.ORANGE);
