@@ -127,12 +127,24 @@ public class GamePage extends Page implements ActionListener {
 	 */
 	private MusicPlayer 		soundPlayer;
 	
+	/**
+	 * L'image de chargement
+	 */
 	private BufferedImage		loading;
 	
+	/**
+	 * Indice d'affichage du chargement
+	 */
 	private int 				showTickAnimation;
 	
+	/**
+	 * Le temps sauvegardé
+	 */
 	private float 				elapsedTimeSaved;
 	
+	/**
+	 * Le temps total
+	 */
 	private float 				elapsedTimeTotal;
 
 

@@ -86,7 +86,7 @@ public class TutorialPage extends Page implements ActionListener{
 		try
 		{
 			this.interfaceImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "interfaceimage.png"));
-			//this.controlsImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "controlsimage.png"));
+			this.controlsImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "controlsimage.png"));
 			this.rulesImage = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "reglesimage.png"));
 		} catch (IOException e)
 		{
@@ -109,6 +109,9 @@ public class TutorialPage extends Page implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof BlokusButton) {
 			if ((e.getSource().equals(this.buttonHomeLeft)) || (e.getSource().equals(this.buttonHomeRight))) {
+				this.onControl = false;
+				this.onInterface = true;
+				this.onRules = false;
 				Navigation.NavigateTo(Navigation.homePage);
 			}
 			else if (e.getSource().equals(this.buttonControlsRight))
@@ -176,7 +179,7 @@ public class TutorialPage extends Page implements ActionListener{
 			this.buttonControlsRight.draw(g2d);
 		}
 		else if (this.onControl) {
-			//g2d.drawImage(this.controlsImage, POS_X_PANEL, POS_Y_PANEL, null);
+			g2d.drawImage(this.controlsImage, POS_X_PANEL, POS_Y_PANEL, null);
 			this.buttonInterfaceLeft.draw(g2d);
 			this.buttonRulesRight.draw(g2d);
 		}
