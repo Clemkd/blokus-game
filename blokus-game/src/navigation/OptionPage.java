@@ -42,7 +42,7 @@ public class OptionPage extends Page implements ActionListener {
 	private BlokusButton		buttonHelp3;
 
 	private BlokusCheckBox		checkBoxDisplayPossibleMoves;
-	private BlokusCheckBox		checkBoxAutoSave;
+//	private BlokusCheckBox		checkBoxAutoSave;
 	private BlokusCheckBox		checkBoxActivateMusic;
 	private BlokusCheckBox		checkBoxActivateSFX;
 
