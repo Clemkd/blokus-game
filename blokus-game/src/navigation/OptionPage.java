@@ -126,7 +126,7 @@ public class OptionPage extends Page implements ActionListener {
 		
 		// DEBUT PAGE GENERAL
 		this.checkBoxDisplayPossibleMoves.setEnabled(this.onGeneral);
-		this.checkBoxAutoSave.setEnabled(this.onGeneral);
+		//this.checkBoxAutoSave.setEnabled(this.onGeneral);
 		this.checkBoxActivateMusic.setEnabled(this.onGeneral);
 		this.upDownVolumeMusic.setEnabled(this.onGeneral);
 		this.checkBoxActivateSFX.setEnabled(this.onGeneral);
@@ -135,7 +135,7 @@ public class OptionPage extends Page implements ActionListener {
 		this.titleGame.update(elapsedTime);
 		this.titleAudio.update(elapsedTime);
 		this.checkBoxDisplayPossibleMoves.update(elapsedTime);
-		this.checkBoxAutoSave.update(elapsedTime);
+		//this.checkBoxAutoSave.update(elapsedTime);
 		this.checkBoxActivateMusic.update(elapsedTime);
 		this.upDownVolumeMusic.update(elapsedTime);
 		this.checkBoxActivateSFX.update(elapsedTime);
@@ -193,7 +193,7 @@ public class OptionPage extends Page implements ActionListener {
 
 			this.titleGame.draw(g2d);
 			this.checkBoxDisplayPossibleMoves.draw(g2d);
-			this.checkBoxAutoSave.draw(g2d);
+			//this.checkBoxAutoSave.draw(g2d);
 
 			this.titleAudio.draw(g2d);
 			this.checkBoxActivateMusic.draw(g2d);
@@ -262,7 +262,7 @@ public class OptionPage extends Page implements ActionListener {
 			}
 			else if (e.getSource().equals(this.buttonToValid)) {
 				this.option.setHelp(this.checkBoxDisplayPossibleMoves.isChecked());
-				this.option.setAutoSave(this.checkBoxAutoSave.isChecked());
+				//this.option.setAutoSave(this.checkBoxAutoSave.isChecked());
 				this.option.setPlayMusic(this.checkBoxActivateMusic.isChecked());
 				this.option.setPlaySFX(this.checkBoxActivateSFX.isChecked());
 				this.option.setVolumeSFX(this.upDownVolumeSFX.getValue());
@@ -378,9 +378,9 @@ public class OptionPage extends Page implements ActionListener {
 				"METTRE EN SURBRILLANCE LES COUPS POSSIBLES", this.customFontCheckbox);
 		this.checkBoxDisplayPossibleMoves.setPosition(new Vector2(POS_X_CHECKBOX, 150));
 
-		this.checkBoxAutoSave = new BlokusCheckBox(true, this.option.isAutoSave(), "SAUVEGARDE AUTOMATIQUE",
-				this.customFontCheckbox);
-		this.checkBoxAutoSave.setPosition(new Vector2(POS_X_CHECKBOX, 180));
+		//this.checkBoxAutoSave = new BlokusCheckBox(true, this.option.isAutoSave(), "SAUVEGARDE AUTOMATIQUE",
+		//		this.customFontCheckbox);
+		//this.checkBoxAutoSave.setPosition(new Vector2(POS_X_CHECKBOX, 180));
 
 		this.titleAudio = new BlokusLabel("AUDIO", customFontTitle);
 		this.titleAudio.setPosition(new Vector2(POS_X_TITLE, 252));
