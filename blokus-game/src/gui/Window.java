@@ -1,15 +1,20 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import navigation.Navigation;
+import navigation.Page;
 
 public class Window implements Runnable , ActionListener 
 {
@@ -52,6 +57,15 @@ public class Window implements Runnable , ActionListener
 		this.frame = new JFrame();
 		this.frame.setName(name);
 		this.frame.setSize(WIDTH, HEIGHT);
+		Image iconImage;
+		try {
+			iconImage = ImageIO.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "icon.png"));
+			this.frame.setIconImage(iconImage);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.gameGraphics = new GraphicsPanel();
 		this.frame.getContentPane().add(this.gameGraphics, BorderLayout.CENTER);
