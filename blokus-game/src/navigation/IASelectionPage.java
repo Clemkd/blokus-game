@@ -13,8 +13,8 @@ import javax.imageio.ImageIO;
 import entities.CellColor;
 import entities.Game;
 import entities.PlayerHuman;
+import entities.PlayerIA;
 import entities.PlayerMCIA;
-import entities.PlayerMedium;
 import entities.PlayerRandom;
 import gui.BlokusButton;
 import gui.GraphicsPanel;
@@ -97,13 +97,11 @@ public class IASelectionPage extends Page implements ActionListener{
 				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur", colorsP1), new PlayerRandom("IA Facile", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
 			}else if(e.getSource().equals(this.buttonIAMedium)){
-				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur", colorsP1), new PlayerMedium("IA Moyenne", colorsP2)));
+				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur", colorsP1), new PlayerMCIA("IA Moyenne", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
-				//TODO lancer une nouvelle partie avec une ia moyenne
 			}else if(e.getSource().equals(this.buttonIAHard)){
-				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur", colorsP1), new PlayerMCIA("IA Difficile", colorsP2)));
+				((GamePage) Navigation.gamePage).setGame(new Game(new PlayerHuman("Joueur", colorsP1), new PlayerIA("IA Difficile", colorsP2)));
 				Navigation.NavigateTo(Navigation.gamePage);
-				//TODO lancer une nouvelle partie avec une ia difficile
 			}else if(e.getSource().equals(this.buttonReturn)){
 				Navigation.NavigateTo(Navigation.homePage);
 			}

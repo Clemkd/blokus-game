@@ -36,7 +36,12 @@ public class PlayerMedium extends Player{
 			@Override
 			public void run() 
 			{
-
+				try {
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				ArrayList<Move> moves = Move.possibleMovesWithHeurisitic(game, 5);
 				chosenMove = moves.isEmpty() ? Move.EMPTY : moves.get(rand.nextInt(moves.size()));
 				

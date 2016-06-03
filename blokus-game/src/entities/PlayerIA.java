@@ -38,6 +38,12 @@ public class PlayerIA extends Player {
 
 			@Override
 			public void run() {
+				try {
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				chosenMove = alphaBeta(game.copy(), MAX_DEPTH, true, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
 				playing = false;
