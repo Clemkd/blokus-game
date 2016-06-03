@@ -7,6 +7,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import program.Program;
+
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
@@ -42,6 +45,10 @@ public class MusicPlayer {
 				this.clip = AudioSystem.getClip();
 				this.clip.open(audioIn);
 				this.gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
+				if(musicName.startsWith("effect"))
+					this.setVolume(Program.optionConfiguration.getVolumeSFX());
+				else
+					this.setVolume(Program.optionConfiguration.getVolumeMusic());
 			}
 			catch (LineUnavailableException | IOException e) {
 				e.printStackTrace();
