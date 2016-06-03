@@ -44,10 +44,10 @@ public class GamePage extends Page implements ActionListener {
 	/**
 	 * Constante pour la position en Y des boutons, permet un alignement correct
 	 */
-	private static final int	BUTTONS_Y_POSITION	= 700; // 725
+	private static final int	BUTTONS_Y_POSITION	= 700;	// 725
 
 	/**
-	 *  Flag du Drag&Drop
+	 * Flag du Drag&Drop
 	 */
 	private boolean				inDragAndDrop;
 
@@ -96,7 +96,6 @@ public class GamePage extends Page implements ActionListener {
 	 */
 	private PlayerPanel			panelJoueur2;
 
-
 	/**
 	 * Le plateau du jeu
 	 */
@@ -125,30 +124,29 @@ public class GamePage extends Page implements ActionListener {
 	/**
 	 * Le player des effets sonores
 	 */
-	private MusicPlayer 		soundPlayer;
-	
+	private MusicPlayer			soundPlayer;
+
 	/**
 	 * L'image de chargement
 	 */
 	private BufferedImage		loading;
-	
+
 	/**
 	 * Indice d'affichage du chargement
 	 */
-	private int 				showTickAnimation;
-	
+	private int					showTickAnimation;
+
 	/**
 	 * Le temps sauvegardé
 	 */
-	private float 				elapsedTimeSaved;
-	
+	private float				elapsedTimeSaved;
+
 	/**
 	 * Le temps total
 	 */
-	private float 				elapsedTimeTotal;
-	
-	private boolean 			messageBoxIsClosed;
+	private float				elapsedTimeTotal;
 
+	private boolean				messageBoxIsClosed;
 
 	/**
 	 * Constructeur
@@ -172,8 +170,8 @@ public class GamePage extends Page implements ActionListener {
 		this.buttonRedo.update(elapsedTime);
 		this.buttonSave.update(elapsedTime);
 		this.buttonExit.update(elapsedTime);
-		if(this.game.update()) {
-			if(Program.optionConfiguration.isPlaySFX()) {
+		if (this.game.update()) {
+			if (Program.optionConfiguration.isPlaySFX()) {
 				this.soundPlayer.changeMusic("effect04");
 				this.soundPlayer.setVolume(Program.optionConfiguration.getVolumeSFX());
 				this.soundPlayer.playOnce();
@@ -188,36 +186,39 @@ public class GamePage extends Page implements ActionListener {
 		this.buttonRedo.setEnabled(this.game.canRedo());
 		this.buttonUndo.setEnabled(this.game.canUndo());
 
-		if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
-			if (this.panelJoueur1.getAssociatedPlayer() instanceof PlayerHuman) {
-				this.panelJoueur1.setEnabled(true);
+		if (this.game.isTerminated() == false) {
+			if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
+				if (this.panelJoueur1.getAssociatedPlayer() instanceof PlayerHuman) {
+					this.panelJoueur1.setEnabled(true);
+				}
+			}
+			else if (this.game.getCurrentPlayer() == this.panelJoueur2.getAssociatedPlayer()) {
+				if (this.panelJoueur2.getAssociatedPlayer() instanceof PlayerHuman) {
+					this.panelJoueur2.setEnabled(true);
+				}
 			}
 		}
-		else if (this.game.getCurrentPlayer() == this.panelJoueur2.getAssociatedPlayer()) {
-			if (this.panelJoueur2.getAssociatedPlayer() instanceof PlayerHuman) {
-				this.panelJoueur2.setEnabled(true);
-			}
+		else {
+			this.panelJoueur1.setEnabled(false);
+			this.panelJoueur2.setEnabled(false);
 		}
 
 		this.updatePlayerPanels(elapsedTime);
 		this.updateMouse(elapsedTime);
 
 		if (this.game.isTerminated()) {
-			if(this.messageBoxIsClosed)
-			{
+			if (this.messageBoxIsClosed) {
 				int scoreP1 = this.game.getScore(this.game.getPlayers().get(0));
 				int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
 				String vict = "";
-				if(scoreP1 > scoreP2)
-				{
-					vict =this.game.getPlayers().get(0).getName()+" à gagné";
+				if (scoreP1 > scoreP2) {
+					vict = this.game.getPlayers().get(0).getName() + " à gagné";
 				}
-				else
-				{
-					vict =this.game.getPlayers().get(1).getName()+" à gagné";
+				else {
+					vict = this.game.getPlayers().get(1).getName() + " à gagné";
 				}
 				BlokusMessageBox msgbox = new BlokusMessageBox(null,
-						vict+"\nScore : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
+						vict + "\nScore : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
 						BlokusMessageBoxButtonState.YES_OR_NO);
 				msgbox.setBackColor(Color.WHITE);
 				msgbox.setStrokeColor(CSSColors.DARKGREEN.color());
@@ -225,11 +226,10 @@ public class GamePage extends Page implements ActionListener {
 				msgbox.show(this);
 			}
 		}
-		
+
 		this.elapsedTimeTotal += elapsedTime;
-		if(this.elapsedTimeTotal>this.elapsedTimeSaved+100)
-		{
-			this.showTickAnimation = (this.showTickAnimation+1)%8;
+		if (this.elapsedTimeTotal > this.elapsedTimeSaved + 100) {
+			this.showTickAnimation = (this.showTickAnimation + 1) % 8;
 			this.elapsedTimeSaved = this.elapsedTimeTotal;
 		}
 	}
@@ -251,16 +251,16 @@ public class GamePage extends Page implements ActionListener {
 		if (this.selectedTile != null) {
 			this.selectedTile.draw(g2d);
 		}
-		
-		if(!(this.game.getPlayers().get(0) instanceof PlayerHuman) && !(this.game.isTerminated()))
-		{
-			if(this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(0).getName())
-			g2d.drawImage(this.loading,305, 10, 305+48, 10+48, 0+(this.showTickAnimation*48), 0, 48+(this.showTickAnimation*48),48, null);
+
+		if (!(this.game.getPlayers().get(0) instanceof PlayerHuman) && !(this.game.isTerminated())) {
+			if (this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(0).getName())
+				g2d.drawImage(this.loading, 305, 10, 305 + 48, 10 + 48, 0 + (this.showTickAnimation * 48), 0,
+						48 + (this.showTickAnimation * 48), 48, null);
 		}
-		if(!(this.game.getPlayers().get(1) instanceof PlayerHuman) && !(this.game.isTerminated()))
-		{
-			if(this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(1).getName())
-			g2d.drawImage(this.loading,925, 10, 925+48, 10+48, 0+(this.showTickAnimation*48), 0, 48+(this.showTickAnimation*48),48, null);
+		if (!(this.game.getPlayers().get(1) instanceof PlayerHuman) && !(this.game.isTerminated())) {
+			if (this.game.getCurrentPlayer().getName() == this.game.getPlayers().get(1).getName())
+				g2d.drawImage(this.loading, 925, 10, 925 + 48, 10 + 48, 0 + (this.showTickAnimation * 48), 0,
+						48 + (this.showTickAnimation * 48), 48, null);
 		}
 
 		g2d.dispose();
@@ -274,7 +274,7 @@ public class GamePage extends Page implements ActionListener {
 	private void processDragAndDrop(float elapsedTime) {
 		Vector2 mPos = Mouse.getPosition();
 
-		if(Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyReturn()) {
+		if (Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeyReturn()) {
 			this.game.getCurrentPlayer().addTileToInventory(this.selectedTile.getTile());
 
 			this.selectedTile = null;
@@ -283,21 +283,24 @@ public class GamePage extends Page implements ActionListener {
 			Mouse.consumeLastScroll();
 			Mouse.consumeLastMouseButton();
 		}
-		
+
 		// Gestion de la rotation de la pièce
-		if (Mouse.getLastScrollClicks() != 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateClockwise() || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateCounterClockwise()) 
-		{
+		if (Mouse.getLastScrollClicks() != 0
+				|| Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeyRotateClockwise()
+				|| Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeyRotateCounterClockwise()) {
 			Vector2 fc = this.selectedTile.getTile().getFirstCase();
 			Vector2 fc2;
 			Vector2 v = new Vector2();
-			if (Mouse.getLastScrollClicks() > 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateClockwise() ) {
+			if (Mouse.getLastScrollClicks() > 0
+					|| Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeyRotateClockwise()) {
 				this.selectedTile.setTile(this.selectedTile.getTile().rotateClockwise());
 				fc2 = this.selectedTile.getTile().getFirstCase();
 				v.setX(this.selectedTileHeldCell.getY() + fc.getY() - fc2.getX());
 				v.setY((Tile.WIDTH - (this.selectedTileHeldCell.getX() + fc.getX()) - 1) - fc2.getY());
 				this.selectedTileHeldCell = v;
 			}
-			else if (Mouse.getLastScrollClicks() < 0 || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyRotateCounterClockwise() ) {
+			else if (Mouse.getLastScrollClicks() < 0
+					|| Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeyRotateCounterClockwise()) {
 				this.selectedTile.setTile(this.selectedTile.getTile().rotateCounterClockwise());
 				fc2 = this.selectedTile.getTile().getFirstCase();
 				v.setX((Tile.WIDTH - (this.selectedTileHeldCell.getY() + fc.getY()) - 1) - fc2.getX());
@@ -308,7 +311,9 @@ public class GamePage extends Page implements ActionListener {
 			Keyboard.consumeLastKeyTyped();
 			Mouse.consumeLastScroll();
 		}
-		else if ((!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.RIGHT) || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeySymetryClockwise() || Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeySymetryCounterClockwise() ) // Bouton droit enfoncé, gestion de la symétrie
+		else if ((!Mouse.isReleased() && Mouse.getLastMouseButton() == Mouse.RIGHT)
+				|| Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeySymetryClockwise()
+				|| Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeySymetryCounterClockwise()) // Bouton droit enfoncé, gestion de la symétrie
 		{
 			Vector2 fc = this.selectedTile.getTile().getFirstCase();
 			Vector2 fc2;
@@ -351,8 +356,8 @@ public class GamePage extends Page implements ActionListener {
 				Vector2 fc = this.selectedTile.getTile().getFirstCase();
 
 				List<Vector2> validDropCells = this.blokusBoard.getBoard()
-						.getFreePositions(this.selectedTile.getTile().getColor()); 
-				List<Vector2> extremities = this.selectedTile.getTile().getExtremities(); 
+						.getFreePositions(this.selectedTile.getTile().getColor());
+				List<Vector2> extremities = this.selectedTile.getTile().getExtremities();
 				Vector2 tileOrigin = null;
 				Vector2 position = new Vector2();
 
@@ -397,8 +402,8 @@ public class GamePage extends Page implements ActionListener {
 					Mouse.consumeLastMouseButton();
 				}
 			}
-			
-			if(this.selectedTile!=null)
+
+			if (this.selectedTile != null)
 				this.selectedTile.update(elapsedTime);
 		}
 	}
@@ -431,8 +436,8 @@ public class GamePage extends Page implements ActionListener {
 				Mouse.consumeLastScroll();
 			}
 		}
-		
-		if(Keyboard.getLastKeyTyped()==Program.optionConfiguration.getKeyReturn()) {
+
+		if (Keyboard.getLastKeyTyped() == Program.optionConfiguration.getKeyReturn()) {
 			Keyboard.consumeLastKeyTyped();
 			Mouse.consumeLastScroll();
 			Mouse.consumeLastMouseButton();
@@ -442,7 +447,7 @@ public class GamePage extends Page implements ActionListener {
 			Mouse.consumeLastMouseButton();
 		}
 	}
-	
+
 	/**
 	 * Gestion de la souris en dehors du mode drag&drop
 	 * 
@@ -522,53 +527,63 @@ public class GamePage extends Page implements ActionListener {
 		else if (e.getSource() instanceof BlokusMessageBox) {
 			if (e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand()) {
 				System.out.println(this.game.isTerminated());
-				if(!this.game.isTerminated() || !this.messageBoxIsClosed)
-				{
+				if (!this.game.isTerminated() || !this.messageBoxIsClosed) {
 					Navigation.NavigateTo(Navigation.homePage);
 				}
-				else
-				{
+				else {
 					Player p1, p2;
-					if(this.game.getPlayers().get(0) instanceof PlayerHuman) {
-						p1 = new PlayerHuman(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					if (this.game.getPlayers().get(0) instanceof PlayerHuman) {
+						p1 = new PlayerHuman(this.game.getPlayers().get(0).getName(),
+								this.game.getPlayers().get(0).getColors());
 					}
-					else if(this.game.getPlayers().get(0) instanceof PlayerRandom) {
-						p1 = new PlayerRandom(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					else if (this.game.getPlayers().get(0) instanceof PlayerRandom) {
+						p1 = new PlayerRandom(this.game.getPlayers().get(0).getName(),
+								this.game.getPlayers().get(0).getColors());
 					}
-					else if(this.game.getPlayers().get(0) instanceof PlayerMCIA) {
-						p1 = new PlayerMCIA(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					else if (this.game.getPlayers().get(0) instanceof PlayerMCIA) {
+						p1 = new PlayerMCIA(this.game.getPlayers().get(0).getName(),
+								this.game.getPlayers().get(0).getColors());
 					}
-					else if(this.game.getPlayers().get(0) instanceof PlayerMedium) {
-						p1 = new PlayerMedium(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					else if (this.game.getPlayers().get(0) instanceof PlayerMedium) {
+						p1 = new PlayerMedium(this.game.getPlayers().get(0).getName(),
+								this.game.getPlayers().get(0).getColors());
 					}
-					else if(this.game.getPlayers().get(0) instanceof PlayerIA) {
-						p1 = new PlayerIA(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+					else if (this.game.getPlayers().get(0) instanceof PlayerIA) {
+						p1 = new PlayerIA(this.game.getPlayers().get(0).getName(),
+								this.game.getPlayers().get(0).getColors());
 					}
 					else {
 						System.err.println("Erreur recréation joueur 1");
-						p1 = new PlayerHuman(this.game.getPlayers().get(0).getName(), this.game.getPlayers().get(0).getColors());
+						p1 = new PlayerHuman(this.game.getPlayers().get(0).getName(),
+								this.game.getPlayers().get(0).getColors());
 					}
-					
-					if(this.game.getPlayers().get(1) instanceof PlayerHuman) {
-						p2 = new PlayerHuman(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+
+					if (this.game.getPlayers().get(1) instanceof PlayerHuman) {
+						p2 = new PlayerHuman(this.game.getPlayers().get(1).getName(),
+								this.game.getPlayers().get(1).getColors());
 					}
-					else if(this.game.getPlayers().get(1) instanceof PlayerRandom) {
-						p2 = new PlayerRandom(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					else if (this.game.getPlayers().get(1) instanceof PlayerRandom) {
+						p2 = new PlayerRandom(this.game.getPlayers().get(1).getName(),
+								this.game.getPlayers().get(1).getColors());
 					}
-					else if(this.game.getPlayers().get(1) instanceof PlayerMCIA) {
-						p2 = new PlayerMCIA(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					else if (this.game.getPlayers().get(1) instanceof PlayerMCIA) {
+						p2 = new PlayerMCIA(this.game.getPlayers().get(1).getName(),
+								this.game.getPlayers().get(1).getColors());
 					}
-					else if(this.game.getPlayers().get(1) instanceof PlayerMedium) {
-						p2 = new PlayerMedium(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					else if (this.game.getPlayers().get(1) instanceof PlayerMedium) {
+						p2 = new PlayerMedium(this.game.getPlayers().get(1).getName(),
+								this.game.getPlayers().get(1).getColors());
 					}
-					else if(this.game.getPlayers().get(1) instanceof PlayerIA) {
-						p2 = new PlayerIA(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+					else if (this.game.getPlayers().get(1) instanceof PlayerIA) {
+						p2 = new PlayerIA(this.game.getPlayers().get(1).getName(),
+								this.game.getPlayers().get(1).getColors());
 					}
 					else {
 						System.err.println("Erreur recréation joueur 2");
-						p2 = new PlayerHuman(this.game.getPlayers().get(1).getName(), this.game.getPlayers().get(1).getColors());
+						p2 = new PlayerHuman(this.game.getPlayers().get(1).getName(),
+								this.game.getPlayers().get(1).getColors());
 					}
-					
+
 					this.setGame(new Game(p1, p2));
 					Navigation.NavigateTo(Navigation.gamePage);
 				}
@@ -579,8 +594,7 @@ public class GamePage extends Page implements ActionListener {
 				this.getMessageBox().close(this);
 			}
 			if (e.getActionCommand() == BlokusMessageBoxResult.NO.getActionCommand()) {
-				if(this.game.isTerminated() && this.messageBoxIsClosed)
-				{
+				if (this.game.isTerminated() && this.messageBoxIsClosed) {
 					this.messageBoxIsClosed = false;
 				}
 			}
@@ -591,7 +605,7 @@ public class GamePage extends Page implements ActionListener {
 	 * 
 	 */
 	private void quitConfirm() {
-		BlokusMessageBox msgbox = new BlokusMessageBox(null,"Êtes-vous sûr de vouloir retourner à l'accueil ?",
+		BlokusMessageBox msgbox = new BlokusMessageBox(null, "Êtes-vous sûr de vouloir retourner à l'accueil ?",
 				this.font, BlokusMessageBoxButtonState.YES_OR_NO);
 		msgbox.setBackColor(Color.WHITE);
 		msgbox.setStrokeColor(Color.ORANGE);
@@ -602,7 +616,8 @@ public class GamePage extends Page implements ActionListener {
 	/**
 	 * Setter de game
 	 * 
-	 * @param g la partie
+	 * @param g
+	 *            la partie
 	 */
 	public void setGame(Game g) {
 		this.game = g;
@@ -619,7 +634,7 @@ public class GamePage extends Page implements ActionListener {
 			try {
 				this.font = BufferedHelper.getDefaultFont(20f);
 				this.titre = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_IMAGES + "logo.png"));
-				this.loading = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_ANIMATION+"loading.png"));
+				this.loading = ImageIO.read(getClass().getResource(Page.PATH_RESOURCES_ANIMATION + "loading.png"));
 			}
 			catch (IOException e) {
 				System.err.println(e.getMessage());
@@ -663,7 +678,7 @@ public class GamePage extends Page implements ActionListener {
 			}
 			this.flagLoad = true;
 			this.messageBoxIsClosed = true;
-			
+
 			this.elapsedTimeSaved = 0;
 			this.showTickAnimation = 0;
 			this.elapsedTimeTotal = 0;
