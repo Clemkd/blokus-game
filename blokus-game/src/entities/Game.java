@@ -340,6 +340,8 @@ public class Game implements Serializable
 					{
 						this.doMove(m);
 					}
+					if (turn!=this.currentTurn)
+						return true;
 				}
 			}
 			else
@@ -367,8 +369,6 @@ public class Game implements Serializable
 		{
 			System.out.println("Partie terminée !");
 		}
-		if (turn!=this.currentTurn)
-			return true;
 		return false;
 	}
 
