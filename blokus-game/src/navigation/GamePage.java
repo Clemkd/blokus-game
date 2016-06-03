@@ -164,12 +164,7 @@ public class GamePage extends Page implements ActionListener {
 	@Override
 	public void updatePage(float elapsedTime) {
 		GraphicsPanel.newCursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
-
-		this.buttonOption.update(elapsedTime);
-		this.buttonUndo.update(elapsedTime);
-		this.buttonRedo.update(elapsedTime);
-		this.buttonSave.update(elapsedTime);
-		this.buttonExit.update(elapsedTime);
+		
 		if (this.game.update()) {
 			if (Program.optionConfiguration.isPlaySFX()) {
 				this.soundPlayer.changeMusic("effect04");
@@ -182,9 +177,23 @@ public class GamePage extends Page implements ActionListener {
 		this.blokusBoard.showValidMoves(this.inDragAndDrop && Program.optionConfiguration.isHelp(),
 				this.game.getCurrentColor());
 		this.blokusBoard.update(elapsedTime);
-
-		this.buttonRedo.setEnabled(this.game.canRedo());
-		this.buttonUndo.setEnabled(this.game.canUndo());
+		
+		if(this.game.getCurrentPlayer() instanceof PlayerHuman) {
+			this.buttonOption.setEnabled(true);
+			this.buttonRedo.setEnabled(this.game.canRedo());
+			this.buttonUndo.setEnabled(this.game.canUndo());
+			this.buttonSave.setEnabled(true);
+		} else {
+			this.buttonOption.setEnabled(false);
+			this.buttonUndo.setEnabled(false);
+			this.buttonRedo.setEnabled(false);
+			this.buttonSave.setEnabled(false);
+		}
+		this.buttonOption.update(elapsedTime);
+		this.buttonUndo.update(elapsedTime);
+		this.buttonRedo.update(elapsedTime);
+		this.buttonSave.update(elapsedTime);
+		this.buttonExit.update(elapsedTime);
 
 		if (this.game.isTerminated() == false) {
 			if (this.game.getCurrentPlayer() == this.panelJoueur1.getAssociatedPlayer()) {
