@@ -535,7 +535,6 @@ public class GamePage extends Page implements ActionListener {
 		}
 		else if (e.getSource() instanceof BlokusMessageBox) {
 			if (e.getActionCommand() == BlokusMessageBoxResult.YES.getActionCommand()) {
-				System.out.println(this.game.isTerminated());
 				if (!this.game.isTerminated() || !this.messageBoxIsClosed) {
 					Navigation.NavigateTo(Navigation.homePage);
 				}
