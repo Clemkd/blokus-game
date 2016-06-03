@@ -44,6 +44,8 @@ public class Window implements Runnable , ActionListener
 	 */
 	private static MusicPlayer musicPlayer = new MusicPlayer();
 	
+	private String title;
+	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 778;
 
@@ -53,9 +55,11 @@ public class Window implements Runnable , ActionListener
 	 * @param name le nom de la fenêtre
 	 */
 	public Window(String name) {
+		this.title = "Blokus";
 		this.frame = new JFrame();
 		this.frame.setName(name);
 		this.frame.setSize(WIDTH, HEIGHT);
+		this.frame.setTitle(this.title);
 		Image iconImage;
 		try {
 			iconImage = ImageIO.read(getClass().getResourceAsStream(Page.PATH_RESOURCES_IMAGES + "icon.png"));

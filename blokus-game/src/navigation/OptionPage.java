@@ -104,7 +104,7 @@ public class OptionPage extends Page implements ActionListener {
 		this.soundPlayer = new MusicPlayer();
 		try {
 			this.customFontCheckbox = BufferedHelper.getDefaultFont(16f);
-			this.customFontTitle = BufferedHelper.getDefaultFont(20f);
+			this.customFontTitle = BufferedHelper.getDefaultFont(18f);
 			this.customFontText = BufferedHelper.getDefaultFont(14f);
 		}
 		catch (Exception e) {
@@ -432,8 +432,8 @@ public class OptionPage extends Page implements ActionListener {
 		this.textRunning1.setPosition(new Vector2(POS_X_TITLE, 207));
 
 		String s1 = new StringBuilder()
-				.append("1) Chaque joueur place chacun son tour la première pièce de son choix sur le plateau\n")
-				.append("de telle sorte que celle-ci recouvre une case d'angle du plateau.").toString();
+				.append("1) Chaque joueur place chacun son tour la première pièce de son choix sur le plateau de telle \n")
+				.append("sorte que celle-ci recouvre une case d'angle du plateau.").toString();
 		this.textRunning2 = new BlokusText(s1, customFontText);
 		this.textRunning2.setPosition(new Vector2(POS_X_TITLE, 237));
 

@@ -54,7 +54,7 @@ public class BlokusLabel implements DrawableInterface {
 		g2d.fillRect(this.position.getX(), this.position.getY(), 807, 35);
 		g2d.setFont(this.font);
 		g2d.setColor(Color.WHITE);
-		g2d.drawString(this.text, this.position.getX()+5, this.position.getY()+25);
+		g2d.drawString(this.text, this.position.getX()+15, this.position.getY()+25);
 		g2d.dispose();
 	}
 
