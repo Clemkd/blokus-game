@@ -351,8 +351,8 @@ public class GamePage extends Page implements ActionListener {
 				Vector2 fc = this.selectedTile.getTile().getFirstCase();
 
 				List<Vector2> validDropCells = this.blokusBoard.getBoard()
-						.getFreePositions(this.selectedTile.getTile().getColor()); //TODO Sauvegarder cette liste une fois par entrée dans le mode D&D ?
-				List<Vector2> extremities = this.selectedTile.getTile().getExtremities(); //TODO Idem
+						.getFreePositions(this.selectedTile.getTile().getColor()); 
+				List<Vector2> extremities = this.selectedTile.getTile().getExtremities(); 
 				Vector2 tileOrigin = null;
 				Vector2 position = new Vector2();
 

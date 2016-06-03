@@ -144,9 +144,6 @@ public class IASelectionPage extends Page implements ActionListener{
 	}
 
 	@Override
-	public void unloadContents() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void unloadContents() {}
 
 }
