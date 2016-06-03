@@ -233,23 +233,23 @@ public class Game implements Serializable
 		this.playingColors = undoRedoManagerColors.redo(this.playingColors);
 		if(currentTurn%2==0)
 		{
-			if(!(this.players.get(0) instanceof PlayerHuman))
+			this.players.set(0, this.undoRedoManagerPlayer.get(0).redo(this.players.get(0)));
+			if(!(this.players.get(1) instanceof PlayerHuman))
 			{
 				this.players.set(1, this.undoRedoManagerPlayer.get(1).redo(this.players.get(1)));
 				this.board = undoRedoManager.redo(this.board);
 				currentTurn++;
 			}
-			this.players.set(0, this.undoRedoManagerPlayer.get(0).redo(this.players.get(0)));
 		}
 		else
 		{
-			if(!(this.players.get(1) instanceof PlayerHuman))
+			this.players.set(1, this.undoRedoManagerPlayer.get(1).redo(this.players.get(1)));
+			if(!(this.players.get(0) instanceof PlayerHuman))
 			{
 				this.players.set(0, this.undoRedoManagerPlayer.get(0).redo(this.players.get(0)));
 				this.board = undoRedoManager.redo(this.board);
 				currentTurn++;
 			}
-			this.players.set(1, this.undoRedoManagerPlayer.get(1).redo(this.players.get(1)));
 		}
 		this.currentTurn++;
 	}
