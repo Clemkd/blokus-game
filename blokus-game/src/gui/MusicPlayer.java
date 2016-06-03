@@ -115,7 +115,7 @@ public class MusicPlayer {
 	public void setVolume(float gain) {
 		int i = Math.round(gain/0.05f);
 		gain = i*0.05f;
-		float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+		float dB = (float) (Math.log(gain/10f) / Math.log(10.0) * 20.0);
 		this.gainControl.setValue(dB);
 	}
 }

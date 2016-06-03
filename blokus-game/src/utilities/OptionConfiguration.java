@@ -55,8 +55,8 @@ public class OptionConfiguration implements Serializable {
 		this.playSFX = true;
 		this.autoSave = true;
 		this.help = false;
-		this.volumeMusic = 0.45f;
-		this.volumeSFX = 0.65f;
+		this.volumeMusic = 0.4f;
+		this.volumeSFX = 0.6f;
 		this.firstLaunch = true;
 
 		this.keyRotateClockwise = 39;
