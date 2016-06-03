@@ -432,8 +432,8 @@ public class OptionPage extends Page implements ActionListener {
 		this.textRunning1.setPosition(new Vector2(POS_X_TITLE, 207));
 
 		String s1 = new StringBuilder()
-				.append("1) Au premier tour, chaque joueur place chacun son tour la première pièce de son choix sur le\n")
-				.append("plateau de telle sorte que celle-ci recouvre une case d'angle du plateau.").toString();
+				.append("1) Chaque joueur place chacun son tour la première pièce de son choix sur le plateau\n")
+				.append("de telle sorte que celle-ci recouvre une case d'angle du plateau.").toString();
 		this.textRunning2 = new BlokusText(s1, customFontText);
 		this.textRunning2.setPosition(new Vector2(POS_X_TITLE, 237));
 
@@ -454,7 +454,7 @@ public class OptionPage extends Page implements ActionListener {
 
 		String s4 = new StringBuilder()
 				.append("- Lorsqu'un joueur est bloqué et ne peut plus placer de pièce, il est obligé de passer son tour.\n")
-				.append("- Lorsque tous les joueurs sont bloqués, le GAGNANT est celui qui a POSÉ LE PLUS DE pièces.")
+				.append("- Lorsque tous les joueurs sont bloqués, le GAGNANT est celui qui occupe le plus d'espace.")
 				.toString();
 		this.textEnd = new BlokusText(s4, customFontText);
 		this.textEnd.setPosition(new Vector2(POS_X_TITLE, 437));
