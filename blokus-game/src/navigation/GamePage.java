@@ -221,10 +221,10 @@ public class GamePage extends Page implements ActionListener {
 				int scoreP2 = this.game.getScore(this.game.getPlayers().get(1));
 				String vict = "";
 				if (scoreP1 > scoreP2) {
-					vict = this.game.getPlayers().get(0).getName() + " à gagné";
+					vict = this.game.getPlayers().get(0).getName() + " a gagné";
 				}
 				else {
-					vict = this.game.getPlayers().get(1).getName() + " à gagné";
+					vict = this.game.getPlayers().get(1).getName() + " a gagné";
 				}
 				BlokusMessageBox msgbox = new BlokusMessageBox(null,
 						vict + "\nScore : " + scoreP1 + " - " + scoreP2 + "\n\nVoulez vous rejouer ?", this.font,
